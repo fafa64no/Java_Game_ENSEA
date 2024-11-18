@@ -63,22 +63,22 @@ public class Level extends JPanel implements Displayable {
                 colliders.add(new Collider(88,88,64*(size.x-2)+40,64*(size.y-2)+40,true));
                 break;
             case 1:
-                colliders.add(new Collider(88,24,64*(size.x-2)+40,64*(size.y-2)+40,true));
+                colliders.add(new Collider(88,-40,64*(size.x-2)+40,64*(size.y-2)+40,true));
                 colliders.add(new Collider(0,0,64*exitPlacement,64));
                 colliders.add(new Collider(64*(exitPlacement+1),0,64*size.x,64));
                 break;
             case 2:
-                colliders.add(new Collider(24,88,64*(size.x-2)+40,64*(size.y-2)+40,true));
+                colliders.add(new Collider(-40,88,64*(size.x-2)+40,64*(size.y-2)+40,true));
                 colliders.add(new Collider(0,0,64,64*exitPlacement));
                 colliders.add(new Collider(0,64*(exitPlacement+1),64,64*size.y));
                 break;
             case 3:
-                colliders.add(new Collider(88,88,64*(size.x-2)+40,64*(size.y-2)+104,true));
+                colliders.add(new Collider(88,88,64*(size.x-2)+40,64*(size.y-2)+168,true));
                 colliders.add(new Collider(0,64*(size.y-1),64*exitPlacement,64*(size.y)));
                 colliders.add(new Collider(64*(exitPlacement+1),64*(size.y-1),64*size.x,64*(size.y)));
                 break;
             case 4:
-                colliders.add(new Collider(88,88,64*(size.x-2)+104,64*(size.y-2)+40,true));
+                colliders.add(new Collider(88,88,64*(size.x-2)+168,64*(size.y-2)+40,true));
                 colliders.add(new Collider(64*(size.x-1),0,64*size.x,64*exitPlacement));
                 colliders.add(new Collider(64*(size.x-1),64*(exitPlacement+1),64*size.x,64*size.y));
                 break;
@@ -117,22 +117,33 @@ public class Level extends JPanel implements Displayable {
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
+        Graphics2D g2d=(Graphics2D)g.create();
+        //g2d.translate(super.position.x,super.position.y);
+        //g2d.scale(super.scale.x,super.scale.y);
         int x=0;    int y=0;
         for (char[] line : map){
             for (char c : line){
                 switch (c){
                     case ' ':
                     case '.':
-                        g.drawImage(grassTextures[PseudoRandom.getRandomBetween(0,3,x,y)],x,y,null); break;
+                        g2d.translate(x,y);
+                        g2d.drawRenderedImage(grassTextures[PseudoRandom.getRandomBetween(0,3,x,y)],null);
+                        g2d.translate(-x,-y); break;
                     case 't':
                     case 'T':
-                        g.drawImage(treeTexture,x,y,null);  break;
+                        g2d.translate(x,y);
+                        g2d.drawRenderedImage(treeTexture,null);
+                        g2d.translate(-x,-y); break;
                     case 'h':
                     case 'H':
-                        g.drawImage(trapTexture,x,y,null);  break;
+                        g2d.translate(x,y);
+                        g2d.drawRenderedImage(trapTexture,null);
+                        g2d.translate(-x,-y); break;
                     case 'r':
                     case 'R':
-                        g.drawImage(rockTexture,x,y,null);  break;
+                        g2d.translate(x,y);
+                        g2d.drawRenderedImage(rockTexture,null);
+                        g2d.translate(-x,-y); break;
                 }
                 x+=64;
             }

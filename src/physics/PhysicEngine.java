@@ -36,7 +36,6 @@ public class PhysicEngine implements Engine {
             BVec2 canMove=new BVec2();
             double currentInverseFriction=1;
             for (Collider staticCollider : staticColliders){
-                if(staticCollider==null)continue;
                 BVec2 collisions=staticCollider.doCollide(dynamicSprite.getCollider(),dynamicSprite.getPosition(),nextPosition);
                 if(collisions.x){
                     canMove.x=false;

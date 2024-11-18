@@ -1,6 +1,7 @@
 package game;
 
 import physics.Collider;
+import rendering.Camera;
 import rendering.Displayable;
 import rendering.RenderEngine;
 import utils.IVec2;
@@ -15,6 +16,7 @@ public class Sprite extends JPanel implements Displayable {
     protected IVec2 position;
     private final Collider collider;
     protected BufferedImage texture;
+    protected Camera currentCamera;
 
     public Sprite(IVec2 position, Collider collider, String texturePath) {
         this.position = position;

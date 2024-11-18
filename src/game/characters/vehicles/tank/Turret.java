@@ -1,7 +1,6 @@
 package game.characters.vehicles.tank;
 
 import game.characters.vehicles.Vehicle;
-import physics.Collider;
 import utils.IVec2;
 
 import java.awt.*;

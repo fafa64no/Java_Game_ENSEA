@@ -12,7 +12,7 @@ public class RenderEngine extends JFrame implements Engine {
     private final List<Displayable> displayableList_layer2;
 
     public RenderEngine(){
-        super("TD4_Java_Proj");
+        super("COHOMA - Simulator - 2024");
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setUndecorated(true);
         this.setVisible(true);
