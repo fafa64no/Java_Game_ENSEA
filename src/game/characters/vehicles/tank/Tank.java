@@ -41,12 +41,6 @@ public class Tank extends Vehicle {
     }
 
     @Override
-    public void draw(RenderEngine renderEngine) {
-        renderEngine.remove(this);
-        renderEngine.add(this);
-    }
-
-    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 

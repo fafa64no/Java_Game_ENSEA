@@ -15,9 +15,13 @@ public class Turret extends Vehicle {
 
     protected void computeNewRotation(double parentRotationModifier){
         this.rotation=(this.rotation+parentRotationModifier)%(2*Math.PI);
+        IVec2 targetPosition=new IVec2(
+                (int)Math.round(MouseInfo.getPointerInfo().getLocation().x/currentCamera.getScale().x)+currentCamera.getOffset().x,
+                (int)Math.round(MouseInfo.getPointerInfo().getLocation().y/currentCamera.getScale().y)+currentCamera.getOffset().y
+        );
         double targetRotation=(new IVec2(
-                (int)Math.round((MouseInfo.getPointerInfo().getLocation().x+this.currentCamera.getOffset().x)*this.currentCamera.getScale().x)-this.position.x,
-                (int)Math.round((MouseInfo.getPointerInfo().getLocation().y+this.currentCamera.getOffset().y)*this.currentCamera.getScale().y)-this.position.y
+                targetPosition.x-this.position.x,
+                targetPosition.y-this.position.y
         ).getAngle()+Math.PI/2);
         this.rotation=(this.rotation+((targetRotation-this.rotation>=0)?1:-1)*Math.min(Math.abs(targetRotation-this.rotation),this.rotationSpeed))%(2*Math.PI);
     }

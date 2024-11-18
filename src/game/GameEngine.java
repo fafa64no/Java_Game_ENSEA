@@ -2,6 +2,7 @@ package game;
 
 import game.characters.Character;
 import game.characters.vehicles.tank.Tank;
+import game.hud.HudManager;
 import physics.Collider;
 import physics.PhysicEngine;
 import rendering.RenderEngine;
@@ -19,6 +20,8 @@ public class GameEngine implements KeyListener, Engine {
 
     private final PhysicEngine physicEngine;
     private final RenderEngine renderEngine;
+
+    private final HudManager hudManager;
 
     private final Tank currentTank = new Tank(
             new IVec2(320,120),
@@ -47,6 +50,7 @@ public class GameEngine implements KeyListener, Engine {
         renderEngine.addToRenderList(levels[currentLevel],2);
         renderEngine.addToRenderList(currentTank,1);
         renderEngine.addToRenderList(currentTank.getTurret(),0);
+        this.hudManager=new HudManager(renderEngine);
         renderEngine.paint();
 
         physicEngine.addDynamicSprite(currentTank);

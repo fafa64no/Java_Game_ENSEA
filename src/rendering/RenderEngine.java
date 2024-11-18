@@ -16,7 +16,9 @@ public class RenderEngine extends JFrame implements Engine {
 
     private Camera currentCamera=new Camera(
             new IVec2(-600,-350),
-            new Vec2(1.5,1.5)
+            new Vec2(
+                    1.5,
+                    1.5)
     );
 
     public RenderEngine(){
@@ -29,6 +31,8 @@ public class RenderEngine extends JFrame implements Engine {
         displayableList_layer0 = new ArrayList<>();
         displayableList_layer1 = new ArrayList<>();
         displayableList_layer2 = new ArrayList<>();
+
+        System.out.println(this.getBounds());
     }
 
     public void addToRenderList(Displayable displayable,int layer){
@@ -53,18 +57,18 @@ public class RenderEngine extends JFrame implements Engine {
         for (Displayable displayable : displayableList_layer0) {
             displayable.draw(this);
             displayable.linkCamera(currentCamera);
+            this.setVisible(true);
         }
-        this.setVisible(true);
         for (Displayable displayable : displayableList_layer1) {
             displayable.draw(this);
             displayable.linkCamera(currentCamera);
+            this.setVisible(true);
         }
-        this.setVisible(true);
         for (Displayable displayable : displayableList_layer2) {
             displayable.draw(this);
             displayable.linkCamera(currentCamera);
+            this.setVisible(true);
         }
-        this.setVisible(true);
     }
 
     public Camera getCurrentCamera() {
