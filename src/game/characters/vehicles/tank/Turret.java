@@ -19,11 +19,12 @@ public class Turret extends Vehicle {
                 (int)Math.round(MouseInfo.getPointerInfo().getLocation().x/currentCamera.getScale().x)+currentCamera.getOffset().x,
                 (int)Math.round(MouseInfo.getPointerInfo().getLocation().y/currentCamera.getScale().y)+currentCamera.getOffset().y
         );
-        double targetRotation=(new IVec2(
+        double targetRotation=new IVec2(
                 targetPosition.x-this.position.x,
                 targetPosition.y-this.position.y
-        ).getAngle()+Math.PI/2);
-        this.rotation=(this.rotation+((targetRotation-this.rotation>=0)?1:-1)*Math.min(Math.abs(targetRotation-this.rotation),this.rotationSpeed))%(2*Math.PI);
+        ).getAngle()+Math.PI/2;
+        System.out.println(targetRotation+" : "+this.rotation);
+        this.rotation=this.rotation+((targetRotation-this.rotation>=0)?1:-1)*Math.min(Math.abs(targetRotation-this.rotation),this.rotationSpeed);
     }
 
     @Override

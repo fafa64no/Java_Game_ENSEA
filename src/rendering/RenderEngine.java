@@ -6,6 +6,7 @@ import utils.Vec2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,13 @@ public class RenderEngine extends JFrame implements Engine {
         this.setUndecorated(true);
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.getContentPane().setCursor(
+                Toolkit.getDefaultToolkit().createCustomCursor(
+                        new BufferedImage(16,16,BufferedImage.TYPE_INT_ARGB),
+                        new Point(0,0),
+                        "blank cursor"
+                )
+        );
 
         displayableList_layer0 = new ArrayList<>();
         displayableList_layer1 = new ArrayList<>();
