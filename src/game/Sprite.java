@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class Sprite extends JPanel implements Displayable {
+public abstract class Sprite extends JPanel implements Displayable {
     protected IVec2 position;
     private final Collider collider;
     protected BufferedImage texture;
@@ -22,7 +22,6 @@ public class Sprite extends JPanel implements Displayable {
         this.position = position;
         this.collider = collider;
 
-        this.setBackground(new Color(0,0,0,0));
         this.setOpaque(false);
 
         try {
@@ -39,6 +38,11 @@ public class Sprite extends JPanel implements Displayable {
 
     public IVec2 getPosition() {
         return position;
+    }
+
+    @Override
+    public void linkCamera(Camera camera) {
+        this.currentCamera=camera;
     }
 
     @Override

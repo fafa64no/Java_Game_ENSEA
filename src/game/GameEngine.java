@@ -25,7 +25,7 @@ public class GameEngine implements KeyListener, Engine {
             new Collider(16,16,48,48),
             "./img/characters/tanks/test/base.png",
             "./img/characters/tanks/test/turret.png",
-            5,
+            10,
             new IVec2(64,64),
             1,
             0.1,
@@ -39,6 +39,8 @@ public class GameEngine implements KeyListener, Engine {
         levels[2]=new Level(new IVec2(16,9),"./data/level3.txt");
         levels[3]=new Level(new IVec2(80,40),"./data/level4.txt");
         currentLevel=3;
+
+        renderEngine.getCurrentCamera().setCameraTarget(this.currentTank);
 
         renderEngine.addKeyListener(this);
 

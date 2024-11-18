@@ -4,7 +4,7 @@ import physics.Collider;
 import utils.BVec2;
 import utils.IVec2;
 
-public class DynamicSprite extends Sprite{
+public abstract class DynamicSprite extends Sprite{
     protected IVec2 currentVelocity;
     private final IVec2 initialPosition;
     protected IVec2 nextPosition=new IVec2();

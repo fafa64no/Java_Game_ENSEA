@@ -50,6 +50,10 @@ public class Tank extends Vehicle {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.scale(currentCamera.getScale().x,currentCamera.getScale().y);
+        g2d.translate(-currentCamera.getOffset().x,-currentCamera.getOffset().y);
+
         animationCounter=(animationCounter+animationSpeed)%(animationFrames*animationFrames);
         int animationFrame=animationCounter/animationFrames;
 
@@ -57,10 +61,9 @@ public class Tank extends Vehicle {
         if (super.currentDir.isNull())  {texX=0;                                    }
         else                            {texX=animationFrame*super.textureSize.x;   }
 
-        Graphics2D g2d=(Graphics2D)g.create();
-        g2d.translate(super.position.x,super.position.y);
-        g2d.rotate(super.rotation, textureSize.x >> 1,textureSize.y >> 1);
-        g2d.scale(super.scale.x,super.scale.y);
+        g2d.translate(super.position.x, super.position.y);
+        g2d.rotate(super.rotation, textureSize.x >> 1, textureSize.y >> 1);
+        g2d.scale(super.scale.x, super.scale.y);
         g2d.drawRenderedImage(super.texture.getSubimage(
                 texX,
                 0,

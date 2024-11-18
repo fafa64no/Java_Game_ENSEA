@@ -16,8 +16,8 @@ public class Turret extends Vehicle {
     protected void computeNewRotation(double parentRotationModifier){
         this.rotation=(this.rotation+parentRotationModifier)%(2*Math.PI);
         double targetRotation=(new IVec2(
-                MouseInfo.getPointerInfo().getLocation().x-this.position.x,
-                MouseInfo.getPointerInfo().getLocation().y-this.position.y
+                (int)Math.round((MouseInfo.getPointerInfo().getLocation().x+this.currentCamera.getOffset().x)*this.currentCamera.getScale().x)-this.position.x,
+                (int)Math.round((MouseInfo.getPointerInfo().getLocation().y+this.currentCamera.getOffset().y)*this.currentCamera.getScale().y)-this.position.y
         ).getAngle()+Math.PI/2);
         this.rotation=(this.rotation+((targetRotation-this.rotation>=0)?1:-1)*Math.min(Math.abs(targetRotation-this.rotation),this.rotationSpeed))%(2*Math.PI);
     }
@@ -31,7 +31,11 @@ public class Turret extends Vehicle {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2d=(Graphics2D)g.create();
+
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.scale(currentCamera.getScale().x,currentCamera.getScale().y);
+        g2d.translate(-currentCamera.getOffset().x,-currentCamera.getOffset().y);
+
         g2d.translate(super.position.x,super.position.y);
         g2d.rotate(super.rotation, textureSize.x >> 1,textureSize.y >> 1);
         g2d.scale(super.scale.x,super.scale.y);

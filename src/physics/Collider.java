@@ -8,6 +8,14 @@ public class Collider {
     private final boolean inverted;
     private final double friction;
 
+    public Collider() {
+        this.inverted=false;
+        this.corners=new IVec2[4];
+        this.corners[0]=new IVec2();    this.corners[1]=new IVec2();
+        this.corners[2]=new IVec2();    this.corners[3]=new IVec2();
+        this.friction=0;
+    }
+
     public Collider(int x1, int y1, int x2, int y2) {
         this.inverted=false;
         this.corners=new IVec2[4];
