@@ -1,6 +1,6 @@
 package utils;
 
-import game.Level;
+import game.level.Level;
 import game.characters.vehicles.tank.Tank;
 import physics.Collider;
 

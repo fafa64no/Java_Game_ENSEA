@@ -85,6 +85,13 @@ public class RenderEngine extends JFrame implements Engine {
         return instance;
     }
 
+    public static IVec2 getMiddleOfFrame(){
+        return new IVec2(
+                -(int)Math.round((float) instance.getContentPane().getSize().width /(2*RenderEngine.getCurrentCamera().getScale().x)),
+                -(int)Math.round((float) instance.getContentPane().getSize().height /(2*RenderEngine.getCurrentCamera().getScale().y))
+        );
+    }
+
     @Override
     public void update() {
         this.currentCamera.update();

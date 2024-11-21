@@ -2,6 +2,7 @@ package game;
 
 import game.characters.vehicles.tank.Tank;
 import game.hud.HudManager;
+import game.level.Level;
 import physics.Collider;
 import physics.PhysicEngine;
 import rendering.RenderEngine;
@@ -16,8 +17,8 @@ public class GameEngine implements KeyListener, Engine {
     private static GameEngine instance;
 
     private final Level[] levels;
-    private int currentLevel=0;
     private final Tank[] tanks;
+    private int currentLevel=0;
     private int currentTank=0;
 
     private final IVec2 currentInputDir = new IVec2();

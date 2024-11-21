@@ -30,6 +30,7 @@ public class Camera {
 
     public void update(){
         if(this.targetSprite==null)return;
-        this.offset= IVec2.add(this.targetSprite.getPosition(),this.initialOffset);
+        this.offset= this.targetSprite.getPosition();
+        this.offset= IVec2.add(this.targetSprite.getPosition(),RenderEngine.getMiddleOfFrame());
     }
 }
