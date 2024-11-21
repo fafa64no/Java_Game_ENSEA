@@ -13,13 +13,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class GameEngine implements KeyListener, Engine {
+    private static GameEngine instance;
+
     private final Level[] levels;
     private int currentLevel;
 
     private final IVec2 currentInputDir = new IVec2();
-
-    private final PhysicEngine physicEngine;
-    private final RenderEngine renderEngine;
 
     private final HudManager hudManager;
 
@@ -35,7 +34,9 @@ public class GameEngine implements KeyListener, Engine {
             0.05
     );
 
-    public GameEngine(RenderEngine renderEngine, PhysicEngine physicEngine) {
+    public GameEngine() {
+        if(instance==null)instance=this;
+
         levels=new Level[4];
         levels[0]=new Level(new IVec2(16,9),"./data/level1.txt");
         levels[1]=new Level(new IVec2(16,9),"./data/level2.txt");
@@ -43,36 +44,37 @@ public class GameEngine implements KeyListener, Engine {
         levels[3]=new Level(new IVec2(80,40),"./data/level4.txt");
         currentLevel=3;
 
-        renderEngine.getCurrentCamera().setCameraTarget(this.currentTank);
+        RenderEngine.getInstance().getCurrentCamera().setCameraTarget(this.currentTank);
 
-        renderEngine.addKeyListener(this);
+        RenderEngine.getInstance().addKeyListener(this);
 
-        renderEngine.addToRenderList(levels[currentLevel],2);
-        renderEngine.addToRenderList(currentTank,1);
-        renderEngine.addToRenderList(currentTank.getTurret(),0);
-        this.hudManager=new HudManager(renderEngine);
-        renderEngine.paint();
+        RenderEngine.getInstance().addToRenderList(levels[currentLevel],2);
+        RenderEngine.getInstance().addToRenderList(currentTank,1);
+        RenderEngine.getInstance().addToRenderList(currentTank.getTurret(),0);
+        this.hudManager=new HudManager();
+        RenderEngine.getInstance().paint();
 
-        physicEngine.addDynamicSprite(currentTank);
+        PhysicEngine.getInstance().addDynamicSprite(currentTank);
         for (Collider collider : levels[currentLevel].getColliders())
-            physicEngine.addStaticCollider(collider);
-
-        this.physicEngine=physicEngine;
-        this.renderEngine=renderEngine;
+            PhysicEngine.getInstance().addStaticCollider(collider);
     }
 
     private void goToLevel(int i){
         for (Collider collider : levels[currentLevel].getColliders())
-            physicEngine.removeStaticCollider(collider);
-        renderEngine.removeFromRenderList(levels[currentLevel]);
+            PhysicEngine.getInstance().removeStaticCollider(collider);
+        RenderEngine.getInstance().removeFromRenderList(levels[currentLevel]);
 
         this.currentLevel=i;
 
         for (Collider collider : levels[currentLevel].getColliders())
-            physicEngine.addStaticCollider(collider);
-        renderEngine.addToRenderList(levels[currentLevel],2);
-        renderEngine.paint();
+            PhysicEngine.getInstance().addStaticCollider(collider);
+        RenderEngine.getInstance().addToRenderList(levels[currentLevel],2);
+        RenderEngine.getInstance().paint();
         currentTank.resetPosition();
+    }
+
+    public static GameEngine getInstance() {
+        return instance;
     }
 
     @Override

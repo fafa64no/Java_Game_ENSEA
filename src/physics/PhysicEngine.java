@@ -1,6 +1,7 @@
 package physics;
 
 import game.DynamicSprite;
+import rendering.RenderEngine;
 import utils.BVec2;
 import utils.Engine;
 import utils.IVec2;
@@ -9,10 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhysicEngine implements Engine {
+    private static PhysicEngine instance;
+
     private final List<Collider> staticColliders;
     private final List<DynamicSprite> dynamicSprites;
 
     public PhysicEngine() {
+        if(instance==null)instance=this;
+
         this.dynamicSprites = new ArrayList<>();
         this.staticColliders = new ArrayList<>();
     }
@@ -27,6 +32,10 @@ public class PhysicEngine implements Engine {
 
     public void addDynamicSprite(DynamicSprite sprite){
         this.dynamicSprites.add(sprite);
+    }
+
+    public static PhysicEngine getInstance() {
+        return instance;
     }
 
     @Override

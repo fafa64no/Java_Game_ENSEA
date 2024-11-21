@@ -9,7 +9,7 @@ public class Vec2 {
         this.x = x;
     }
 
-    public static Vec2 add(Vec2 a, Vec2 b){
+    public static Vec2 add(Vec2 a,  Vec2 b){
         return new Vec2(a.x+b.x,a.y+b.y);
     }
     public static Vec2 add(IVec2 a, IVec2 b){
@@ -18,7 +18,7 @@ public class Vec2 {
     public static Vec2 add(IVec2 a, Vec2 b){
         return new Vec2(a.x+b.x,a.y+b.y);
     }
-    public static Vec2 add(Vec2 a, IVec2 b){
+    public static Vec2 add(Vec2 a,  IVec2 b){
         return new Vec2(a.x+b.x,a.y+b.y);
     }
 

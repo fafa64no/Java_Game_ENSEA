@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RenderEngine extends JFrame implements Engine {
+    private static RenderEngine instance;
+
     private final List<Displayable> displayableList_layer0;     // Turret
     private final List<Displayable> displayableList_layer1;     // Tank
     private final List<Displayable> displayableList_layer2;     // Terrain
@@ -24,6 +26,7 @@ public class RenderEngine extends JFrame implements Engine {
 
     public RenderEngine(){
         super("COHOMA - Simulator - 2024");
+        if(instance==null)instance=this;
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setUndecorated(true);
         this.setVisible(true);
@@ -81,6 +84,10 @@ public class RenderEngine extends JFrame implements Engine {
 
     public Camera getCurrentCamera() {
         return currentCamera;
+    }
+
+    public static RenderEngine getInstance() {
+        return instance;
     }
 
     @Override

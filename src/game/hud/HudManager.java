@@ -7,8 +7,8 @@ public class HudManager {
         "img/hud/cursor.png"
     );
 
-    public HudManager(RenderEngine renderEngine){
-        renderEngine.addToRenderList(cursor,0);
+    public HudManager(){
+        RenderEngine.getInstance().addToRenderList(cursor,0);
         System.out.println(cursor);
     }
 }

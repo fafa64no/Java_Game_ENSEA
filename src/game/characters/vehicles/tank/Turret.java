@@ -2,7 +2,6 @@ package game.characters.vehicles.tank;
 
 import game.characters.vehicles.Vehicle;
 import utils.IVec2;
-import utils.Vec2;
 
 import java.awt.*;
 
@@ -16,21 +15,24 @@ public class Turret extends Vehicle {
 
     protected void computeNewRotation(double parentRotationModifier){
         this.rotation=(this.rotation+parentRotationModifier)%(2*Math.PI);
-        IVec2 targetPosition=new IVec2(
-                (int)Math.round(MouseInfo.getPointerInfo().getLocation().x/currentCamera.getScale().x)+currentCamera.getOffset().x,
-                (int)Math.round(MouseInfo.getPointerInfo().getLocation().y/currentCamera.getScale().y)+currentCamera.getOffset().y
-        );
-        double targetRotation=(new IVec2(
-                targetPosition.x-this.position.x- (int)Math.round((double) this.textureSize.x /2),
-                targetPosition.y-this.position.y- (int)Math.round((double) this.textureSize.y /2)
-        ).getAngle()+5*Math.PI/2)%(2*Math.PI);
+        double targetRotation = getTargetRotation();
         int angleSign;  double angleToTravel;
 
         angleToTravel=Math.abs(targetRotation-rotation);
         angleSign=((targetRotation-rotation>=0)?1:-1)*((angleToTravel<Math.PI)?1:-1);
 
-        this.rotation+=angleSign*Math.min(angleToTravel,this.rotationSpeed);
-        this.rotation=(this.rotation+2*Math.PI)%(2*Math.PI);
+        this.rotation+=angleSign*Math.min(angleToTravel,this.rotationSpeed)+2*Math.PI;
+    }
+
+    private double getTargetRotation() {
+        IVec2 targetPosition=new IVec2(
+                (int)Math.round(MouseInfo.getPointerInfo().getLocation().x/currentCamera.getScale().x)+currentCamera.getOffset().x,
+                (int)Math.round(MouseInfo.getPointerInfo().getLocation().y/currentCamera.getScale().y)+currentCamera.getOffset().y
+        );
+        return (new IVec2(
+                targetPosition.x- this.position.x- (int)Math.round((double) this.textureSize.x /2),
+                targetPosition.y- this.position.y- (int)Math.round((double) this.textureSize.y /2)
+        ).getAngle()+5*Math.PI/2)%(2*Math.PI);
     }
 
     @Override

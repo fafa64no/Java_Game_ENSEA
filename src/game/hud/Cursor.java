@@ -9,7 +9,6 @@ import java.awt.*;
 
 public class Cursor extends DynamicSprite {
     private final Vec2 scale = new Vec2(3,3);
-    private final double rotation=0;
     private final IVec2 textureSize = new IVec2(9,9);
 
     public Cursor(String texturePath) {

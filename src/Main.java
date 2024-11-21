@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class Main {
     private static final PhysicEngine physicEngine=new PhysicEngine();
     private static final RenderEngine renderEngine=new RenderEngine();
-    private static final GameEngine gameEngine=new GameEngine(renderEngine,physicEngine);
+    private static final GameEngine gameEngine=new GameEngine();
 
     public static void main(String[] args) {
         System.out.println("Starting game");
