@@ -1,7 +1,6 @@
 package game;
 
 import physics.Collider;
-import rendering.Camera;
 import rendering.Displayable;
 import rendering.RenderEngine;
 import utils.IVec2;
@@ -25,8 +24,6 @@ public class Level extends JPanel implements Displayable {
     private BufferedImage treeTexture;
     private BufferedImage trapTexture;
     private BufferedImage rockTexture;
-
-    private Camera currentCamera;
 
     public Level(IVec2 size,String path){
         this.map=new char[size.x][size.y];
@@ -118,16 +115,11 @@ public class Level extends JPanel implements Displayable {
     }
 
     @Override
-    public void linkCamera(Camera camera) {
-        this.currentCamera=camera;
-    }
-
-    @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d=(Graphics2D)g.create();
-        g2d.scale(currentCamera.getScale().x,currentCamera.getScale().y);
-        g2d.translate(-currentCamera.getOffset().x,-currentCamera.getOffset().y);
+        g2d.scale(RenderEngine.getCurrentCamera().getScale().x,RenderEngine.getCurrentCamera().getScale().y);
+        g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
         int x=0;    int y=0;
         for (char[] line : map){
             for (char c : line){

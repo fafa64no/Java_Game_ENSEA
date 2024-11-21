@@ -44,44 +44,41 @@ public class RenderEngine extends JFrame implements Engine {
         displayableList_layer2 = new ArrayList<>();
     }
 
-    public void addToRenderList(Displayable displayable,int layer){
+    public static void addToRenderList(Displayable displayable,int layer){
         switch (layer){
             case 0:
-                displayableList_layer0.add(displayable);    break;
+                instance.displayableList_layer0.add(displayable);    break;
             case 1:
-                displayableList_layer1.add(displayable);    break;
+                instance.displayableList_layer1.add(displayable);    break;
             case 2:
-                displayableList_layer2.add(displayable);    break;
+                instance.displayableList_layer2.add(displayable);    break;
         }
     }
 
-    public void removeFromRenderList(Displayable displayable){
-        displayableList_layer0.remove(displayable);
-        displayableList_layer1.remove(displayable);
-        displayableList_layer2.remove(displayable);
+    public static void removeFromRenderList(Displayable displayable){
+        instance.displayableList_layer0.remove(displayable);
+        instance.displayableList_layer1.remove(displayable);
+        instance.displayableList_layer2.remove(displayable);
         displayable.clear();
     }
 
-    public void paint(){
-        for (Displayable displayable : displayableList_layer0) {
+    public static void paint(){
+        for (Displayable displayable : instance.displayableList_layer0) {
             displayable.draw();
-            displayable.linkCamera(currentCamera);
             instance.setVisible(true);
         }
-        for (Displayable displayable : displayableList_layer1) {
+        for (Displayable displayable : instance.displayableList_layer1) {
             displayable.draw();
-            displayable.linkCamera(currentCamera);
             instance.setVisible(true);
         }
-        for (Displayable displayable : displayableList_layer2) {
+        for (Displayable displayable : instance.displayableList_layer2) {
             displayable.draw();
-            displayable.linkCamera(currentCamera);
             instance.setVisible(true);
         }
     }
 
-    public Camera getCurrentCamera() {
-        return currentCamera;
+    public static Camera getCurrentCamera() {
+        return instance.currentCamera;
     }
 
     public static RenderEngine getInstance() {

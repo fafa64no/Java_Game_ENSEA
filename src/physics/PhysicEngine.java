@@ -1,7 +1,6 @@
 package physics;
 
 import game.DynamicSprite;
-import rendering.RenderEngine;
 import utils.BVec2;
 import utils.Engine;
 import utils.IVec2;
@@ -22,19 +21,19 @@ public class PhysicEngine implements Engine {
         this.staticColliders = new ArrayList<>();
     }
 
-    public void addStaticCollider(Collider collider){
-        this.staticColliders.add(collider);
+    public static void addStaticCollider(Collider collider){
+        instance.staticColliders.add(collider);
     }
 
-    public void removeStaticCollider(Collider collider){
-        this.staticColliders.remove(collider);
+    public static void removeStaticCollider(Collider collider){
+        instance.staticColliders.remove(collider);
     }
 
-    public void addDynamicSprite(DynamicSprite sprite){
+    public static void addDynamicSprite(DynamicSprite sprite){
         instance.dynamicSprites.add(sprite);
     }
 
-    public void removeDynamicSprite(DynamicSprite sprite){
+    public static void removeDynamicSprite(DynamicSprite sprite){
         instance.dynamicSprites.remove(sprite);
     }
 

@@ -45,8 +45,8 @@ public class Tank extends Vehicle {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g.create();
-        g2d.scale(currentCamera.getScale().x,currentCamera.getScale().y);
-        g2d.translate(-currentCamera.getOffset().x,-currentCamera.getOffset().y);
+        g2d.scale(RenderEngine.getCurrentCamera().getScale().x,RenderEngine.getCurrentCamera().getScale().y);
+        g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
 
         animationCounter=(animationCounter+animationSpeed)%(animationFrames*animationFrames);
         int animationFrame=animationCounter/animationFrames;

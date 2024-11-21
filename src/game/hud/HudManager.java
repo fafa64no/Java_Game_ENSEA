@@ -8,7 +8,6 @@ public class HudManager {
     );
 
     public HudManager(){
-        RenderEngine.getInstance().addToRenderList(cursor,0);
-        System.out.println(cursor);
+        RenderEngine.addToRenderList(cursor,0);
     }
 }

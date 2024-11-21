@@ -1,6 +1,7 @@
 package game.characters.vehicles.tank;
 
 import game.characters.vehicles.Vehicle;
+import rendering.RenderEngine;
 import utils.IVec2;
 
 import java.awt.*;
@@ -26,8 +27,8 @@ public class Turret extends Vehicle {
 
     private double getTargetRotation() {
         IVec2 targetPosition=new IVec2(
-                (int)Math.round(MouseInfo.getPointerInfo().getLocation().x/currentCamera.getScale().x)+currentCamera.getOffset().x,
-                (int)Math.round(MouseInfo.getPointerInfo().getLocation().y/currentCamera.getScale().y)+currentCamera.getOffset().y
+                (int)Math.round(MouseInfo.getPointerInfo().getLocation().x/RenderEngine.getCurrentCamera().getScale().x)+RenderEngine.getCurrentCamera().getOffset().x,
+                (int)Math.round(MouseInfo.getPointerInfo().getLocation().y/RenderEngine.getCurrentCamera().getScale().y)+RenderEngine.getCurrentCamera().getOffset().y
         );
         return (new IVec2(
                 targetPosition.x- this.position.x- (int)Math.round((double) this.textureSize.x /2),
@@ -46,8 +47,8 @@ public class Turret extends Vehicle {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g.create();
-        g2d.scale(currentCamera.getScale().x,currentCamera.getScale().y);
-        g2d.translate(-currentCamera.getOffset().x,-currentCamera.getOffset().y);
+        g2d.scale(RenderEngine.getCurrentCamera().getScale().x,RenderEngine.getCurrentCamera().getScale().y);
+        g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
 
         g2d.translate(super.position.x,super.position.y);
         g2d.rotate(super.rotation, textureSize.x >> 1,textureSize.y >> 1);

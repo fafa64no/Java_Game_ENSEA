@@ -26,36 +26,36 @@ public class GameEngine implements KeyListener, Engine {
     public GameEngine() {
         if(instance==null)instance=this;
 
-        levels= DataGen.genLevels();
+        levels=DataGen.genLevels();
         tanks=DataGen.genTanks();
 
         goToLevel(3);
         swapTank(0);
 
-        RenderEngine.getInstance().getCurrentCamera().setCameraTarget(tanks[currentTank]);
+        RenderEngine.getCurrentCamera().setCameraTarget(tanks[currentTank]);
         RenderEngine.getInstance().addKeyListener(instance);
     }
 
     private void goToLevel(int i){
         for (Collider collider : levels[currentLevel].getColliders())
-            PhysicEngine.getInstance().removeStaticCollider(collider);
-        RenderEngine.getInstance().removeFromRenderList(levels[currentLevel]);
+            PhysicEngine.removeStaticCollider(collider);
+        RenderEngine.removeFromRenderList(levels[currentLevel]);
         currentLevel=i;
         for (Collider collider : levels[currentLevel].getColliders())
-            PhysicEngine.getInstance().addStaticCollider(collider);
-        RenderEngine.getInstance().addToRenderList(levels[currentLevel],2);
-        RenderEngine.getInstance().paint();
+            PhysicEngine.addStaticCollider(collider);
+        RenderEngine.addToRenderList(levels[currentLevel],2);
+        RenderEngine.paint();
     }
 
     private void swapTank(int i){
-        RenderEngine.getInstance().removeFromRenderList(tanks[currentTank]);
-        RenderEngine.getInstance().removeFromRenderList(tanks[currentTank].getTurret());
-        PhysicEngine.getInstance().removeDynamicSprite(tanks[currentTank]);
+        RenderEngine.removeFromRenderList(tanks[currentTank]);
+        RenderEngine.removeFromRenderList(tanks[currentTank].getTurret());
+        PhysicEngine.removeDynamicSprite(tanks[currentTank]);
         currentTank=i;
-        PhysicEngine.getInstance().addDynamicSprite(tanks[currentTank]);
-        RenderEngine.getInstance().addToRenderList(tanks[currentTank],1);
-        RenderEngine.getInstance().addToRenderList(tanks[currentTank].getTurret(),0);
-        RenderEngine.getInstance().paint();
+        PhysicEngine.addDynamicSprite(tanks[currentTank]);
+        RenderEngine.addToRenderList(tanks[currentTank],1);
+        RenderEngine.addToRenderList(tanks[currentTank].getTurret(),0);
+        RenderEngine.paint();
     }
 
     public static GameEngine getInstance() {
