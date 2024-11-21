@@ -15,10 +15,16 @@ public class Tank extends Vehicle {
         this.turret=new Turret(position,turretTexturePath,1,textureSize,this, turretRotationSpeed);
     }
 
+    public Tank(IVec2 position, Collider collider, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, IVec2 scale) {
+        super(position, collider, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
+        this.turret=new Turret(position,turretTexturePath,1,textureSize,this, turretRotationSpeed, scale);
+        super.scale=scale;
+    }
+
     protected IVec2 getTurretMount(){
         return new IVec2(
-            (int)Math.round(super.position.x+super.textureSize.y*Math.sin(this.rotation)/8),
-            (int)Math.round(super.position.y-super.textureSize.y*Math.cos(this.rotation)/8)
+            (int)Math.round(position.x+textureSize.y*Math.sin(rotation)/8),
+            (int)Math.round(position.y-textureSize.y*Math.cos(rotation)/8)
         );
     }
 
@@ -55,9 +61,9 @@ public class Tank extends Vehicle {
         if (super.currentDir.isNull())  {texX=0;                                    }
         else                            {texX=animationFrame*super.textureSize.x;   }
 
-        g2d.translate(super.position.x, super.position.y);
-        g2d.rotate(super.rotation, textureSize.x >> 1, textureSize.y >> 1);
-        g2d.scale(super.scale.x, super.scale.y);
+        g2d.translate(position.x-scale.x*Math.round((float) textureSize.x /2), position.y-scale.y*Math.round((float) textureSize.y /2));
+        g2d.rotate(super.rotation, scale.x*Math.round((float) textureSize.x /2),scale.y*Math.round((float) textureSize.y /2));
+        g2d.scale(scale.x, scale.y);
         g2d.drawRenderedImage(super.texture.getSubimage(
                 texX,
                 0,

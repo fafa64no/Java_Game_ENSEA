@@ -31,7 +31,7 @@ public class GameEngine implements KeyListener, Engine {
         tanks=DataGen.genTanks();
 
         goToLevel(3);
-        swapTank(0);
+        swapTank(1);
 
         RenderEngine.getCurrentCamera().setCameraTarget(tanks[currentTank]);
         RenderEngine.getInstance().addKeyListener(instance);

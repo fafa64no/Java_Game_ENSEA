@@ -14,6 +14,12 @@ public class Turret extends Vehicle {
         this.parent=parent;
     }
 
+    public Turret(IVec2 position, String texturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed, IVec2 scale) {
+        super(position, null, texturePath, 0, animationFrames, textureSize, rotationSpeed);
+        this.parent=parent;
+        super.scale=scale;
+    }
+
     protected void computeNewRotation(double parentRotationModifier){
         this.rotation=(this.rotation+parentRotationModifier)%(2*Math.PI);
         double targetRotation = getTargetRotation();
@@ -31,8 +37,8 @@ public class Turret extends Vehicle {
                 (int)Math.round(MouseInfo.getPointerInfo().getLocation().y/RenderEngine.getCurrentCamera().getScale().y)+RenderEngine.getCurrentCamera().getOffset().y
         );
         return (new IVec2(
-                targetPosition.x- this.position.x- (int)Math.round((double) this.textureSize.x /2),
-                targetPosition.y- this.position.y- (int)Math.round((double) this.textureSize.y /2)
+                targetPosition.x- this.position.x,
+                targetPosition.y- this.position.y
         ).getAngle()+5*Math.PI/2)%(2*Math.PI);
     }
 
@@ -50,8 +56,8 @@ public class Turret extends Vehicle {
         g2d.scale(RenderEngine.getCurrentCamera().getScale().x,RenderEngine.getCurrentCamera().getScale().y);
         g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
 
-        g2d.translate(super.position.x,super.position.y);
-        g2d.rotate(super.rotation, textureSize.x >> 1,textureSize.y >> 1);
+        g2d.translate(position.x-scale.x*Math.round((float) textureSize.x /2), position.y-scale.y*Math.round((float) textureSize.y /2));
+        g2d.rotate(super.rotation, scale.x*Math.round((float) textureSize.x /2),scale.y*Math.round((float) textureSize.y /2));
         g2d.scale(super.scale.x,super.scale.y);
         g2d.drawRenderedImage(super.texture.getSubimage(
                 0,

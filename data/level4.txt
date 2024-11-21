@@ -1,40 +1,58 @@
-RRRRRRRRRRRRRR.RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-R                                                                              R
-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+..................................................................................................
+.                                                                                                .
+.                                                                                                .
+.                                                                                                .
+.                                                                                                .
+.                                                                                                .
+.                                                                                                .
+.                                                                                                .
+.                                                                                                .
+.        RRRRRRRRRRRRRR   RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        R                                                                              R        .
+.        RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR        .
+.                                                                                                .
+.                                                                                                .
+.                                                                                                .
+.                                                                                                .
+.                                                                                                .
+.                                                                                                .
+.                                                                                                .
+.                                                                                                .
+..................................................................................................

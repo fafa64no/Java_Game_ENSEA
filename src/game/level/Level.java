@@ -3,6 +3,7 @@ package game.level;
 import physics.Collider;
 import rendering.Displayable;
 import rendering.RenderEngine;
+import utils.DataGen;
 import utils.IVec2;
 import utils.PseudoRandom;
 
@@ -20,77 +21,70 @@ public class Level extends JPanel implements Displayable {
     private final char[][] map;
     private final List<Collider> colliders;
 
+    private final IVec2 tileSize = new IVec2(16,16);
     private final BufferedImage[] grassTextures;
+    private final BufferedImage[] stoneTextures;
     private BufferedImage treeTexture;
     private BufferedImage trapTexture;
-    private BufferedImage rockTexture;
 
     public Level(IVec2 size,String path){
-        this.map=new char[size.x][size.y];
-        this.colliders=new ArrayList<>();
-        this.grassTextures=new BufferedImage[4];
+        map=new char[size.x][size.y];
+        colliders=new ArrayList<>();
         try{
-            grassTextures[0] = ImageIO.read(new File("./img/level/grass0.png"));
-            grassTextures[1] = ImageIO.read(new File("./img/level/grass1.png"));
-            grassTextures[2] = ImageIO.read(new File("./img/level/grass2.png"));
-            grassTextures[3] = ImageIO.read(new File("./img/level/grass3.png"));
             treeTexture = ImageIO.read(new File("./img/level/tree.png"));
             trapTexture = ImageIO.read(new File("./img/level/trap.png"));
-            rockTexture = ImageIO.read(new File("./img/level/rock.png"));
-
             BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
             for (int i = 0; i< size.y; i++) map[i]=bufferedReader.readLine().toCharArray();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        } catch (Exception e){e.printStackTrace();}
+        grassTextures = DataGen.getGrassTextures();
+        stoneTextures = DataGen.getStoneTextures();
 
         // Search for exit
-        int exitSide=0;
-        int exitPlacement=0;
-        for (int i=0;i<size.x;i++){
-            if (this.map[0][i]=='.')        { exitSide=1;   exitPlacement=i; break; }
-            if (this.map[size.y-1][i]=='.') { exitSide=3;   exitPlacement=i; break; }
-        }
-        for (int i=0;i<size.y;i++){
-            if (this.map[i][0]=='.')        { exitSide=2;   exitPlacement=i; break; }
-            if (this.map[i][size.x-1]=='.')   { exitSide=4;   exitPlacement=i; break; }
-        }
-
-        // Generate colliders
-        switch (exitSide){
-            case 0:
-                colliders.add(new Collider(88,88,64*(size.x-2)+40,64*(size.y-2)+40,true));
-                break;
-            case 1:
-                colliders.add(new Collider(88,-40,64*(size.x-2)+40,64*(size.y-2)+40,true));
-                colliders.add(new Collider(0,0,64*exitPlacement,64));
-                colliders.add(new Collider(64*(exitPlacement+1),0,64*size.x,64));
-                break;
-            case 2:
-                colliders.add(new Collider(-40,88,64*(size.x-2)+40,64*(size.y-2)+40,true));
-                colliders.add(new Collider(0,0,64,64*exitPlacement));
-                colliders.add(new Collider(0,64*(exitPlacement+1),64,64*size.y));
-                break;
-            case 3:
-                colliders.add(new Collider(88,88,64*(size.x-2)+40,64*(size.y-2)+168,true));
-                colliders.add(new Collider(0,64*(size.y-1),64*exitPlacement,64*(size.y)));
-                colliders.add(new Collider(64*(exitPlacement+1),64*(size.y-1),64*size.x,64*(size.y)));
-                break;
-            case 4:
-                colliders.add(new Collider(88,88,64*(size.x-2)+168,64*(size.y-2)+40,true));
-                colliders.add(new Collider(64*(size.x-1),0,64*size.x,64*exitPlacement));
-                colliders.add(new Collider(64*(size.x-1),64*(exitPlacement+1),64*size.x,64*size.y));
-                break;
-        }
-        for (int x=1;x<size.x-1;x++){
-            for (int y=1;y<size.y-1;y++){
+//        int exitSide=0;
+//        int exitPlacement=0;
+//        for (int i=0;i<size.x;i++){
+//            if (this.map[0][i]=='.')        { exitSide=1;   exitPlacement=i; break; }
+//            if (this.map[size.y-1][i]=='.') { exitSide=3;   exitPlacement=i; break; }
+//        }
+//        for (int i=0;i<size.y;i++){
+//            if (this.map[i][0]=='.')        { exitSide=2;   exitPlacement=i; break; }
+//            if (this.map[i][size.x-1]=='.')   { exitSide=4;   exitPlacement=i; break; }
+//        }
+//
+//        // Generate colliders
+//        switch (exitSide){
+//            case 0:
+//                colliders.add(new Collider(tileSize.x+24,tileSize.y+24,tileSize.x*(size.x-1)-24,tileSize.y*(size.y-1)-24,true));
+//                break;
+//            case 1:
+//                colliders.add(new Collider(88,-40,64*(size.x-2)+40,64*(size.y-2)+40,true));
+//                colliders.add(new Collider(0,0,64*exitPlacement,64));
+//                colliders.add(new Collider(64*(exitPlacement+1),0,64*size.x,64));
+//                break;
+//            case 2:
+//                colliders.add(new Collider(-40,88,64*(size.x-2)+40,64*(size.y-2)+40,true));
+//                colliders.add(new Collider(0,0,64,64*exitPlacement));
+//                colliders.add(new Collider(0,64*(exitPlacement+1),64,64*size.y));
+//                break;
+//            case 3:
+//                colliders.add(new Collider(88,88,64*(size.x-2)+40,64*(size.y-2)+168,true));
+//                colliders.add(new Collider(0,64*(size.y-1),64*exitPlacement,64*(size.y)));
+//                colliders.add(new Collider(64*(exitPlacement+1),64*(size.y-1),64*size.x,64*(size.y)));
+//                break;
+//            case 4:
+//                colliders.add(new Collider(88,88,64*(size.x-2)+168,64*(size.y-2)+40,true));
+//                colliders.add(new Collider(64*(size.x-1),0,64*size.x,64*exitPlacement));
+//                colliders.add(new Collider(64*(size.x-1),64*(exitPlacement+1),64*size.x,64*size.y));
+//                break;
+//        }
+        for (int x=0;x<size.x;x++){
+            for (int y=0;y<size.y;y++){
                 switch (this.map[y][x]){
                     case 'R':
-                        colliders.add(new Collider(64*x,64*y+8,64*(x+1),64*(y+1)-8,0.3));
+                        colliders.add(new Collider(tileSize.x*x,tileSize.y*y,tileSize.x*(x+1),tileSize.y*(y+1),0.3));
                         break;
                     case 'T':
-                        colliders.add(new Collider(64*x,64*y,64*(x+1),64*(y+1)));
+                        colliders.add(new Collider(tileSize.x*x,tileSize.y*y,tileSize.x*(x+1),tileSize.y*(y+1)));
                         break;
                     case 'H':
                         break;
@@ -120,14 +114,15 @@ public class Level extends JPanel implements Displayable {
         Graphics2D g2d=(Graphics2D)g.create();
         g2d.scale(RenderEngine.getCurrentCamera().getScale().x,RenderEngine.getCurrentCamera().getScale().y);
         g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
-        int x=0;    int y=0;
+        int x=Math.round((float) (-map[0].length * tileSize.x) /2);
+        int y=Math.round((float) (-map.length * tileSize.y) /2);
         for (char[] line : map){
             for (char c : line){
                 switch (c){
                     case ' ':
                     case '.':
                         g2d.translate(x,y);
-                        g2d.drawRenderedImage(grassTextures[PseudoRandom.getRandomBetween(0,3,x,y)],null);
+                        g2d.drawRenderedImage(grassTextures[PseudoRandom.getRandomBetween(0,grassTextures.length,x,y)],null);
                         g2d.translate(-x,-y); break;
                     case 't':
                     case 'T':
@@ -142,13 +137,13 @@ public class Level extends JPanel implements Displayable {
                     case 'r':
                     case 'R':
                         g2d.translate(x,y);
-                        g2d.drawRenderedImage(rockTexture,null);
+                        g2d.drawRenderedImage(stoneTextures[PseudoRandom.getRandomBetween(0,stoneTextures.length,x,y)],null);
                         g2d.translate(-x,-y); break;
                 }
-                x+=64;
+                x+=tileSize.x;
             }
-            y+=64;
-            x=0;
+            y+=tileSize.y;
+            x=Math.round((float) (-map[0].length * tileSize.x) /2);
         }
     }
 }

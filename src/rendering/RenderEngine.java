@@ -18,10 +18,10 @@ public class RenderEngine extends JFrame implements Engine {
     private final List<Displayable> displayableList_layer2;     // Terrain
 
     private Camera currentCamera=new Camera(
-            new IVec2(-600,-350),
+            new IVec2(0,0),
             new Vec2(
-                    1.5,
-                    1.5)
+                    3,
+                    3)
     );
 
     public RenderEngine(){
@@ -29,7 +29,6 @@ public class RenderEngine extends JFrame implements Engine {
         if(instance==null)instance=this;
         instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
         instance.setUndecorated(true);
-        instance.setVisible(true);
         instance.setDefaultCloseOperation(EXIT_ON_CLOSE);
         instance.getContentPane().setCursor(
                 Toolkit.getDefaultToolkit().createCustomCursor(
