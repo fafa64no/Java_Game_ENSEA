@@ -27,11 +27,11 @@ public class RenderEngine extends JFrame implements Engine {
     public RenderEngine(){
         super("COHOMA - Simulator - 2024");
         if(instance==null)instance=this;
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setUndecorated(true);
-        this.setVisible(true);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.getContentPane().setCursor(
+        instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        instance.setUndecorated(true);
+        instance.setVisible(true);
+        instance.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        instance.getContentPane().setCursor(
                 Toolkit.getDefaultToolkit().createCustomCursor(
                         new BufferedImage(16,16,BufferedImage.TYPE_INT_ARGB),
                         new Point(0,0),
@@ -42,8 +42,6 @@ public class RenderEngine extends JFrame implements Engine {
         displayableList_layer0 = new ArrayList<>();
         displayableList_layer1 = new ArrayList<>();
         displayableList_layer2 = new ArrayList<>();
-
-        System.out.println(this.getBounds());
     }
 
     public void addToRenderList(Displayable displayable,int layer){
@@ -61,24 +59,24 @@ public class RenderEngine extends JFrame implements Engine {
         displayableList_layer0.remove(displayable);
         displayableList_layer1.remove(displayable);
         displayableList_layer2.remove(displayable);
-        displayable.clear(this);
+        displayable.clear();
     }
 
     public void paint(){
         for (Displayable displayable : displayableList_layer0) {
-            displayable.draw(this);
+            displayable.draw();
             displayable.linkCamera(currentCamera);
-            this.setVisible(true);
+            instance.setVisible(true);
         }
         for (Displayable displayable : displayableList_layer1) {
-            displayable.draw(this);
+            displayable.draw();
             displayable.linkCamera(currentCamera);
-            this.setVisible(true);
+            instance.setVisible(true);
         }
         for (Displayable displayable : displayableList_layer2) {
-            displayable.draw(this);
+            displayable.draw();
             displayable.linkCamera(currentCamera);
-            this.setVisible(true);
+            instance.setVisible(true);
         }
     }
 
@@ -93,7 +91,6 @@ public class RenderEngine extends JFrame implements Engine {
     @Override
     public void update() {
         this.currentCamera.update();
-        this.paint();
-        SwingUtilities.updateComponentTreeUI(this);
+        SwingUtilities.updateComponentTreeUI(instance);
     }
 }

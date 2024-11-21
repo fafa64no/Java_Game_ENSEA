@@ -1,7 +1,7 @@
 package rendering;
 
 public interface Displayable {
-    void draw(RenderEngine renderEngine);
-    void clear(RenderEngine renderEngine);
+    void draw();
+    void clear();
     void linkCamera(Camera camera);
 }

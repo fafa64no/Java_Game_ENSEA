@@ -33,13 +33,13 @@ public class Level extends JPanel implements Displayable {
         this.colliders=new ArrayList<>();
         this.grassTextures=new BufferedImage[4];
         try{
-            grassTextures[0] = ImageIO.read(new File("./img/grass0.png"));
-            grassTextures[1] = ImageIO.read(new File("./img/grass1.png"));
-            grassTextures[2] = ImageIO.read(new File("./img/grass2.png"));
-            grassTextures[3] = ImageIO.read(new File("./img/grass3.png"));
-            treeTexture = ImageIO.read(new File("./img/tree.png"));
-            trapTexture = ImageIO.read(new File("./img/trap.png"));
-            rockTexture = ImageIO.read(new File("./img/rock.png"));
+            grassTextures[0] = ImageIO.read(new File("./img/level/grass0.png"));
+            grassTextures[1] = ImageIO.read(new File("./img/level/grass1.png"));
+            grassTextures[2] = ImageIO.read(new File("./img/level/grass2.png"));
+            grassTextures[3] = ImageIO.read(new File("./img/level/grass3.png"));
+            treeTexture = ImageIO.read(new File("./img/level/tree.png"));
+            trapTexture = ImageIO.read(new File("./img/level/trap.png"));
+            rockTexture = ImageIO.read(new File("./img/level/rock.png"));
 
             BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
             for (int i = 0; i< size.y; i++) map[i]=bufferedReader.readLine().toCharArray();
@@ -107,14 +107,14 @@ public class Level extends JPanel implements Displayable {
     }
 
     @Override
-    public void draw(RenderEngine renderEngine) {
-        renderEngine.remove(this);
-        renderEngine.add(this);
+    public void draw() {
+        RenderEngine.getInstance().remove(this);
+        RenderEngine.getInstance().add(this);
     }
 
     @Override
-    public void clear(RenderEngine renderEngine) {
-        renderEngine.remove(this);
+    public void clear() {
+        RenderEngine.getInstance().remove(this);
     }
 
     @Override

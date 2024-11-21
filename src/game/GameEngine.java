@@ -1,11 +1,11 @@
 package game;
 
-import game.characters.Character;
 import game.characters.vehicles.tank.Tank;
 import game.hud.HudManager;
 import physics.Collider;
 import physics.PhysicEngine;
 import rendering.RenderEngine;
+import utils.DataGen;
 import utils.Engine;
 import utils.IVec2;
 
@@ -16,61 +16,46 @@ public class GameEngine implements KeyListener, Engine {
     private static GameEngine instance;
 
     private final Level[] levels;
-    private int currentLevel;
+    private int currentLevel=0;
+    private final Tank[] tanks;
+    private int currentTank=0;
 
     private final IVec2 currentInputDir = new IVec2();
-
-    private final HudManager hudManager;
-
-    private final Tank currentTank = new Tank(
-            new IVec2(320,120),
-            new Collider(16,16,48,48),
-            "./img/characters/tanks/test/base.png",
-            "./img/characters/tanks/test/turret.png",
-            10,
-            new IVec2(64,64),
-            1,
-            0.1,
-            0.05
-    );
+    private final HudManager hudManager=new HudManager();
 
     public GameEngine() {
         if(instance==null)instance=this;
 
-        levels=new Level[4];
-        levels[0]=new Level(new IVec2(16,9),"./data/level1.txt");
-        levels[1]=new Level(new IVec2(16,9),"./data/level2.txt");
-        levels[2]=new Level(new IVec2(16,9),"./data/level3.txt");
-        levels[3]=new Level(new IVec2(80,40),"./data/level4.txt");
-        currentLevel=3;
+        levels= DataGen.genLevels();
+        tanks=DataGen.genTanks();
 
-        RenderEngine.getInstance().getCurrentCamera().setCameraTarget(this.currentTank);
+        goToLevel(3);
+        swapTank(0);
 
-        RenderEngine.getInstance().addKeyListener(this);
-
-        RenderEngine.getInstance().addToRenderList(levels[currentLevel],2);
-        RenderEngine.getInstance().addToRenderList(currentTank,1);
-        RenderEngine.getInstance().addToRenderList(currentTank.getTurret(),0);
-        this.hudManager=new HudManager();
-        RenderEngine.getInstance().paint();
-
-        PhysicEngine.getInstance().addDynamicSprite(currentTank);
-        for (Collider collider : levels[currentLevel].getColliders())
-            PhysicEngine.getInstance().addStaticCollider(collider);
+        RenderEngine.getInstance().getCurrentCamera().setCameraTarget(tanks[currentTank]);
+        RenderEngine.getInstance().addKeyListener(instance);
     }
 
     private void goToLevel(int i){
         for (Collider collider : levels[currentLevel].getColliders())
             PhysicEngine.getInstance().removeStaticCollider(collider);
         RenderEngine.getInstance().removeFromRenderList(levels[currentLevel]);
-
-        this.currentLevel=i;
-
+        currentLevel=i;
         for (Collider collider : levels[currentLevel].getColliders())
             PhysicEngine.getInstance().addStaticCollider(collider);
         RenderEngine.getInstance().addToRenderList(levels[currentLevel],2);
         RenderEngine.getInstance().paint();
-        currentTank.resetPosition();
+    }
+
+    private void swapTank(int i){
+        RenderEngine.getInstance().removeFromRenderList(tanks[currentTank]);
+        RenderEngine.getInstance().removeFromRenderList(tanks[currentTank].getTurret());
+        PhysicEngine.getInstance().removeDynamicSprite(tanks[currentTank]);
+        currentTank=i;
+        PhysicEngine.getInstance().addDynamicSprite(tanks[currentTank]);
+        RenderEngine.getInstance().addToRenderList(tanks[currentTank],1);
+        RenderEngine.getInstance().addToRenderList(tanks[currentTank].getTurret(),0);
+        RenderEngine.getInstance().paint();
     }
 
     public static GameEngine getInstance() {
@@ -79,7 +64,7 @@ public class GameEngine implements KeyListener, Engine {
 
     @Override
     public void update() {
-        currentTank.setInput(currentInputDir);
+        tanks[currentTank].setInput(currentInputDir);
     }
 
     @Override
@@ -93,8 +78,12 @@ public class GameEngine implements KeyListener, Engine {
                 currentInputDir.y+=1;   break;
             case 90: // Move up ("Z")
                 currentInputDir.y-=1;   break;
+            case 82: // Swap Tank ("R")
+                instance.swapTank((currentTank+1)%tanks.length);        break;
             case 84: // Test key ("T")
-                this.goToLevel((currentLevel+1)%levels.length);     break;
+                instance.goToLevel((currentLevel+1)%levels.length);     break;
+            default:
+                //System.out.println(e.getKeyCode());
         }
         currentInputDir.x=Math.min(Math.max(currentInputDir.x,-1),1);
         currentInputDir.y=Math.min(Math.max(currentInputDir.y,-1),1);

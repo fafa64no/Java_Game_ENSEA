@@ -31,7 +31,11 @@ public class PhysicEngine implements Engine {
     }
 
     public void addDynamicSprite(DynamicSprite sprite){
-        this.dynamicSprites.add(sprite);
+        instance.dynamicSprites.add(sprite);
+    }
+
+    public void removeDynamicSprite(DynamicSprite sprite){
+        instance.dynamicSprites.remove(sprite);
     }
 
     public static PhysicEngine getInstance() {

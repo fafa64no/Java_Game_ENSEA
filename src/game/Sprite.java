@@ -24,12 +24,8 @@ public abstract class Sprite extends JPanel implements Displayable {
 
         this.setOpaque(false);
 
-        try {
-            this.texture = ImageIO.read(new File(texturePath));
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        try {this.texture = ImageIO.read(new File(texturePath));}
+        catch (Exception e){e.printStackTrace();}
     }
 
     public Collider getCollider() {
@@ -46,13 +42,13 @@ public abstract class Sprite extends JPanel implements Displayable {
     }
 
     @Override
-    public void draw(RenderEngine renderEngine) {
-        renderEngine.remove(this);
-        renderEngine.add(this);
+    public void draw() {
+        RenderEngine.getInstance().remove(this);
+        RenderEngine.getInstance().add(this);
     }
 
     @Override
-    public void clear(RenderEngine renderEngine) {
-        renderEngine.remove(this);
+    public void clear() {
+        RenderEngine.getInstance().remove(this);
     }
 }
