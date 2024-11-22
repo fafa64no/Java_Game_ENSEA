@@ -1,4 +1,4 @@
-package utils;
+package utils.vectors;
 
 public class Vec2 {
     public double x;

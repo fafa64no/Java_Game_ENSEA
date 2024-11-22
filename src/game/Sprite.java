@@ -3,7 +3,7 @@ package game;
 import physics.Collider;
 import rendering.Displayable;
 import rendering.RenderEngine;
-import utils.IVec2;
+import utils.vectors.IVec2;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

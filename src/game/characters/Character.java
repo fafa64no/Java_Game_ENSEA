@@ -2,7 +2,7 @@ package game.characters;
 
 import game.DynamicSprite;
 import physics.Collider;
-import utils.IVec2;
+import utils.vectors.IVec2;
 
 public abstract class Character extends DynamicSprite {
     private final int velocityMultiplier;

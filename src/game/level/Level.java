@@ -3,8 +3,9 @@ package game.level;
 import physics.Collider;
 import rendering.Displayable;
 import rendering.RenderEngine;
+import utils.Cfg;
 import utils.DataGen;
-import utils.IVec2;
+import utils.vectors.IVec2;
 import utils.PseudoRandom;
 
 import javax.imageio.ImageIO;
@@ -21,7 +22,7 @@ public class Level extends JPanel implements Displayable {
     private final char[][] map;
     private final List<Collider> colliders;
 
-    private final IVec2 tileSize = new IVec2(16,16);
+    private final IVec2 tileSize = new IVec2(Cfg.getTileSize(),Cfg.getTileSize());
     private final IVec2 mapOffset = new IVec2();
 
     private final BufferedImage[] grassTextures;

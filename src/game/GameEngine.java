@@ -8,7 +8,7 @@ import physics.PhysicEngine;
 import rendering.RenderEngine;
 import utils.DataGen;
 import utils.Engine;
-import utils.IVec2;
+import utils.vectors.IVec2;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

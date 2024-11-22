@@ -2,7 +2,7 @@ package game.characters.vehicles;
 
 import game.characters.Character;
 import physics.Collider;
-import utils.IVec2;
+import utils.vectors.IVec2;
 
 public abstract class Vehicle extends Character {
     protected IVec2 scale;

@@ -1,4 +1,4 @@
-package utils;
+package utils.vectors;
 
 public class IVec2 {
     public int x;
@@ -33,6 +33,10 @@ public class IVec2 {
 
     public static IVec2 add(IVec2 a, IVec2 b){
         return new IVec2(a.x+b.x,a.y+b.y);
+    }
+
+    public static IVec2 add(IVec2 a, IVec2 b, IVec2 c){
+        return new IVec2(a.x+b.x+c.x,a.y+b.y+c.y);
     }
 
     public static IVec2 multiply(IVec2 a, int x){

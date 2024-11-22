@@ -2,17 +2,19 @@ package game.hud;
 
 import game.DynamicSprite;
 import physics.Collider;
-import utils.IVec2;
-import utils.Vec2;
+import utils.vectors.IVec2;
+import utils.vectors.Vec2;
 
 import java.awt.*;
 
 public class Cursor extends DynamicSprite {
-    private final Vec2 scale = new Vec2(3,3);
-    private final IVec2 textureSize = new IVec2(9,9);
+    private final Vec2 scale;
+    private final IVec2 textureSize;
 
-    public Cursor(String texturePath) {
+    public Cursor(String texturePath, Vec2 scale, IVec2 textureSize) {
         super(new IVec2(), new Collider(), texturePath);
+        this.scale=scale;
+        this.textureSize=textureSize;
     }
 
     @Override

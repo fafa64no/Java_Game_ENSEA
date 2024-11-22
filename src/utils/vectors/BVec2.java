@@ -1,4 +1,4 @@
-package utils;
+package utils.vectors;
 
 public class BVec2 {
     public boolean x;

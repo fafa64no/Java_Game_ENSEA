@@ -1,8 +1,8 @@
 package rendering;
 
 import utils.Engine;
-import utils.IVec2;
-import utils.Vec2;
+import utils.vectors.IVec2;
+import utils.vectors.Vec2;
 
 import javax.swing.*;
 import java.awt.*;

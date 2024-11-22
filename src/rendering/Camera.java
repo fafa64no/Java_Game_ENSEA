@@ -1,8 +1,8 @@
 package rendering;
 
 import game.DynamicSprite;
-import utils.IVec2;
-import utils.Vec2;
+import utils.vectors.IVec2;
+import utils.vectors.Vec2;
 
 public class Camera {
     private IVec2 offset;
@@ -31,6 +31,6 @@ public class Camera {
     public void update(){
         if(this.targetSprite==null)return;
         this.offset= this.targetSprite.getPosition();
-        this.offset= IVec2.add(this.targetSprite.getPosition(),RenderEngine.getMiddleOfFrame());
+        this.offset= IVec2.add(this.targetSprite.getPosition(),RenderEngine.getMiddleOfFrame(),this.initialOffset);
     }
 }

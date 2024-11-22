@@ -3,6 +3,7 @@ package utils;
 import game.level.Level;
 import game.characters.vehicles.tank.Tank;
 import physics.Collider;
+import utils.vectors.IVec2;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -50,37 +51,25 @@ public class DataGen {
 
     public static BufferedImage[] getGrassTextures(){
         if(tileSheet_1 ==null) {
-            try {
-                tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
+            try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
         BufferedImage[] grassTextures = new BufferedImage[8];
-        grassTextures[0]= tileSheet_1.getSubimage(0,0,16,16);
-        grassTextures[1]= tileSheet_1.getSubimage(16,0,16,16);
-        grassTextures[2]= tileSheet_1.getSubimage(32,0,16,16);
-        grassTextures[3]= tileSheet_1.getSubimage(48,0,16,16);
-        grassTextures[4]= tileSheet_1.getSubimage(0,16,16,16);
-        grassTextures[5]= tileSheet_1.getSubimage(16,16,16,16);
-        grassTextures[6]= tileSheet_1.getSubimage(32,16,16,16);
-        grassTextures[7]= tileSheet_1.getSubimage(48,16,16,16);
+        for (int i=0;i<8;i++){
+            grassTextures[i]=tileSheet_1.getSubimage(i*Cfg.getTileSize(),0,Cfg.getTileSize(),Cfg.getTileSize());
+        }
         return grassTextures;
     }
 
     public static BufferedImage[] getStoneTextures(){
         if(tileSheet_1 ==null) {
-            try {
-                tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
+            try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
         BufferedImage[] stoneTextures = new BufferedImage[8];
-        stoneTextures[0]= tileSheet_1.getSubimage(0,32,16,16);
-        stoneTextures[1]= tileSheet_1.getSubimage(16,32,16,16);
-        stoneTextures[2]= tileSheet_1.getSubimage(32,32,16,16);
-        stoneTextures[3]= tileSheet_1.getSubimage(48,32,16,16);
-        stoneTextures[4]= tileSheet_1.getSubimage(0,48,16,16);
-        stoneTextures[5]= tileSheet_1.getSubimage(16,48,16,16);
-        stoneTextures[6]= tileSheet_1.getSubimage(32,48,16,16);
-        stoneTextures[7]= tileSheet_1.getSubimage(48,48,16,16);
+        for (int i=0;i<8;i++){
+            stoneTextures[i]=tileSheet_1.getSubimage(i*Cfg.getTileSize(),16,Cfg.getTileSize(),Cfg.getTileSize());
+        }
         return stoneTextures;
     }
 }

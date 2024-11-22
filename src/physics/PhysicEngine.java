@@ -1,9 +1,9 @@
 package physics;
 
 import game.DynamicSprite;
-import utils.BVec2;
+import utils.vectors.BVec2;
 import utils.Engine;
-import utils.IVec2;
+import utils.vectors.IVec2;
 
 import java.util.ArrayList;
 import java.util.List;

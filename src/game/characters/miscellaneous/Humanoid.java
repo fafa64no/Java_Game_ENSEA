@@ -2,7 +2,7 @@ package game.characters.miscellaneous;
 
 import game.characters.Character;
 import physics.Collider;
-import utils.IVec2;
+import utils.vectors.IVec2;
 
 import java.awt.*;
 

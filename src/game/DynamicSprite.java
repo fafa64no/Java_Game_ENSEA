@@ -1,8 +1,8 @@
 package game;
 
 import physics.Collider;
-import utils.BVec2;
-import utils.IVec2;
+import utils.vectors.BVec2;
+import utils.vectors.IVec2;
 
 public abstract class DynamicSprite extends Sprite{
     protected IVec2 currentVelocity;

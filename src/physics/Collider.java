@@ -1,7 +1,7 @@
 package physics;
 
-import utils.BVec2;
-import utils.IVec2;
+import utils.vectors.BVec2;
+import utils.vectors.IVec2;
 
 public class Collider {
     private final IVec2[] corners;

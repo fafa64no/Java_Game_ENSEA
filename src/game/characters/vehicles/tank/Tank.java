@@ -3,7 +3,7 @@ package game.characters.vehicles.tank;
 import game.characters.vehicles.Vehicle;
 import physics.Collider;
 import rendering.RenderEngine;
-import utils.IVec2;
+import utils.vectors.IVec2;
 
 import java.awt.*;
 
