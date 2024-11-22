@@ -1,0 +1,9 @@
+package main.rendering;
+
+public enum RenderingLayers {
+    RENDERING_LAYER_AIR,
+    RENDERING_LAYER_LEAVES,
+    RENDERING_LAYER_TURRET,
+    RENDERING_LAYER_TANK,
+    RENDERING_LAYER_TERRAIN;
+}
