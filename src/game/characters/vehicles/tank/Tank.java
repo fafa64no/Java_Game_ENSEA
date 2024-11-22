@@ -1,12 +1,12 @@
 package game.characters.vehicles.tank;
 
 import game.characters.vehicles.Vehicle;
-import physics.BoxCollider;
-import physics.Collideable;
-import physics.Collider;
+import physics.colliders.BoxCollider;
+import physics.colliders.Collider;
 import rendering.RenderEngine;
 import utils.vectors.BVec2;
 import utils.vectors.IVec2;
+import utils.vectors.Vec2;
 
 import java.awt.*;
 
@@ -14,12 +14,12 @@ public class Tank extends Vehicle {
     private final Turret turret;
     private final BoxCollider collider;
 
-    public Tank(IVec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed) {
+    public Tank(IVec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, IVec2 colliderSize) {
         super(position, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
         this.turret=new Turret(position,turretTexturePath,1,textureSize,this, turretRotationSpeed);
         this.collider=new BoxCollider(
-                new IVec2(-10,-10),
-                new IVec2(10,10),
+                new IVec2(-colliderSize.x,-colliderSize.y),
+                colliderSize,
                 false,
                 0,
                 new IVec2(),
@@ -27,13 +27,12 @@ public class Tank extends Vehicle {
         );
     }
 
-    public Tank(IVec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, IVec2 scale) {
-        super(position, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
+    public Tank(IVec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, Vec2 scale, IVec2 colliderSize) {
+        super(position, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed, scale);
         this.turret=new Turret(position,turretTexturePath,1,textureSize,this, turretRotationSpeed, scale);
-        super.scale=scale;
         this.collider=new BoxCollider(
-                new IVec2(-16,16),
-                new IVec2(16,16),
+                new IVec2(-colliderSize.x,-colliderSize.y),
+                colliderSize,
                 false,
                 0,
                 new IVec2(),

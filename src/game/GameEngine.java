@@ -3,7 +3,7 @@ package game;
 import game.characters.vehicles.tank.Tank;
 import game.hud.HudManager;
 import game.level.Level;
-import physics.BoxCollider;
+import physics.colliders.BoxCollider;
 import physics.CollisionLayers;
 import physics.PhysicEngine;
 import rendering.RenderEngine;
@@ -35,7 +35,7 @@ public class GameEngine implements KeyListener, Engine {
         goToLevel(0);
         swapTank(1);
 
-        RenderEngine.getCurrentCamera().setCameraTarget(tanks[currentTank]);
+        RenderEngine.setupCameras(tanks);
         RenderEngine.getInstance().addKeyListener(instance);
     }
 
@@ -55,6 +55,7 @@ public class GameEngine implements KeyListener, Engine {
         RenderEngine.removeFromRenderList(tanks[currentTank].getTurret());
         PhysicEngine.removeCollider(tanks[currentTank].getCollider());
         currentTank=i;
+        RenderEngine.setCurrentCamera(this,i);
         PhysicEngine.addCollider(tanks[currentTank].getCollider(),CollisionLayers.COLLISION_LAYER_ALLIES);
         RenderEngine.addToRenderList(tanks[currentTank],RenderingLayers.RENDERING_LAYER_TANK);
         RenderEngine.addToRenderList(tanks[currentTank].getTurret(),RenderingLayers.RENDERING_LAYER_TURRET);

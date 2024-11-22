@@ -5,6 +5,10 @@ import utils.vectors.IVec2;
 
 import java.awt.*;
 
+/**
+ * MIGHT BE OUTDATED (No idea)
+ */
+
 public class Humanoid extends Character {
     private int animationCounter;
     private final int animationFrames;

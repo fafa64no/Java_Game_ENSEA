@@ -3,6 +3,7 @@ package game.characters.vehicles.tank;
 import game.characters.vehicles.Vehicle;
 import rendering.RenderEngine;
 import utils.vectors.IVec2;
+import utils.vectors.Vec2;
 
 import java.awt.*;
 
@@ -14,7 +15,7 @@ public class Turret extends Vehicle {
         this.parent=parent;
     }
 
-    public Turret(IVec2 position, String texturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed, IVec2 scale) {
+    public Turret(IVec2 position, String texturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed, Vec2 scale) {
         super(position, texturePath, 0, animationFrames, textureSize, rotationSpeed);
         this.parent=parent;
         super.scale=scale;

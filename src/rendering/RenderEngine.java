@@ -1,6 +1,9 @@
 package rendering;
 
+import game.DynamicSprite;
+import game.GameEngine;
 import utils.Engine;
+import utils.data.DataGen;
 import utils.vectors.IVec2;
 import utils.vectors.Vec2;
 
@@ -19,12 +22,8 @@ public class RenderEngine extends JFrame implements Engine {
     private final List<Displayable> displayableList_layer3 = new ArrayList<>();     // Tank
     private final List<Displayable> displayableList_layer4 = new ArrayList<>();     // Terrain
 
-    private Camera currentCamera=new Camera(
-            new IVec2(0,0),
-            new Vec2(
-                    3,
-                    3)
-    );
+    private final Camera[] cameras = DataGen.genCameras();
+    private int currentCamera;
 
     public RenderEngine(){
         super("COHOMA - Simulator - 2024");
@@ -89,7 +88,18 @@ public class RenderEngine extends JFrame implements Engine {
     }
 
     public static Camera getCurrentCamera() {
-        return instance.currentCamera;
+        return instance.cameras[instance.currentCamera];
+    }
+
+    public static void setupCameras(DynamicSprite[] dynamicSprites){
+        for (int i=0;i<instance.cameras.length;i++){
+            instance.cameras[i].setCameraTarget(dynamicSprites[i]);
+        }
+    }
+
+    public static void setCurrentCamera(GameEngine renderEngine,int i){
+        if(renderEngine!=GameEngine.getInstance())return;
+        instance.currentCamera=i;
     }
 
     public static RenderEngine getInstance() {
@@ -105,7 +115,7 @@ public class RenderEngine extends JFrame implements Engine {
 
     @Override
     public void update() {
-        this.currentCamera.update();
+        this.cameras[currentCamera].update();
         SwingUtilities.updateComponentTreeUI(instance);
     }
 }

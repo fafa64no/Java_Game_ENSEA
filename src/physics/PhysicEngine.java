@@ -1,6 +1,7 @@
 package physics;
 
 import game.DynamicSprite;
+import physics.colliders.Collider;
 import utils.Engine;
 import utils.vectors.BVec2;
 import utils.vectors.IVec2;

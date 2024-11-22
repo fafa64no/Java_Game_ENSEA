@@ -1,4 +1,4 @@
-package physics;
+package physics.colliders;
 
 import game.DynamicSprite;
 import utils.vectors.IVec2;

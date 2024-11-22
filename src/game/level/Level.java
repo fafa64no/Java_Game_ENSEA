@@ -1,8 +1,6 @@
 package game.level;
 
-import physics.BoxCollider;
-import physics.Collideable;
-import physics.Collider;
+import physics.colliders.BoxCollider;
 import rendering.Displayable;
 import rendering.RenderEngine;
 import utils.data.Cfg;

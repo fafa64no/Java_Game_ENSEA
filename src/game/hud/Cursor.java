@@ -1,7 +1,6 @@
 package game.hud;
 
 import game.DynamicSprite;
-import physics.BoxCollider;
 import utils.vectors.IVec2;
 import utils.vectors.Vec2;
 
