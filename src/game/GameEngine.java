@@ -7,6 +7,7 @@ import physics.BoxCollider;
 import physics.CollisionLayers;
 import physics.PhysicEngine;
 import rendering.RenderEngine;
+import rendering.RenderingLayers;
 import utils.data.DataGen;
 import utils.Engine;
 import utils.vectors.IVec2;
@@ -31,7 +32,7 @@ public class GameEngine implements KeyListener, Engine {
         levels=DataGen.genLevels();
         tanks=DataGen.genTanks();
 
-        goToLevel(3);
+        goToLevel(0);
         swapTank(1);
 
         RenderEngine.getCurrentCamera().setCameraTarget(tanks[currentTank]);
@@ -45,7 +46,7 @@ public class GameEngine implements KeyListener, Engine {
         currentLevel=i;
         for (BoxCollider solidCollider : levels[currentLevel].getColliders())
             PhysicEngine.addCollider(solidCollider, CollisionLayers.COLLISION_LAYER_TERRAIN);
-        RenderEngine.addToRenderList(levels[currentLevel],4);
+        RenderEngine.addToRenderList(levels[currentLevel], RenderingLayers.RENDERING_LAYER_TERRAIN);
         RenderEngine.paint();
     }
 
@@ -55,8 +56,8 @@ public class GameEngine implements KeyListener, Engine {
         PhysicEngine.removeCollider(tanks[currentTank].getCollider());
         currentTank=i;
         PhysicEngine.addCollider(tanks[currentTank].getCollider(),CollisionLayers.COLLISION_LAYER_ALLIES);
-        RenderEngine.addToRenderList(tanks[currentTank],3);
-        RenderEngine.addToRenderList(tanks[currentTank].getTurret(),2);
+        RenderEngine.addToRenderList(tanks[currentTank],RenderingLayers.RENDERING_LAYER_TANK);
+        RenderEngine.addToRenderList(tanks[currentTank].getTurret(),RenderingLayers.RENDERING_LAYER_TURRET);
         RenderEngine.paint();
     }
 
@@ -82,8 +83,10 @@ public class GameEngine implements KeyListener, Engine {
                 currentInputDir.y-=1;   break;
             case 82: // Swap Tank ("R")
                 instance.swapTank((currentTank+1)%tanks.length);        break;
-            case 84: // Test key ("T")
+            case 76: // Swap Level ("L")
                 instance.goToLevel((currentLevel+1)%levels.length);     break;
+            case 84: // Test key ("T")
+                System.out.println(tanks[currentTank].getPosition()+" : "+tanks[currentTank].getCollider().getOffset());   break;
             default:
                 //System.out.println("Key pressed : "+e.getKeyCode());
         }

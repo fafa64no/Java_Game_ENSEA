@@ -33,8 +33,8 @@ public class BoxCollider extends SolidCollider{
     public BVec2 doCollide(Collider c, IVec2 offset) {
         BVec2 output=new BVec2(c.isInverted(),c.isInverted());
         for (IVec2 cornerA : this.corners){
-            IVec2 offsetedCorner1 = IVec2.add(cornerA,c.getOffset());
-            IVec2 offsetedCorner2 = IVec2.add(cornerA,c.getOffset(),offset);
+            IVec2 offsetedCorner1 = IVec2.add(cornerA,c.getOffset(),this.offset);
+            IVec2 offsetedCorner2 = IVec2.add(cornerA,c.getOffset(),this.offset,offset);
             switch (c){
                 case BoxCollider sc:
                     if (
@@ -60,5 +60,12 @@ public class BoxCollider extends SolidCollider{
             }
         }
         return output;
+    }
+
+    @Override
+    public void setOffset(DynamicSprite requester,IVec2 offset) {
+        if(requester==parent){
+            this.offset=IVec2.add(initialOffset,offset);
+        }
     }
 }

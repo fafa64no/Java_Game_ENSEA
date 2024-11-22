@@ -11,4 +11,5 @@ public interface Collider {
     boolean isInverted();
     DynamicSprite getParent();
     double getFriction();
+    void setOffset(DynamicSprite requester,IVec2 offset);
 }

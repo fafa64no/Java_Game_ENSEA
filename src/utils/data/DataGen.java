@@ -12,11 +12,11 @@ import java.io.IOException;
 
 public class DataGen {
     public static Level[] genLevels(){
-        Level[] levels=new Level[4];
-        levels[0]=new Level(new IVec2(16,9),"assets/data/level1.txt");
-        levels[1]=new Level(new IVec2(16,9),"assets/data/level2.txt");
-        levels[2]=new Level(new IVec2(16,9),"assets/data/level3.txt");
-        levels[3]=new Level(new IVec2(114,74),"assets/data/level4.txt");
+        Level[] levels=new Level[1];
+        //levels[0]=new Level(new IVec2(16,9),"assets/data/level1.txt");
+        //levels[1]=new Level(new IVec2(16,9),"assets/data/level2.txt");
+        //levels[2]=new Level(new IVec2(16,9),"assets/data/level3.txt");
+        levels[0]=new Level(new IVec2(146,74),"assets/data/level4.txt");
         return levels;
     }
 

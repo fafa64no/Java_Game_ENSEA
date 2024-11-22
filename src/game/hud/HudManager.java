@@ -1,6 +1,7 @@
 package game.hud;
 
 import rendering.RenderEngine;
+import rendering.RenderingLayers;
 import utils.vectors.IVec2;
 import utils.vectors.Vec2;
 
@@ -12,6 +13,6 @@ public class HudManager {
     );
 
     public HudManager(){
-        RenderEngine.addToRenderList(cursor,0);
+        RenderEngine.addToRenderList(cursor, RenderingLayers.RENDERING_LAYER_AIR);
     }
 }

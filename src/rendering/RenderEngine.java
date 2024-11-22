@@ -41,17 +41,17 @@ public class RenderEngine extends JFrame implements Engine {
         );
     }
 
-    public static void addToRenderList(Displayable displayable,int layer){
+    public static void addToRenderList(Displayable displayable,RenderingLayers layer){
         switch (layer){
-            case 0:
+            case RENDERING_LAYER_AIR:
                 instance.displayableList_layer0.add(displayable);    break;
-            case 1:
+            case RENDERING_LAYER_LEAVES:
                 instance.displayableList_layer1.add(displayable);    break;
-            case 2:
+            case RENDERING_LAYER_TURRET:
                 instance.displayableList_layer2.add(displayable);    break;
-            case 3:
+            case RENDERING_LAYER_TANK:
                 instance.displayableList_layer3.add(displayable);    break;
-            case 4:
+            case RENDERING_LAYER_TERRAIN:
                 instance.displayableList_layer4.add(displayable);    break;
         }
     }

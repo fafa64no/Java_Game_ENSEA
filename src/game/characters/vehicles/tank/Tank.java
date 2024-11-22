@@ -18,8 +18,8 @@ public class Tank extends Vehicle {
         super(position, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
         this.turret=new Turret(position,turretTexturePath,1,textureSize,this, turretRotationSpeed);
         this.collider=new BoxCollider(
-                new IVec2(-16,16),
-                new IVec2(16,16),
+                new IVec2(-10,-10),
+                new IVec2(10,10),
                 false,
                 0,
                 new IVec2(),
@@ -71,6 +71,7 @@ public class Tank extends Vehicle {
     public void goToNextPosition(BVec2 canMove, double friction){
         if(canMove.x)   position.x=(int)Math.round(position.x-currentVelocity.y*Math.sin(rotation));
         if(canMove.y)   position.y=(int)Math.round(position.y+currentVelocity.y*Math.cos(rotation));
+        collider.setOffset(this,this.position);
     }
 
     @Override

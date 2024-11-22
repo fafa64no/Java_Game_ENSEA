@@ -65,31 +65,11 @@ public class PhysicEngine implements Engine {
                     currentInverseFriction=Math.min(currentInverseFriction,colliderTerrain.getFriction());
                 }
                 if(canMove.isFalse()){
-                    System.out.println("Colliding");
                     break;
                 }
             }
             dynamicSprite.goToNextPosition(canMove,currentInverseFriction);
             colliderAlly.onCollide();
         }
-
-//        for (DynamicSprite dynamicSprite : dynamicSprites){
-//            IVec2 nextPosition=dynamicSprite.computeNewPosition();
-//            BVec2 canMove=new BVec2();
-//            double currentInverseFriction=1;
-//            for (BoxCollider staticSolidCollider : staticSolidColliders){
-//                BVec2 collisions= staticSolidCollider.doCollide(dynamicSprite.getCollider(),dynamicSprite.getPosition(),nextPosition);
-//                if(collisions.x){
-//                    canMove.x=false;
-//                    currentInverseFriction=Math.min(currentInverseFriction, staticSolidCollider.getFriction());
-//                }
-//                if(collisions.y){
-//                    canMove.y=false;
-//                    currentInverseFriction=Math.min(currentInverseFriction, staticSolidCollider.getFriction());
-//                }
-//                if(canMove.isFalse())     break;
-//            }
-//            dynamicSprite.goToNextPosition(canMove,currentInverseFriction);
-//        }
     }
 }

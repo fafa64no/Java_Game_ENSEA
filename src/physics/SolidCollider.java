@@ -6,9 +6,9 @@ import utils.vectors.IVec2;
 public abstract class SolidCollider implements Collider{
     protected final boolean inverted;
     protected final double friction;
-    private IVec2 offset;
-    private final IVec2 initialOffset;
-    private final DynamicSprite parent;
+    protected IVec2 offset;
+    protected final IVec2 initialOffset;
+    protected final DynamicSprite parent;
 
     public SolidCollider(boolean inverted, double friction,IVec2 offset){
         this.inverted=inverted;
@@ -45,5 +45,14 @@ public abstract class SolidCollider implements Collider{
         return parent;
     }
 
-
+    @Override
+    public String toString() {
+        return "SolidCollider{" +
+                "inverted=" + inverted +
+                ", friction=" + friction +
+                ", offset=" + offset +
+                ", initialOffset=" + initialOffset +
+                ", parent=" + parent +
+                '}';
+    }
 }

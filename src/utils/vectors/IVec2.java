@@ -18,15 +18,6 @@ public class IVec2 {
         return (this.x==0)&&(this.y==0);
     }
 
-    public double getLength(){
-        return Math.sqrt(this.x*this.x+this.y*this.y);
-    }
-
-    public Vec2 normalize(){
-        double length=this.getLength();
-        return new Vec2(this.x/length,this.y/length);
-    }
-
     public double getAngle(){
         return Math.atan2(y,x);
     }
@@ -37,6 +28,10 @@ public class IVec2 {
 
     public static IVec2 add(IVec2 a, IVec2 b, IVec2 c){
         return new IVec2(a.x+b.x+c.x,a.y+b.y+c.y);
+    }
+
+    public static IVec2 add(IVec2 a, IVec2 b, IVec2 c, IVec2 d){
+        return new IVec2(a.x+b.x+c.x+d.x,a.y+b.y+c.y+d.y);
     }
 
     public static IVec2 multiply(IVec2 a, int x){

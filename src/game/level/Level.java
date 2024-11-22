@@ -47,14 +47,26 @@ public class Level extends JPanel implements Displayable {
 
         for (int x=0;x<size.x;x++){
             for (int y=0;y<size.y;y++){
-                int posX=tileSize.x*x+mapOffset.x;
-                int posY=tileSize.y*y+ mapOffset.y;
+                int posX=(int)-Math.round(tileSize.x*(x+0.5)+mapOffset.x);
+                int posY=(int)-Math.round(tileSize.y*(y+0.5)+mapOffset.y);
                 switch (this.map[y][x]){
                     case 'R':
-                        //solidColliders.add(new BoxCollider(posX,posY,posX+tileSize.x,posY+tileSize.y,0.3));
+                        colliders.add(new BoxCollider(
+                                new IVec2(-tileSize.x/2,-tileSize.x/2),
+                                new IVec2(tileSize.x/2, tileSize.y/2),
+                                false,
+                                0.5,
+                                new IVec2(posX,posY)
+                        ));
                         break;
                     case 'T':
-                        //solidColliders.add(new BoxCollider(posX,posY,posX+tileSize.x,posY+tileSize.y,0.2));
+                        colliders.add(new BoxCollider(
+                                new IVec2(-tileSize.x/2,-tileSize.x/2),
+                                new IVec2(tileSize.x/2, tileSize.y/2),
+                                false,
+                                0.2,
+                                new IVec2(posX,posY)
+                        ));
                         break;
                     case 'H':
                         break;
