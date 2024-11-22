@@ -1,7 +1,7 @@
 import game.GameEngine;
 import physics.PhysicEngine;
 import rendering.RenderEngine;
-import utils.Cfg;
+import utils.data.Cfg;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -12,6 +12,8 @@ public class Main {
     private static final GameEngine gameEngine=new GameEngine();
 
     public static void main(String[] args) {
+        System.out.println("Starting engines");
+
         ActionListener updateTasks = e -> {
             physicEngine.update();
             renderEngine.update();
@@ -22,6 +24,6 @@ public class Main {
         timer.setRepeats(true);
         timer.start();
 
-        System.out.println("Timer launched");
+        System.out.println("Updating engines");
     }
 }

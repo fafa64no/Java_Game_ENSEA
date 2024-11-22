@@ -3,10 +3,10 @@ package game.level;
 import physics.Collider;
 import rendering.Displayable;
 import rendering.RenderEngine;
-import utils.Cfg;
-import utils.DataGen;
+import utils.data.Cfg;
+import utils.data.DataGen;
 import utils.vectors.IVec2;
-import utils.PseudoRandom;
+import utils.noise.PseudoRandom;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -91,7 +91,7 @@ public class Level extends JPanel implements Displayable {
                     case ' ':
                     case '.':
                         g2d.translate(x,y);
-                        g2d.drawRenderedImage(grassTextures[PseudoRandom.getRandomBetween(0,grassTextures.length,x,y)],null);
+                        g2d.drawRenderedImage(grassTextures[PseudoRandom.getRandomBetween(0,grassTextures.length,x,y)-1],null);
                         g2d.translate(-x,-y); break;
                     case 't':
                     case 'T':
@@ -106,7 +106,7 @@ public class Level extends JPanel implements Displayable {
                     case 'r':
                     case 'R':
                         g2d.translate(x,y);
-                        g2d.drawRenderedImage(stoneTextures[PseudoRandom.getRandomBetween(0,stoneTextures.length,x,y)],null);
+                        g2d.drawRenderedImage(stoneTextures[PseudoRandom.getRandomBetween(0,stoneTextures.length,x,y)-1],null);
                         g2d.translate(-x,-y); break;
                 }
                 x+=tileSize.x;

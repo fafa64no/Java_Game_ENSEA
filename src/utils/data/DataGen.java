@@ -1,4 +1,4 @@
-package utils;
+package utils.data;
 
 import game.level.Level;
 import game.characters.vehicles.tank.Tank;
@@ -16,7 +16,7 @@ public class DataGen {
         levels[0]=new Level(new IVec2(16,9),"assets/data/level1.txt");
         levels[1]=new Level(new IVec2(16,9),"assets/data/level2.txt");
         levels[2]=new Level(new IVec2(16,9),"assets/data/level3.txt");
-        levels[3]=new Level(new IVec2(98,58),"assets/data/level4.txt");
+        levels[3]=new Level(new IVec2(114,74),"assets/data/level4.txt");
         return levels;
     }
 
@@ -54,9 +54,10 @@ public class DataGen {
             try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        BufferedImage[] grassTextures = new BufferedImage[8];
-        for (int i=0;i<8;i++){
-            grassTextures[i]=tileSheet_1.getSubimage(i*Cfg.getTileSize(),0,Cfg.getTileSize(),Cfg.getTileSize());
+        int grassNb=32;
+        BufferedImage[] grassTextures = new BufferedImage[grassNb];
+        for (int i=0;i<grassNb;i++){
+            grassTextures[i]=tileSheet_1.getSubimage(i* Cfg.getTileSize(),0,Cfg.getTileSize(),Cfg.getTileSize());
         }
         return grassTextures;
     }
@@ -66,9 +67,10 @@ public class DataGen {
             try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        BufferedImage[] stoneTextures = new BufferedImage[8];
-        for (int i=0;i<8;i++){
-            stoneTextures[i]=tileSheet_1.getSubimage(i*Cfg.getTileSize(),16,Cfg.getTileSize(),Cfg.getTileSize());
+        int stoneNb=32;
+        BufferedImage[] stoneTextures = new BufferedImage[stoneNb];
+        for (int i=0;i<stoneNb;i++){
+            stoneTextures[i]=tileSheet_1.getSubimage(i*Cfg.getTileSize(),Cfg.getTileSize(),Cfg.getTileSize(),Cfg.getTileSize());
         }
         return stoneTextures;
     }

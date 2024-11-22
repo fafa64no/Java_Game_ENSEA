@@ -6,7 +6,7 @@ import game.level.Level;
 import physics.Collider;
 import physics.PhysicEngine;
 import rendering.RenderEngine;
-import utils.DataGen;
+import utils.data.DataGen;
 import utils.Engine;
 import utils.vectors.IVec2;
 
@@ -44,7 +44,7 @@ public class GameEngine implements KeyListener, Engine {
         currentLevel=i;
         for (Collider collider : levels[currentLevel].getColliders())
             PhysicEngine.addStaticCollider(collider);
-        RenderEngine.addToRenderList(levels[currentLevel],2);
+        RenderEngine.addToRenderList(levels[currentLevel],4);
         RenderEngine.paint();
     }
 
@@ -54,8 +54,8 @@ public class GameEngine implements KeyListener, Engine {
         PhysicEngine.removeDynamicSprite(tanks[currentTank]);
         currentTank=i;
         PhysicEngine.addDynamicSprite(tanks[currentTank]);
-        RenderEngine.addToRenderList(tanks[currentTank],1);
-        RenderEngine.addToRenderList(tanks[currentTank].getTurret(),0);
+        RenderEngine.addToRenderList(tanks[currentTank],3);
+        RenderEngine.addToRenderList(tanks[currentTank].getTurret(),2);
         RenderEngine.paint();
     }
 
@@ -84,7 +84,7 @@ public class GameEngine implements KeyListener, Engine {
             case 84: // Test key ("T")
                 instance.goToLevel((currentLevel+1)%levels.length);     break;
             default:
-                //System.out.println(e.getKeyCode());
+                //System.out.println("Key pressed : "+e.getKeyCode());
         }
         currentInputDir.x=Math.min(Math.max(currentInputDir.x,-1),1);
         currentInputDir.y=Math.min(Math.max(currentInputDir.y,-1),1);

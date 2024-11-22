@@ -13,9 +13,11 @@ import java.util.List;
 public class RenderEngine extends JFrame implements Engine {
     private static RenderEngine instance;
 
-    private final List<Displayable> displayableList_layer0;     // Turret
-    private final List<Displayable> displayableList_layer1;     // Tank
-    private final List<Displayable> displayableList_layer2;     // Terrain
+    private final List<Displayable> displayableList_layer0 = new ArrayList<>();     // Aerial
+    private final List<Displayable> displayableList_layer1 = new ArrayList<>();     // Leaves
+    private final List<Displayable> displayableList_layer2 = new ArrayList<>();     // Turret
+    private final List<Displayable> displayableList_layer3 = new ArrayList<>();     // Tank
+    private final List<Displayable> displayableList_layer4 = new ArrayList<>();     // Terrain
 
     private Camera currentCamera=new Camera(
             new IVec2(0,0),
@@ -32,15 +34,11 @@ public class RenderEngine extends JFrame implements Engine {
         instance.setDefaultCloseOperation(EXIT_ON_CLOSE);
         instance.getContentPane().setCursor(
                 Toolkit.getDefaultToolkit().createCustomCursor(
-                        new BufferedImage(16,16,BufferedImage.TYPE_INT_ARGB),
+                        new BufferedImage(9,9,BufferedImage.TYPE_INT_ARGB),
                         new Point(0,0),
                         "blank cursor"
                 )
         );
-
-        displayableList_layer0 = new ArrayList<>();
-        displayableList_layer1 = new ArrayList<>();
-        displayableList_layer2 = new ArrayList<>();
     }
 
     public static void addToRenderList(Displayable displayable,int layer){
@@ -51,6 +49,10 @@ public class RenderEngine extends JFrame implements Engine {
                 instance.displayableList_layer1.add(displayable);    break;
             case 2:
                 instance.displayableList_layer2.add(displayable);    break;
+            case 3:
+                instance.displayableList_layer3.add(displayable);    break;
+            case 4:
+                instance.displayableList_layer4.add(displayable);    break;
         }
     }
 
@@ -58,6 +60,8 @@ public class RenderEngine extends JFrame implements Engine {
         instance.displayableList_layer0.remove(displayable);
         instance.displayableList_layer1.remove(displayable);
         instance.displayableList_layer2.remove(displayable);
+        instance.displayableList_layer3.remove(displayable);
+        instance.displayableList_layer4.remove(displayable);
         displayable.clear();
     }
 
@@ -71,6 +75,14 @@ public class RenderEngine extends JFrame implements Engine {
             instance.setVisible(true);
         }
         for (Displayable displayable : instance.displayableList_layer2) {
+            displayable.draw();
+            instance.setVisible(true);
+        }
+        for (Displayable displayable : instance.displayableList_layer3) {
+            displayable.draw();
+            instance.setVisible(true);
+        }
+        for (Displayable displayable : instance.displayableList_layer4) {
             displayable.draw();
             instance.setVisible(true);
         }
