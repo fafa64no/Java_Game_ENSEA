@@ -1,7 +1,6 @@
 package game.characters;
 
 import game.DynamicSprite;
-import physics.Collider;
 import utils.vectors.IVec2;
 
 public abstract class Character extends DynamicSprite {
@@ -15,8 +14,8 @@ public abstract class Character extends DynamicSprite {
     protected final int animationFrames;
     protected final int animationSpeed=4;
 
-    public Character(IVec2 position, Collider collider, String texturePath, int velocityMultiplier, int animationFrames, IVec2 textureSize) {
-        super(position, collider, texturePath);
+    public Character(IVec2 position, String texturePath, int velocityMultiplier, int animationFrames, IVec2 textureSize) {
+        super(position, texturePath);
         this.velocityMultiplier = velocityMultiplier;
         this.animationFrames=animationFrames;
         this.textureSize=textureSize;

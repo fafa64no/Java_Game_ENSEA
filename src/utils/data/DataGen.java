@@ -2,7 +2,7 @@ package utils.data;
 
 import game.level.Level;
 import game.characters.vehicles.tank.Tank;
-import physics.Collider;
+import physics.BoxCollider;
 import utils.vectors.IVec2;
 
 import javax.imageio.ImageIO;
@@ -24,7 +24,6 @@ public class DataGen {
         Tank[] tanks=new Tank[2];
         tanks[0]=new Tank(
                 new IVec2(320,120),
-                new Collider(-16,-16,16,16),
                 "./assets/textures/characters/tanks/test/base.png",
                 "./assets/textures/characters/tanks/test/turret.png",
                 10,
@@ -35,7 +34,6 @@ public class DataGen {
         );
         tanks[1]=new Tank(
                 new IVec2(0,0),
-                new Collider(-16,-16,16,16),
                 "./assets/textures/characters/tanks/panzer_IV/base.png",
                 "./assets/textures/characters/tanks/panzer_IV/turret.png",
                 5,
@@ -49,28 +47,30 @@ public class DataGen {
 
     private static BufferedImage tileSheet_1 =null;
 
-    public static BufferedImage[] getGrassTextures(){
+    public static BufferedImage[][] getGrassTextures(){
         if(tileSheet_1 ==null) {
             try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        int grassNb=32;
-        BufferedImage[] grassTextures = new BufferedImage[grassNb];
-        for (int i=0;i<grassNb;i++){
-            grassTextures[i]=tileSheet_1.getSubimage(i* Cfg.getTileSize(),0,Cfg.getTileSize(),Cfg.getTileSize());
+        BufferedImage[][] grassTextures = new BufferedImage[Cfg.getGrassColorsNb()][Cfg.getGrassVariantsNb()];
+        for (int i=0;i<Cfg.getGrassColorsNb();i++){
+            for (int j=0;j<Cfg.getGrassVariantsNb();j++){
+                grassTextures[i][j]=tileSheet_1.getSubimage((i*Cfg.getGrassVariantsNb()+j)* Cfg.getTileSize(),0,Cfg.getTileSize(),Cfg.getTileSize());
+            }
         }
         return grassTextures;
     }
 
-    public static BufferedImage[] getStoneTextures(){
+    public static BufferedImage[][] getStoneTextures(){
         if(tileSheet_1 ==null) {
             try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        int stoneNb=32;
-        BufferedImage[] stoneTextures = new BufferedImage[stoneNb];
-        for (int i=0;i<stoneNb;i++){
-            stoneTextures[i]=tileSheet_1.getSubimage(i*Cfg.getTileSize(),Cfg.getTileSize(),Cfg.getTileSize(),Cfg.getTileSize());
+        BufferedImage[][] stoneTextures = new BufferedImage[Cfg.getStoneColorsNb()][Cfg.getStoneVariantsNb()];
+        for (int i=0;i<Cfg.getStoneColorsNb();i++){
+            for (int j=0;j<Cfg.getStoneVariantsNb();j++){
+                stoneTextures[i][j]=tileSheet_1.getSubimage((i*Cfg.getStoneVariantsNb()+j)* Cfg.getTileSize(),Cfg.getTileSize(),Cfg.getTileSize(),Cfg.getTileSize());
+            }
         }
         return stoneTextures;
     }

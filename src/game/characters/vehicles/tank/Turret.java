@@ -10,12 +10,12 @@ public class Turret extends Vehicle {
     private final Tank parent;
 
     public Turret(IVec2 position, String texturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed) {
-        super(position, null, texturePath, 0, animationFrames, textureSize, rotationSpeed);
+        super(position, texturePath, 0, animationFrames, textureSize, rotationSpeed);
         this.parent=parent;
     }
 
     public Turret(IVec2 position, String texturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed, IVec2 scale) {
-        super(position, null, texturePath, 0, animationFrames, textureSize, rotationSpeed);
+        super(position, texturePath, 0, animationFrames, textureSize, rotationSpeed);
         this.parent=parent;
         super.scale=scale;
     }
@@ -40,12 +40,6 @@ public class Turret extends Vehicle {
                 targetPosition.x- this.position.x,
                 targetPosition.y- this.position.y
         ).getAngle()+5*Math.PI/2)%(2*Math.PI);
-    }
-
-    @Override
-    public IVec2 computeNewPosition() {
-        super.nextPosition=this.parent.getTurretMount();
-        return super.nextPosition;
     }
 
     @Override

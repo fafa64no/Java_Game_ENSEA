@@ -1,24 +1,44 @@
 package game.characters.vehicles.tank;
 
 import game.characters.vehicles.Vehicle;
+import physics.BoxCollider;
+import physics.Collideable;
 import physics.Collider;
 import rendering.RenderEngine;
+import utils.vectors.BVec2;
 import utils.vectors.IVec2;
 
 import java.awt.*;
 
 public class Tank extends Vehicle {
     private final Turret turret;
+    private final BoxCollider collider;
 
-    public Tank(IVec2 position, Collider collider, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed) {
-        super(position, collider, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
+    public Tank(IVec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed) {
+        super(position, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
         this.turret=new Turret(position,turretTexturePath,1,textureSize,this, turretRotationSpeed);
+        this.collider=new BoxCollider(
+                new IVec2(-16,16),
+                new IVec2(16,16),
+                false,
+                0,
+                new IVec2(),
+                this
+        );
     }
 
-    public Tank(IVec2 position, Collider collider, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, IVec2 scale) {
-        super(position, collider, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
+    public Tank(IVec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, IVec2 scale) {
+        super(position, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
         this.turret=new Turret(position,turretTexturePath,1,textureSize,this, turretRotationSpeed, scale);
         super.scale=scale;
+        this.collider=new BoxCollider(
+                new IVec2(-16,16),
+                new IVec2(16,16),
+                false,
+                0,
+                new IVec2(),
+                this
+        );
     }
 
     protected IVec2 getTurretMount(){
@@ -39,11 +59,18 @@ public class Tank extends Vehicle {
     }
 
     @Override
-    public IVec2 computeNewPosition() {
-        super.nextPosition.x=(int)Math.round(super.position.x-super.currentVelocity.y*Math.sin(super.rotation));
-        super.nextPosition.y=(int)Math.round(super.position.y+super.currentVelocity.y*Math.cos(super.rotation));
-        this.computeNewRotation();
-        return super.nextPosition;
+    public IVec2 getCurrentVelocity() {
+        IVec2 actualVelocity=new IVec2();
+        actualVelocity.x=(int)Math.round(-currentVelocity.y*Math.sin(rotation));
+        actualVelocity.y=(int)Math.round( currentVelocity.y*Math.cos(rotation));
+        computeNewRotation();
+        return actualVelocity;
+    }
+
+    @Override
+    public void goToNextPosition(BVec2 canMove, double friction){
+        if(canMove.x)   position.x=(int)Math.round(position.x-currentVelocity.y*Math.sin(rotation));
+        if(canMove.y)   position.y=(int)Math.round(position.y+currentVelocity.y*Math.cos(rotation));
     }
 
     @Override
@@ -70,5 +97,9 @@ public class Tank extends Vehicle {
                 super.textureSize.x,
                 super.textureSize.y
         ),null);
+    }
+
+    public Collider getCollider() {
+        return collider;
     }
 }

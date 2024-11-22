@@ -18,6 +18,7 @@ public class BVec2 {
         return (!x)&&(!y);
     }
 
+
     @Override
     public String toString() {
         return "BVec2{" +

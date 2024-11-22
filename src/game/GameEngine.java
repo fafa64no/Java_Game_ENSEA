@@ -3,7 +3,8 @@ package game;
 import game.characters.vehicles.tank.Tank;
 import game.hud.HudManager;
 import game.level.Level;
-import physics.Collider;
+import physics.BoxCollider;
+import physics.CollisionLayers;
 import physics.PhysicEngine;
 import rendering.RenderEngine;
 import utils.data.DataGen;
@@ -38,12 +39,12 @@ public class GameEngine implements KeyListener, Engine {
     }
 
     private void goToLevel(int i){
-        for (Collider collider : levels[currentLevel].getColliders())
-            PhysicEngine.removeStaticCollider(collider);
+        for (BoxCollider solidCollider : levels[currentLevel].getColliders())
+            PhysicEngine.removeCollider(solidCollider);
         RenderEngine.removeFromRenderList(levels[currentLevel]);
         currentLevel=i;
-        for (Collider collider : levels[currentLevel].getColliders())
-            PhysicEngine.addStaticCollider(collider);
+        for (BoxCollider solidCollider : levels[currentLevel].getColliders())
+            PhysicEngine.addCollider(solidCollider, CollisionLayers.COLLISION_LAYER_TERRAIN);
         RenderEngine.addToRenderList(levels[currentLevel],4);
         RenderEngine.paint();
     }
@@ -51,9 +52,9 @@ public class GameEngine implements KeyListener, Engine {
     private void swapTank(int i){
         RenderEngine.removeFromRenderList(tanks[currentTank]);
         RenderEngine.removeFromRenderList(tanks[currentTank].getTurret());
-        PhysicEngine.removeDynamicSprite(tanks[currentTank]);
+        PhysicEngine.removeCollider(tanks[currentTank].getCollider());
         currentTank=i;
-        PhysicEngine.addDynamicSprite(tanks[currentTank]);
+        PhysicEngine.addCollider(tanks[currentTank].getCollider(),CollisionLayers.COLLISION_LAYER_ALLIES);
         RenderEngine.addToRenderList(tanks[currentTank],3);
         RenderEngine.addToRenderList(tanks[currentTank].getTurret(),2);
         RenderEngine.paint();

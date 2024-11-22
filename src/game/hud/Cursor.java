@@ -1,7 +1,7 @@
 package game.hud;
 
 import game.DynamicSprite;
-import physics.Collider;
+import physics.BoxCollider;
 import utils.vectors.IVec2;
 import utils.vectors.Vec2;
 
@@ -12,7 +12,7 @@ public class Cursor extends DynamicSprite {
     private final IVec2 textureSize;
 
     public Cursor(String texturePath, Vec2 scale, IVec2 textureSize) {
-        super(new IVec2(), new Collider(), texturePath);
+        super(new IVec2(), texturePath);
         this.scale=scale;
         this.textureSize=textureSize;
     }

@@ -1,34 +1,27 @@
 package game;
 
-import physics.Collider;
 import utils.vectors.BVec2;
 import utils.vectors.IVec2;
 
 public abstract class DynamicSprite extends Sprite{
     protected IVec2 currentVelocity;
-    protected IVec2 nextPosition=new IVec2();
 
-    public DynamicSprite(IVec2 position, Collider collider, String texturePath) {
-        super(position, collider, texturePath);
+    public DynamicSprite(IVec2 position, String texturePath) {
+        super(position, texturePath);
         this.currentVelocity=new IVec2(0,0);
     }
 
-    public DynamicSprite(IVec2 position, Collider collider, String texturePath, IVec2 velocity) {
-        super(position, collider, texturePath);
+    public DynamicSprite(IVec2 position, String texturePath, IVec2 velocity) {
+        super(position, texturePath);
         this.currentVelocity = velocity;
     }
 
-    protected void setVelocity(IVec2 vel){
-        this.currentVelocity=vel;
-    }
+    protected void setVelocity(IVec2 vel){currentVelocity=vel;}
 
-    public IVec2 computeNewPosition(){
-        this.nextPosition=IVec2.add(this.position,this.currentVelocity);
-        return this.nextPosition;
-    }
+    public IVec2 getCurrentVelocity(){return currentVelocity;}
 
     public void goToNextPosition(BVec2 canMove,double friction){
-        if(canMove.x) this.position.x+=(int)Math.round((this.nextPosition.x-this.position.x)*friction);
-        if(canMove.y) this.position.y+=(int)Math.round((this.nextPosition.y-this.position.y)*friction);
+        if(canMove.x) position.x+=(int)Math.round(currentVelocity.x*friction);
+        if(canMove.y) position.y+=(int)Math.round(currentVelocity.y*friction);
     }
 }

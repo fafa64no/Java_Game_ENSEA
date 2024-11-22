@@ -1,5 +1,7 @@
 package game.level;
 
+import physics.BoxCollider;
+import physics.Collideable;
 import physics.Collider;
 import rendering.Displayable;
 import rendering.RenderEngine;
@@ -20,19 +22,18 @@ import java.util.List;
 
 public class Level extends JPanel implements Displayable {
     private final char[][] map;
-    private final List<Collider> colliders;
+    private final List<BoxCollider> colliders=new ArrayList<>();
 
     private final IVec2 tileSize = new IVec2(Cfg.getTileSize(),Cfg.getTileSize());
     private final IVec2 mapOffset = new IVec2();
 
-    private final BufferedImage[] grassTextures;
-    private final BufferedImage[] stoneTextures;
+    private final BufferedImage[][] grassTextures;
+    private final BufferedImage[][] stoneTextures;
     private BufferedImage treeTexture;
     private BufferedImage trapTexture;
 
     public Level(IVec2 size,String path){
         map=new char[size.y][size.x];
-        colliders=new ArrayList<>();
         mapOffset.x=Math.round((float) (-map[0].length * tileSize.x) /2);
         mapOffset.y=Math.round((float) (-map.length * tileSize.y) /2);
         try{
@@ -50,20 +51,16 @@ public class Level extends JPanel implements Displayable {
                 int posY=tileSize.y*y+ mapOffset.y;
                 switch (this.map[y][x]){
                     case 'R':
-                        colliders.add(new Collider(posX,posY,posX+tileSize.x,posY+tileSize.y,0.3));
+                        //solidColliders.add(new BoxCollider(posX,posY,posX+tileSize.x,posY+tileSize.y,0.3));
                         break;
                     case 'T':
-                        colliders.add(new Collider(posX,posY,posX+tileSize.x,posY+tileSize.y,0.2));
+                        //solidColliders.add(new BoxCollider(posX,posY,posX+tileSize.x,posY+tileSize.y,0.2));
                         break;
                     case 'H':
                         break;
                 }
             }
         }
-    }
-
-    public List<Collider> getColliders() {
-        return colliders;
     }
 
     @Override
@@ -91,7 +88,10 @@ public class Level extends JPanel implements Displayable {
                     case ' ':
                     case '.':
                         g2d.translate(x,y);
-                        g2d.drawRenderedImage(grassTextures[PseudoRandom.getRandomBetween(0,grassTextures.length,x,y)-1],null);
+                        g2d.drawRenderedImage(
+                                grassTextures[PseudoRandom.getRandomBetween(0,grassTextures.length-1,x,y,Cfg.getNoiseSizeTerrainColor())]
+                                        [PseudoRandom.getRandomBetween(0,grassTextures[0].length-1,x,y,Cfg.getNoiseSizeTerrainVariant())],
+                                null);
                         g2d.translate(-x,-y); break;
                     case 't':
                     case 'T':
@@ -106,7 +106,10 @@ public class Level extends JPanel implements Displayable {
                     case 'r':
                     case 'R':
                         g2d.translate(x,y);
-                        g2d.drawRenderedImage(stoneTextures[PseudoRandom.getRandomBetween(0,stoneTextures.length,x,y)-1],null);
+                        g2d.drawRenderedImage(
+                                stoneTextures[PseudoRandom.getRandomBetween(0,stoneTextures.length-1,x,y,Cfg.getNoiseSizeTerrainColor())]
+                                        [PseudoRandom.getRandomBetween(0,stoneTextures[0].length-1,x,y,Cfg.getNoiseSizeTerrainVariant())],
+                                null);
                         g2d.translate(-x,-y); break;
                 }
                 x+=tileSize.x;
@@ -114,5 +117,9 @@ public class Level extends JPanel implements Displayable {
             y+=tileSize.y;
             x=mapOffset.x;
         }
+    }
+
+    public List<BoxCollider> getColliders() {
+        return colliders;
     }
 }
