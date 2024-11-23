@@ -43,21 +43,40 @@ public class BoxCollider extends SolidCollider{
         Vec2 newCenterDiff = Vec2.add(previousCenterDiff,offset);
         switch (c){
             case BoxCollider bc:
-                if (
-                    newCenterDiff.x<= bc.getCorners()[0].x + size.x/2.0 &&
-                    newCenterDiff.x>= bc.getCorners()[2].x - size.x/2.0 &&
-                    previousCenterDiff.y<= bc.getCorners()[0].y + size.y/2.0 &&
-                    previousCenterDiff.y>= bc.getCorners()[2].y - size.y/2.0
-                ) {
-                    didCollide.x=!c.isInverted();
-                }
-                if (
-                    previousCenterDiff.x<= bc.getCorners()[0].x + size.x/2.0 &&
-                    previousCenterDiff.x>= bc.getCorners()[2].x - size.x/2.0 &&
-                    newCenterDiff.y<= bc.getCorners()[0].y + size.y/2.0 &&
-                    newCenterDiff.y>= bc.getCorners()[2].y - size.y/2.0
-                ) {
-                    didCollide.y=!c.isInverted();
+                if(c.isInverted()){
+                    if (
+                        newCenterDiff.x<= bc.getCorners()[0].x - size.x/2.0 &&
+                        newCenterDiff.x>= bc.getCorners()[2].x + size.x/2.0 &&
+                        previousCenterDiff.y<= bc.getCorners()[0].y - size.y/2.0 &&
+                        previousCenterDiff.y>= bc.getCorners()[2].y + size.y/2.0
+                    ) {
+                        didCollide.x=false;
+                    }
+                    if (
+                        previousCenterDiff.x<= bc.getCorners()[0].x - size.x/2.0 &&
+                        previousCenterDiff.x>= bc.getCorners()[2].x + size.x/2.0 &&
+                        newCenterDiff.y<= bc.getCorners()[0].y - size.y/2.0 &&
+                        newCenterDiff.y>= bc.getCorners()[2].y + size.y/2.0
+                    ) {
+                        didCollide.y=false;
+                    }
+                }else{
+                    if (
+                        newCenterDiff.x<= bc.getCorners()[0].x + size.x/2.0 &&
+                        newCenterDiff.x>= bc.getCorners()[2].x - size.x/2.0 &&
+                        previousCenterDiff.y<= bc.getCorners()[0].y + size.y/2.0 &&
+                        previousCenterDiff.y>= bc.getCorners()[2].y - size.y/2.0
+                    ) {
+                        didCollide.x=true;
+                    }
+                    if (
+                        previousCenterDiff.x<= bc.getCorners()[0].x + size.x/2.0 &&
+                        previousCenterDiff.x>= bc.getCorners()[2].x - size.x/2.0 &&
+                        newCenterDiff.y<= bc.getCorners()[0].y + size.y/2.0 &&
+                        newCenterDiff.y>= bc.getCorners()[2].y - size.y/2.0
+                    ) {
+                        didCollide.y=true;
+                    }
                 }
                 break;
             case CircleCollider cc:

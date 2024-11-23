@@ -30,7 +30,7 @@ public class CircleCollider extends SolidCollider{
                     previousClosestPoint.y<= bc.getCorners()[0].y &&
                     previousClosestPoint.y>= bc.getCorners()[2].y
                 ) {
-                    didCollide.x=!c.isInverted();
+                    didCollide.x=!bc.isInverted();
                 }
                 if (
                     previousClosestPoint.x<= bc.getCorners()[0].x &&
@@ -38,7 +38,7 @@ public class CircleCollider extends SolidCollider{
                     newClosestPoint.y<= bc.getCorners()[0].y &&
                     newClosestPoint.y>= bc.getCorners()[2].y
                 ) {
-                    didCollide.y=!c.isInverted();
+                    didCollide.y=!bc.isInverted();
                 }
                 break;
             case CircleCollider cc:
@@ -52,10 +52,10 @@ public class CircleCollider extends SolidCollider{
                 break;
         }
         if(didCollide.isFalse())return null;
-        System.out.println("-------------\npreviousCenterDiff : "+previousCenterDiff.x+" : "+previousCenterDiff.y+
-                "\npreviousClosestPoint : "+previousClosestPoint.x+" : "+previousClosestPoint.y+
-                "\nnewCenterDiff : "+newCenterDiff.x+" : "+newCenterDiff.y+
-                "\nnewClosestPoint : "+newClosestPoint.x+" : "+newClosestPoint.y);
+        //System.out.println("-------------\npreviousCenterDiff : "+previousCenterDiff.x+" : "+previousCenterDiff.y+
+        //        "\npreviousClosestPoint : "+previousClosestPoint.x+" : "+previousClosestPoint.y+
+        //        "\nnewCenterDiff : "+newCenterDiff.x+" : "+newCenterDiff.y+
+        //        "\nnewClosestPoint : "+newClosestPoint.x+" : "+newClosestPoint.y);
         return new Collision(didCollide);
     }
 

@@ -39,7 +39,7 @@ public class DataGen {
                 new Vec2(0,0),
                 "./assets/textures/characters/tanks/panzer_IV_gray/base.png",
                 "./assets/textures/characters/tanks/panzer_IV_gray/turret.png",
-                3,
+                5,
                 new IVec2(38,72),
                 1,
                 0.1,
@@ -50,7 +50,7 @@ public class DataGen {
                 new Vec2(0,0),
                 "./assets/textures/characters/tanks/panzer_IV_brown/base.png",
                 "./assets/textures/characters/tanks/panzer_IV_brown/turret.png",
-                5,
+                6,
                 new IVec2(38,72),
                 1,
                 0.1,
@@ -88,6 +88,36 @@ public class DataGen {
             }
         }
         return stoneTextures;
+    }
+
+    public static BufferedImage[][] getTreeTextures(){
+        if(tileSheet_1 ==null) {
+            try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        BufferedImage[][] treeTextures = new BufferedImage[Cfg.treeColorsNb][Cfg.treeVariantsNb];
+        for (int i=0;i<Cfg.treeColorsNb;i++){
+            for (int j=0;j<Cfg.treeVariantsNb;j++){
+                treeTextures[i][j]=tileSheet_1.getSubimage((i*Cfg.treeVariantsNb+j)* Cfg.tileSize,2*Cfg.tileSize,Cfg.tileSize,Cfg.tileSize);
+            }
+        }
+        return treeTextures;
+    }
+
+    public static BufferedImage getTrapTexture(){
+        if(tileSheet_1 ==null) {
+            try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        return tileSheet_1.getSubimage(Cfg.tileSize,3*Cfg.tileSize,Cfg.tileSize,Cfg.tileSize);
+    }
+
+    public static BufferedImage getBarrierTexture(){
+        if(tileSheet_1 ==null) {
+            try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        return tileSheet_1.getSubimage(0,3*Cfg.tileSize,Cfg.tileSize,Cfg.tileSize);
     }
 
     public static Camera[] genCameras(){

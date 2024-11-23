@@ -50,8 +50,8 @@ public class Vec2 {
 
     public Vec2 getClosestPoint(Vec2 target, double maxDistance){
         Vec2 offset = Vec2.substract(target,this);
-        double lengthToTravel = -Math.min(maxDistance,offset.getLength());
-        return Vec2.multiply(offset.normalize(),lengthToTravel);
+        double lengthToTravel = Math.min(maxDistance,offset.getLength());
+        return Vec2.add(Vec2.multiply(offset.normalize(),lengthToTravel),this);
     }
 
     public double getSquareLength(){
