@@ -22,7 +22,7 @@ public class Level extends JPanel implements Displayable {
     private final char[][] map;
     private final List<BoxCollider> colliders=new ArrayList<>();
 
-    private final IVec2 tileSize = new IVec2(Cfg.getTileSize(),Cfg.getTileSize());
+    private final IVec2 tileSize = new IVec2(Cfg.tileSize,Cfg.tileSize);
     private final IVec2 mapOffset = new IVec2();
 
     private final BufferedImage[][] grassTextures;
@@ -99,8 +99,8 @@ public class Level extends JPanel implements Displayable {
                     case '.':
                         g2d.translate(x,y);
                         g2d.drawRenderedImage(
-                                grassTextures[PseudoRandom.getRandomBetween(0,grassTextures.length-1,x,y,Cfg.getNoiseSizeTerrainColor())]
-                                        [PseudoRandom.getRandomBetween(0,grassTextures[0].length-1,x,y,Cfg.getNoiseSizeTerrainVariant())],
+                                grassTextures[PseudoRandom.getRandomBetween(0,grassTextures.length-1,x,y,Cfg.noiseSizeTerrainColor)]
+                                        [PseudoRandom.getRandomBetween(0,grassTextures[0].length-1,x,y,Cfg.noiseSizeTerrainVariant)],
                                 null);
                         g2d.translate(-x,-y); break;
                     case 't':
@@ -117,8 +117,8 @@ public class Level extends JPanel implements Displayable {
                     case 'R':
                         g2d.translate(x,y);
                         g2d.drawRenderedImage(
-                                stoneTextures[PseudoRandom.getRandomBetween(0,stoneTextures.length-1,x,y,Cfg.getNoiseSizeTerrainColor())]
-                                        [PseudoRandom.getRandomBetween(0,stoneTextures[0].length-1,x,y,Cfg.getNoiseSizeTerrainVariant())],
+                                stoneTextures[PseudoRandom.getRandomBetween(0,stoneTextures.length-1,x,y,Cfg.noiseSizeTerrainColor)]
+                                        [PseudoRandom.getRandomBetween(0,stoneTextures[0].length-1,x,y,Cfg.noiseSizeTerrainVariant)],
                                 null);
                         g2d.translate(-x,-y); break;
                 }

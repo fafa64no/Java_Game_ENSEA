@@ -12,11 +12,11 @@ import java.util.List;
 public class PhysicEngine implements Engine {
     private static PhysicEngine instance;
 
-    private final List<Collider> colliderList_layer0=new ArrayList<>();
-    private final List<Collider> colliderList_layer1=new ArrayList<>();
-    private final List<Collider> colliderList_layer2=new ArrayList<>();
-    private final List<Collider> colliderList_layer3=new ArrayList<>();
-    private final List<Collider> colliderList_layer4=new ArrayList<>();
+    private final List<Collider> colliderList_layer0=new ArrayList<>(); // Terrain
+    private final List<Collider> colliderList_layer1=new ArrayList<>(); // Allies
+    private final List<Collider> colliderList_layer2=new ArrayList<>(); // Enemies
+    private final List<Collider> colliderList_layer3=new ArrayList<>(); // Ally projectiles
+    private final List<Collider> colliderList_layer4=new ArrayList<>(); // Enemy projectiles
 
     public PhysicEngine() {
         if(instance==null)instance=this;
@@ -55,13 +55,14 @@ public class PhysicEngine implements Engine {
             BVec2 canMove=new BVec2();
 
             for(Collider colliderTerrain : colliderList_layer0){
-                BVec2 collisions=colliderAlly.doCollide(colliderTerrain,velocity);
-                if(!collisions.isFalse())colliderTerrain.onCollide();
-                if(collisions.x){
+                Collision collision=colliderAlly.doCollide(colliderTerrain,velocity);
+                if(collision==null)continue;
+                colliderTerrain.onCollide();
+                if(collision.collisions.x){
                     canMove.x=false;
                     currentInverseFriction=Math.min(currentInverseFriction,colliderTerrain.getFriction());
                 }
-                if(collisions.y){
+                if(collision.collisions.y){
                     canMove.y=false;
                     currentInverseFriction=Math.min(currentInverseFriction,colliderTerrain.getFriction());
                 }

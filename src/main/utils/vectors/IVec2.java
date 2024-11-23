@@ -22,8 +22,26 @@ public class IVec2 {
         return Math.atan2(y,x);
     }
 
+    private Vec2 normalize(){
+        double length=getLength();
+        return new Vec2(
+                x/length,
+                y/length
+        );
+    }
+
+    public Vec2 getClosestPoint(IVec2 target, double maxDistance){
+        IVec2 offset = IVec2.substract(target,this);
+        double lengthToTravel = Math.min(maxDistance,offset.getLength());
+        return Vec2.multiply(offset.normalize(),lengthToTravel);
+    }
+
     public int getSquareLength(){
-        return x*x+y+y;
+        return x*x+y*y;
+    }
+
+    public double getLength(){
+        return Math.sqrt(getSquareLength());
     }
 
     public static IVec2 add(IVec2 a, IVec2 b){

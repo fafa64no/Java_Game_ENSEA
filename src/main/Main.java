@@ -22,7 +22,7 @@ public class Main {
             gameEngine.update();
         };
 
-        Timer timer=new Timer(Cfg.getDelayBetweenFrames(), updateTasks);
+        Timer timer=new Timer(Cfg.delayBetweenFrames, updateTasks);
         timer.setRepeats(true);
         timer.start();
 

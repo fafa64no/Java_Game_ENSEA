@@ -2,7 +2,9 @@ package main.game.characters.vehicles.tank;
 
 import main.game.characters.vehicles.Vehicle;
 import main.physics.colliders.BoxCollider;
+import main.physics.colliders.CircleCollider;
 import main.physics.colliders.Collider;
+import main.physics.colliders.SolidCollider;
 import main.rendering.RenderEngine;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.IVec2;
@@ -12,7 +14,7 @@ import java.awt.*;
 
 public class Tank extends Vehicle {
     private final TankTurret tankTurret;
-    private final BoxCollider collider;
+    private final SolidCollider collider;
 
     public Tank(IVec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, IVec2 colliderSize) {
         super(position, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
@@ -33,6 +35,18 @@ public class Tank extends Vehicle {
         this.collider=new BoxCollider(
                 new IVec2(-colliderSize.x,-colliderSize.y),
                 colliderSize,
+                false,
+                0,
+                new IVec2(),
+                this
+        );
+    }
+
+    public Tank(IVec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, double colliderRadius) {
+        super(position, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
+        this.tankTurret =new TankTurret(position,turretTexturePath,1,textureSize,this, turretRotationSpeed);
+        this.collider=new CircleCollider(
+                colliderRadius,
                 false,
                 0,
                 new IVec2(),

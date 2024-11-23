@@ -1,8 +1,10 @@
 package main.physics.colliders;
 
 import main.game.DynamicSprite;
+import main.physics.Collision;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.IVec2;
+import main.utils.vectors.Vec2;
 
 public class CircleCollider extends SolidCollider{
     private final double radius;
@@ -13,40 +15,43 @@ public class CircleCollider extends SolidCollider{
     }
 
     @Override
-    public BVec2 doCollide(Collider c, IVec2 offset) {
-        BVec2 output=new BVec2(c.isInverted(), c.isInverted());
-        IVec2 previousCenterDiff =IVec2.add(c.getOffset(),this.offset);
-        IVec2 newCenterDiff =IVec2.add(c.getOffset(),this.offset,offset);
+    public Collision doCollide(Collider c, IVec2 offset) {
+        BVec2 didCollide = new BVec2(c.isInverted(), c.isInverted());
+        IVec2 previousCenterDiff = IVec2.add(c.getOffset(),this.offset);
+        IVec2 newCenterDiff = IVec2.add(previousCenterDiff,offset);
         switch (c){
             case BoxCollider bc:
+                Vec2 previousClosestPoint=previousCenterDiff.getClosestPoint(bc.getCenterWithoutOffset(),radius);
+                Vec2 newClosestPoint=newCenterDiff.getClosestPoint(bc.getCenterWithoutOffset(),radius);
                 if (
-                    newCenterDiff.x<= bc.getCorners()[0].x + radius/2 &&
-                    newCenterDiff.x>= bc.getCorners()[2].x - radius/2 &&
-                    previousCenterDiff.y<= bc.getCorners()[0].y + radius/2 &&
-                    previousCenterDiff.y>= bc.getCorners()[2].y - radius/2
+                    newClosestPoint.x<= bc.getCorners()[0].x &&
+                    newClosestPoint.x>= bc.getCorners()[2].x &&
+                    previousClosestPoint.y<= bc.getCorners()[0].y &&
+                    previousClosestPoint.y>= bc.getCorners()[2].y
                 ) {
-                    output.x=!c.isInverted();
+                    didCollide.x=!c.isInverted();
                 }
                 if (
-                    previousCenterDiff.x<= bc.getCorners()[0].x + radius/2 &&
-                    previousCenterDiff.x>= bc.getCorners()[2].x - radius/2 &&
-                    newCenterDiff.y<= bc.getCorners()[0].y + radius/2 &&
-                    newCenterDiff.y>= bc.getCorners()[2].y - radius/2
+                    previousClosestPoint.x<= bc.getCorners()[0].x &&
+                    previousClosestPoint.x>= bc.getCorners()[2].x &&
+                    newClosestPoint.y<= bc.getCorners()[0].y &&
+                    newClosestPoint.y>= bc.getCorners()[2].y
                 ) {
-                    output.y=!c.isInverted();
+                    didCollide.y=!c.isInverted();
                 }
                 break;
             case CircleCollider cc:
                 if(IVec2.substract(c.getOffset(), newCenterDiff).getSquareLength()<(radius-cc.getRadius())*(radius-cc.getRadius())){
-                    output.x=!c.isInverted();
-                    output.y=!c.isInverted();
+                    didCollide.x=!c.isInverted();
+                    didCollide.y=!c.isInverted();
                 }
                 break;
             default:
                 System.out.println("Collider type not handled by CircleCollider");
                 break;
         }
-        return output;
+        if(didCollide.isFalse())return null;
+        return new Collision(didCollide);
     }
 
     protected double getRadius() {

@@ -1,6 +1,7 @@
 package main.physics.colliders;
 
 import main.game.DynamicSprite;
+import main.physics.Collision;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.IVec2;
 
@@ -36,10 +37,10 @@ public class BoxCollider extends SolidCollider{
     public IVec2[] getCorners() {return corners;}
 
     @Override
-    public BVec2 doCollide(Collider c, IVec2 offset) {
-        BVec2 output=new BVec2(c.isInverted(),c.isInverted());
+    public Collision doCollide(Collider c, IVec2 offset) {
+        BVec2 didCollide = new BVec2(c.isInverted(),c.isInverted());
         IVec2 previousCenterDiff = IVec2.add(centerWithoutOffset,c.getOffset(),this.offset);
-        IVec2 newCenterDiff = IVec2.add(centerWithoutOffset,c.getOffset(),this.offset,offset);
+        IVec2 newCenterDiff = IVec2.add(previousCenterDiff,offset);
         switch (c){
             case BoxCollider bc:
                 if (
@@ -48,7 +49,7 @@ public class BoxCollider extends SolidCollider{
                     previousCenterDiff.y<= bc.getCorners()[0].y + size.y/2 &&
                     previousCenterDiff.y>= bc.getCorners()[2].y - size.y/2
                 ) {
-                    output.x=!c.isInverted();
+                    didCollide.x=!c.isInverted();
                 }
                 if (
                     previousCenterDiff.x<= bc.getCorners()[0].x + size.x/2 &&
@@ -56,15 +57,20 @@ public class BoxCollider extends SolidCollider{
                     newCenterDiff.y<= bc.getCorners()[0].y + size.y/2 &&
                     newCenterDiff.y>= bc.getCorners()[2].y - size.y/2
                 ) {
-                    output.y=!c.isInverted();
+                    didCollide.y=!c.isInverted();
                 }
                 break;
             case CircleCollider cc:
-                output=cc.doCollide(this,new IVec2(-offset.x,-offset.y));
+                return cc.doCollide(this,new IVec2(-offset.x,-offset.y));
             default:
                 System.out.println("Collider type not handled by BoxCollider");
                 break;
         }
-        return output;
+        if(didCollide.isFalse())return null;
+        return new Collision(didCollide);
+    }
+
+    public IVec2 getCenterWithoutOffset() {
+        return centerWithoutOffset;
     }
 }

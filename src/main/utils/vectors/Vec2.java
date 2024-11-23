@@ -27,6 +27,14 @@ public class Vec2 {
         return new Vec2(a.x+b.x,a.y+b.y);
     }
 
+    public static Vec2 multiply(Vec2 a, double x){
+        return new Vec2(a.x*x,a.y*x);
+    }
+
+    public double getAngle(){
+        return Math.atan2(y,x);
+    }
+
     @Override
     public String toString() {
         return "Vec2{" +

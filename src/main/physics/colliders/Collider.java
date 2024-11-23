@@ -1,11 +1,11 @@
 package main.physics.colliders;
 
 import main.game.DynamicSprite;
-import main.utils.vectors.BVec2;
+import main.physics.Collision;
 import main.utils.vectors.IVec2;
 
 public interface Collider {
-    BVec2 doCollide(Collider c, IVec2 offset);
+    Collision doCollide(Collider c, IVec2 offset);
     void onCollide();
     IVec2 getOffset();
     boolean isInverted();

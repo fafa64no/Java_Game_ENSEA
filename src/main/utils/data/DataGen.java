@@ -22,7 +22,7 @@ public class DataGen {
     }
 
     public static Tank[] genTanks(){
-        Tank[] tanks=new Tank[2];
+        Tank[] tanks=new Tank[3];
         tanks[0]=new Tank(
                 new IVec2(320,120),
                 "./assets/textures/characters/tanks/test/base.png",
@@ -37,14 +37,25 @@ public class DataGen {
         );
         tanks[1]=new Tank(
                 new IVec2(0,0),
-                "./assets/textures/characters/tanks/panzer_IV/base.png",
-                "./assets/textures/characters/tanks/panzer_IV/turret.png",
+                "./assets/textures/characters/tanks/panzer_IV_gray/base.png",
+                "./assets/textures/characters/tanks/panzer_IV_gray/turret.png",
+                3,
+                new IVec2(38,72),
+                1,
+                0.1,
+                0.05,
+                new IVec2(15,15)
+        );
+        tanks[2]=new Tank(
+                new IVec2(0,0),
+                "./assets/textures/characters/tanks/panzer_IV_brown/base.png",
+                "./assets/textures/characters/tanks/panzer_IV_brown/turret.png",
                 5,
                 new IVec2(38,72),
                 1,
                 0.1,
                 0.05,
-                new IVec2(16,16)
+                15
         );
         return tanks;
     }
@@ -56,10 +67,10 @@ public class DataGen {
             try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        BufferedImage[][] grassTextures = new BufferedImage[Cfg.getGrassColorsNb()][Cfg.getGrassVariantsNb()];
-        for (int i=0;i<Cfg.getGrassColorsNb();i++){
-            for (int j=0;j<Cfg.getGrassVariantsNb();j++){
-                grassTextures[i][j]=tileSheet_1.getSubimage((i*Cfg.getGrassVariantsNb()+j)* Cfg.getTileSize(),0,Cfg.getTileSize(),Cfg.getTileSize());
+        BufferedImage[][] grassTextures = new BufferedImage[Cfg.grassColorsNb][Cfg.grassVariantsNb];
+        for (int i=0;i<Cfg.grassColorsNb;i++){
+            for (int j=0;j<Cfg.grassVariantsNb;j++){
+                grassTextures[i][j]=tileSheet_1.getSubimage((i*Cfg.grassVariantsNb+j)* Cfg.tileSize,0,Cfg.tileSize,Cfg.tileSize);
             }
         }
         return grassTextures;
@@ -70,17 +81,17 @@ public class DataGen {
             try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        BufferedImage[][] stoneTextures = new BufferedImage[Cfg.getStoneColorsNb()][Cfg.getStoneVariantsNb()];
-        for (int i=0;i<Cfg.getStoneColorsNb();i++){
-            for (int j=0;j<Cfg.getStoneVariantsNb();j++){
-                stoneTextures[i][j]=tileSheet_1.getSubimage((i*Cfg.getStoneVariantsNb()+j)* Cfg.getTileSize(),Cfg.getTileSize(),Cfg.getTileSize(),Cfg.getTileSize());
+        BufferedImage[][] stoneTextures = new BufferedImage[Cfg.stoneColorsNb][Cfg.stoneVariantsNb];
+        for (int i=0;i<Cfg.stoneColorsNb;i++){
+            for (int j=0;j<Cfg.stoneVariantsNb;j++){
+                stoneTextures[i][j]=tileSheet_1.getSubimage((i*Cfg.stoneVariantsNb+j)* Cfg.tileSize,Cfg.tileSize,Cfg.tileSize,Cfg.tileSize);
             }
         }
         return stoneTextures;
     }
 
     public static Camera[] genCameras(){
-        Camera[] output=new Camera[2];
+        Camera[] output=new Camera[3];
         output[0]=new Camera(
                 new IVec2(0,0),
                 new Vec2(
@@ -88,6 +99,12 @@ public class DataGen {
                         2)
         );
         output[1]=new Camera(
+                new IVec2(0,0),
+                new Vec2(
+                        3,
+                        3)
+        );
+        output[2]=new Camera(
                 new IVec2(0,0),
                 new Vec2(
                         3,
