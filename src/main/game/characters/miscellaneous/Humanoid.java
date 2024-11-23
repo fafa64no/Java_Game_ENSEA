@@ -2,6 +2,7 @@ package main.game.characters.miscellaneous;
 
 import main.game.characters.Character;
 import main.utils.vectors.IVec2;
+import main.utils.vectors.Vec2;
 
 import java.awt.*;
 
@@ -13,7 +14,7 @@ public class Humanoid extends Character {
     private int animationCounter;
     private final int animationFrames;
 
-    public Humanoid(IVec2 position, String texturePath, int velocityMultiplier, int animationFrames, IVec2 textureSize) {
+    public Humanoid(Vec2 position, String texturePath, int velocityMultiplier, int animationFrames, IVec2 textureSize) {
         super(position, texturePath, velocityMultiplier,animationFrames,textureSize);
         this.animationFrames=animationFrames;
     }

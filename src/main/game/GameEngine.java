@@ -11,6 +11,7 @@ import main.rendering.RenderingLayers;
 import main.utils.data.DataGen;
 import main.utils.Engine;
 import main.utils.vectors.IVec2;
+import main.utils.vectors.Vec2;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -25,7 +26,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
     private int currentLevel=0;
     private int currentTank=0;
 
-    private final IVec2 currentInputDir = new IVec2();
+    private final Vec2 currentInputDir = new Vec2();
     private final HudManager hudManager=new HudManager();
 
     public GameEngine() {

@@ -16,48 +16,48 @@ public class Tank extends Vehicle {
     private final TankTurret tankTurret;
     private final SolidCollider collider;
 
-    public Tank(IVec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, IVec2 colliderSize) {
+    public Tank(Vec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, Vec2 colliderSize) {
         super(position, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
         this.tankTurret =new TankTurret(position,turretTexturePath,1,textureSize,this, turretRotationSpeed);
         this.collider=new BoxCollider(
-                new IVec2(-colliderSize.x,-colliderSize.y),
+                new Vec2(-colliderSize.x,-colliderSize.y),
                 colliderSize,
                 false,
                 0,
-                new IVec2(),
+                new Vec2(),
                 this
         );
     }
 
-    public Tank(IVec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, Vec2 scale, IVec2 colliderSize) {
+    public Tank(Vec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, Vec2 scale, Vec2 colliderSize) {
         super(position, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed, scale);
         this.tankTurret =new TankTurret(position,turretTexturePath,1,textureSize,this, turretRotationSpeed, scale);
         this.collider=new BoxCollider(
-                new IVec2(-colliderSize.x,-colliderSize.y),
+                new Vec2(-colliderSize.x,-colliderSize.y),
                 colliderSize,
                 false,
                 0,
-                new IVec2(),
+                new Vec2(),
                 this
         );
     }
 
-    public Tank(IVec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, double colliderRadius) {
+    public Tank(Vec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, double colliderRadius) {
         super(position, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
         this.tankTurret =new TankTurret(position,turretTexturePath,1,textureSize,this, turretRotationSpeed);
         this.collider=new CircleCollider(
                 colliderRadius,
                 false,
                 0,
-                new IVec2(),
+                new Vec2(),
                 this
         );
     }
 
-    protected IVec2 getTurretMount(){
-        return new IVec2(
-            (int)Math.round(position.x+textureSize.y*Math.sin(rotation)/8),
-            (int)Math.round(position.y-textureSize.y*Math.cos(rotation)/8)
+    protected Vec2 getTurretMount(){
+        return new Vec2(
+            position.x+textureSize.y*Math.sin(rotation)/8,
+            position.y-textureSize.y*Math.cos(rotation)/8
         );
     }
 
@@ -72,10 +72,10 @@ public class Tank extends Vehicle {
     }
 
     @Override
-    public IVec2 getCurrentVelocity() {
-        IVec2 actualVelocity=new IVec2();
-        actualVelocity.x=(int)Math.round(-currentVelocity.y*Math.sin(rotation));
-        actualVelocity.y=(int)Math.round( currentVelocity.y*Math.cos(rotation));
+    public Vec2 getCurrentVelocity() {
+        Vec2 actualVelocity=new Vec2();
+        actualVelocity.x=-currentVelocity.y*Math.sin(rotation);
+        actualVelocity.y= currentVelocity.y*Math.cos(rotation);
         computeNewRotation();
         return actualVelocity;
     }

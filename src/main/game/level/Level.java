@@ -7,6 +7,7 @@ import main.utils.data.Cfg;
 import main.utils.data.DataGen;
 import main.utils.vectors.IVec2;
 import main.utils.noise.PseudoRandom;
+import main.utils.vectors.Vec2;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -23,7 +24,7 @@ public class Level extends JPanel implements Displayable {
     private final List<BoxCollider> colliders=new ArrayList<>();
 
     private final IVec2 tileSize = new IVec2(Cfg.tileSize,Cfg.tileSize);
-    private final IVec2 mapOffset = new IVec2();
+    private final Vec2 mapOffset = new Vec2();
 
     private final BufferedImage[][] grassTextures;
     private final BufferedImage[][] stoneTextures;
@@ -32,8 +33,8 @@ public class Level extends JPanel implements Displayable {
 
     public Level(IVec2 size,String path){
         map=new char[size.y][size.x];
-        mapOffset.x=Math.round((float) (-map[0].length * tileSize.x) /2);
-        mapOffset.y=Math.round((float) (-map.length * tileSize.y) /2);
+        mapOffset.x=-map[0].length * tileSize.x /2.0;
+        mapOffset.y=-map.length * tileSize.y /2.0;
         try{
             treeTexture = ImageIO.read(new File("./assets/textures/level/tree.png"));
             trapTexture = ImageIO.read(new File("./assets/textures/level/trap.png"));
@@ -50,20 +51,20 @@ public class Level extends JPanel implements Displayable {
                 switch (this.map[y][x]){
                     case 'R':
                         colliders.add(new BoxCollider(
-                                new IVec2(-tileSize.x/2,-tileSize.x/2),
-                                new IVec2(tileSize.x/2, tileSize.y/2),
+                                new Vec2(-tileSize.x/2.0,-tileSize.x/2.0),
+                                new Vec2(tileSize.x/2.0, tileSize.y/2.0),
                                 false,
                                 0.5,
-                                new IVec2(posX,posY)
+                                new Vec2(posX,posY)
                         ));
                         break;
                     case 'T':
                         colliders.add(new BoxCollider(
-                                new IVec2(-tileSize.x/2,-tileSize.x/2),
-                                new IVec2(tileSize.x/2, tileSize.y/2),
+                                new Vec2(-tileSize.x/2.0,-tileSize.x/2.0),
+                                new Vec2(tileSize.x/2.0, tileSize.y/2.0),
                                 false,
                                 0.2,
-                                new IVec2(posX,posY)
+                                new Vec2(posX,posY)
                         ));
                         break;
                     case 'H':
@@ -90,8 +91,8 @@ public class Level extends JPanel implements Displayable {
         Graphics2D g2d=(Graphics2D)g.create();
         g2d.scale(RenderEngine.getCurrentCamera().getScale().x,RenderEngine.getCurrentCamera().getScale().y);
         g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
-        int x=mapOffset.x;
-        int y=mapOffset.y;
+        double x=mapOffset.x;
+        double y=mapOffset.y;
         for (char[] line : map){
             for (char c : line){
                 switch (c){

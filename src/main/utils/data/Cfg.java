@@ -2,6 +2,7 @@ package main.utils.data;
 
 public class Cfg {
     public final static int delayBetweenFrames=20;
+    public final static double minimumVectorSize=0.000000001;
 
     public final static int tileSize=16;
     public final static int grassColorsNb=8;

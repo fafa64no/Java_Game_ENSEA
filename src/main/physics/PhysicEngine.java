@@ -5,6 +5,7 @@ import main.physics.colliders.Collider;
 import main.utils.Engine;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.IVec2;
+import main.utils.vectors.Vec2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,7 @@ public class PhysicEngine implements Engine {
             if(dynamicSprite==null)continue;
 
             double currentInverseFriction=1;
-            IVec2 velocity=dynamicSprite.getCurrentVelocity();
+            Vec2 velocity=dynamicSprite.getCurrentVelocity();
             BVec2 canMove=new BVec2();
 
             for(Collider colliderTerrain : colliderList_layer0){

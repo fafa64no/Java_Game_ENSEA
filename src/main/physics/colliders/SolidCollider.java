@@ -1,16 +1,16 @@
 package main.physics.colliders;
 
 import main.game.DynamicSprite;
-import main.utils.vectors.IVec2;
+import main.utils.vectors.Vec2;
 
 public abstract class SolidCollider implements Collider{
     protected final boolean inverted;
     protected final double friction;
-    protected IVec2 offset;
-    protected final IVec2 initialOffset;
+    protected Vec2 offset;
+    protected final Vec2 initialOffset;
     protected final DynamicSprite parent;
 
-    public SolidCollider(boolean inverted, double friction,IVec2 offset){
+    public SolidCollider(boolean inverted, double friction,Vec2 offset){
         this.inverted=inverted;
         this.friction=friction;
         this.offset=offset;
@@ -18,7 +18,7 @@ public abstract class SolidCollider implements Collider{
         this.parent=null;
     }
 
-    public SolidCollider(boolean inverted, double friction,IVec2 offset, DynamicSprite parent){
+    public SolidCollider(boolean inverted, double friction,Vec2 offset, DynamicSprite parent){
         this.inverted=inverted;
         this.friction=friction;
         this.offset=offset;
@@ -36,7 +36,7 @@ public abstract class SolidCollider implements Collider{
     }
 
     @Override
-    public IVec2 getOffset(){
+    public Vec2 getOffset(){
         return offset;
     }
 
@@ -46,9 +46,9 @@ public abstract class SolidCollider implements Collider{
     }
 
     @Override
-    public void setOffset(DynamicSprite requester,IVec2 offset) {
+    public void setOffset(DynamicSprite requester, Vec2 offset) {
         if(requester==parent){
-            this.offset=IVec2.add(initialOffset,offset);
+            this.offset=Vec2.add(initialOffset,offset);
         }
     }
 

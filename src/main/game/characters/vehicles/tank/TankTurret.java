@@ -12,13 +12,13 @@ public class TankTurret extends Vehicle {
     private final Tank parent;
     private final ProjectileHandler projectile;
 
-    public TankTurret(IVec2 position, String texturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed) {
+    public TankTurret(Vec2 position, String texturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed) {
         super(position, texturePath, 0, animationFrames, textureSize, rotationSpeed);
         this.parent=parent;
         this.projectile=null;
     }
 
-    public TankTurret(IVec2 position, String texturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed, Vec2 scale) {
+    public TankTurret(Vec2 position, String texturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed, Vec2 scale) {
         super(position, texturePath, 0, animationFrames, textureSize, rotationSpeed);
         this.parent=parent;
         super.scale=scale;
@@ -36,16 +36,16 @@ public class TankTurret extends Vehicle {
         this.rotation+=angleSign*Math.min(angleToTravel,this.rotationSpeed)+2*Math.PI;
     }
 
-    private IVec2 getTargetPosition() {
-        return new IVec2(
-                (int)Math.round(MouseInfo.getPointerInfo().getLocation().x/RenderEngine.getCurrentCamera().getScale().x)+RenderEngine.getCurrentCamera().getOffset().x,
-                (int)Math.round(MouseInfo.getPointerInfo().getLocation().y/RenderEngine.getCurrentCamera().getScale().y)+RenderEngine.getCurrentCamera().getOffset().y
+    private Vec2 getTargetPosition() {
+        return new Vec2(
+                MouseInfo.getPointerInfo().getLocation().x/RenderEngine.getCurrentCamera().getScale().x+RenderEngine.getCurrentCamera().getOffset().x,
+                MouseInfo.getPointerInfo().getLocation().y/RenderEngine.getCurrentCamera().getScale().y+RenderEngine.getCurrentCamera().getOffset().y
         );
     }
 
     private double getTargetRotation() {
-        IVec2 targetPosition=getTargetPosition();
-        return (new IVec2(
+        Vec2 targetPosition=getTargetPosition();
+        return (new Vec2(
                 targetPosition.x- this.position.x,
                 targetPosition.y- this.position.y
         ).getAngle()+5*Math.PI/2)%(2*Math.PI);
@@ -53,7 +53,7 @@ public class TankTurret extends Vehicle {
 
     public boolean fireProjectile(){
         if(projectile==null)return false;
-        IVec2 targetPosition=getTargetPosition();
+        Vec2 targetPosition=getTargetPosition();
         projectile.fireInDirection(targetPosition,this.position);
         return true;
     }
@@ -66,8 +66,8 @@ public class TankTurret extends Vehicle {
         g2d.scale(RenderEngine.getCurrentCamera().getScale().x,RenderEngine.getCurrentCamera().getScale().y);
         g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
 
-        g2d.translate(position.x-scale.x*Math.round((float) textureSize.x /2), position.y-scale.y*Math.round((float) textureSize.y /2));
-        g2d.rotate(super.rotation, scale.x*Math.round((float) textureSize.x /2),scale.y*Math.round((float) textureSize.y /2));
+        g2d.translate(position.x-scale.x*textureSize.x /2, position.y-scale.y*textureSize.y /2);
+        g2d.rotate(super.rotation, scale.x*textureSize.x /2,scale.y*textureSize.y /2);
         g2d.scale(super.scale.x,super.scale.y);
         g2d.drawRenderedImage(super.texture.getSubimage(
                 0,

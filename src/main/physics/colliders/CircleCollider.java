@@ -3,22 +3,21 @@ package main.physics.colliders;
 import main.game.DynamicSprite;
 import main.physics.Collision;
 import main.utils.vectors.BVec2;
-import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 
 public class CircleCollider extends SolidCollider{
     private final double radius;
 
-    public CircleCollider(double radius,boolean inverted, double friction, IVec2 offset, DynamicSprite parent) {
+    public CircleCollider(double radius,boolean inverted, double friction, Vec2 offset, DynamicSprite parent) {
         super(inverted, friction, offset, parent);
         this.radius=radius;
     }
 
     @Override
-    public Collision doCollide(Collider c, IVec2 offset) {
+    public Collision doCollide(Collider c, Vec2 offset) {
         BVec2 didCollide = new BVec2(c.isInverted(), c.isInverted());
-        IVec2 previousCenterDiff = IVec2.add(c.getOffset(),this.offset);
-        IVec2 newCenterDiff = IVec2.add(previousCenterDiff,offset);
+        Vec2 previousCenterDiff = Vec2.add(c.getOffset(),this.offset);
+        Vec2 newCenterDiff = Vec2.add(previousCenterDiff,offset);
         switch (c){
             case BoxCollider bc:
                 Vec2 previousClosestPoint=previousCenterDiff.getClosestPoint(bc.getCenterWithoutOffset(),radius);
@@ -41,7 +40,7 @@ public class CircleCollider extends SolidCollider{
                 }
                 break;
             case CircleCollider cc:
-                if(IVec2.substract(c.getOffset(), newCenterDiff).getSquareLength()<(radius-cc.getRadius())*(radius-cc.getRadius())){
+                if(Vec2.substract(c.getOffset(), newCenterDiff).getSquareLength()<(radius-cc.getRadius())*(radius-cc.getRadius())){
                     didCollide.x=!c.isInverted();
                     didCollide.y=!c.isInverted();
                 }

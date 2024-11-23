@@ -24,7 +24,7 @@ public class DataGen {
     public static Tank[] genTanks(){
         Tank[] tanks=new Tank[3];
         tanks[0]=new Tank(
-                new IVec2(320,120),
+                new Vec2(320,120),
                 "./assets/textures/characters/tanks/test/base.png",
                 "./assets/textures/characters/tanks/test/turret.png",
                 15,
@@ -33,10 +33,10 @@ public class DataGen {
                 0.2,
                 0.25,
                 new Vec2(0.2,0.2),
-                new IVec2(1,1)
+                new Vec2(1,1)
         );
         tanks[1]=new Tank(
-                new IVec2(0,0),
+                new Vec2(0,0),
                 "./assets/textures/characters/tanks/panzer_IV_gray/base.png",
                 "./assets/textures/characters/tanks/panzer_IV_gray/turret.png",
                 3,
@@ -44,10 +44,10 @@ public class DataGen {
                 1,
                 0.1,
                 0.05,
-                new IVec2(15,15)
+                new Vec2(15,15)
         );
         tanks[2]=new Tank(
-                new IVec2(0,0),
+                new Vec2(0,0),
                 "./assets/textures/characters/tanks/panzer_IV_brown/base.png",
                 "./assets/textures/characters/tanks/panzer_IV_brown/turret.png",
                 5,
@@ -93,19 +93,19 @@ public class DataGen {
     public static Camera[] genCameras(){
         Camera[] output=new Camera[3];
         output[0]=new Camera(
-                new IVec2(0,0),
+                new Vec2(0,0),
                 new Vec2(
                         2,
                         2)
         );
         output[1]=new Camera(
-                new IVec2(0,0),
+                new Vec2(0,0),
                 new Vec2(
                         3,
                         3)
         );
         output[2]=new Camera(
-                new IVec2(0,0),
+                new Vec2(0,0),
                 new Vec2(
                         3,
                         3)

@@ -11,7 +11,7 @@ public class Cursor extends DynamicSprite {
     private final IVec2 textureSize;
 
     public Cursor(String texturePath, Vec2 scale, IVec2 textureSize) {
-        super(new IVec2(), texturePath);
+        super(new Vec2(), texturePath);
         this.scale=scale;
         this.textureSize=textureSize;
     }

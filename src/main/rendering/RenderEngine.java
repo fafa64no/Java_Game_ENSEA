@@ -5,6 +5,7 @@ import main.game.GameEngine;
 import main.utils.Engine;
 import main.utils.data.DataGen;
 import main.utils.vectors.IVec2;
+import main.utils.vectors.Vec2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -105,10 +106,10 @@ public class RenderEngine extends JFrame implements Engine {
         return instance;
     }
 
-    public static IVec2 getMiddleOfFrame(){
-        return new IVec2(
-                -(int)Math.round((float) instance.getContentPane().getSize().width /(2*RenderEngine.getCurrentCamera().getScale().x)),
-                -(int)Math.round((float) instance.getContentPane().getSize().height /(2*RenderEngine.getCurrentCamera().getScale().y))
+    public static Vec2 getMiddleOfFrame(){
+        return new Vec2(
+                -instance.getContentPane().getSize().width /(2*RenderEngine.getCurrentCamera().getScale().x),
+                -instance.getContentPane().getSize().height /(2*RenderEngine.getCurrentCamera().getScale().y)
         );
     }
 

@@ -2,7 +2,7 @@ package main.game;
 
 import main.rendering.Displayable;
 import main.rendering.RenderEngine;
-import main.utils.vectors.IVec2;
+import main.utils.vectors.Vec2;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,10 +10,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public abstract class Sprite extends JPanel implements Displayable {
-    protected IVec2 position;
+    protected Vec2 position;
     protected BufferedImage texture;
 
-    public Sprite(IVec2 position, String texturePath) {
+    public Sprite(Vec2 position, String texturePath) {
         this.position = position;
 
         this.setOpaque(false);
@@ -22,7 +22,7 @@ public abstract class Sprite extends JPanel implements Displayable {
         catch (Exception e){e.printStackTrace();}
     }
 
-    public IVec2 getPosition() {
+    public Vec2 getPosition() {
         return position;
     }
 
