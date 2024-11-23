@@ -21,7 +21,7 @@ public abstract class DynamicSprite extends Sprite{
     public Vec2 getCurrentVelocity(){return currentVelocity;}
 
     public void goToNextPosition(BVec2 canMove,double friction){
-        if(canMove.x) position.x+=(int)Math.round(currentVelocity.x*friction);
-        if(canMove.y) position.y+=(int)Math.round(currentVelocity.y*friction);
+        if(canMove.x) position.x+=currentVelocity.x*friction;
+        if(canMove.y) position.y+=currentVelocity.y*friction;
     }
 }

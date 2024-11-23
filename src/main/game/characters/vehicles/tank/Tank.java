@@ -82,8 +82,8 @@ public class Tank extends Vehicle {
 
     @Override
     public void goToNextPosition(BVec2 canMove, double friction){
-        if(canMove.x)   position.x=(int)Math.round(position.x-currentVelocity.y*Math.sin(rotation));
-        if(canMove.y)   position.y=(int)Math.round(position.y+currentVelocity.y*Math.cos(rotation));
+        if(canMove.x)   position.x=position.x-currentVelocity.y*Math.sin(rotation);
+        if(canMove.y)   position.y=position.y+currentVelocity.y*Math.cos(rotation);
         collider.setOffset(this,this.position);
     }
 

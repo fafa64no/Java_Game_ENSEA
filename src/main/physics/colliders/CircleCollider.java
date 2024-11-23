@@ -18,10 +18,12 @@ public class CircleCollider extends SolidCollider{
         BVec2 didCollide = new BVec2(c.isInverted(), c.isInverted());
         Vec2 previousCenterDiff = Vec2.add(c.getOffset(),this.offset);
         Vec2 newCenterDiff = Vec2.add(previousCenterDiff,offset);
+        Vec2 previousClosestPoint=new Vec2();
+        Vec2 newClosestPoint=new Vec2();
         switch (c){
             case BoxCollider bc:
-                Vec2 previousClosestPoint=previousCenterDiff.getClosestPoint(bc.getCenterWithoutOffset(),radius);
-                Vec2 newClosestPoint=newCenterDiff.getClosestPoint(bc.getCenterWithoutOffset(),radius);
+                previousClosestPoint=previousCenterDiff.getClosestPoint(bc.getCenterWithoutOffset(),radius);
+                newClosestPoint=newCenterDiff.getClosestPoint(bc.getCenterWithoutOffset(),radius);
                 if (
                     newClosestPoint.x<= bc.getCorners()[0].x &&
                     newClosestPoint.x>= bc.getCorners()[2].x &&
@@ -50,6 +52,10 @@ public class CircleCollider extends SolidCollider{
                 break;
         }
         if(didCollide.isFalse())return null;
+        System.out.println("-------------\npreviousCenterDiff : "+previousCenterDiff.x+" : "+previousCenterDiff.y+
+                "\npreviousClosestPoint : "+previousClosestPoint.x+" : "+previousClosestPoint.y+
+                "\nnewCenterDiff : "+newCenterDiff.x+" : "+newCenterDiff.y+
+                "\nnewClosestPoint : "+newClosestPoint.x+" : "+newClosestPoint.y);
         return new Collision(didCollide);
     }
 
