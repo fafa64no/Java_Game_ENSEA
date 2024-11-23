@@ -35,7 +35,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
         levels=DataGen.genLevels();
         tanks=DataGen.genTanks();
 
-        goToLevel(0);
+        goToLevel(1);
         swapTank(1);
 
         RenderEngine.setupCameras(tanks);

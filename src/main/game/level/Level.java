@@ -9,12 +9,10 @@ import main.utils.vectors.IVec2;
 import main.utils.noise.PseudoRandom;
 import main.utils.vectors.Vec2;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +40,22 @@ public class Level extends JPanel implements Displayable {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
             for (int i = 0; i< size.y; i++) map[i]=bufferedReader.readLine().toCharArray();
         } catch (Exception e){e.printStackTrace();}
+
+        grassTextures = DataGen.getGrassTextures();
+        stoneTextures = DataGen.getStoneTextures();
+        treeTextures = DataGen.getTreeTextures();
+        trapTexture = DataGen.getTrapTexture();
+        barrierTexture = DataGen.getBarrierTexture();
+
+        initTextures();
+        initColliders();
+    }
+
+    public Level(IVec2 size){
+        map=LevelGenerator.genTerrain(size);
+        mapTextures=new BufferedImage[size.y][size.x];
+        mapOffset.x=-map[0].length * tileSize.x /2.0;
+        mapOffset.y=-map.length * tileSize.y /2.0;
 
         grassTextures = DataGen.getGrassTextures();
         stoneTextures = DataGen.getStoneTextures();
