@@ -13,6 +13,9 @@ public class Cfg {
     public final static int treeVariantsNb=1;
     public final static int pathColorsNb=8;
     public final static int pathVariantsNb=4;
+    public final static int leavesColorsNb=1;
+    public final static int leavesVariantsNb=1;
+
     public final static double treeHitBoxSize=0.5;
 
     public final static int mapVerticalWallThickness=18;

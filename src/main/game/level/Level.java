@@ -7,7 +7,9 @@ import main.utils.data.Cfg;
 import main.utils.data.DataGen;
 import main.utils.vectors.IVec2;
 import main.utils.noise.PseudoRandom;
+import main.utils.vectors.IVec4;
 import main.utils.vectors.Vec2;
+import main.utils.vectors.Vec4;
 
 import javax.swing.*;
 import java.awt.*;
@@ -136,16 +138,34 @@ public class Level extends JPanel implements Displayable {
     }
 
     public double getGroundSpeed(Vec2 position){
-        int beforeClamp=(int) Math.round((position.x+mapOffset.x)/Cfg.tileSize);
-        int tilePosX = Math.clamp((int) Math.round((position.x-mapOffset.x)/Cfg.tileSize),0,map[0].length);
-        int tilePosY = Math.clamp((int) Math.round((position.y-mapOffset.y)/Cfg.tileSize),0,map.length);
+        int tilePosX = Math.clamp((int) Math.round((position.x-mapOffset.x)/Cfg.tileSize),0,map[0].length-1);
+        int tilePosY = Math.clamp((int) Math.round((position.y-mapOffset.y)/Cfg.tileSize),0,map.length-1);
         char tile = map[tilePosY][tilePosX];
-        System.out.println("Fun : "+tilePosX+" : "+tilePosY+" : "+tile+" : "+beforeClamp);
         return switch (tile) {
             case 'P' -> 1.5;
             case 'H' -> 0.1;
             default -> 1;
         };
+    }
+
+    public Vec4 getTilesWindow(){
+        Vec2 cameraCenter=RenderEngine.getCurrentCamera().getTargetOffset();
+        return new Vec4(
+                cameraCenter.x-RenderEngine.getInstance().getContentPane().getSize().width /(2*Cfg.tileSize*RenderEngine.getCurrentCamera().getScale().x)+map[0].length/2.0,
+                cameraCenter.y-RenderEngine.getInstance().getContentPane().getSize().height/(2*Cfg.tileSize*RenderEngine.getCurrentCamera().getScale().y)+map.length/2.0,
+                cameraCenter.x+RenderEngine.getInstance().getContentPane().getSize().width /(2*Cfg.tileSize*RenderEngine.getCurrentCamera().getScale().x)+map[0].length/2.0,
+                cameraCenter.y+RenderEngine.getInstance().getContentPane().getSize().height/(2*Cfg.tileSize*RenderEngine.getCurrentCamera().getScale().y)+map.length/2.0
+        );
+    }
+
+    public IVec4 getTilesIDWindow(){
+        Vec4 tilesWindow=getTilesWindow();
+        return new IVec4(
+            (int) Math.floor(Math.max(-Cfg.mapHorizontalWallThickness, tilesWindow.x)),
+            (int) Math.ceil(Math.min(map[0].length+Cfg.mapHorizontalWallThickness, tilesWindow.z)),
+            (int) Math.floor(Math.max(-Cfg.mapVerticalWallThickness, tilesWindow.y)),
+            (int) Math.ceil(Math.min(map.length+Cfg.mapVerticalWallThickness, tilesWindow.w))
+        );
     }
 
     @Override
@@ -166,30 +186,9 @@ public class Level extends JPanel implements Displayable {
         g2d.scale(RenderEngine.getCurrentCamera().getScale().x,RenderEngine.getCurrentCamera().getScale().y);
         g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
         // Don't render outside of camera range because lag
-        Vec2 cameraCenter=RenderEngine.getCurrentCamera().getTargetOffset();
-        Vec2 cameraCornerA=Vec2.add(cameraCenter,new Vec2(
-                -RenderEngine.getInstance().getContentPane().getSize().width /(2*Cfg.tileSize*RenderEngine.getCurrentCamera().getScale().x)+map[0].length/2.0,
-                -RenderEngine.getInstance().getContentPane().getSize().height/(2*Cfg.tileSize*RenderEngine.getCurrentCamera().getScale().y)+map.length/2.0
-        ));
-        Vec2 cameraCornerB=Vec2.add(cameraCenter,new Vec2(
-                RenderEngine.getInstance().getContentPane().getSize().width /(2*Cfg.tileSize*RenderEngine.getCurrentCamera().getScale().x)+map[0].length/2.0,
-                RenderEngine.getInstance().getContentPane().getSize().height/(2*Cfg.tileSize*RenderEngine.getCurrentCamera().getScale().y)+map.length/2.0
-        ));
-        int minX,maxX,minY,maxY;
-        minX= (int) Math.floor(Math.max(-Cfg.mapHorizontalWallThickness,
-                cameraCornerA.x
-        ));
-        maxX= (int) Math.ceil(Math.min(map[0].length+Cfg.mapHorizontalWallThickness,
-                cameraCornerB.x
-        ));
-        minY= (int) Math.floor(Math.max(-Cfg.mapVerticalWallThickness,
-                cameraCornerA.y
-        ));
-        maxY= (int) Math.ceil(Math.min(map.length+Cfg.mapVerticalWallThickness,
-                cameraCornerB.y
-        ));
-        for (int x = minX; x < maxX; x++) {
-            for (int y = minY; y < maxY; y++) {
+        IVec4 tileIDWindow = getTilesIDWindow();
+        for (int x = tileIDWindow.x; x < tileIDWindow.y; x++) {
+            for (int y = tileIDWindow.z; y < tileIDWindow.w; y++) {
                 double posX=mapOffset.x+x*Cfg.tileSize;
                 double posY=mapOffset.y+y*Cfg.tileSize;
                 g2d.translate(posX,posY);

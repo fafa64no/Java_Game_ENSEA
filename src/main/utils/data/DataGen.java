@@ -12,6 +12,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class DataGen {
+
+/*      ################ - Levels and Tanks - ################      */
+
     public static Level[] genLevels(){
         Level[] levels=new Level[5];
         levels[0]=new Level(new IVec2(146,74),"assets/data/level4.txt");
@@ -61,7 +64,10 @@ public class DataGen {
         return tanks;
     }
 
-    private static BufferedImage tileSheet_1 =null;
+/*      ################ - Textures - ################      */
+
+    private static BufferedImage tileSheet_1 = null;
+    private static BufferedImage tileSheet_2 = null;
 
     public static BufferedImage[][] getGrassTextures(){
         if(tileSheet_1 ==null) {
@@ -134,6 +140,22 @@ public class DataGen {
         }
         return tileSheet_1.getSubimage(0,4*Cfg.tileSize,Cfg.tileSize,Cfg.tileSize);
     }
+
+    public static BufferedImage[][] getLeavesTextures(){
+        if(tileSheet_2 ==null) {
+            try {tileSheet_2 = ImageIO.read(new File("assets/textures/level/tileSheet_2.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        BufferedImage[][] leavesTextures = new BufferedImage[Cfg.leavesColorsNb][Cfg.leavesColorsNb];
+        for (int i=0;i<Cfg.leavesColorsNb;i++){
+            for (int j=0;j<Cfg.leavesColorsNb;j++){
+                leavesTextures[i][j]=tileSheet_2.getSubimage((i*Cfg.leavesColorsNb+j)*2*Cfg.tileSize,3*Cfg.tileSize,2*Cfg.tileSize,2*Cfg.tileSize);
+            }
+        }
+        return leavesTextures;
+    }
+
+/*      ################ - Cameras - ################      */
 
     public static Camera[] genCameras(){
         Camera[] output=new Camera[3];
