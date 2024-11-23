@@ -146,8 +146,31 @@ public class Level extends JPanel implements Displayable {
         Graphics2D g2d=(Graphics2D)g.create();
         g2d.scale(RenderEngine.getCurrentCamera().getScale().x,RenderEngine.getCurrentCamera().getScale().y);
         g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
-        for (int x=-Cfg.mapHorizontalWallThickness;x<map[0].length+Cfg.mapHorizontalWallThickness; x++) {
-            for (int y=-Cfg.mapVerticalWallThickness; y < map.length+Cfg.mapVerticalWallThickness; y++) {
+        // Don't render outside of camera range because lag
+        int minX,maxX,minY,maxY;
+        Vec2 cameraCenter=RenderEngine.getCurrentCamera().getTargetOffset();
+        Vec2 cameraCornerA=Vec2.add(cameraCenter,new Vec2(
+                -RenderEngine.getInstance().getContentPane().getSize().width/(2*tileSize.x*RenderEngine.getCurrentCamera().getScale().x)+map[0].length/2.0,
+                -RenderEngine.getInstance().getContentPane().getSize().height/(2*tileSize.y*RenderEngine.getCurrentCamera().getScale().y)+map.length/2.0
+        ));
+        Vec2 cameraCornerB=Vec2.add(cameraCenter,new Vec2(
+                RenderEngine.getInstance().getContentPane().getSize().width/(2*tileSize.x*RenderEngine.getCurrentCamera().getScale().x)+map[0].length/2.0,
+                RenderEngine.getInstance().getContentPane().getSize().height/(2*tileSize.y*RenderEngine.getCurrentCamera().getScale().y)+map.length/2.0
+        ));
+        minX= (int) Math.floor(Math.max(-Cfg.mapHorizontalWallThickness,
+                cameraCornerA.x
+        ));
+        maxX= (int) Math.ceil(Math.min(map[0].length+Cfg.mapHorizontalWallThickness,
+                cameraCornerB.x
+        ));
+        minY= (int) Math.floor(Math.max(-Cfg.mapVerticalWallThickness,
+                cameraCornerA.y
+        ));
+        maxY= (int) Math.ceil(Math.min(map.length+Cfg.mapVerticalWallThickness,
+                cameraCornerB.y
+        ));
+        for (int x = minX; x < maxX; x++) {
+            for (int y = minY; y < maxY; y++) {
                 double posX=mapOffset.x+x*tileSize.x;
                 double posY=mapOffset.y+y*tileSize.y;
                 g2d.translate(posX,posY);

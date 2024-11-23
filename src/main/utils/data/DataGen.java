@@ -15,7 +15,7 @@ public class DataGen {
     public static Level[] genLevels(){
         Level[] levels=new Level[5];
         levels[0]=new Level(new IVec2(146,74),"assets/data/level4.txt");
-        levels[1]=new Level(new IVec2(256,256));
+        levels[1]=new Level(new IVec2(1024,1024));
         levels[2]=new Level(new IVec2(16,9),"assets/data/level1.txt");
         levels[3]=new Level(new IVec2(16,9),"assets/data/level2.txt");
         levels[4]=new Level(new IVec2(16,9),"assets/data/level3.txt");
@@ -25,7 +25,7 @@ public class DataGen {
     public static Tank[] genTanks(){
         Tank[] tanks=new Tank[3];
         tanks[0]=new Tank(
-                new Vec2(320,120),
+                new Vec2(),
                 "./assets/textures/characters/tanks/test/base.png",
                 "./assets/textures/characters/tanks/test/turret.png",
                 15,
@@ -37,7 +37,7 @@ public class DataGen {
                 new Vec2(1,1)
         );
         tanks[1]=new Tank(
-                new Vec2(0,0),
+                new Vec2(),
                 "./assets/textures/characters/tanks/panzer_IV_gray/base.png",
                 "./assets/textures/characters/tanks/panzer_IV_gray/turret.png",
                 5,
@@ -48,7 +48,7 @@ public class DataGen {
                 new Vec2(15,15)
         );
         tanks[2]=new Tank(
-                new Vec2(0,0),
+                new Vec2(),
                 "./assets/textures/characters/tanks/panzer_IV_brown/base.png",
                 "./assets/textures/characters/tanks/panzer_IV_brown/turret.png",
                 6,

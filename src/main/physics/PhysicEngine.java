@@ -4,7 +4,6 @@ import main.game.DynamicSprite;
 import main.physics.colliders.Collider;
 import main.utils.Engine;
 import main.utils.vectors.BVec2;
-import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 
 import java.util.ArrayList;

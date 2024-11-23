@@ -1,6 +1,7 @@
 package main.rendering;
 
 import main.game.DynamicSprite;
+import main.utils.data.Cfg;
 import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 
@@ -30,7 +31,14 @@ public class Camera {
 
     public void update(){
         if(this.targetSprite==null)return;
-        this.offset= this.targetSprite.getPosition();
         this.offset= Vec2.add(this.targetSprite.getPosition(),RenderEngine.getMiddleOfFrame(),this.initialOffset);
+    }
+
+    public Vec2 getTargetOffset(){
+        if(targetSprite==null)return new Vec2();
+        return new Vec2(
+                (targetSprite.getPosition().x+initialOffset.x)/(Cfg.tileSize),
+                (targetSprite.getPosition().y+initialOffset.y)/(Cfg.tileSize)
+        );
     }
 }

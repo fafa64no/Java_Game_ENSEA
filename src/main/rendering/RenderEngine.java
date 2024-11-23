@@ -4,7 +4,6 @@ import main.game.DynamicSprite;
 import main.game.GameEngine;
 import main.utils.Engine;
 import main.utils.data.DataGen;
-import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 
 import javax.swing.*;
@@ -97,8 +96,8 @@ public class RenderEngine extends JFrame implements Engine {
         }
     }
 
-    public static void setCurrentCamera(GameEngine renderEngine,int i){
-        if(renderEngine!=GameEngine.getInstance())return;
+    public static void setCurrentCamera(GameEngine gameEngine, int i){
+        if(gameEngine !=GameEngine.getInstance())return;
         instance.currentCamera=i;
     }
 

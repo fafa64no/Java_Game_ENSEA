@@ -20,5 +20,6 @@ public class Cfg {
     public final static int noiseSizeTerrainColor=32;
     public final static int noiseSizeTerrainVariant=2;
     public final static int noiseSizeTerrainStones=64;
-    public final static int noiseSizeTerrainTrees=2;
+    public final static int noiseSizeTerrainTrees=1;
+    public final static int noiseSizeTerrainTraps=8;
 }
