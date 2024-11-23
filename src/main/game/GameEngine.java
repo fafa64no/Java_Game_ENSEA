@@ -70,6 +70,10 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
         return instance;
     }
 
+    public static Level getCurrentLevel() {
+        return instance.levels[instance.currentLevel];
+    }
+
     @Override
     public void update() {
         tanks[currentTank].setInput(currentInputDir);

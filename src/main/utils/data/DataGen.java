@@ -105,12 +105,26 @@ public class DataGen {
         return treeTextures;
     }
 
+    public static BufferedImage[][] getPathTextures(){
+        if(tileSheet_1 ==null) {
+            try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        BufferedImage[][] pathTextures = new BufferedImage[Cfg.pathColorsNb][Cfg.pathVariantsNb];
+        for (int i=0;i<Cfg.pathColorsNb;i++){
+            for (int j=0;j<Cfg.pathVariantsNb;j++){
+                pathTextures[i][j]=tileSheet_1.getSubimage((i*Cfg.pathVariantsNb+j)* Cfg.tileSize,3*Cfg.tileSize,Cfg.tileSize,Cfg.tileSize);
+            }
+        }
+        return pathTextures;
+    }
+
     public static BufferedImage getTrapTexture(){
         if(tileSheet_1 ==null) {
             try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        return tileSheet_1.getSubimage(Cfg.tileSize,3*Cfg.tileSize,Cfg.tileSize,Cfg.tileSize);
+        return tileSheet_1.getSubimage(Cfg.tileSize,4*Cfg.tileSize,Cfg.tileSize,Cfg.tileSize);
     }
 
     public static BufferedImage getBarrierTexture(){
@@ -118,7 +132,7 @@ public class DataGen {
             try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        return tileSheet_1.getSubimage(0,3*Cfg.tileSize,Cfg.tileSize,Cfg.tileSize);
+        return tileSheet_1.getSubimage(0,4*Cfg.tileSize,Cfg.tileSize,Cfg.tileSize);
     }
 
     public static Camera[] genCameras(){

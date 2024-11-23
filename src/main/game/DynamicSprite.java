@@ -16,7 +16,9 @@ public abstract class DynamicSprite extends Sprite{
         this.currentVelocity = velocity;
     }
 
-    protected void setVelocity(Vec2 vel){currentVelocity=vel;}
+    protected void setVelocity(Vec2 vel){
+        currentVelocity=Vec2.multiply(vel,GameEngine.getCurrentLevel().getGroundSpeed(position));
+    }
 
     public Vec2 getCurrentVelocity(){return currentVelocity;}
 
