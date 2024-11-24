@@ -4,6 +4,7 @@ import main.game.DynamicSprite;
 import main.physics.Collision;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;
+import main.utils.vectors.Vec4;
 
 public class BoxCollider extends SolidCollider{
     private final Vec2[] corners;
@@ -72,8 +73,8 @@ public class BoxCollider extends SolidCollider{
                     if (
                         previousCenterDiff.x<= bc.getCorners()[0].x + size.x/2.0 &&
                         previousCenterDiff.x>= bc.getCorners()[2].x - size.x/2.0 &&
-                        newCenterDiff.y<= bc.getCorners()[0].y + size.y/2.0 &&
-                        newCenterDiff.y>= bc.getCorners()[2].y - size.y/2.0
+                        newCenterDiff.y<= bc.getCorners()[0].y      + size.y/2.0 &&
+                        newCenterDiff.y>= bc.getCorners()[2].y      - size.y/2.0
                     ) {
                         didCollide.y=true;
                     }
@@ -81,6 +82,47 @@ public class BoxCollider extends SolidCollider{
                 break;
             case CircleCollider cc:
                 return cc.doCollide(this,new Vec2(-offset.x,-offset.y));
+            case TilemapCollider tc:
+                Vec4[] collsionBoxes = tc.getCollisionBoxes(this.offset);
+                for (Vec4 collisionBox : collsionBoxes){
+                    if(collisionBox==null)continue;
+                    if(c.isInverted()){
+                        if (
+                            newCenterDiff.x<=       collisionBox.y + size.x/2.0 &&
+                            newCenterDiff.x>=       collisionBox.x - size.x/2.0 &&
+                            previousCenterDiff.y<=  collisionBox.w + size.y/2.0 &&
+                            previousCenterDiff.y>=  collisionBox.z - size.y/2.0
+                        ) {
+                            didCollide.x=false;
+                        }
+                        if (
+                            previousCenterDiff.x<=  collisionBox.y + size.x/2.0 &&
+                            previousCenterDiff.x>=  collisionBox.x - size.x/2.0 &&
+                            newCenterDiff.y<=       collisionBox.w + size.y/2.0 &&
+                            newCenterDiff.y>=       collisionBox.z - size.y/2.0
+                        ) {
+                            didCollide.y=false;
+                        }
+                    }else{
+                        if (
+                            newCenterDiff.x<=       collisionBox.y + size.x/2.0 &&
+                            newCenterDiff.x>=       collisionBox.x - size.x/2.0 &&
+                            previousCenterDiff.y<=  collisionBox.w + size.y/2.0 &&
+                            previousCenterDiff.y>=  collisionBox.z - size.y/2.0
+                        ) {
+                            didCollide.x=true;
+                        }
+                        if (
+                            previousCenterDiff.x<=  collisionBox.y + size.x/2.0 &&
+                            previousCenterDiff.x>=  collisionBox.x - size.x/2.0 &&
+                            newCenterDiff.y<=       collisionBox.w + size.y/2.0 &&
+                            newCenterDiff.y>=       collisionBox.z - size.y/2.0
+                        ) {
+                            didCollide.y=true;
+                        }
+                    }
+                }
+                break;
             default:
                 System.out.println("Collider type not handled by BoxCollider");
                 break;

@@ -1,6 +1,8 @@
 package main.game.level;
 
 import main.physics.colliders.BoxCollider;
+import main.physics.colliders.Collider;
+import main.physics.colliders.TilemapCollider;
 import main.rendering.Displayable;
 import main.rendering.LeavesRenderer;
 import main.rendering.RenderEngine;
@@ -23,7 +25,7 @@ import java.util.List;
 public class Level extends JPanel implements Displayable {
     private final char[][] map;
     private final BufferedImage[][] mapTextures;
-    private final List<BoxCollider> colliders=new ArrayList<>();
+    private final List<Collider> colliders=new ArrayList<>();
 
     private final Vec2 mapOffset = new Vec2();
 
@@ -114,34 +116,7 @@ public class Level extends JPanel implements Displayable {
                 0.5,
                 new Vec2()
         ));
-        for (int x=0;x<map[0].length;x++){
-            for (int y=0;y<map.length;y++){
-                int posX=(int)-Math.round(Config.smallTileSize *(x+0.5)+mapOffset.x);
-                int posY=(int)-Math.round(Config.smallTileSize *(y+0.5)+mapOffset.y);
-                switch (this.map[y][x]){
-                    case 'R':
-                        colliders.add(new BoxCollider(
-                                new Vec2(-Config.smallTileSize /2.0,-Config.smallTileSize /2.0),
-                                new Vec2( Config.smallTileSize /2.0, Config.smallTileSize /2.0),
-                                false,
-                                0.5,
-                                new Vec2(posX,posY)
-                        ));
-                        break;
-                    case 'T':
-                        colliders.add(new BoxCollider(
-                                new Vec2(-Config.treeHitBoxSize* Config.smallTileSize /2.0,-Config.treeHitBoxSize* Config.smallTileSize /2.0),
-                                new Vec2( Config.treeHitBoxSize* Config.smallTileSize /2.0, Config.treeHitBoxSize* Config.smallTileSize /2.0),
-                                false,
-                                0.2,
-                                new Vec2(posX,posY)
-                        ));
-                        break;
-                    case 'H':
-                        break;
-                }
-            }
-        }
+        colliders.add(new TilemapCollider(this));
     }
 
     public double getGroundSpeed(Vec2 position){
@@ -155,18 +130,22 @@ public class Level extends JPanel implements Displayable {
         };
     }
 
-    public Vec4 getTilesWindow(){
-        Vec2 cameraCenter=RenderEngine.getCurrentCamera().getTargetOffset();
+    private Vec4 getTilesWindow(Vec2 center, Vec2 halfWindowSize){
         return new Vec4(
-                cameraCenter.x-RenderEngine.getInstance().getContentPane().getSize().width /(2* Config.smallTileSize *RenderEngine.getCurrentCamera().getScale().x)+map[0].length/2.0,
-                cameraCenter.y-RenderEngine.getInstance().getContentPane().getSize().height/(2* Config.smallTileSize *RenderEngine.getCurrentCamera().getScale().y)+map.length/2.0,
-                cameraCenter.x+RenderEngine.getInstance().getContentPane().getSize().width /(2* Config.smallTileSize *RenderEngine.getCurrentCamera().getScale().x)+map[0].length/2.0,
-                cameraCenter.y+RenderEngine.getInstance().getContentPane().getSize().height/(2* Config.smallTileSize *RenderEngine.getCurrentCamera().getScale().y)+map.length/2.0
+                center.x-halfWindowSize.x+map[0].length/2.0,
+                center.y-halfWindowSize.y+map.length/2.0,
+                center.x+halfWindowSize.x+map[0].length/2.0,
+                center.y+halfWindowSize.y+map.length/2.0
         );
     }
 
-    public IVec4 getTilesIDWindow(){
-        Vec4 tilesWindow=getTilesWindow();
+    public IVec4 getTilesIDWindowFromCameraWithExtraBorder(){
+        Vec2 cameraCenter = RenderEngine.getCurrentCamera().getTargetOffset();
+        Vec2 halfWindowSize = new Vec2(
+                RenderEngine.getInstance().getContentPane().getSize().width /(2* Config.smallTileSize *RenderEngine.getCurrentCamera().getScale().x),
+                RenderEngine.getInstance().getContentPane().getSize().height/(2* Config.smallTileSize *RenderEngine.getCurrentCamera().getScale().y)
+        );
+        Vec4 tilesWindow = getTilesWindow(cameraCenter,halfWindowSize);
         return new IVec4(
             (int) Math.floor(Math.max(-Config.mapHorizontalWallThickness, tilesWindow.x)),
             (int) Math.ceil(Math.min(map[0].length+ Config.mapHorizontalWallThickness, tilesWindow.z)),
@@ -175,18 +154,35 @@ public class Level extends JPanel implements Displayable {
         );
     }
 
-    public IVec4 getTilesIDWindow(IVec2 additionalCameraSize){
-        Vec4 tilesWindow=getTilesWindow();
+    public IVec4 getTilesIDWindowFromCamera(IVec2 additionalCameraSize){
+        Vec2 cameraCenter = RenderEngine.getCurrentCamera().getTargetOffset();
+        Vec2 halfWindowSize = new Vec2(
+                RenderEngine.getInstance().getContentPane().getSize().width /(2* Config.smallTileSize *RenderEngine.getCurrentCamera().getScale().x),
+                RenderEngine.getInstance().getContentPane().getSize().height/(2* Config.smallTileSize *RenderEngine.getCurrentCamera().getScale().y)
+        );
+        return getTilesIDWindowFromOffset(cameraCenter,halfWindowSize,additionalCameraSize);
+    }
+
+    public IVec4 getTilesIDWindowFromOffset(Vec2 offset, Vec2 halfWindowSize, IVec2 additionalCameraSize){
+        Vec4 tilesWindow = getTilesWindow(offset,halfWindowSize);
         return new IVec4(
-                (int) Math.floor(Math.max(0, tilesWindow.x-additionalCameraSize.x)),
-                (int) Math.ceil(Math.min(map[0].length, tilesWindow.z+additionalCameraSize.x)),
-                (int) Math.floor(Math.max(0, tilesWindow.y-additionalCameraSize.y)),
-                (int) Math.ceil(Math.min(map.length, tilesWindow.w+additionalCameraSize.y))
+                (int) Math.floor(Math.clamp(tilesWindow.x-additionalCameraSize.x,0,map[0].length)),            // Minimum X
+                (int) Math.ceil( Math.clamp(tilesWindow.z+additionalCameraSize.x,0,map[0].length)), // Maximum X
+                (int) Math.floor(Math.clamp(tilesWindow.y-additionalCameraSize.y,0,map.length)),            // Minimum Y
+                (int) Math.ceil( Math.clamp(tilesWindow.w+additionalCameraSize.y,0,map.length))     // Maximum Y
         );
     }
 
     public LeavesRenderer getLeavesRenderer() {
         return leavesRenderer;
+    }
+
+    public char[][] getMap() {
+        return map;
+    }
+
+    public Vec2 getMapOffset() {
+        return mapOffset;
     }
 
     @Override
@@ -207,7 +203,7 @@ public class Level extends JPanel implements Displayable {
         g2d.scale(RenderEngine.getCurrentCamera().getScale().x,RenderEngine.getCurrentCamera().getScale().y);
         g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
         // Don't render outside of camera range because lag
-        IVec4 tileIDWindow = getTilesIDWindow();
+        IVec4 tileIDWindow = getTilesIDWindowFromCameraWithExtraBorder();
         for (int x = tileIDWindow.x; x < tileIDWindow.y; x++) {
             for (int y = tileIDWindow.z; y < tileIDWindow.w; y++) {
                 double posX=mapOffset.x+x* Config.smallTileSize;
@@ -223,7 +219,7 @@ public class Level extends JPanel implements Displayable {
         }
     }
 
-    public List<BoxCollider> getColliders() {
+    public List<Collider> getColliders() {
         return colliders;
     }
 }

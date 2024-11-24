@@ -19,4 +19,14 @@ public class IVec4 {
         this.z = z;
         this.w = w;
     }
+
+    @Override
+    public String toString() {
+        return "IVec4{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                ", w=" + w +
+                '}';
+    }
 }

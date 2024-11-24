@@ -58,7 +58,7 @@ public class LeavesRenderer extends JPanel implements Displayable {
         g2d.scale(RenderEngine.getCurrentCamera().getScale().x,RenderEngine.getCurrentCamera().getScale().y);
         g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
         // Don't render outside of camera range because lag
-        IVec4 tileIDWindow = GameEngine.getCurrentLevel().getTilesIDWindow(new IVec2(1,1));
+        IVec4 tileIDWindow = GameEngine.getCurrentLevel().getTilesIDWindowFromCamera(new IVec2(1,1));
         for (int x = tileIDWindow.x; x < tileIDWindow.y; x++) {
             for (int y = tileIDWindow.z; y < tileIDWindow.w; y++) {
                 if(mapLeavesTextures[y][x]==null)continue;

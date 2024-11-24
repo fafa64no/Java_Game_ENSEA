@@ -18,8 +18,8 @@ public class TankShell extends JPanel implements ProjectileHandler, Displayable 
     private final Projectile[] projectiles = new Projectile[Config.maxProjectilesPerProjectileHandler];
     private int projectilePointer = 0;
 
-    public final int projectileLifeSpawn=500;
-    public final double projectileSpeed=30;
+    public final int projectileLifeSpan = 500;
+    public final double projectileSpeed = 30;
 
     public TankShell(){
         if(instance==null)instance=this;
@@ -39,9 +39,10 @@ public class TankShell extends JPanel implements ProjectileHandler, Displayable 
     @Override
     public void fireInDirection(Vec2 initialPosition, double rotation) {
         projectiles[projectilePointer]=new Projectile(
-                projectileLifeSpawn,
+                projectileLifeSpan,
+                2,
                 initialPosition,
-                Vec2.multiply(new Vec2(0,1).rotateBy(rotation).normalize(),projectileSpeed),
+                projectileSpeed,
                 rotation
         );
         projectilePointer=(projectilePointer+1)%projectiles.length;
@@ -52,9 +53,9 @@ public class TankShell extends JPanel implements ProjectileHandler, Displayable 
         for(int i=0; i<projectiles.length; i++){
             Projectile projectile=projectiles[i];
             if(projectile==null)continue;
-            projectile.remainingMilliseconds -= Config.delayBetweenFrames;
-            if(projectile.remainingMilliseconds<=0)projectiles[i]=null;
-            projectile.currentPosition=Vec2.add(projectile.currentPosition,projectile.velocity);
+            projectile.decrementTimeRemaining();
+            if(projectile.getRemainingMilliseconds()<=0)projectiles[i]=null;
+            projectile.incrementPosition();
         }
     }
 
@@ -78,12 +79,12 @@ public class TankShell extends JPanel implements ProjectileHandler, Displayable 
         g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
 
         for(Projectile projectile : projectiles){
-            if(projectile==null)continue;
-            g2d.translate(projectile.currentPosition.x- (double) Config.smallTileSize /2,projectile.currentPosition.y- (double) Config.smallTileSize /2);
+            if(projectile==null||projectile.getInvisibilityFrames()>0)continue;
+            g2d.translate(projectile.getCurrentPosition().x- (double) Config.smallTileSize /2,projectile.getCurrentPosition().y- (double) Config.smallTileSize /2);
             g2d.rotate(projectile.rotation,(double) Config.smallTileSize /2,(double) Config.smallTileSize /2);
             g2d.drawRenderedImage(texture,null);
             g2d.rotate(-projectile.rotation,(double) Config.smallTileSize /2,(double) Config.smallTileSize /2);
-            g2d.translate(-projectile.currentPosition.x+ (double) Config.smallTileSize /2,-projectile.currentPosition.y+ (double) Config.smallTileSize /2);
+            g2d.translate(-projectile.getCurrentPosition().x+ (double) Config.smallTileSize /2,-projectile.getCurrentPosition().y+ (double) Config.smallTileSize /2);
         }
     }
 }

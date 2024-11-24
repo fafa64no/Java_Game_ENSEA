@@ -7,6 +7,7 @@ import main.game.projectiles.ProjectileHandler;
 import main.physics.colliders.BoxCollider;
 import main.physics.CollisionLayers;
 import main.physics.PhysicEngine;
+import main.physics.colliders.Collider;
 import main.rendering.RenderEngine;
 import main.rendering.RenderingLayers;
 import main.utils.data.DataGen;
@@ -48,12 +49,12 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
     }
 
     private void goToLevel(int i){
-        for (BoxCollider solidCollider : levels[currentLevel].getColliders())
+        for (Collider solidCollider : levels[currentLevel].getColliders())
             PhysicEngine.removeCollider(solidCollider);
         RenderEngine.removeFromRenderList(levels[currentLevel]);
         RenderEngine.removeFromRenderList(levels[currentLevel].getLeavesRenderer());
         currentLevel=i;
-        for (BoxCollider solidCollider : levels[currentLevel].getColliders())
+        for (Collider solidCollider : levels[currentLevel].getColliders())
             PhysicEngine.addCollider(solidCollider, CollisionLayers.COLLISION_LAYER_TERRAIN);
         RenderEngine.addToRenderList(levels[currentLevel], RenderingLayers.RENDERING_LAYER_TERRAIN);
         RenderEngine.addToRenderList(levels[currentLevel].getLeavesRenderer(), RenderingLayers.RENDERING_LAYER_LEAVES);
@@ -145,7 +146,9 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
     public void mousePressed(MouseEvent e) {
         switch (e.getButton()){
             case 1:     // Left Click
-                System.out.println(tanks[currentTank].getTurret().fireProjectile());
+                if(!tanks[currentTank].getTurret().fireProjectile()){
+                    System.out.println("Reloading ...");
+                }
                 break;
             case 2:     // Right Click
                 break;

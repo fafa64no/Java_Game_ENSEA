@@ -16,6 +16,11 @@ public class Vec2 {
         this.x = x;
     }
 
+    public Vec2(double t){
+        this.x=t;
+        this.y=t;
+    }
+
     public static Vec2 add(Vec2 a,  Vec2 b){
         return new Vec2(a.x+b.x,a.y+b.y);
     }
