@@ -1,6 +1,6 @@
 package main.utils.vectors;
 
-import main.utils.data.Cfg;
+import main.utils.data.Config;
 
 public class Vec2 {
     public double x;
@@ -75,6 +75,6 @@ public class Vec2 {
     }
 
     public boolean isNull() {
-        return (Math.abs(x) < Cfg.minimumVectorSize)&&(Math.abs(y) < Cfg.minimumVectorSize);
+        return (Math.abs(x) < Config.minimumVectorSize)&&(Math.abs(y) < Config.minimumVectorSize);
     }
 }

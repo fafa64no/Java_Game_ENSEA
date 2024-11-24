@@ -74,10 +74,10 @@ public class DataGen {
             try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        BufferedImage[][] grassTextures = new BufferedImage[Cfg.grassColorsNb][Cfg.grassVariantsNb];
-        for (int i=0;i<Cfg.grassColorsNb;i++){
-            for (int j=0;j<Cfg.grassVariantsNb;j++){
-                grassTextures[i][j]=tileSheet_1.getSubimage((i*Cfg.grassVariantsNb+j)* Cfg.tileSize,0,Cfg.tileSize,Cfg.tileSize);
+        BufferedImage[][] grassTextures = new BufferedImage[Config.grassColorsNb][Config.grassVariantsNb];
+        for (int i = 0; i< Config.grassColorsNb; i++){
+            for (int j = 0; j< Config.grassVariantsNb; j++){
+                grassTextures[i][j]=tileSheet_1.getSubimage((i* Config.grassVariantsNb+j)* Config.smallTileSize,0, Config.smallTileSize, Config.smallTileSize);
             }
         }
         return grassTextures;
@@ -88,10 +88,10 @@ public class DataGen {
             try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        BufferedImage[][] stoneTextures = new BufferedImage[Cfg.stoneColorsNb][Cfg.stoneVariantsNb];
-        for (int i=0;i<Cfg.stoneColorsNb;i++){
-            for (int j=0;j<Cfg.stoneVariantsNb;j++){
-                stoneTextures[i][j]=tileSheet_1.getSubimage((i*Cfg.stoneVariantsNb+j)* Cfg.tileSize,Cfg.tileSize,Cfg.tileSize,Cfg.tileSize);
+        BufferedImage[][] stoneTextures = new BufferedImage[Config.stoneColorsNb][Config.stoneVariantsNb];
+        for (int i = 0; i< Config.stoneColorsNb; i++){
+            for (int j = 0; j< Config.stoneVariantsNb; j++){
+                stoneTextures[i][j]=tileSheet_1.getSubimage((i* Config.stoneVariantsNb+j)* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
             }
         }
         return stoneTextures;
@@ -102,10 +102,10 @@ public class DataGen {
             try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        BufferedImage[][] treeTextures = new BufferedImage[Cfg.treeColorsNb][Cfg.treeVariantsNb];
-        for (int i=0;i<Cfg.treeColorsNb;i++){
-            for (int j=0;j<Cfg.treeVariantsNb;j++){
-                treeTextures[i][j]=tileSheet_1.getSubimage((i*Cfg.treeVariantsNb+j)* Cfg.tileSize,2*Cfg.tileSize,Cfg.tileSize,Cfg.tileSize);
+        BufferedImage[][] treeTextures = new BufferedImage[Config.treeColorsNb][Config.treeVariantsNb];
+        for (int i = 0; i< Config.treeColorsNb; i++){
+            for (int j = 0; j< Config.treeVariantsNb; j++){
+                treeTextures[i][j]=tileSheet_1.getSubimage((i* Config.treeVariantsNb+j)* Config.smallTileSize,2* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
             }
         }
         return treeTextures;
@@ -116,10 +116,10 @@ public class DataGen {
             try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        BufferedImage[][] pathTextures = new BufferedImage[Cfg.pathColorsNb][Cfg.pathVariantsNb];
-        for (int i=0;i<Cfg.pathColorsNb;i++){
-            for (int j=0;j<Cfg.pathVariantsNb;j++){
-                pathTextures[i][j]=tileSheet_1.getSubimage((i*Cfg.pathVariantsNb+j)* Cfg.tileSize,3*Cfg.tileSize,Cfg.tileSize,Cfg.tileSize);
+        BufferedImage[][] pathTextures = new BufferedImage[Config.pathColorsNb][Config.pathVariantsNb];
+        for (int i = 0; i< Config.pathColorsNb; i++){
+            for (int j = 0; j< Config.pathVariantsNb; j++){
+                pathTextures[i][j]=tileSheet_1.getSubimage((i* Config.pathVariantsNb+j)* Config.smallTileSize,3* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
             }
         }
         return pathTextures;
@@ -130,7 +130,7 @@ public class DataGen {
             try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        return tileSheet_1.getSubimage(Cfg.tileSize,4*Cfg.tileSize,Cfg.tileSize,Cfg.tileSize);
+        return tileSheet_1.getSubimage(Config.smallTileSize,4* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
     }
 
     public static BufferedImage getBarrierTexture(){
@@ -138,7 +138,7 @@ public class DataGen {
             try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        return tileSheet_1.getSubimage(0,4*Cfg.tileSize,Cfg.tileSize,Cfg.tileSize);
+        return tileSheet_1.getSubimage(0,4* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
     }
 
     public static BufferedImage[][] getLeavesTextures(){
@@ -146,10 +146,10 @@ public class DataGen {
             try {tileSheet_2 = ImageIO.read(new File("assets/textures/level/tileSheet_2.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        BufferedImage[][] leavesTextures = new BufferedImage[Cfg.leavesColorsNb][Cfg.leavesColorsNb];
-        for (int i=0;i<Cfg.leavesColorsNb;i++){
-            for (int j=0;j<Cfg.leavesColorsNb;j++){
-                leavesTextures[i][j]=tileSheet_2.getSubimage((i*Cfg.leavesColorsNb+j)*2*Cfg.tileSize,3*Cfg.tileSize,2*Cfg.tileSize,2*Cfg.tileSize);
+        BufferedImage[][] leavesTextures = new BufferedImage[Config.leavesColorsNb][Config.leavesVariantsNb];
+        for (int i = 0; i< Config.leavesColorsNb; i++){
+            for (int j = 0; j< Config.leavesVariantsNb; j++){
+                leavesTextures[i][j]=tileSheet_2.getSubimage((i* Config.leavesVariantsNb+j)* Config.largeTileSize,0, Config.largeTileSize, Config.largeTileSize);
             }
         }
         return leavesTextures;

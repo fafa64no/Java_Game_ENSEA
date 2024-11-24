@@ -3,7 +3,7 @@ package main;
 import main.game.GameEngine;
 import main.physics.PhysicEngine;
 import main.rendering.RenderEngine;
-import main.utils.data.Cfg;
+import main.utils.data.Config;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -22,7 +22,7 @@ public class Main {
             gameEngine.update();
         };
 
-        Timer timer=new Timer(Cfg.delayBetweenFrames, updateTasks);
+        Timer timer=new Timer(Config.delayBetweenFrames, updateTasks);
         timer.setRepeats(true);
         timer.start();
 

@@ -1,10 +1,12 @@
 package main.utils.data;
 
-public class Cfg {
+public class Config {
     public final static int delayBetweenFrames=20;
     public final static double minimumVectorSize=0.000000001;
 
-    public final static int tileSize=16;
+    public final static int smallTileSize=16;
+    public final static int largeTileSize=64;
+
     public final static int grassColorsNb=8;
     public final static int grassVariantsNb=4;
     public final static int stoneColorsNb=8;
@@ -14,7 +16,7 @@ public class Cfg {
     public final static int pathColorsNb=8;
     public final static int pathVariantsNb=4;
     public final static int leavesColorsNb=1;
-    public final static int leavesVariantsNb=1;
+    public final static int leavesVariantsNb=4;
 
     public final static double treeHitBoxSize=0.5;
 

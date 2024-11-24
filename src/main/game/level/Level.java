@@ -2,8 +2,9 @@ package main.game.level;
 
 import main.physics.colliders.BoxCollider;
 import main.rendering.Displayable;
+import main.rendering.LeavesRenderer;
 import main.rendering.RenderEngine;
-import main.utils.data.Cfg;
+import main.utils.data.Config;
 import main.utils.data.DataGen;
 import main.utils.vectors.IVec2;
 import main.utils.noise.PseudoRandom;
@@ -33,11 +34,13 @@ public class Level extends JPanel implements Displayable {
     private final BufferedImage trapTexture;
     private final BufferedImage barrierTexture;
 
+    private final LeavesRenderer leavesRenderer;
+
     public Level(IVec2 size,String path){
         map=new char[size.y][size.x];
         mapTextures=new BufferedImage[size.y][size.x];
-        mapOffset.x=-map[0].length * Cfg.tileSize /2.0;
-        mapOffset.y=-map.length * Cfg.tileSize /2.0;
+        mapOffset.x=-map[0].length * Config.smallTileSize /2.0;
+        mapOffset.y=-map.length * Config.smallTileSize /2.0;
         try{
             BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
             for (int i = 0; i< size.y; i++) map[i]=bufferedReader.readLine().toCharArray();
@@ -52,13 +55,15 @@ public class Level extends JPanel implements Displayable {
 
         initTextures();
         initColliders();
+
+        leavesRenderer = new LeavesRenderer(map,mapOffset);
     }
 
     public Level(IVec2 size){
         map=LevelGenerator.genTerrain(size);
         mapTextures=new BufferedImage[size.y][size.x];
-        mapOffset.x=-map[0].length * Cfg.tileSize /2.0;
-        mapOffset.y=-map.length * Cfg.tileSize /2.0;
+        mapOffset.x=-map[0].length * Config.smallTileSize /2.0;
+        mapOffset.y=-map.length * Config.smallTileSize /2.0;
 
         grassTextures = DataGen.getGrassTextures();
         stoneTextures = DataGen.getStoneTextures();
@@ -69,6 +74,8 @@ public class Level extends JPanel implements Displayable {
 
         initTextures();
         initColliders();
+
+        leavesRenderer = new LeavesRenderer(map,mapOffset);
     }
 
     private void initTextures(){
@@ -76,23 +83,23 @@ public class Level extends JPanel implements Displayable {
             for (int y = 0; y < map.length; y++) {
                 switch (map[y][x]){
                     case 'R':
-                        mapTextures[y][x]=stoneTextures[PseudoRandom.getRandomBetween(0,stoneTextures.length-1,x,y,Cfg.noiseSizeTerrainColor)]
-                                [PseudoRandom.getRandomBetween(0,stoneTextures[0].length-1,x,y,Cfg.noiseSizeTerrainVariant)];
+                        mapTextures[y][x]=stoneTextures[PseudoRandom.getRandomBetween(0,stoneTextures.length-1,x,y, Config.noiseSizeTerrainColor)]
+                                [PseudoRandom.getRandomBetween(0,stoneTextures[0].length-1,x,y, Config.noiseSizeTerrainVariant)];
                         break;
                     case 'T':
-                        mapTextures[y][x]=treeTextures[PseudoRandom.getRandomBetween(0,treeTextures.length-1,x,y,Cfg.noiseSizeTerrainColor)]
-                                [PseudoRandom.getRandomBetween(0,treeTextures[0].length-1,x,y,Cfg.noiseSizeTerrainVariant)];
+                        mapTextures[y][x]=treeTextures[PseudoRandom.getRandomBetween(0,treeTextures.length-1,x,y, Config.noiseSizeTerrainColor)]
+                                [PseudoRandom.getRandomBetween(0,treeTextures[0].length-1,x,y, Config.noiseSizeTerrainVariant)];
                         break;
                     case 'P':
-                        mapTextures[y][x]=pathTextures[PseudoRandom.getRandomBetween(0,pathTextures.length-1,x,y,Cfg.noiseSizeTerrainColor)]
-                                [PseudoRandom.getRandomBetween(0,pathTextures[0].length-1,x,y,Cfg.noiseSizeTerrainVariant)];
+                        mapTextures[y][x]=pathTextures[PseudoRandom.getRandomBetween(0,pathTextures.length-1,x,y, Config.noiseSizeTerrainColor)]
+                                [PseudoRandom.getRandomBetween(0,pathTextures[0].length-1,x,y, Config.noiseSizeTerrainVariant)];
                         break;
                     case 'H':
                         mapTextures[y][x]=trapTexture;
                         break;
                     default:
-                        mapTextures[y][x]=grassTextures[PseudoRandom.getRandomBetween(0,grassTextures.length-1,x,y,Cfg.noiseSizeTerrainColor)]
-                                [PseudoRandom.getRandomBetween(0,grassTextures[0].length-1,x,y,Cfg.noiseSizeTerrainVariant)];
+                        mapTextures[y][x]=grassTextures[PseudoRandom.getRandomBetween(0,grassTextures.length-1,x,y, Config.noiseSizeTerrainColor)]
+                                [PseudoRandom.getRandomBetween(0,grassTextures[0].length-1,x,y, Config.noiseSizeTerrainVariant)];
                         break;
                 }
             }
@@ -109,13 +116,13 @@ public class Level extends JPanel implements Displayable {
         ));
         for (int x=0;x<map[0].length;x++){
             for (int y=0;y<map.length;y++){
-                int posX=(int)-Math.round(Cfg.tileSize*(x+0.5)+mapOffset.x);
-                int posY=(int)-Math.round(Cfg.tileSize*(y+0.5)+mapOffset.y);
+                int posX=(int)-Math.round(Config.smallTileSize *(x+0.5)+mapOffset.x);
+                int posY=(int)-Math.round(Config.smallTileSize *(y+0.5)+mapOffset.y);
                 switch (this.map[y][x]){
                     case 'R':
                         colliders.add(new BoxCollider(
-                                new Vec2(-Cfg.tileSize/2.0,-Cfg.tileSize/2.0),
-                                new Vec2( Cfg.tileSize/2.0, Cfg.tileSize/2.0),
+                                new Vec2(-Config.smallTileSize /2.0,-Config.smallTileSize /2.0),
+                                new Vec2( Config.smallTileSize /2.0, Config.smallTileSize /2.0),
                                 false,
                                 0.5,
                                 new Vec2(posX,posY)
@@ -123,8 +130,8 @@ public class Level extends JPanel implements Displayable {
                         break;
                     case 'T':
                         colliders.add(new BoxCollider(
-                                new Vec2(-Cfg.treeHitBoxSize*Cfg.tileSize/2.0,-Cfg.treeHitBoxSize*Cfg.tileSize/2.0),
-                                new Vec2( Cfg.treeHitBoxSize*Cfg.tileSize/2.0, Cfg.treeHitBoxSize*Cfg.tileSize/2.0),
+                                new Vec2(-Config.treeHitBoxSize* Config.smallTileSize /2.0,-Config.treeHitBoxSize* Config.smallTileSize /2.0),
+                                new Vec2( Config.treeHitBoxSize* Config.smallTileSize /2.0, Config.treeHitBoxSize* Config.smallTileSize /2.0),
                                 false,
                                 0.2,
                                 new Vec2(posX,posY)
@@ -138,8 +145,8 @@ public class Level extends JPanel implements Displayable {
     }
 
     public double getGroundSpeed(Vec2 position){
-        int tilePosX = Math.clamp((int) Math.round((position.x-mapOffset.x)/Cfg.tileSize),0,map[0].length-1);
-        int tilePosY = Math.clamp((int) Math.round((position.y-mapOffset.y)/Cfg.tileSize),0,map.length-1);
+        int tilePosX = Math.clamp((int) Math.round((position.x-mapOffset.x)/ Config.smallTileSize),0,map[0].length-1);
+        int tilePosY = Math.clamp((int) Math.round((position.y-mapOffset.y)/ Config.smallTileSize),0,map.length-1);
         char tile = map[tilePosY][tilePosX];
         return switch (tile) {
             case 'P' -> 1.5;
@@ -151,21 +158,35 @@ public class Level extends JPanel implements Displayable {
     public Vec4 getTilesWindow(){
         Vec2 cameraCenter=RenderEngine.getCurrentCamera().getTargetOffset();
         return new Vec4(
-                cameraCenter.x-RenderEngine.getInstance().getContentPane().getSize().width /(2*Cfg.tileSize*RenderEngine.getCurrentCamera().getScale().x)+map[0].length/2.0,
-                cameraCenter.y-RenderEngine.getInstance().getContentPane().getSize().height/(2*Cfg.tileSize*RenderEngine.getCurrentCamera().getScale().y)+map.length/2.0,
-                cameraCenter.x+RenderEngine.getInstance().getContentPane().getSize().width /(2*Cfg.tileSize*RenderEngine.getCurrentCamera().getScale().x)+map[0].length/2.0,
-                cameraCenter.y+RenderEngine.getInstance().getContentPane().getSize().height/(2*Cfg.tileSize*RenderEngine.getCurrentCamera().getScale().y)+map.length/2.0
+                cameraCenter.x-RenderEngine.getInstance().getContentPane().getSize().width /(2* Config.smallTileSize *RenderEngine.getCurrentCamera().getScale().x)+map[0].length/2.0,
+                cameraCenter.y-RenderEngine.getInstance().getContentPane().getSize().height/(2* Config.smallTileSize *RenderEngine.getCurrentCamera().getScale().y)+map.length/2.0,
+                cameraCenter.x+RenderEngine.getInstance().getContentPane().getSize().width /(2* Config.smallTileSize *RenderEngine.getCurrentCamera().getScale().x)+map[0].length/2.0,
+                cameraCenter.y+RenderEngine.getInstance().getContentPane().getSize().height/(2* Config.smallTileSize *RenderEngine.getCurrentCamera().getScale().y)+map.length/2.0
         );
     }
 
     public IVec4 getTilesIDWindow(){
         Vec4 tilesWindow=getTilesWindow();
         return new IVec4(
-            (int) Math.floor(Math.max(-Cfg.mapHorizontalWallThickness, tilesWindow.x)),
-            (int) Math.ceil(Math.min(map[0].length+Cfg.mapHorizontalWallThickness, tilesWindow.z)),
-            (int) Math.floor(Math.max(-Cfg.mapVerticalWallThickness, tilesWindow.y)),
-            (int) Math.ceil(Math.min(map.length+Cfg.mapVerticalWallThickness, tilesWindow.w))
+            (int) Math.floor(Math.max(-Config.mapHorizontalWallThickness, tilesWindow.x)),
+            (int) Math.ceil(Math.min(map[0].length+ Config.mapHorizontalWallThickness, tilesWindow.z)),
+            (int) Math.floor(Math.max(-Config.mapVerticalWallThickness, tilesWindow.y)),
+            (int) Math.ceil(Math.min(map.length+ Config.mapVerticalWallThickness, tilesWindow.w))
         );
+    }
+
+    public IVec4 getTilesIDWindow(IVec2 additionalCameraSize){
+        Vec4 tilesWindow=getTilesWindow();
+        return new IVec4(
+                (int) Math.floor(Math.max(0, tilesWindow.x-additionalCameraSize.x)),
+                (int) Math.ceil(Math.min(map[0].length, tilesWindow.z+additionalCameraSize.x)),
+                (int) Math.floor(Math.max(0, tilesWindow.y-additionalCameraSize.y)),
+                (int) Math.ceil(Math.min(map.length, tilesWindow.w+additionalCameraSize.y))
+        );
+    }
+
+    public LeavesRenderer getLeavesRenderer() {
+        return leavesRenderer;
     }
 
     @Override
@@ -189,8 +210,8 @@ public class Level extends JPanel implements Displayable {
         IVec4 tileIDWindow = getTilesIDWindow();
         for (int x = tileIDWindow.x; x < tileIDWindow.y; x++) {
             for (int y = tileIDWindow.z; y < tileIDWindow.w; y++) {
-                double posX=mapOffset.x+x*Cfg.tileSize;
-                double posY=mapOffset.y+y*Cfg.tileSize;
+                double posX=mapOffset.x+x* Config.smallTileSize;
+                double posY=mapOffset.y+y* Config.smallTileSize;
                 g2d.translate(posX,posY);
                 if(x>=0&&x<map[0].length&&y>=0&&y<map.length){
                     g2d.drawRenderedImage(mapTextures[y][x],null);
