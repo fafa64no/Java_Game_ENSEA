@@ -30,4 +30,6 @@ public class Config {
     public final static int noiseSizeTerrainStones=64;
     public final static int noiseSizeTerrainTrees=1;
     public final static int noiseSizeTerrainTraps=8;
+
+    public final static int maxProjectilesPerProjectileHandler=256;
 }

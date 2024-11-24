@@ -40,7 +40,7 @@ public class Vec2 {
         return new Vec2(a.x-b.x,a.y-b.y);
     }
 
-    private Vec2 normalize(){
+    public Vec2 normalize(){
         double length=getLength();
         return new Vec2(
                 x/length,
@@ -64,6 +64,17 @@ public class Vec2 {
 
     public double getAngle(){
         return Math.atan2(y,x);
+    }
+
+    public Vec2 rotateBy(double rotation){
+        return new Vec2(
+                x*Math.cos(rotation)+y*Math.sin(rotation),
+                x*Math.sin(rotation)-y*Math.cos(rotation)
+        );
+    }
+
+    public Vec2 copy(){
+        return new Vec2(x,y);
     }
 
     @Override

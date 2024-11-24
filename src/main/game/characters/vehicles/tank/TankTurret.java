@@ -2,6 +2,7 @@ package main.game.characters.vehicles.tank;
 
 import main.game.characters.vehicles.Vehicle;
 import main.game.projectiles.ProjectileHandler;
+import main.game.projectiles.TankShell;
 import main.rendering.RenderEngine;
 import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
@@ -14,15 +15,14 @@ public class TankTurret extends Vehicle {
 
     public TankTurret(Vec2 position, String texturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed) {
         super(position, texturePath, 0, animationFrames, textureSize, rotationSpeed);
-        this.parent=parent;
-        this.projectile=null;
+        this.parent = parent;
+        this.projectile = TankShell.getInstance();
     }
 
     public TankTurret(Vec2 position, String texturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed, Vec2 scale) {
-        super(position, texturePath, 0, animationFrames, textureSize, rotationSpeed);
-        this.parent=parent;
-        super.scale=scale;
-        this.projectile=null;
+        super(position, texturePath, 0, animationFrames, textureSize, rotationSpeed, scale);
+        this.parent = parent;
+        this.projectile = TankShell.getInstance();
     }
 
     protected void computeNewRotation(double parentRotationModifier){
@@ -53,8 +53,7 @@ public class TankTurret extends Vehicle {
 
     public boolean fireProjectile(){
         if(projectile==null)return false;
-        Vec2 targetPosition=getTargetPosition();
-        projectile.fireInDirection(targetPosition,this.position);
+        projectile.fireInDirection(this.position,this.rotation);
         return true;
     }
 

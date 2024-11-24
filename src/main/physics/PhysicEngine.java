@@ -2,6 +2,7 @@ package main.physics;
 
 import main.game.DynamicSprite;
 import main.physics.colliders.Collider;
+import main.rendering.RenderEngine;
 import main.utils.Engine;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;
@@ -41,7 +42,8 @@ public class PhysicEngine implements Engine {
     }
 
     public static PhysicEngine getInstance() {
-        return instance;
+        if(instance!=null)return instance;
+        return new PhysicEngine();
     }
 
     @Override

@@ -66,93 +66,110 @@ public class DataGen {
 
 /*      ################ - Textures - ################      */
 
-    private static BufferedImage tileSheet_1 = null;
-    private static BufferedImage tileSheet_2 = null;
+    private static BufferedImage smallTiles = null;
+    private static BufferedImage largeTiles = null;
+    private static BufferedImage smallShells = null;
 
     public static BufferedImage[][] getGrassTextures(){
-        if(tileSheet_1 ==null) {
-            try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
+        if(smallTiles ==null) {
+            try {
+                smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
         BufferedImage[][] grassTextures = new BufferedImage[Config.grassColorsNb][Config.grassVariantsNb];
         for (int i = 0; i< Config.grassColorsNb; i++){
             for (int j = 0; j< Config.grassVariantsNb; j++){
-                grassTextures[i][j]=tileSheet_1.getSubimage((i* Config.grassVariantsNb+j)* Config.smallTileSize,0, Config.smallTileSize, Config.smallTileSize);
+                grassTextures[i][j]= smallTiles.getSubimage((i* Config.grassVariantsNb+j)* Config.smallTileSize,0, Config.smallTileSize, Config.smallTileSize);
             }
         }
         return grassTextures;
     }
 
     public static BufferedImage[][] getStoneTextures(){
-        if(tileSheet_1 ==null) {
-            try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
+        if(smallTiles ==null) {
+            try {
+                smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
         BufferedImage[][] stoneTextures = new BufferedImage[Config.stoneColorsNb][Config.stoneVariantsNb];
         for (int i = 0; i< Config.stoneColorsNb; i++){
             for (int j = 0; j< Config.stoneVariantsNb; j++){
-                stoneTextures[i][j]=tileSheet_1.getSubimage((i* Config.stoneVariantsNb+j)* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
+                stoneTextures[i][j]= smallTiles.getSubimage((i* Config.stoneVariantsNb+j)* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
             }
         }
         return stoneTextures;
     }
 
     public static BufferedImage[][] getTreeTextures(){
-        if(tileSheet_1 ==null) {
-            try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
+        if(smallTiles ==null) {
+            try {
+                smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
         BufferedImage[][] treeTextures = new BufferedImage[Config.treeColorsNb][Config.treeVariantsNb];
         for (int i = 0; i< Config.treeColorsNb; i++){
             for (int j = 0; j< Config.treeVariantsNb; j++){
-                treeTextures[i][j]=tileSheet_1.getSubimage((i* Config.treeVariantsNb+j)* Config.smallTileSize,2* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
+                treeTextures[i][j]= smallTiles.getSubimage((i* Config.treeVariantsNb+j)* Config.smallTileSize,2* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
             }
         }
         return treeTextures;
     }
 
     public static BufferedImage[][] getPathTextures(){
-        if(tileSheet_1 ==null) {
-            try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
+        if(smallTiles ==null) {
+            try {
+                smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
         BufferedImage[][] pathTextures = new BufferedImage[Config.pathColorsNb][Config.pathVariantsNb];
         for (int i = 0; i< Config.pathColorsNb; i++){
             for (int j = 0; j< Config.pathVariantsNb; j++){
-                pathTextures[i][j]=tileSheet_1.getSubimage((i* Config.pathVariantsNb+j)* Config.smallTileSize,3* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
+                pathTextures[i][j]= smallTiles.getSubimage((i* Config.pathVariantsNb+j)* Config.smallTileSize,3* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
             }
         }
         return pathTextures;
     }
 
     public static BufferedImage getTrapTexture(){
-        if(tileSheet_1 ==null) {
-            try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
+        if(smallTiles ==null) {
+            try {
+                smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        return tileSheet_1.getSubimage(Config.smallTileSize,4* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
+        return smallTiles.getSubimage(Config.smallTileSize,4* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
     }
 
     public static BufferedImage getBarrierTexture(){
-        if(tileSheet_1 ==null) {
-            try {tileSheet_1 = ImageIO.read(new File("assets/textures/level/tileSheet_1.png"));}
+        if(smallTiles ==null) {
+            try {
+                smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        return tileSheet_1.getSubimage(0,4* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
+        return smallTiles.getSubimage(0,4* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
     }
 
     public static BufferedImage[][] getLeavesTextures(){
-        if(tileSheet_2 ==null) {
-            try {tileSheet_2 = ImageIO.read(new File("assets/textures/level/tileSheet_2.png"));}
+        if(largeTiles ==null) {
+            try {
+                largeTiles = ImageIO.read(new File("assets/textures/level/largeTiles.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
         BufferedImage[][] leavesTextures = new BufferedImage[Config.leavesColorsNb][Config.leavesVariantsNb];
         for (int i = 0; i< Config.leavesColorsNb; i++){
             for (int j = 0; j< Config.leavesVariantsNb; j++){
-                leavesTextures[i][j]=tileSheet_2.getSubimage((i* Config.leavesVariantsNb+j)* Config.largeTileSize,0, Config.largeTileSize, Config.largeTileSize);
+                leavesTextures[i][j]= largeTiles.getSubimage((i* Config.leavesVariantsNb+j)* Config.largeTileSize,0, Config.largeTileSize, Config.largeTileSize);
             }
         }
         return leavesTextures;
+    }
+
+    public static BufferedImage getTankShellTexture(){
+        if(smallShells ==null) {
+            try {
+                smallShells = ImageIO.read(new File("assets/textures/projectiles/smallShells.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        return smallShells.getSubimage(0,0, Config.smallTileSize, Config.smallTileSize);
     }
 
 /*      ################ - Cameras - ################      */

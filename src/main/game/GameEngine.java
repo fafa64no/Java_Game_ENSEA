@@ -3,6 +3,7 @@ package main.game;
 import main.game.characters.vehicles.tank.Tank;
 import main.game.hud.HudManager;
 import main.game.level.Level;
+import main.game.projectiles.ProjectileHandler;
 import main.physics.colliders.BoxCollider;
 import main.physics.CollisionLayers;
 import main.physics.PhysicEngine;
@@ -10,13 +11,14 @@ import main.rendering.RenderEngine;
 import main.rendering.RenderingLayers;
 import main.utils.data.DataGen;
 import main.utils.Engine;
-import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameEngine implements KeyListener, Engine, MouseListener {
     private static GameEngine instance;
@@ -25,6 +27,8 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
     private final Tank[] tanks;
     private int currentLevel=0;
     private int currentTank=0;
+
+    private final List<ProjectileHandler> projectileHandlers = new ArrayList<>();
 
     private final Vec2 currentInputDir = new Vec2();
     private final HudManager hudManager=new HudManager();
@@ -69,16 +73,22 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
     }
 
     public static GameEngine getInstance() {
-        return instance;
+        if(instance!=null)return instance;
+        return new GameEngine();
     }
 
     public static Level getCurrentLevel() {
         return instance.levels[instance.currentLevel];
     }
 
+    public static void addProjectileHandler(ProjectileHandler projectileHandler){
+        if(projectileHandler!=null)instance.projectileHandlers.add(projectileHandler);
+    }
+
     @Override
     public void update() {
         tanks[currentTank].setInput(currentInputDir);
+        for(ProjectileHandler projectileHandler : instance.projectileHandlers)projectileHandler.updateLifetimes();
     }
 
     @Override

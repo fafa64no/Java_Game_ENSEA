@@ -102,7 +102,8 @@ public class RenderEngine extends JFrame implements Engine {
     }
 
     public static RenderEngine getInstance() {
-        return instance;
+        if(instance!=null)return instance;
+        return new RenderEngine();
     }
 
     public static Vec2 getMiddleOfFrame(){
