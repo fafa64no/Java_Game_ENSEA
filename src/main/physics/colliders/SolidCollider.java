@@ -1,6 +1,7 @@
 package main.physics.colliders;
 
 import main.game.DynamicSprite;
+import main.physics.ColliderType;
 import main.utils.vectors.Vec2;
 
 public abstract class SolidCollider implements Collider{
@@ -9,6 +10,7 @@ public abstract class SolidCollider implements Collider{
     protected Vec2 offset;
     protected final Vec2 initialOffset;
     protected final DynamicSprite parent;
+    protected final ColliderType colliderType;
 
     public SolidCollider(boolean inverted, double friction,Vec2 offset){
         this.inverted=inverted;
@@ -16,6 +18,7 @@ public abstract class SolidCollider implements Collider{
         this.offset=offset;
         this.initialOffset=offset;
         this.parent=null;
+        this.colliderType=ColliderType.SOLID_INERT;
     }
 
     public SolidCollider(boolean inverted, double friction,Vec2 offset, DynamicSprite parent){
@@ -24,6 +27,16 @@ public abstract class SolidCollider implements Collider{
         this.offset=offset;
         this.initialOffset=offset;
         this.parent=parent;
+        this.colliderType=ColliderType.SOLID_INERT;
+    }
+
+    public SolidCollider(boolean inverted, double friction,Vec2 offset, DynamicSprite parent, ColliderType colliderType){
+        this.inverted=inverted;
+        this.friction=friction;
+        this.offset=offset;
+        this.initialOffset=offset;
+        this.parent=parent;
+        this.colliderType=colliderType;
     }
 
     public boolean isInverted() {return inverted;}
@@ -31,7 +44,7 @@ public abstract class SolidCollider implements Collider{
     public double getFriction() {return friction;}
 
     @Override
-    public void onCollide() {
+    public void onCollide(ColliderType colliderType) {
 
     }
 
@@ -46,10 +59,9 @@ public abstract class SolidCollider implements Collider{
     }
 
     @Override
-    public void setOffset(DynamicSprite requester, Vec2 offset) {
-        if(requester==parent){
-            this.offset=Vec2.add(initialOffset,offset);
-        }
+    public void setOffset() {
+        if(parent==null)return;
+        this.offset=Vec2.add(initialOffset,parent.getPosition());
     }
 
     @Override
@@ -61,5 +73,10 @@ public abstract class SolidCollider implements Collider{
                 ", initialOffset=" + initialOffset +
                 ", parent=" + parent +
                 '}';
+    }
+
+    @Override
+    public ColliderType getColliderType() {
+        return colliderType;
     }
 }

@@ -2,7 +2,6 @@ package main.physics;
 
 import main.game.DynamicSprite;
 import main.physics.colliders.Collider;
-import main.rendering.RenderEngine;
 import main.utils.Engine;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;
@@ -59,12 +58,14 @@ public class PhysicEngine implements Engine {
             for(Collider colliderTerrain : colliderList_layer0){
                 Collision collision=colliderAlly.doCollide(colliderTerrain,velocity);
                 if(collision==null)continue;
-                colliderTerrain.onCollide();
-                if(collision.collisions.x){
+                colliderAlly.onCollide(colliderTerrain.getColliderType());
+                colliderTerrain.onCollide(colliderAlly.getColliderType());
+                boolean doesPreventMovement = colliderTerrain.getColliderType()==ColliderType.SOLID_INERT ||colliderTerrain.getColliderType()==ColliderType.SOLID_DAMAGE_DEALER;
+                if(collision.collisions.x&&doesPreventMovement){
                     canMove.x=false;
                     currentInverseFriction=Math.min(currentInverseFriction,colliderTerrain.getFriction());
                 }
-                if(collision.collisions.y){
+                if(collision.collisions.y&&doesPreventMovement){
                     canMove.y=false;
                     currentInverseFriction=Math.min(currentInverseFriction,colliderTerrain.getFriction());
                 }
@@ -72,8 +73,27 @@ public class PhysicEngine implements Engine {
                     break;
                 }
             }
+
+            for(Collider colliderEnemy : colliderList_layer2){
+                Collision collision=colliderAlly.doCollide(colliderEnemy,velocity);
+                if(collision==null)continue;
+                colliderAlly.onCollide(colliderEnemy.getColliderType());
+                colliderEnemy.onCollide(colliderAlly.getColliderType());
+                boolean doesPreventMovement = colliderEnemy.getColliderType()==ColliderType.SOLID_INERT || colliderEnemy.getColliderType()==ColliderType.SOLID_DAMAGE_DEALER;
+                if(collision.collisions.x&&doesPreventMovement){
+                    canMove.x=false;
+                    currentInverseFriction=Math.min(currentInverseFriction, colliderEnemy.getFriction());
+                }
+                if(collision.collisions.y&&doesPreventMovement){
+                    canMove.y=false;
+                    currentInverseFriction=Math.min(currentInverseFriction, colliderEnemy.getFriction());
+                }
+                if(canMove.isFalse()){
+                    break;
+                }
+            }
+
             dynamicSprite.goToNextPosition(canMove,currentInverseFriction);
-            colliderAlly.onCollide();
         }
     }
 }

@@ -47,6 +47,9 @@ public class Vec2 {
     public static Vec2 substract(Vec2 a, Vec2 b){
         return new Vec2(a.x-b.x,a.y-b.y);
     }
+    public static Vec2 addSubstract(Vec2 a, Vec2 b,  Vec2 c){
+        return new Vec2(a.x+b.x-c.x,a.y+b.y-c.y);
+    }
 
     public Vec2 normalize(){
         double length=getLength();

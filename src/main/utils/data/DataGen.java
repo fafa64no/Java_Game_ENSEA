@@ -28,7 +28,7 @@ public class DataGen {
     public static Tank[] genTanks(){
         Tank[] tanks=new Tank[3];
         tanks[0]=new Tank(
-                new Vec2(),
+                new Vec2(-64,0),
                 "./assets/textures/characters/tanks/test/base.png",
                 "./assets/textures/characters/tanks/test/turret.png",
                 15,
@@ -53,7 +53,7 @@ public class DataGen {
                 new Vec2(15,15)
         );
         tanks[2]=new Tank(
-                new Vec2(),
+                new Vec2(64,0),
                 "./assets/textures/characters/tanks/panzer_IV_brown/base.png",
                 "./assets/textures/characters/tanks/panzer_IV_brown/turret.png",
                 6,
