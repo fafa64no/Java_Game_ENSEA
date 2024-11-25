@@ -15,10 +15,12 @@ public class Main {
     private static GameEngine gameEngine;
 
     public static void main(String[] args) {
-        Debug.printTimeSinceLast("Test");
+        Debug.printTimeSinceLast(null);
+
         physicEngine=new PhysicEngine();
         renderEngine=new RenderEngine();
         Debug.printTimeSinceLast("Started RenderEngine and PhysicEngine");
+
         gameEngine=new GameEngine();
         Debug.printTimeSinceLast("Started GameEngine");
 
@@ -34,7 +36,7 @@ public class Main {
 
         RenderEngine.paint();
 
-        Debug.printTimeSinceLast("End of main");
+        Debug.printTimeSinceLast("Reached end of main");
         Debug.printTime("---");
     }
 }

@@ -152,7 +152,7 @@ public class Level extends JPanel implements Displayable {
                 }
             }
         }
-        System.out.println("\nGenerated cubes : "+cube0count+" | "+cube1count+"\n\t||| "+(cube0count+cube1count)+"\n");
+        System.out.println("\nGenerated cubes : "+(cube0count+cube1count)+"\n\t0 : "+cube0count+"\n\t1 : "+cube1count);
     }
 
     public double getGroundSpeed(Vec2 position){

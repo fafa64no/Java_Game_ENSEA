@@ -6,13 +6,12 @@ public class Debug {
     private static long lastTimeRecorded = Config.startTime;
 
     public static void printTimeSinceLast(String text){
-        System.out.println("-- Debug | "+text+" : "+(System.currentTimeMillis()-lastTimeRecorded)+" ms");
+        if(text!=null)System.out.println("-- Debug | "+text+" : "+(System.currentTimeMillis()-lastTimeRecorded)+" ms");
         lastTimeRecorded = System.currentTimeMillis();
     }
 
     public static void printTimeSinceLast(){
-        System.out.println("-- Debug | Unnamed : "+(System.currentTimeMillis()-lastTimeRecorded)+" ms");
-        lastTimeRecorded = System.currentTimeMillis();
+        printTimeSinceLast("Unnamed");
     }
 
     public static void printTime(String text){
@@ -20,6 +19,6 @@ public class Debug {
     }
 
     public static void printTime(){
-        System.out.println("-- Debug | Unnamed : "+(System.currentTimeMillis()-Config.startTime)+" ms");
+        printTime("Unnamed");
     }
 }

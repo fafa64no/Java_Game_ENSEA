@@ -1,5 +1,6 @@
 package main.game.characters.vehicles.tank;
 
+import main.game.GameEngine;
 import main.game.characters.LifeStates;
 import main.game.characters.vehicles.Vehicle;
 import main.physics.colliders.BoxCollider;
@@ -71,7 +72,7 @@ public class Tank extends Vehicle {
     }
 
     public void computeNewRotation(){
-        if(lifeState==LifeStates.CURRENTLY_DEAD)return;
+        if(lifeState == LifeStates.CURRENTLY_DEAD || this != GameEngine.getCurrentTank()) return;
         double rotationModifier=super.rotationSpeed*super.currentDir.x;
         super.rotation=(super.rotation+rotationModifier)%(2*Math.PI);
         tankTurret.computeNewRotation(rotationModifier);

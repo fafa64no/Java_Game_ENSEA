@@ -13,6 +13,6 @@ public class HudManager {
                 new Vec2(3, 3),
                 new IVec2(9, 9)
         );
-        RenderEngine.addToRenderList(cursor, RenderingLayers.RENDERING_LAYER_AIR);
+        RenderEngine.addToRenderList(cursor, RenderingLayers.RENDERING_LAYER_HUD);
     }
 }

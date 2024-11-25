@@ -1,5 +1,6 @@
 package main.game.characters.vehicles.tank;
 
+import main.game.GameEngine;
 import main.game.characters.LifeStates;
 import main.game.characters.vehicles.Vehicle;
 import main.game.projectiles.ProjectileHandler;
@@ -52,6 +53,7 @@ public class TankTurret extends Vehicle {
     }
 
     private double getTargetRotation() {
+        if(parent != GameEngine.getCurrentTank()) return 0;
         Vec2 targetPosition=getTargetPosition();
         return (new Vec2(
                 targetPosition.x- this.position.x,

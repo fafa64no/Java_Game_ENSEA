@@ -36,7 +36,6 @@ public class LevelGenerator {
                 output[y][x]='.';
             }
         }
-        writeMap(output);
         return output;
     }
 

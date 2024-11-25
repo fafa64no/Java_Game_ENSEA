@@ -42,7 +42,7 @@ public class RenderEngine extends JFrame implements Engine {
 
     public static void addToRenderList(Displayable displayable,RenderingLayers layer){
         switch (layer){
-            case RENDERING_LAYER_AIR:
+            case RENDERING_LAYER_HUD:
                 instance.displayableList_layer0.add(displayable);    break;
             case RENDERING_LAYER_LEAVES:
                 instance.displayableList_layer1.add(displayable);    break;
@@ -69,27 +69,22 @@ public class RenderEngine extends JFrame implements Engine {
             displayable.draw();
             instance.setVisible(true);
         }
-        Debug.printTimeSinceLast("Painted layer 0");
         for (Displayable displayable : instance.displayableList_layer1) {
             displayable.draw();
             instance.setVisible(true);
         }
-        Debug.printTimeSinceLast("Painted layer 1");
         for (Displayable displayable : instance.displayableList_layer2) {
             displayable.draw();
             instance.setVisible(true);
         }
-        Debug.printTimeSinceLast("Painted layer 2");
         for (Displayable displayable : instance.displayableList_layer3) {
             displayable.draw();
             instance.setVisible(true);
         }
-        Debug.printTimeSinceLast("Painted layer 3");
         for (Displayable displayable : instance.displayableList_layer4) {
             displayable.draw();
             instance.setVisible(true);
         }
-        Debug.printTimeSinceLast("Painted layer 4");
     }
 
     public static Camera getCurrentCamera() {

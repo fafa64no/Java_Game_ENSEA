@@ -41,15 +41,16 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
         levels=DataGen.genLevels();
         tanks=DataGen.genTanks();
 
-        Debug.printTimeSinceLast("Generated levels");
+        Debug.printTimeSinceLast("Generated levels from char array");
+
+        goToLevel(0);
+        swapTank(1);
 
         for(Tank tank : tanks){
             RenderEngine.addToRenderList(tank,RenderingLayers.RENDERING_LAYER_TANK);
             RenderEngine.addToRenderList(tank.getTurret(),RenderingLayers.RENDERING_LAYER_TURRET);
+            PhysicEngine.addCollider(tank.getCollider(),CollisionLayers.COLLISION_LAYER_ALLIES);
         }
-
-        goToLevel(0);
-        swapTank(1);
 
         RenderEngine.setupCameras(tanks);
         RenderEngine.getInstance().addKeyListener(instance);
@@ -68,13 +69,12 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
         RenderEngine.addToRenderList(levels[currentLevel], RenderingLayers.RENDERING_LAYER_TERRAIN);
         RenderEngine.addToRenderList(levels[currentLevel].getLeavesRenderer(), RenderingLayers.RENDERING_LAYER_LEAVES);
         RenderEngine.addToRenderList(levels[currentLevel].getCubeRenderer(), RenderingLayers.RENDERING_LAYER_TANK);
+        RenderEngine.paint();
     }
 
     private void swapTank(int i){
-        PhysicEngine.removeCollider(tanks[currentTank].getCollider());
         currentTank=i;
         RenderEngine.setCurrentCamera(this,i);
-        PhysicEngine.addCollider(tanks[currentTank].getCollider(),CollisionLayers.COLLISION_LAYER_ALLIES);
     }
 
     public static GameEngine getInstance() {
@@ -88,6 +88,10 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
 
     public static void addProjectileHandler(ProjectileHandler projectileHandler){
         if(projectileHandler!=null)instance.projectileHandlers.add(projectileHandler);
+    }
+
+    public static Tank getCurrentTank(){
+        return instance.tanks[instance.currentTank];
     }
 
     @Override
