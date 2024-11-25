@@ -51,8 +51,6 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
         goToLevel(0);
         swapTank(1);
 
-        RenderEngine.paint();
-
         RenderEngine.setupCameras(tanks);
         RenderEngine.getInstance().addKeyListener(instance);
         RenderEngine.getInstance().addMouseListener(instance);
@@ -63,12 +61,13 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
             PhysicEngine.removeCollider(collider);
         RenderEngine.removeFromRenderList(levels[currentLevel]);
         RenderEngine.removeFromRenderList(levels[currentLevel].getLeavesRenderer());
+        RenderEngine.removeFromRenderList(levels[currentLevel].getCubeRenderer());
         currentLevel=i;
         for (Collider collider : levels[currentLevel].getColliders())
             PhysicEngine.addCollider(collider, CollisionLayers.COLLISION_LAYER_TERRAIN);
         RenderEngine.addToRenderList(levels[currentLevel], RenderingLayers.RENDERING_LAYER_TERRAIN);
         RenderEngine.addToRenderList(levels[currentLevel].getLeavesRenderer(), RenderingLayers.RENDERING_LAYER_LEAVES);
-        Debug.printTimeSinceLast("Swapped level");
+        RenderEngine.addToRenderList(levels[currentLevel].getCubeRenderer(), RenderingLayers.RENDERING_LAYER_TANK);
     }
 
     private void swapTank(int i){

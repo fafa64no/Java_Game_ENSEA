@@ -7,13 +7,13 @@ import main.physics.PhysicEngine;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
 import main.rendering.RenderEngine;
-import main.rendering.RenderingLayers;
 import main.utils.data.Config;
 import main.utils.data.DataGen;
 import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class BasicCube extends Character implements RedCube{
     private final Collider collider;
@@ -39,7 +39,6 @@ public class BasicCube extends Character implements RedCube{
                 this,
                 ColliderType.NONE_DAMAGE_DEALER
         );
-        //RenderEngine.addToRenderList(this, RenderingLayers.RENDERING_LAYER_TANK);
         PhysicEngine.addCollider(collider, CollisionLayers.COLLISION_LAYER_ENNEMIES);
         PhysicEngine.addCollider(damageZone, CollisionLayers.COLLISION_LAYER_ENNEMIES);
         collider.setOffset();
@@ -57,5 +56,15 @@ public class BasicCube extends Character implements RedCube{
         g2d.translate(position.x-Math.round((float) textureSize.x /2), position.y-Math.round((float) textureSize.y /2));
 
         g2d.drawRenderedImage(texture,null);
+    }
+
+    @Override
+    public IVec2 getTextureSize() {
+        return textureSize;
+    }
+
+    @Override
+    public BufferedImage getTexture() {
+        return texture;
     }
 }

@@ -6,10 +6,7 @@ import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
 import main.physics.colliders.SolidCollider;
 import main.physics.colliders.TilemapCollider;
-import main.rendering.Camera;
-import main.rendering.Displayable;
-import main.rendering.LeavesRenderer;
-import main.rendering.RenderEngine;
+import main.rendering.*;
 import main.utils.data.Config;
 import main.utils.data.DataGen;
 import main.utils.debug.Debug;
@@ -31,7 +28,6 @@ public class Level extends JPanel implements Displayable {
     private final char[][] map;
     private final BufferedImage[][] mapTextures;
     private final List<Collider> colliders = new ArrayList<>();
-    private final List<RedCube> redCubes = new ArrayList<>();
 
     private final Vec2 mapOffset = new Vec2();
 
@@ -43,6 +39,7 @@ public class Level extends JPanel implements Displayable {
     private final BufferedImage barrierTexture;
 
     private final LeavesRenderer leavesRenderer;
+    private final CubeRenderer cubeRenderer;
 
     public Level(IVec2 size,String path){
         this.setOpaque(false);
@@ -67,6 +64,7 @@ public class Level extends JPanel implements Displayable {
         spawnEnemies();
 
         leavesRenderer = new LeavesRenderer(map,mapOffset);
+        cubeRenderer = new CubeRenderer();
     }
 
     public Level(IVec2 size){
@@ -86,11 +84,12 @@ public class Level extends JPanel implements Displayable {
         trapTexture = DataGen.getTrapTexture();
         barrierTexture = DataGen.getBarrierTexture();
 
+        leavesRenderer = new LeavesRenderer(map,mapOffset);
+        cubeRenderer = new CubeRenderer();
+
         initTextures();
         initColliders();
         spawnEnemies();
-
-        leavesRenderer = new LeavesRenderer(map,mapOffset);
     }
 
     private void initTextures(){
@@ -142,18 +141,18 @@ public class Level extends JPanel implements Displayable {
                 switch (map[y][x]){
                     case '0':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize/2.0));
-                        redCubes.add(new BasicCube(spawnPosition.copy()));
+                        cubeRenderer.addCube(new BasicCube(spawnPosition.copy()));
                         cube0count++;
                         break;
                     case '1':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize/2.0));
-                        redCubes.add(new BasicCube(spawnPosition.copy()));
+                        cubeRenderer.addCube(new BasicCube(spawnPosition.copy()));
                         cube1count++;
                         break;
                 }
             }
         }
-        System.out.println("Generated cubes : "+cube0count+" | "+cube1count);
+        System.out.println("\nGenerated cubes : "+cube0count+" | "+cube1count+"\n\t||| "+(cube0count+cube1count)+"\n");
     }
 
     public double getGroundSpeed(Vec2 position){
@@ -203,6 +202,10 @@ public class Level extends JPanel implements Displayable {
 
     public LeavesRenderer getLeavesRenderer() {
         return leavesRenderer;
+    }
+
+    public CubeRenderer getCubeRenderer() {
+        return cubeRenderer;
     }
 
     public char[][] getMap() {
