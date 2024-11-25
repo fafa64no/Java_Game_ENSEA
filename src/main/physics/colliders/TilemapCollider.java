@@ -75,10 +75,10 @@ public class TilemapCollider extends SolidCollider{
                 output[i]=getCollisionBox(new IVec2(x,y));
                 if(output[i]!=null) {
                     Vec4 outputOffset = new Vec4(
-                            x - map[0].length/2.0,
-                            x - map[0].length/2.0,
-                            y - map.length/2.0,
-                            y - map.length/2.0
+                            x - 0.5*map[0].length,
+                            x - 0.5*map[0].length,
+                            y - 0.5*map.length,
+                            y - 0.5*map.length
                     );
                     output[i] = Vec4.multiply(
                             Vec4.add(output[i], outputOffset),

@@ -13,50 +13,42 @@ public class CircleCollider extends SolidCollider{
         this.radius=radius;
     }
 
-    @Override
-    public Collision doCollide(Collider c, Vec2 offset) {
-        BVec2 didCollide = new BVec2(c.isInverted(), c.isInverted());
-        Vec2 previousCenterDiff = Vec2.add(c.getOffset(),this.offset);
+    private Collision circleColliderHandler(CircleCollider cc, Vec2 offset){
+        BVec2 didCollide = new BVec2(cc.isInverted(), cc.isInverted());
+        Vec2 previousCenterDiff = Vec2.add(cc.getOffset(),this.offset);
         Vec2 newCenterDiff = Vec2.add(previousCenterDiff,offset);
-        Vec2 previousClosestPoint=new Vec2();
-        Vec2 newClosestPoint=new Vec2();
-        switch (c){
-            case BoxCollider bc:
-                previousClosestPoint=previousCenterDiff.getClosestPoint(bc.getCenterWithoutOffset(),radius);
-                newClosestPoint=newCenterDiff.getClosestPoint(bc.getCenterWithoutOffset(),radius);
-                if (
-                    newClosestPoint.x<= bc.getCorners()[0].x &&
-                    newClosestPoint.x>= bc.getCorners()[2].x &&
-                    previousClosestPoint.y<= bc.getCorners()[0].y &&
-                    previousClosestPoint.y>= bc.getCorners()[2].y
-                ) {
-                    didCollide.x=!bc.isInverted();
-                }
-                if (
-                    previousClosestPoint.x<= bc.getCorners()[0].x &&
-                    previousClosestPoint.x>= bc.getCorners()[2].x &&
-                    newClosestPoint.y<= bc.getCorners()[0].y &&
-                    newClosestPoint.y>= bc.getCorners()[2].y
-                ) {
-                    didCollide.y=!bc.isInverted();
-                }
-                break;
-            case CircleCollider cc:
-                if(Vec2.substract(c.getOffset(), newCenterDiff).getSquareLength()<(radius-cc.getRadius())*(radius-cc.getRadius())){
-                    didCollide.x=!c.isInverted();
-                    didCollide.y=!c.isInverted();
-                }
-                break;
-            default:
-                System.out.println("Collider type not handled by CircleCollider");
-                break;
+        if(Vec2.substract(cc.getOffset(), newCenterDiff).getSquareLength()<(radius-cc.getRadius())*(radius-cc.getRadius())){
+            didCollide.x=!cc.isInverted();
+            didCollide.y=!cc.isInverted();
         }
         if(didCollide.isFalse())return null;
-        //System.out.println("-------------\npreviousCenterDiff : "+previousCenterDiff.x+" : "+previousCenterDiff.y+
-        //        "\npreviousClosestPoint : "+previousClosestPoint.x+" : "+previousClosestPoint.y+
-        //        "\nnewCenterDiff : "+newCenterDiff.x+" : "+newCenterDiff.y+
-        //        "\nnewClosestPoint : "+newClosestPoint.x+" : "+newClosestPoint.y);
         return new Collision(didCollide);
+    }
+
+    private Collision boxColliderHandler(BoxCollider bc, Vec2 offset){
+        BVec2 didCollide = new BVec2(bc.isInverted(), bc.isInverted());
+        Vec2 previousCenterDiff = Vec2.add(bc.getOffset(),this.offset);
+        Vec2 newCenterDiff = Vec2.add(previousCenterDiff,offset);
+        Vec2 previousClosestPoint=previousCenterDiff.getClosestPoint(bc.getCenterWithoutOffset(),radius);
+        Vec2 newClosestPoint=newCenterDiff.getClosestPoint(bc.getCenterWithoutOffset(),radius);
+        Vec2 xPoint = new Vec2(newClosestPoint.x, previousClosestPoint.y);
+        Vec2 yPoint = new Vec2(previousClosestPoint.x, newClosestPoint.y);
+        if(bc.getHitbox().contains(xPoint)) didCollide.x=!bc.isInverted();
+        if(bc.getHitbox().contains(yPoint)) didCollide.y=!bc.isInverted();
+        if(didCollide.isFalse())return null;
+        return new Collision(didCollide);
+    }
+
+    @Override
+    public Collision doCollide(Collider c, Vec2 offset) {
+        return switch (c) {
+            case BoxCollider bc -> boxColliderHandler(bc, offset);
+            case CircleCollider cc -> circleColliderHandler(cc, offset);
+            default -> {
+                System.out.println("Collider type not handled by CircleCollider");
+                yield null;
+            }
+        };
     }
 
     protected double getRadius() {

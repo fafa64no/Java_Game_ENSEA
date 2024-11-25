@@ -48,6 +48,23 @@ public class Vec4 {
         );
     }
 
+    public boolean contains(Vec2 position){
+        return
+                position.x <= this.y &&  // Compare to maximum X
+                position.x >= this.x &&  // Compare to minimum X
+                position.y <= this.w &&  // Compare to maximum Y
+                position.y >= this.z ;   // Compare to minimum Y
+    }
+
+    public Vec4 makeItFat(Vec2 additionalSize){
+        return new Vec4(
+                this.x-additionalSize.x,
+                this.y+additionalSize.x,
+                this.z-additionalSize.y,
+                this.w+additionalSize.y
+        );
+    }
+
     @Override
     public String toString() {
         return "Vec4{" +

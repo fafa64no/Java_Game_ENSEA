@@ -2,10 +2,12 @@ package main.game;
 
 import main.rendering.Displayable;
 import main.rendering.RenderEngine;
+import main.utils.data.Config;
 import main.utils.vectors.Vec2;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -43,5 +45,11 @@ public abstract class Sprite extends JPanel implements Displayable {
     @Override
     public void clear() {
         RenderEngine.getInstance().remove(this);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        if(!RenderEngine.getCurrentCamera().getDisplayWindow(new Vec2(2* Config.smallTileSize)).contains(position))return;
+        super.paintComponent(g);
     }
 }

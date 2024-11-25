@@ -40,6 +40,9 @@ public class Vec2 {
     public static Vec2 multiply(Vec2 a, double x){
         return new Vec2(a.x*x,a.y*x);
     }
+    public static Vec2 multiply(IVec2 a, double x){
+        return new Vec2(a.x*x,a.y*x);
+    }
 
     public static Vec2 substract(Vec2 a, Vec2 b){
         return new Vec2(a.x-b.x,a.y-b.y);

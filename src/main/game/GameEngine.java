@@ -4,7 +4,6 @@ import main.game.characters.vehicles.tank.Tank;
 import main.game.hud.HudManager;
 import main.game.level.Level;
 import main.game.projectiles.ProjectileHandler;
-import main.physics.colliders.BoxCollider;
 import main.physics.CollisionLayers;
 import main.physics.PhysicEngine;
 import main.physics.colliders.Collider;
@@ -49,13 +48,13 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
     }
 
     private void goToLevel(int i){
-        for (Collider solidCollider : levels[currentLevel].getColliders())
-            PhysicEngine.removeCollider(solidCollider);
+        for (Collider collider : levels[currentLevel].getColliders())
+            PhysicEngine.removeCollider(collider);
         RenderEngine.removeFromRenderList(levels[currentLevel]);
         RenderEngine.removeFromRenderList(levels[currentLevel].getLeavesRenderer());
         currentLevel=i;
-        for (Collider solidCollider : levels[currentLevel].getColliders())
-            PhysicEngine.addCollider(solidCollider, CollisionLayers.COLLISION_LAYER_TERRAIN);
+        for (Collider collider : levels[currentLevel].getColliders())
+            PhysicEngine.addCollider(collider, CollisionLayers.COLLISION_LAYER_TERRAIN);
         RenderEngine.addToRenderList(levels[currentLevel], RenderingLayers.RENDERING_LAYER_TERRAIN);
         RenderEngine.addToRenderList(levels[currentLevel].getLeavesRenderer(), RenderingLayers.RENDERING_LAYER_LEAVES);
         RenderEngine.paint();
@@ -108,7 +107,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
             case 76: // Swap Level ("L")
                 instance.goToLevel((currentLevel+1)%levels.length);     break;
             case 84: // Test key ("T")
-                System.out.println(tanks[currentTank].getPosition()+" : "+tanks[currentTank].getCollider().getOffset());   break;
+                System.out.println(RenderEngine.getCurrentCamera().getDisplayWindow()+" : "+RenderEngine.getCurrentCamera().getTargetTileOffset());   break;
             default:
                 //System.out.println("Key pressed : "+e.getKeyCode());
         }
