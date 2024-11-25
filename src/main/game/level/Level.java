@@ -1,5 +1,7 @@
 package main.game.level;
 
+import main.game.characters.cubes.BasicCube;
+import main.game.characters.cubes.RedCube;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
 import main.physics.colliders.TilemapCollider;
@@ -25,7 +27,8 @@ import java.util.List;
 public class Level extends JPanel implements Displayable {
     private final char[][] map;
     private final BufferedImage[][] mapTextures;
-    private final List<Collider> colliders=new ArrayList<>();
+    private final List<Collider> colliders = new ArrayList<>();
+    private final List<RedCube> redCubes = new ArrayList<>();
 
     private final Vec2 mapOffset = new Vec2();
 
@@ -76,6 +79,7 @@ public class Level extends JPanel implements Displayable {
 
         initTextures();
         initColliders();
+        spawnEnemies();
 
         leavesRenderer = new LeavesRenderer(map,mapOffset);
     }
@@ -96,7 +100,8 @@ public class Level extends JPanel implements Displayable {
                         mapTextures[y][x]=pathTextures[PseudoRandom.getRandomBetween(0,pathTextures.length-1,x,y, Config.noiseSizeTerrainColor)]
                                 [PseudoRandom.getRandomBetween(0,pathTextures[0].length-1,x,y, Config.noiseSizeTerrainVariant)];
                         break;
-                    case 'H':
+                    case '0':
+                    case '1':
                         mapTextures[y][x]=trapTexture;
                         break;
                     default:
@@ -119,13 +124,35 @@ public class Level extends JPanel implements Displayable {
         colliders.add(new TilemapCollider(this));
     }
 
+    private void spawnEnemies(){
+        Vec2 spawnPosition;
+        int cube0count=0;
+        int cube1count=0;
+        for (int x=0;x<map[0].length;x++) {
+            for (int y = 0; y < map.length; y++) {
+                switch (map[y][x]){
+                    case '0':
+                        spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize/2.0));
+                        redCubes.add(new BasicCube(spawnPosition));
+                        cube0count++;
+                        break;
+                    case '1':
+                        spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize/2.0));
+                        cube1count++;
+                        break;
+                }
+            }
+        }
+        System.out.println("Generated cubes : "+cube0count+" | "+cube1count);
+    }
+
     public double getGroundSpeed(Vec2 position){
-        int tilePosX = Math.clamp((int) Math.round((position.x-mapOffset.x)/ Config.smallTileSize),0,map[0].length-1);
-        int tilePosY = Math.clamp((int) Math.round((position.y-mapOffset.y)/ Config.smallTileSize),0,map.length-1);
+        int tilePosX = Math.clamp((int) Math.round((position.x-mapOffset.x) / Config.smallTileSize),0,map[0].length-1);
+        int tilePosY = Math.clamp((int) Math.round((position.y-mapOffset.y) / Config.smallTileSize),0,map.length-1);
         char tile = map[tilePosY][tilePosX];
         return switch (tile) {
-            case 'P' -> 1.5;
-            case 'H' -> 0.1;
+            case 'P' -> Config.pathSpeedModifier;
+            case 'M' -> 0.1;
             default -> 1;
         };
     }

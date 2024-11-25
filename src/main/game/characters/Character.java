@@ -4,6 +4,8 @@ import main.game.DynamicSprite;
 import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 
+import java.awt.image.BufferedImage;
+
 public abstract class Character extends DynamicSprite {
     private final double velocityMultiplier;
 
@@ -17,6 +19,13 @@ public abstract class Character extends DynamicSprite {
 
     public Character(Vec2 position, String texturePath, double velocityMultiplier, int animationFrames, IVec2 textureSize) {
         super(position, texturePath);
+        this.velocityMultiplier = velocityMultiplier;
+        this.animationFrames=animationFrames;
+        this.textureSize=textureSize;
+    }
+
+    public Character(Vec2 position, BufferedImage texture, double velocityMultiplier, int animationFrames, IVec2 textureSize) {
+        super(position, texture);
         this.velocityMultiplier = velocityMultiplier;
         this.animationFrames=animationFrames;
         this.textureSize=textureSize;

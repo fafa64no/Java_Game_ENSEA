@@ -46,8 +46,8 @@ public class BoxCollider extends SolidCollider{
             case BoxCollider bc:
                 if(c.isInverted()){
                     if (
-                        newCenterDiff.x<= bc.getCorners()[0].x - size.x/2.0 &&
-                        newCenterDiff.x>= bc.getCorners()[2].x + size.x/2.0 &&
+                        newCenterDiff.x<= bc.getCorners()[0].x      - size.x/2.0 &&
+                        newCenterDiff.x>= bc.getCorners()[2].x      + size.x/2.0 &&
                         previousCenterDiff.y<= bc.getCorners()[0].y - size.y/2.0 &&
                         previousCenterDiff.y>= bc.getCorners()[2].y + size.y/2.0
                     ) {
@@ -56,15 +56,15 @@ public class BoxCollider extends SolidCollider{
                     if (
                         previousCenterDiff.x<= bc.getCorners()[0].x - size.x/2.0 &&
                         previousCenterDiff.x>= bc.getCorners()[2].x + size.x/2.0 &&
-                        newCenterDiff.y<= bc.getCorners()[0].y - size.y/2.0 &&
-                        newCenterDiff.y>= bc.getCorners()[2].y + size.y/2.0
+                        newCenterDiff.y<= bc.getCorners()[0].y      - size.y/2.0 &&
+                        newCenterDiff.y>= bc.getCorners()[2].y      + size.y/2.0
                     ) {
                         didCollide.y=false;
                     }
                 }else{
                     if (
-                        newCenterDiff.x<= bc.getCorners()[0].x + size.x/2.0 &&
-                        newCenterDiff.x>= bc.getCorners()[2].x - size.x/2.0 &&
+                        newCenterDiff.x<= bc.getCorners()[0].x      + size.x/2.0 &&
+                        newCenterDiff.x>= bc.getCorners()[2].x      - size.x/2.0 &&
                         previousCenterDiff.y<= bc.getCorners()[0].y + size.y/2.0 &&
                         previousCenterDiff.y>= bc.getCorners()[2].y - size.y/2.0
                     ) {

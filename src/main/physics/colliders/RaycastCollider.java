@@ -10,6 +10,7 @@ public class RaycastCollider extends SolidCollider{
 
     @Override
     public Collision doCollide(Collider c, Vec2 offset) {
+        System.out.println("Collider not handled by RaycastCollider");
         return null;
     }
 }

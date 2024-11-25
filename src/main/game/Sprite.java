@@ -22,6 +22,14 @@ public abstract class Sprite extends JPanel implements Displayable {
         catch (Exception e){e.printStackTrace();}
     }
 
+    public Sprite(Vec2 position, BufferedImage texture) {
+        this.position = position;
+
+        this.setOpaque(false);
+
+        this.texture = texture;
+    }
+
     public Vec2 getPosition() {
         return position;
     }

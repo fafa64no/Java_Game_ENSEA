@@ -18,7 +18,7 @@ public class DataGen {
     public static Level[] genLevels(){
         Level[] levels=new Level[5];
         levels[0]=new Level(new IVec2(146,74),"assets/data/level4.txt");
-        levels[1]=new Level(new IVec2(1024,1024));
+        levels[1]=new Level(new IVec2(768,512));
         levels[2]=new Level(new IVec2(16,9),"assets/data/level1.txt");
         levels[3]=new Level(new IVec2(16,9),"assets/data/level2.txt");
         levels[4]=new Level(new IVec2(16,9),"assets/data/level3.txt");
@@ -69,9 +69,10 @@ public class DataGen {
     private static BufferedImage smallTiles = null;
     private static BufferedImage largeTiles = null;
     private static BufferedImage smallShells = null;
+    private static BufferedImage mediumCubes = null;
 
     public static BufferedImage[][] getGrassTextures(){
-        if(smallTiles ==null) {
+        if(smallTiles == null) {
             try {
                 smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
@@ -86,7 +87,7 @@ public class DataGen {
     }
 
     public static BufferedImage[][] getStoneTextures(){
-        if(smallTiles ==null) {
+        if(smallTiles == null) {
             try {
                 smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
@@ -101,7 +102,7 @@ public class DataGen {
     }
 
     public static BufferedImage[][] getTreeTextures(){
-        if(smallTiles ==null) {
+        if(smallTiles == null) {
             try {
                 smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
@@ -116,7 +117,7 @@ public class DataGen {
     }
 
     public static BufferedImage[][] getPathTextures(){
-        if(smallTiles ==null) {
+        if(smallTiles == null) {
             try {
                 smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
@@ -131,7 +132,7 @@ public class DataGen {
     }
 
     public static BufferedImage getTrapTexture(){
-        if(smallTiles ==null) {
+        if(smallTiles == null) {
             try {
                 smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
@@ -140,7 +141,7 @@ public class DataGen {
     }
 
     public static BufferedImage getBarrierTexture(){
-        if(smallTiles ==null) {
+        if(smallTiles == null) {
             try {
                 smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
@@ -149,7 +150,7 @@ public class DataGen {
     }
 
     public static BufferedImage[][] getLeavesTextures(){
-        if(largeTiles ==null) {
+        if(largeTiles == null) {
             try {
                 largeTiles = ImageIO.read(new File("assets/textures/level/largeTiles.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
@@ -164,12 +165,21 @@ public class DataGen {
     }
 
     public static BufferedImage getTankShellTexture(){
-        if(smallShells ==null) {
+        if(smallShells == null) {
             try {
                 smallShells = ImageIO.read(new File("assets/textures/projectiles/smallShells.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
         return smallShells.getSubimage(0,0, Config.smallTileSize, Config.smallTileSize);
+    }
+
+    public static BufferedImage getBasicCubeTexture(){
+        if(mediumCubes == null) {
+            try {
+                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        return mediumCubes.getSubimage(0,0,Config.largeTileSize,Config.largeTileSize);
     }
 
 /*      ################ - Cameras - ################      */

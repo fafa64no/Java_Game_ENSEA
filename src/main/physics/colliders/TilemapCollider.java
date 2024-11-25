@@ -98,6 +98,7 @@ public class TilemapCollider extends SolidCollider{
 
     @Override
     public Collision doCollide(Collider c, Vec2 offset) {
+        System.out.println("Collider not handled by TilemapCollider");
         return null;
     }
 }

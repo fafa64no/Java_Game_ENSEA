@@ -25,8 +25,12 @@ public class LevelGenerator {
                     output[y][x]='T';
                     continue;
                 }
-                if(PseudoRandom.isRandomBetween(0,0.001,3*x,3-2*y, Config.noiseSizeTerrainTraps)){
-                    output[y][x]='H';
+                if(PseudoRandom.isRandomBetween(0,0.0005,30*x,3-20*y, Config.noiseSizeTerrainTraps)){
+                    output[y][x]='0';
+                    continue;
+                }
+                if(PseudoRandom.isRandomBetween(0,0.0005,-25*x,3-25*y, Config.noiseSizeTerrainTraps)){
+                    output[y][x]='1';
                     continue;
                 }
                 output[y][x]='.';

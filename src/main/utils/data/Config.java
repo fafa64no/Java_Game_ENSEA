@@ -20,6 +20,8 @@ public class Config {
 
     public final static double treeHitBoxSize=0.3;
 
+    public final static double pathSpeedModifier=1.2;
+
     public final static int mapVerticalWallThickness=18;
     public final static int mapHorizontalWallThickness=32;
 
