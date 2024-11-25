@@ -39,7 +39,7 @@ public class BasicCube extends Character implements RedCube{
                 this,
                 ColliderType.NONE_DAMAGE_DEALER
         );
-        RenderEngine.addToRenderList(this, RenderingLayers.RENDERING_LAYER_TANK);
+        //RenderEngine.addToRenderList(this, RenderingLayers.RENDERING_LAYER_TANK);
         PhysicEngine.addCollider(collider, CollisionLayers.COLLISION_LAYER_ENNEMIES);
         PhysicEngine.addCollider(damageZone, CollisionLayers.COLLISION_LAYER_ENNEMIES);
         collider.setOffset();

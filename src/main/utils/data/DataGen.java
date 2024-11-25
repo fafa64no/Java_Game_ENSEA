@@ -16,12 +16,9 @@ public class DataGen {
 /*      ################ - Levels and Tanks - ################      */
 
     public static Level[] genLevels(){
-        Level[] levels=new Level[5];
-        levels[0]=new Level(new IVec2(146,74),"assets/data/level4.txt");
-        levels[1]=new Level(new IVec2(1024,1024));
-        levels[2]=new Level(new IVec2(16,9),"assets/data/level1.txt");
-        levels[3]=new Level(new IVec2(16,9),"assets/data/level2.txt");
-        levels[4]=new Level(new IVec2(16,9),"assets/data/level3.txt");
+        Level[] levels=new Level[1];
+        //levels[0]=new Level(new IVec2(146,74),"assets/data/level4.txt");
+        levels[0]=new Level(new IVec2(1024,1024));
         return levels;
     }
 
@@ -72,6 +69,8 @@ public class DataGen {
     private static BufferedImage largeTiles = null;
     private static BufferedImage smallShells = null;
     private static BufferedImage mediumCubes = null;
+
+    private static BufferedImage basicCubeTexture = null;
 
     public static BufferedImage[][] getGrassTextures(){
         if(smallTiles == null) {
@@ -181,7 +180,8 @@ public class DataGen {
                 mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        return mediumCubes.getSubimage(0,0,Config.largeTileSize,Config.largeTileSize);
+        if (basicCubeTexture==null)basicCubeTexture=mediumCubes.getSubimage(0,0,Config.largeTileSize,Config.largeTileSize);
+        return basicCubeTexture;
     }
 
 /*      ################ - Cameras - ################      */

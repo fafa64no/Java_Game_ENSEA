@@ -4,6 +4,7 @@ import main.game.DynamicSprite;
 import main.game.GameEngine;
 import main.utils.Engine;
 import main.utils.data.DataGen;
+import main.utils.debug.Debug;
 import main.utils.vectors.Vec2;
 
 import javax.swing.*;
@@ -68,22 +69,27 @@ public class RenderEngine extends JFrame implements Engine {
             displayable.draw();
             instance.setVisible(true);
         }
+        Debug.printTimeSinceLast("Painted layer 0");
         for (Displayable displayable : instance.displayableList_layer1) {
             displayable.draw();
             instance.setVisible(true);
         }
+        Debug.printTimeSinceLast("Painted layer 1");
         for (Displayable displayable : instance.displayableList_layer2) {
             displayable.draw();
             instance.setVisible(true);
         }
+        Debug.printTimeSinceLast("Painted layer 2");
         for (Displayable displayable : instance.displayableList_layer3) {
             displayable.draw();
             instance.setVisible(true);
         }
+        Debug.printTimeSinceLast("Painted layer 3");
         for (Displayable displayable : instance.displayableList_layer4) {
             displayable.draw();
             instance.setVisible(true);
         }
+        Debug.printTimeSinceLast("Painted layer 4");
     }
 
     public static Camera getCurrentCamera() {

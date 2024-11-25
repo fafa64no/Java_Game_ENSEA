@@ -12,6 +12,7 @@ import main.rendering.LeavesRenderer;
 import main.rendering.RenderEngine;
 import main.utils.data.Config;
 import main.utils.data.DataGen;
+import main.utils.debug.Debug;
 import main.utils.vectors.IVec2;
 import main.utils.noise.PseudoRandom;
 import main.utils.vectors.IVec4;
@@ -63,6 +64,7 @@ public class Level extends JPanel implements Displayable {
 
         initTextures();
         initColliders();
+        spawnEnemies();
 
         leavesRenderer = new LeavesRenderer(map,mapOffset);
     }
@@ -70,6 +72,9 @@ public class Level extends JPanel implements Displayable {
     public Level(IVec2 size){
         this.setOpaque(false);
         map=LevelGenerator.genTerrain(size);
+
+        Debug.printTimeSinceLast("Generated terrain char array");
+
         mapTextures=new BufferedImage[size.y][size.x];
         mapOffset.x=-map[0].length * Config.smallTileSize /2.0;
         mapOffset.y=-map.length * Config.smallTileSize /2.0;

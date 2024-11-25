@@ -38,4 +38,6 @@ public class Config {
     public final static int maxProjectilesPerProjectileHandler=256;
 
     public final static double cubeCollisionRange=32;
+
+    public final static long startTime=System.currentTimeMillis();
 }

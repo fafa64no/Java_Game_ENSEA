@@ -9,8 +9,10 @@ import main.physics.PhysicEngine;
 import main.physics.colliders.Collider;
 import main.rendering.RenderEngine;
 import main.rendering.RenderingLayers;
+import main.utils.data.Config;
 import main.utils.data.DataGen;
 import main.utils.Engine;
+import main.utils.debug.Debug;
 import main.utils.vectors.Vec2;
 
 import java.awt.event.KeyEvent;
@@ -39,13 +41,17 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
         levels=DataGen.genLevels();
         tanks=DataGen.genTanks();
 
+        Debug.printTimeSinceLast("Generated levels");
+
         for(Tank tank : tanks){
             RenderEngine.addToRenderList(tank,RenderingLayers.RENDERING_LAYER_TANK);
             RenderEngine.addToRenderList(tank.getTurret(),RenderingLayers.RENDERING_LAYER_TURRET);
         }
 
-        goToLevel(1);
+        goToLevel(0);
         swapTank(1);
+
+        RenderEngine.paint();
 
         RenderEngine.setupCameras(tanks);
         RenderEngine.getInstance().addKeyListener(instance);
@@ -62,7 +68,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
             PhysicEngine.addCollider(collider, CollisionLayers.COLLISION_LAYER_TERRAIN);
         RenderEngine.addToRenderList(levels[currentLevel], RenderingLayers.RENDERING_LAYER_TERRAIN);
         RenderEngine.addToRenderList(levels[currentLevel].getLeavesRenderer(), RenderingLayers.RENDERING_LAYER_LEAVES);
-        RenderEngine.paint();
+        Debug.printTimeSinceLast("Swapped level");
     }
 
     private void swapTank(int i){
@@ -70,7 +76,6 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
         currentTank=i;
         RenderEngine.setCurrentCamera(this,i);
         PhysicEngine.addCollider(tanks[currentTank].getCollider(),CollisionLayers.COLLISION_LAYER_ALLIES);
-        RenderEngine.paint();
     }
 
     public static GameEngine getInstance() {

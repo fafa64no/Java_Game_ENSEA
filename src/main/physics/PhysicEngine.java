@@ -95,5 +95,33 @@ public class PhysicEngine implements Engine {
 
             dynamicSprite.goToNextPosition(canMove,currentInverseFriction);
         }
+
+        for (Collider colliderEnemy : colliderList_layer2){
+            DynamicSprite dynamicSprite=colliderEnemy.getParent();
+            if(dynamicSprite==null)continue;
+
+            double currentInverseFriction=1;
+            Vec2 velocity=dynamicSprite.getCurrentVelocity();
+            BVec2 canMove=new BVec2();
+
+            for (Collider colliderAllyProjectile : colliderList_layer3){
+                Collision collision=colliderEnemy.doCollide(colliderAllyProjectile,velocity);
+                if(collision==null)continue;
+                colliderEnemy.onCollide(colliderAllyProjectile.getColliderType());
+                colliderAllyProjectile.onCollide(colliderEnemy.getColliderType());
+                boolean doesPreventMovement = colliderAllyProjectile.getColliderType()==ColliderType.SOLID_INERT ||colliderAllyProjectile.getColliderType()==ColliderType.SOLID_DAMAGE_DEALER;
+                if(collision.collisions.x&&doesPreventMovement){
+                    canMove.x=false;
+                    currentInverseFriction=Math.min(currentInverseFriction,colliderAllyProjectile.getFriction());
+                }
+                if(collision.collisions.y&&doesPreventMovement){
+                    canMove.y=false;
+                    currentInverseFriction=Math.min(currentInverseFriction,colliderAllyProjectile.getFriction());
+                }
+                if(canMove.isFalse()){
+                    break;
+                }
+            }
+        }
     }
 }

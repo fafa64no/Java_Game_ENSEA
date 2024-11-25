@@ -89,12 +89,17 @@ public class BoxCollider extends SolidCollider{
         return new Collision(didCollide);
     }
 
+    private Collision pointColliderHandler(PointCollider pc, Vec2 offset){
+        return pc.doCollide(this,new Vec2(-offset.x,-offset.y));
+    }
+
     @Override
     public Collision doCollide(Collider c, Vec2 offset) {
         return switch (c) {
             case BoxCollider bc -> boxColliderHandler(bc, offset);
             case CircleCollider cc -> circleColliderHandler(cc, offset);
             case TilemapCollider tc -> tilemapCollisionHandler(tc, offset);
+            case PointCollider pc -> pointColliderHandler(pc, offset);
             default -> {
                 System.out.println("Collider type not handled by BoxCollider");
                 yield null;
@@ -111,11 +116,17 @@ public class BoxCollider extends SolidCollider{
     public void onCollide(ColliderType colliderType) {
         switch (colliderType){
             case SOLID_DAMAGE_DEALER:
-            case NONE_DAMAGE_DEALER:
                 if(parent==null)break;
                 if(parent instanceof Character){
                     ((Character) parent).takeDamage(5);
                 }
+                break;
+            case NONE_DAMAGE_DEALER:
+                if(parent==null)break;
+                if(parent instanceof Character){
+                    ((Character) parent).takeDamage(40);
+                }
+                break;
             default:
                 break;
         }
