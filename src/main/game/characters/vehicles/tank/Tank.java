@@ -1,5 +1,6 @@
 package main.game.characters.vehicles.tank;
 
+import main.game.characters.LifeStates;
 import main.game.characters.vehicles.Vehicle;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.CircleCollider;
@@ -16,9 +17,9 @@ public class Tank extends Vehicle {
     private final TankTurret tankTurret;
     private final SolidCollider collider;
 
-    public Tank(Vec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, Vec2 colliderSize) {
-        super(position, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
-        this.tankTurret =new TankTurret(position,turretTexturePath,1,textureSize,this, turretRotationSpeed);
+    public Tank(Vec2 position, String texturePath, String turretTexturePath, String deadTexturePath, String deadTurretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, Vec2 colliderSize) {
+        super(position, texturePath, deadTexturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
+        this.tankTurret =new TankTurret(position,turretTexturePath,deadTurretTexturePath,1,textureSize,this, turretRotationSpeed);
         this.collider=new BoxCollider(
                 new Vec2(-colliderSize.x,-colliderSize.y),
                 colliderSize,
@@ -65,10 +66,20 @@ public class Tank extends Vehicle {
         return tankTurret;
     }
 
+    public Collider getCollider() {
+        return collider;
+    }
+
     public void computeNewRotation(){
+        if(lifeState==LifeStates.CURRENTLY_DEAD)return;
         double rotationModifier=super.rotationSpeed*super.currentDir.x;
         super.rotation=(super.rotation+rotationModifier)%(2*Math.PI);
         this.tankTurret.computeNewRotation(rotationModifier);
+    }
+
+    public boolean fireProjectile(){
+        if(lifeState==LifeStates.CURRENTLY_DEAD)return false;
+        return tankTurret.fireProjectile();
     }
 
     @Override
@@ -105,15 +116,21 @@ public class Tank extends Vehicle {
         g2d.translate(position.x-scale.x*Math.round((float) textureSize.x /2), position.y-scale.y*Math.round((float) textureSize.y /2));
         g2d.rotate(super.rotation, scale.x*Math.round((float) textureSize.x /2),scale.y*Math.round((float) textureSize.y /2));
         g2d.scale(scale.x, scale.y);
-        g2d.drawRenderedImage(super.texture.getSubimage(
-                texX,
-                0,
-                super.textureSize.x,
-                super.textureSize.y
-        ),null);
+        if(lifeState!=LifeStates.CURRENTLY_DEAD){
+            g2d.drawRenderedImage(super.texture.getSubimage(
+                    texX,
+                    0,
+                    super.textureSize.x,
+                    super.textureSize.y
+            ),null);
+        }else if(deadTexture!=null){
+            g2d.drawRenderedImage(deadTexture,null);
+        }
     }
 
-    public Collider getCollider() {
-        return collider;
+    @Override
+    public void killYourself() {
+        super.killYourself();
+        tankTurret.killYourself();
     }
 }

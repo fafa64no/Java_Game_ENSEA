@@ -13,7 +13,7 @@ import java.awt.*;
 public class BasicCube extends Character implements RedCube{
     public BasicCube(Vec2 position) {
         super(position, DataGen.getBasicCubeTexture(), 0, 0, new IVec2(Config.largeTileSize,Config.largeTileSize));
-        RenderEngine.addToRenderList(this, RenderingLayers.RENDERING_LAYER_TURRET);
+        RenderEngine.addToRenderList(this, RenderingLayers.RENDERING_LAYER_TANK);
     }
 
     @Override

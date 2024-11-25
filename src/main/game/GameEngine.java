@@ -103,11 +103,11 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
             case 90: // Move up ("Z")
                 currentInputDir.y-=1;   break;
             case 82: // Swap Tank ("R")
-                instance.swapTank((currentTank+1)%tanks.length);        break;
+                instance.swapTank((currentTank+1)%tanks.length);    break;
             case 76: // Swap Level ("L")
-                instance.goToLevel((currentLevel+1)%levels.length);     break;
+                instance.goToLevel((currentLevel+1)%levels.length); break;
             case 84: // Test key ("T")
-                System.out.println(RenderEngine.getCurrentCamera().getDisplayWindow()+" : "+RenderEngine.getCurrentCamera().getTargetTileOffset());   break;
+                tanks[currentTank].takeDamage(25.0);                   break;
             default:
                 //System.out.println("Key pressed : "+e.getKeyCode());
         }
@@ -145,7 +145,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
     public void mousePressed(MouseEvent e) {
         switch (e.getButton()){
             case 1:     // Left Click
-                if(!tanks[currentTank].getTurret().fireProjectile()){
+                if(!tanks[currentTank].fireProjectile()){
                     System.out.println("Reloading ...");
                 }
                 break;

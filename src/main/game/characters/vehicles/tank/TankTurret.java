@@ -1,5 +1,6 @@
 package main.game.characters.vehicles.tank;
 
+import main.game.characters.LifeStates;
 import main.game.characters.vehicles.Vehicle;
 import main.game.projectiles.ProjectileHandler;
 import main.game.projectiles.TankShell;
@@ -19,6 +20,12 @@ public class TankTurret extends Vehicle {
         this.projectile = TankShell.getInstance();
     }
 
+    public TankTurret(Vec2 position, String texturePath, String deadTexturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed) {
+        super(position, texturePath, deadTexturePath, 0, animationFrames, textureSize, rotationSpeed);
+        this.parent = parent;
+        this.projectile = TankShell.getInstance();
+    }
+
     public TankTurret(Vec2 position, String texturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed, Vec2 scale) {
         super(position, texturePath, 0, animationFrames, textureSize, rotationSpeed, scale);
         this.parent = parent;
@@ -27,6 +34,7 @@ public class TankTurret extends Vehicle {
 
     protected void computeNewRotation(double parentRotationModifier){
         this.rotation=(this.rotation+parentRotationModifier)%(2*Math.PI);
+        if(lifeState==LifeStates.CURRENTLY_DEAD)return;
         double targetRotation = getTargetRotation();
         int angleSign;  double angleToTravel;
 
@@ -52,6 +60,7 @@ public class TankTurret extends Vehicle {
     }
 
     public boolean fireProjectile(){
+        if(lifeState==LifeStates.CURRENTLY_DEAD)return false;
         if(projectile==null)return false;
         projectile.fireInDirection(this.position,this.rotation);
         return true;
@@ -68,11 +77,15 @@ public class TankTurret extends Vehicle {
         g2d.translate(position.x-scale.x*textureSize.x /2, position.y-scale.y*textureSize.y /2);
         g2d.rotate(super.rotation, scale.x*textureSize.x /2,scale.y*textureSize.y /2);
         g2d.scale(super.scale.x,super.scale.y);
-        g2d.drawRenderedImage(super.texture.getSubimage(
-                0,
-                0,
-                super.textureSize.x,
-                super.textureSize.y
-        ),null);
+        if(lifeState!=LifeStates.CURRENTLY_DEAD){
+            g2d.drawRenderedImage(super.texture.getSubimage(
+                    0,
+                    0,
+                    super.textureSize.x,
+                    super.textureSize.y
+            ),null);
+        }else if(deadTexture!=null){
+            g2d.drawRenderedImage(deadTexture,null);
+        }
     }
 }

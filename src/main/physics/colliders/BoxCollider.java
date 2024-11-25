@@ -56,7 +56,6 @@ public class BoxCollider extends SolidCollider{
     }
 
     private Collision tilemapCollisionHandler(TilemapCollider tc, Vec2 offset){
-        System.out.println("Reading tilemap collider");
         BVec2 didCollide = new BVec2(tc.isInverted(),tc.isInverted());
         Vec2 previousCenterDiff = Vec2.add(centerWithoutOffset,tc.getOffset(),this.offset);
         Vec2 newCenterDiff = Vec2.add(previousCenterDiff,offset);
@@ -73,7 +72,6 @@ public class BoxCollider extends SolidCollider{
                 if(widerHitbox.contains(xPoint)) didCollide.x=true;
                 if(widerHitbox.contains(yPoint)) didCollide.y=true;
             }
-            if(!didCollide.isFalse())System.out.println("Collided at : "+collisionBox);
         }
         if(didCollide.isFalse())return null;
         return new Collision(didCollide);

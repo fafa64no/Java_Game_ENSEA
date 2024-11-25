@@ -43,6 +43,8 @@ public class DataGen {
                 new Vec2(),
                 "./assets/textures/characters/tanks/panzer_IV_gray/base.png",
                 "./assets/textures/characters/tanks/panzer_IV_gray/turret.png",
+                "./assets/textures/characters/tanks/panzer_IV_gray/deadBase.png",
+                "./assets/textures/characters/tanks/panzer_IV_gray/deadTurret.png",
                 5,
                 new IVec2(38,72),
                 1,
