@@ -21,8 +21,8 @@ public class BasicCube extends Character implements RedCube{
     public BasicCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture) {
         super(position, texture, deadTexture, 0, new IVec2(Config.largeTileSize,Config.largeTileSize));
         collider = new BoxCollider(
-                new Vec2(-14,-14),
-                new Vec2(14,14),
+                new Vec2(-16,-16),
+                new Vec2(16,16),
                 false,
                 0.1,
                 new Vec2(),

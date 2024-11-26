@@ -2,6 +2,7 @@ package main.game.characters.cubes;
 
 import main.game.GameEngine;
 import main.game.characters.AIdriven;
+import main.game.characters.Character;
 import main.game.characters.LifeStates;
 import main.physics.ColliderType;
 import main.physics.CollisionLayers;
@@ -14,13 +15,15 @@ import main.utils.vectors.Vec2;
 import java.awt.image.BufferedImage;
 
 public class RangedCube extends BasicCube implements AIdriven {
-    private final int animationDuration=20;
+    private final int animationDuration=30;
     private int remainingAnimationTime=0;
     private int currentAnimationFrame=0;
 
     private final BufferedImage[] deploymentTextures;
     private final BufferedImage[] retractionTextures;
     private final BufferedImage[] attackTextures;
+
+    private Character currentTarget=null;
 
     private final Collider detectionZone;
     public RangedCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures) {
@@ -42,7 +45,7 @@ public class RangedCube extends BasicCube implements AIdriven {
 
         GameEngine.addAIdriven(this);
         PhysicEngine.addCollider(detectionZone, CollisionLayers.COLLISION_LAYER_ENNEMIES);
-        
+
         detectionZone.setOffset();
     }
 

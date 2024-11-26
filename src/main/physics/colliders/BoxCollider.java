@@ -131,7 +131,12 @@ public class BoxCollider extends SolidCollider{
             case SOLID_DAMAGE_DEALER:
             case NONE_DAMAGE_DEALER:
                 if(parent==null)break;
-                if(parent instanceof Character){
+                if((
+                        this.colliderType==ColliderType.SOLID_INERT||
+                        this.colliderType==ColliderType.SOLID_INERT_ALLY||
+                        this.colliderType==ColliderType.SOLID_DAMAGE_DEALER||
+                        this.colliderType==ColliderType.SOLID_THICK_INERT
+                )&& parent instanceof Character){
                     ((Character) parent).takeDamage(collision.modifier);
                 }
                 if(parent instanceof AIdriven){
