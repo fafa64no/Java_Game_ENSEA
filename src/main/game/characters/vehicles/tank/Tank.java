@@ -18,9 +18,9 @@ public class Tank extends Vehicle {
     private final TankTurret tankTurret;
     private final SolidCollider collider;
 
-    public Tank(Vec2 position, String texturePath, String turretTexturePath, String deadTexturePath, String deadTurretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, Vec2 colliderSize) {
-        super(position, texturePath, deadTexturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
-        this.tankTurret = new TankTurret(position,turretTexturePath,deadTurretTexturePath,1,textureSize,this, turretRotationSpeed);
+    public Tank(Vec2 position, String texturePath, String turretTexturePath, String deadTexturePath, String deadTurretTexturePath, int velocityMultiplier, IVec2 textureSize, double rotationSpeed, double turretRotationSpeed, Vec2 colliderSize) {
+        super(position, texturePath, deadTexturePath, velocityMultiplier, textureSize, rotationSpeed);
+        this.tankTurret = new TankTurret(position,turretTexturePath,deadTurretTexturePath,textureSize,this, turretRotationSpeed);
         this.collider = new BoxCollider(
                 new Vec2(-colliderSize.x,-colliderSize.y),
                 colliderSize,
@@ -31,9 +31,9 @@ public class Tank extends Vehicle {
         );
     }
 
-    public Tank(Vec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, Vec2 scale, Vec2 colliderSize) {
-        super(position, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed, scale);
-        this.tankTurret = new TankTurret(position,turretTexturePath,1,textureSize,this, turretRotationSpeed, scale);
+    public Tank(Vec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, double rotationSpeed, double turretRotationSpeed, Vec2 scale, Vec2 colliderSize) {
+        super(position, texturePath, velocityMultiplier, textureSize, rotationSpeed, scale);
+        this.tankTurret = new TankTurret(position,turretTexturePath,textureSize,this, turretRotationSpeed, scale);
         this.collider = new BoxCollider(
                 new Vec2(-colliderSize.x,-colliderSize.y),
                 colliderSize,
@@ -44,9 +44,9 @@ public class Tank extends Vehicle {
         );
     }
 
-    public Tank(Vec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, int animationFrames, double rotationSpeed, double turretRotationSpeed, double colliderRadius) {
-        super(position, texturePath, velocityMultiplier, animationFrames, textureSize, rotationSpeed);
-        this.tankTurret = new TankTurret(position,turretTexturePath,1,textureSize,this, turretRotationSpeed);
+    public Tank(Vec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, double rotationSpeed, double turretRotationSpeed, double colliderRadius) {
+        super(position, texturePath, velocityMultiplier, textureSize, rotationSpeed);
+        this.tankTurret = new TankTurret(position,turretTexturePath,textureSize,this, turretRotationSpeed);
         this.collider = new CircleCollider(
                 colliderRadius,
                 false,
@@ -107,23 +107,11 @@ public class Tank extends Vehicle {
         g2d.scale(RenderEngine.getCurrentCamera().getScale().x,RenderEngine.getCurrentCamera().getScale().y);
         g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
 
-        animationCounter=(animationCounter+animationSpeed)%(animationFrames*animationFrames);
-        int animationFrame=animationCounter/animationFrames;
-
-        int texX;
-        if (super.currentDir.isNull())  {texX=0;                                    }
-        else                            {texX=animationFrame*super.textureSize.x;   }
-
         g2d.translate(position.x-scale.x*Math.round((float) textureSize.x /2), position.y-scale.y*Math.round((float) textureSize.y /2));
         g2d.rotate(super.rotation, scale.x*Math.round((float) textureSize.x /2),scale.y*Math.round((float) textureSize.y /2));
         g2d.scale(scale.x, scale.y);
         if(lifeState!=LifeStates.CURRENTLY_DEAD){
-            g2d.drawRenderedImage(super.texture.getSubimage(
-                    texX,
-                    0,
-                    super.textureSize.x,
-                    super.textureSize.y
-            ),null);
+            g2d.drawRenderedImage(texture,null);
         }else if(deadTexture!=null){
             g2d.drawRenderedImage(deadTexture,null);
         }

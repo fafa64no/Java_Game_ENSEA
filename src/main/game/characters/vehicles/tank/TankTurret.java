@@ -15,20 +15,20 @@ public class TankTurret extends Vehicle {
     private final Tank parent;
     private final ProjectileHandler projectile;
 
-    public TankTurret(Vec2 position, String texturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed) {
-        super(position, texturePath, 0, animationFrames, textureSize, rotationSpeed);
+    public TankTurret(Vec2 position, String texturePath, IVec2 textureSize, Tank parent, double rotationSpeed) {
+        super(position, texturePath, 0, textureSize, rotationSpeed);
         this.parent = parent;
         this.projectile = TankShell.getInstance();
     }
 
-    public TankTurret(Vec2 position, String texturePath, String deadTexturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed) {
-        super(position, texturePath, deadTexturePath, 0, animationFrames, textureSize, rotationSpeed);
+    public TankTurret(Vec2 position, String texturePath, String deadTexturePath, IVec2 textureSize, Tank parent, double rotationSpeed) {
+        super(position, texturePath, deadTexturePath, 0, textureSize, rotationSpeed);
         this.parent = parent;
         this.projectile = TankShell.getInstance();
     }
 
-    public TankTurret(Vec2 position, String texturePath, int animationFrames, IVec2 textureSize, Tank parent, double rotationSpeed, Vec2 scale) {
-        super(position, texturePath, 0, animationFrames, textureSize, rotationSpeed, scale);
+    public TankTurret(Vec2 position, String texturePath, IVec2 textureSize, Tank parent, double rotationSpeed, Vec2 scale) {
+        super(position, texturePath, 0, textureSize, rotationSpeed, scale);
         this.parent = parent;
         this.projectile = TankShell.getInstance();
     }

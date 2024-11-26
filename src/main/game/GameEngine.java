@@ -1,5 +1,6 @@
 package main.game;
 
+import main.game.characters.AIdriven;
 import main.game.characters.vehicles.tank.Tank;
 import main.game.hud.HudManager;
 import main.game.level.Level;
@@ -31,6 +32,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
     private int currentTank=0;
 
     private final List<ProjectileHandler> projectileHandlers = new ArrayList<>();
+    private final List<AIdriven> aIdrivens = new ArrayList<>();
 
     private final Vec2 currentInputDir = new Vec2();
     private final HudManager hudManager=new HudManager();
@@ -90,6 +92,10 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
         if(projectileHandler!=null)instance.projectileHandlers.add(projectileHandler);
     }
 
+    public static void addAIdriven(AIdriven aIdriven){
+        if(aIdriven!=null)instance.aIdrivens.add(aIdriven);
+    }
+
     public static Tank getCurrentTank(){
         return instance.tanks[instance.currentTank];
     }
@@ -98,6 +104,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
     public void update() {
         tanks[currentTank].setInput(currentInputDir);
         for(ProjectileHandler projectileHandler : instance.projectileHandlers)projectileHandler.updateLifetimes();
+        for(AIdriven aIdriven : aIdrivens)if(aIdriven.isAIenabled())aIdriven.updateAI();
     }
 
     @Override

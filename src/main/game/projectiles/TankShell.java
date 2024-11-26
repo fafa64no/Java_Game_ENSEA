@@ -19,7 +19,7 @@ public class TankShell extends JPanel implements ProjectileHandler, Displayable 
     private int projectilePointer = 0;
 
     public final int projectileLifeSpan = 500;
-    public final double projectileSpeed = 30;
+    public final double projectileSpeed = 15;
 
     public TankShell(){
         if(instance==null)instance=this;
@@ -40,7 +40,7 @@ public class TankShell extends JPanel implements ProjectileHandler, Displayable 
     public void fireInDirection(Vec2 initialPosition, double rotation) {
         projectiles[projectilePointer]=new Projectile(
                 projectileLifeSpan,
-                2,
+                3,
                 initialPosition,
                 projectileSpeed,
                 rotation,

@@ -1,6 +1,7 @@
 package main.physics.colliders;
 
 import main.game.DynamicSprite;
+import main.game.characters.AIdriven;
 import main.game.characters.Character;
 import main.physics.ColliderType;
 import main.physics.Collision;
@@ -136,6 +137,11 @@ public class BoxCollider extends SolidCollider{
                 break;
             default:
                 break;
+        }
+        if(this.colliderType==ColliderType.NONE_TRIGGER){
+            if(parent instanceof AIdriven){
+                ((AIdriven) parent).startAI();
+            }
         }
     }
 }

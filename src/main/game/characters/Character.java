@@ -15,19 +15,14 @@ public abstract class Character extends DynamicSprite {
     protected final Vec2 previousDir = new Vec2();
     protected final IVec2 textureSize;
 
-    protected int animationCounter;
-    protected final int animationFrames;
-    protected final int animationSpeed=4;
-
     protected final double maxHealth;
     protected double currentHealth;
     protected LifeStates lifeState;
     protected final BufferedImage deadTexture;
 
-    public Character(Vec2 position, String texturePath, double velocityMultiplier, int animationFrames, IVec2 textureSize) {
+    public Character(Vec2 position, String texturePath, double velocityMultiplier, IVec2 textureSize) {
         super(position, texturePath);
         this.velocityMultiplier = velocityMultiplier;
-        this.animationFrames=animationFrames;
         this.textureSize=textureSize;
         this.maxHealth=100;
         this.currentHealth=maxHealth;
@@ -35,10 +30,9 @@ public abstract class Character extends DynamicSprite {
         this.deadTexture=null;
     }
 
-    public Character(Vec2 position, BufferedImage texture, double velocityMultiplier, int animationFrames, IVec2 textureSize) {
+    public Character(Vec2 position, BufferedImage texture, double velocityMultiplier, IVec2 textureSize) {
         super(position, texture);
         this.velocityMultiplier = velocityMultiplier;
-        this.animationFrames=animationFrames;
         this.textureSize=textureSize;
         this.maxHealth=100;
         this.currentHealth=maxHealth;
@@ -46,10 +40,9 @@ public abstract class Character extends DynamicSprite {
         this.deadTexture=null;
     }
 
-    public Character(Vec2 position, String texturePath, String deadTexturePath, double velocityMultiplier, int animationFrames, IVec2 textureSize) {
+    public Character(Vec2 position, String texturePath, String deadTexturePath, double velocityMultiplier, IVec2 textureSize) {
         super(position, texturePath);
         this.velocityMultiplier = velocityMultiplier;
-        this.animationFrames=animationFrames;
         this.textureSize=textureSize;
         this.maxHealth=100;
         this.currentHealth=maxHealth;
@@ -60,10 +53,9 @@ public abstract class Character extends DynamicSprite {
         this.deadTexture=deadTexture;
     }
 
-    public Character(Vec2 position, BufferedImage texture, BufferedImage deadTexture, double velocityMultiplier, int animationFrames, IVec2 textureSize) {
+    public Character(Vec2 position, BufferedImage texture, BufferedImage deadTexture, double velocityMultiplier, IVec2 textureSize) {
         super(position, texture);
         this.velocityMultiplier = velocityMultiplier;
-        this.animationFrames=animationFrames;
         this.textureSize=textureSize;
         this.maxHealth=100;
         this.currentHealth=maxHealth;

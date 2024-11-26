@@ -1,6 +1,7 @@
 package main.game.level;
 
 import main.game.characters.cubes.BasicCube;
+import main.game.characters.cubes.RangedCube;
 import main.game.characters.cubes.RedCube;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
@@ -141,12 +142,23 @@ public class Level extends JPanel implements Displayable {
                 switch (map[y][x]){
                     case '0':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        cubeRenderer.addCube(new BasicCube(spawnPosition.copy(),DataGen.getBasicCubeTexture(),DataGen.getBasicCubeDeadTexture()));
+                        cubeRenderer.addCube(new BasicCube(
+                                spawnPosition.copy(),
+                                DataGen.getBasicCubeTexture(),
+                                DataGen.getBasicCubeDeadTexture()
+                        ));
                         cube0count++;
                         break;
                     case '1':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        cubeRenderer.addCube(new BasicCube(spawnPosition.copy(),DataGen.getFollowerCubeTextureCubeTexture(),DataGen.getFollowerCubeDeadTextureCubeDeadTexture()));
+                        cubeRenderer.addCube(new RangedCube(
+                                spawnPosition.copy(),
+                                DataGen.getFollowerCubeTextureCubeTexture(),
+                                DataGen.getFollowerCubeDeadTextureCubeDeadTexture(),
+                                DataGen.getRangedCubeDeploymentTextures(),
+                                DataGen.getRangedCubeRetractionTextures(),
+                                DataGen.getRangedCubeAttackTextures()
+                        ));
                         cube1count++;
                         break;
                 }
