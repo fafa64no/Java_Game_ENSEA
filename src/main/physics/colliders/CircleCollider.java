@@ -27,7 +27,7 @@ public class CircleCollider extends SolidCollider{
 
     private Collision boxColliderHandler(BoxCollider bc, Vec2 offset){
         BVec2 didCollide = new BVec2(bc.isInverted(), bc.isInverted());
-        Vec2 previousCenterDiff = Vec2.add(bc.getOffset(),this.offset);
+        Vec2 previousCenterDiff = Vec2.substract(bc.getOffset(),this.offset);
         Vec2 newCenterDiff = Vec2.add(previousCenterDiff,offset);
         Vec2 previousClosestPoint=previousCenterDiff.getClosestPoint(bc.getCenterWithoutOffset(),radius);
         Vec2 newClosestPoint=newCenterDiff.getClosestPoint(bc.getCenterWithoutOffset(),radius);
@@ -39,11 +39,16 @@ public class CircleCollider extends SolidCollider{
         return new Collision(didCollide);
     }
 
+    private Collision tilemapColliderHandler(TilemapCollider tc, Vec2 offset){
+        return null;
+    }
+
     @Override
     public Collision doCollide(Collider c, Vec2 offset) {
         return switch (c) {
             case BoxCollider bc -> boxColliderHandler(bc, offset);
             case CircleCollider cc -> circleColliderHandler(cc, offset);
+            case TilemapCollider tc -> tilemapColliderHandler(tc, offset);
             default -> {
                 System.out.println("Collider type not handled by CircleCollider");
                 yield null;

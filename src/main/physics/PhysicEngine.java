@@ -12,11 +12,18 @@ import java.util.List;
 public class PhysicEngine implements Engine {
     private static PhysicEngine instance;
 
-    private final List<Collider> colliderList_layer0=new ArrayList<>(); // Terrain
-    private final List<Collider> colliderList_layer1=new ArrayList<>(); // Allies
-    private final List<Collider> colliderList_layer2=new ArrayList<>(); // Enemies
-    private final List<Collider> colliderList_layer3=new ArrayList<>(); // Ally projectiles
-    private final List<Collider> colliderList_layer4=new ArrayList<>(); // Enemy projectiles
+    private final List<Collider> colliderList_layer_terrain =new ArrayList<>(); // Terrain
+    private final List<Collider> colliderList_layer_allies =new ArrayList<>(); // Allies
+    private final List<Collider> colliderList_layer_enemies =new ArrayList<>(); // Enemies
+    private final List<Collider> colliderList_layer_ally_projectiles =new ArrayList<>(); // Ally projectiles
+    private final List<Collider> colliderList_layer_enemy_projectiles =new ArrayList<>(); // Enemy projectiles
+
+    private List<Collider> collidersToRemove=new ArrayList<>();
+    private List<Collider> collidersToAdd_layer_terrain =new ArrayList<>();
+    private List<Collider> collidersToAdd_layer_allies =new ArrayList<>();
+    private List<Collider> collidersToAdd_layer_enemies =new ArrayList<>();
+    private List<Collider> collidersToAdd_layer_ally_projectiles =new ArrayList<>();
+    private List<Collider> collidersToAdd_layer_enemy_projectiles =new ArrayList<>();
 
     public PhysicEngine() {
         if(instance==null)instance=this;
@@ -24,20 +31,16 @@ public class PhysicEngine implements Engine {
 
     public static void addCollider(Collider collider, CollisionLayers layer){
         switch (layer){
-            case COLLISION_LAYER_TERRAIN            -> instance.colliderList_layer0.add(collider);
-            case COLLISION_LAYER_ALLIES             -> instance.colliderList_layer1.add(collider);
-            case COLLISION_LAYER_ENNEMIES           -> instance.colliderList_layer2.add(collider);
-            case COLLISION_LAYER_ALLY_PROJECTILES   -> instance.colliderList_layer3.add(collider);
-            case COLLISION_LAYER_ENNEMY_PROJECTILES -> instance.colliderList_layer4.add(collider);
+            case COLLISION_LAYER_TERRAIN            -> instance.collidersToAdd_layer_terrain.add(collider);
+            case COLLISION_LAYER_ALLIES             -> instance.collidersToAdd_layer_allies.add(collider);
+            case COLLISION_LAYER_ENNEMIES           -> instance.collidersToAdd_layer_enemies.add(collider);
+            case COLLISION_LAYER_ALLY_PROJECTILES   -> instance.collidersToAdd_layer_ally_projectiles.add(collider);
+            case COLLISION_LAYER_ENNEMY_PROJECTILES -> instance.collidersToAdd_layer_enemy_projectiles.add(collider);
         }
     }
 
     public static void removeCollider(Collider collider){
-        instance.colliderList_layer0.remove(collider);
-        instance.colliderList_layer1.remove(collider);
-        instance.colliderList_layer2.remove(collider);
-        instance.colliderList_layer3.remove(collider);
-        instance.colliderList_layer4.remove(collider);
+        instance.collidersToRemove.add(collider);
     }
 
     public static PhysicEngine getInstance() {
@@ -47,7 +50,7 @@ public class PhysicEngine implements Engine {
 
     @Override
     public void update() {
-        for (Collider colliderAlly : colliderList_layer1){
+        for (Collider colliderAlly : colliderList_layer_allies){
             DynamicSprite dynamicSprite=colliderAlly.getParent();
             if(dynamicSprite==null)continue;
 
@@ -55,7 +58,7 @@ public class PhysicEngine implements Engine {
             Vec2 velocity=dynamicSprite.getCurrentVelocity();
             BVec2 canMove=new BVec2();
 
-            for(Collider colliderTerrain : colliderList_layer0){
+            for(Collider colliderTerrain : colliderList_layer_terrain){
                 Collision collision=colliderAlly.doCollide(colliderTerrain,velocity);
                 if(collision==null)continue;
                 colliderAlly.onCollide(colliderTerrain.getColliderType());
@@ -74,7 +77,7 @@ public class PhysicEngine implements Engine {
                 }
             }
 
-            for(Collider colliderEnemy : colliderList_layer2){
+            for(Collider colliderEnemy : colliderList_layer_enemies){
                 Collision collision=colliderAlly.doCollide(colliderEnemy,velocity);
                 if(collision==null)continue;
                 colliderAlly.onCollide(colliderEnemy.getColliderType());
@@ -96,7 +99,7 @@ public class PhysicEngine implements Engine {
             dynamicSprite.goToNextPosition(canMove,currentInverseFriction);
         }
 
-        for (Collider colliderEnemy : colliderList_layer2){
+        for (Collider colliderEnemy : colliderList_layer_enemies){
             DynamicSprite dynamicSprite=colliderEnemy.getParent();
             if(dynamicSprite==null)continue;
 
@@ -104,7 +107,7 @@ public class PhysicEngine implements Engine {
             Vec2 velocity=dynamicSprite.getCurrentVelocity();
             BVec2 canMove=new BVec2();
 
-            for (Collider colliderAllyProjectile : colliderList_layer3){
+            for (Collider colliderAllyProjectile : colliderList_layer_ally_projectiles){
                 Collision collision=colliderEnemy.doCollide(colliderAllyProjectile,velocity);
                 if(collision==null)continue;
                 colliderEnemy.onCollide(colliderAllyProjectile.getColliderType());
@@ -123,5 +126,26 @@ public class PhysicEngine implements Engine {
                 }
             }
         }
+
+        for(Collider collider : collidersToRemove){
+            instance.colliderList_layer_terrain.remove(collider);
+            instance.colliderList_layer_allies.remove(collider);
+            instance.colliderList_layer_enemies.remove(collider);
+            instance.colliderList_layer_ally_projectiles.remove(collider);
+            instance.colliderList_layer_enemy_projectiles.remove(collider);
+        }
+
+        instance.colliderList_layer_terrain.addAll(collidersToAdd_layer_terrain);
+        instance.colliderList_layer_allies.addAll(collidersToAdd_layer_allies);
+        instance.colliderList_layer_enemies.addAll(collidersToAdd_layer_enemies);
+        instance.colliderList_layer_ally_projectiles.addAll(collidersToAdd_layer_ally_projectiles);
+        instance.colliderList_layer_enemy_projectiles.addAll(collidersToAdd_layer_enemy_projectiles);
+
+        instance.collidersToRemove=new ArrayList<>();
+        instance.collidersToAdd_layer_terrain =new ArrayList<>();
+        instance.collidersToAdd_layer_allies =new ArrayList<>();
+        instance.collidersToAdd_layer_enemies =new ArrayList<>();
+        instance.collidersToAdd_layer_ally_projectiles =new ArrayList<>();
+        instance.collidersToAdd_layer_enemy_projectiles =new ArrayList<>();
     }
 }

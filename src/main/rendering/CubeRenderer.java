@@ -21,6 +21,10 @@ public class CubeRenderer extends JPanel implements Displayable {
         redCubes.add(redCube);
     }
 
+    public void removeCube(RedCube redCube){
+        redCubes.remove(redCube);
+    }
+
     @Override
     public void draw() {
         RenderEngine.getInstance().remove(this);

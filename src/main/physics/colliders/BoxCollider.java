@@ -20,7 +20,7 @@ public class BoxCollider extends SolidCollider{
         x2=Math.max(cornerA.x,cornerB.x);  y2=Math.max(cornerA.y,cornerB.y);
         hitbox=new Vec4(x1,x2,y1,y2);
         size=new Vec2(x2-x1,y2-y1);
-        centerWithoutOffset =new Vec2((x1 + x2) /2.0,(y1 + y2) /2.0);
+        centerWithoutOffset =new Vec2((x1 + x2) * 0.5,(y1 + y2) * 0.5);
     }
 
     public BoxCollider(Vec2 cornerA, Vec2 cornerB, boolean inverted, double friction, Vec2 offset, DynamicSprite parent) {
@@ -43,7 +43,9 @@ public class BoxCollider extends SolidCollider{
         centerWithoutOffset =new Vec2((x1 + x2) /2.0,(y1 + y2) /2.0);
     }
 
-    public Vec4 getHitbox() {return hitbox;}
+    public Vec4 getHitbox() {
+        return hitbox;//Vec4.add(hitbox,offset);
+    }
 
     private Collision circleColliderHandler(CircleCollider cc, Vec2 offset){
         return cc.doCollide(this,new Vec2(-offset.x,-offset.y));
@@ -118,13 +120,13 @@ public class BoxCollider extends SolidCollider{
             case SOLID_DAMAGE_DEALER:
                 if(parent==null)break;
                 if(parent instanceof Character){
-                    ((Character) parent).takeDamage(5);
+                    ((Character) parent).takeDamage(40);
                 }
                 break;
             case NONE_DAMAGE_DEALER:
                 if(parent==null)break;
                 if(parent instanceof Character){
-                    ((Character) parent).takeDamage(40);
+                    ((Character) parent).takeDamage(5);
                 }
                 break;
             default:

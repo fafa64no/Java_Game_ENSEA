@@ -140,19 +140,19 @@ public class Level extends JPanel implements Displayable {
             for (int y = 0; y < map.length; y++) {
                 switch (map[y][x]){
                     case '0':
-                        spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize/2.0));
-                        cubeRenderer.addCube(new BasicCube(spawnPosition.copy()));
+                        spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
+                        cubeRenderer.addCube(new BasicCube(spawnPosition.copy(),DataGen.getBasicCubeTexture()));
                         cube0count++;
                         break;
                     case '1':
-                        spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize/2.0));
-                        cubeRenderer.addCube(new BasicCube(spawnPosition.copy()));
+                        spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
+                        cubeRenderer.addCube(new BasicCube(spawnPosition.copy(),DataGen.getBasicCubeTexture()));
                         cube1count++;
                         break;
                 }
             }
         }
-        System.out.println("\nGenerated cubes : "+(cube0count+cube1count)+"\n\t0 : "+cube0count+"\n\t1 : "+cube1count);
+        System.out.println("\nGenerated cubes : "+(cube0count+cube1count)+"\n\t0 : "+cube0count+"\n\t1 : "+cube1count+"\n");
     }
 
     public double getGroundSpeed(Vec2 position){

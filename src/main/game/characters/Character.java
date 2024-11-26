@@ -90,12 +90,10 @@ public abstract class Character extends DynamicSprite {
 
     public void takeDamage(double damage){
         currentHealth-=damage;
-        System.out.println("Took damage : "+damage);
         if(currentHealth<0)killYourself();
     }
 
     public void killYourself(){
-        System.out.println("Killing myself");
         lifeState=LifeStates.CURRENTLY_DEAD;
     }
 }

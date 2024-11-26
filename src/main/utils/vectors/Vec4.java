@@ -30,6 +30,16 @@ public class Vec4 {
         );
     }
 
+    public static Vec4 add(Vec4 a, Vec2 b){
+        return new Vec4(
+                a.x+b.x,
+                a.y+b.x,
+                a.z+b.y,
+                a.w+b.y
+
+        );
+    }
+
     public static Vec4 multiply(Vec4 a, double t){
         return new Vec4(
                 a.x*t,

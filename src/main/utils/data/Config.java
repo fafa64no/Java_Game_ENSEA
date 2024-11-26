@@ -25,6 +25,9 @@ public class Config {
     public final static int mapVerticalWallThickness=18;
     public final static int mapHorizontalWallThickness=32;
 
+    public final static int defaultMapWidth=1024;
+    public final static int defaultMapHeight=768;
+
     public final static int tilemapColliderRange=4;
 
     public final static double noiseSeed=6.6260755;
@@ -40,4 +43,6 @@ public class Config {
     public final static double cubeCollisionRange=32;
 
     public final static long startTime=System.currentTimeMillis();
+
+    public static boolean currentlyDebugging=false;
 }

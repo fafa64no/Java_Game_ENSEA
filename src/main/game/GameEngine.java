@@ -115,10 +115,10 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
                 instance.swapTank((currentTank+1)%tanks.length);    break;
             case 76: // Swap Level ("L")
                 instance.goToLevel((currentLevel+1)%levels.length); break;
-            case 84: // Test key ("T")
-                tanks[currentTank].takeDamage(25.0);                   break;
+            case 84: // Debug key ("T")
+                Config.currentlyDebugging=!Config.currentlyDebugging;  break;
             default:
-                //System.out.println("Key pressed : "+e.getKeyCode());
+                //if(Config.currentlyDebugging)System.out.println("Key pressed : "+e.getKeyCode());
         }
         currentInputDir.x=Math.min(Math.max(currentInputDir.x,-1),1);
         currentInputDir.y=Math.min(Math.max(currentInputDir.y,-1),1);

@@ -17,8 +17,7 @@ public class DataGen {
 
     public static Level[] genLevels(){
         Level[] levels=new Level[1];
-        //levels[0]=new Level(new IVec2(146,74),"assets/data/level4.txt");
-        levels[0]=new Level(new IVec2(1024,1024));
+        levels[0]=new Level(new IVec2(Config.defaultMapWidth,Config.defaultMapHeight));
         return levels;
     }
 

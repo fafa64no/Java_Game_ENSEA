@@ -24,7 +24,8 @@ public class Projectile {
         this.rotation = rotation;
         this.collider = new PointCollider(
                 new Vec2(),
-                ColliderType.NONE_DAMAGE_DEALER
+                ColliderType.NONE_DAMAGE_DEALER,
+                this
         );
         this.collider.setOffset();
         PhysicEngine.addCollider(this.collider, CollisionLayers.COLLISION_LAYER_ALLY_PROJECTILES);
@@ -50,6 +51,6 @@ public class Projectile {
     public void decrementTimeRemaining(){
         remainingMilliseconds -= Config.delayBetweenFrames;
         invisibilityFrames--;
-        PhysicEngine.removeCollider(collider);
+        if(remainingMilliseconds<=0)PhysicEngine.removeCollider(collider);
     }
 }
