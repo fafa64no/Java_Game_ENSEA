@@ -12,6 +12,7 @@ public abstract class SolidCollider implements Collider{
     protected final Vec2 initialOffset;
     protected final DynamicSprite parent;
     protected final ColliderType colliderType;
+    protected final double modifier;
 
     public SolidCollider(boolean inverted, double friction,Vec2 offset){
         this.inverted=inverted;
@@ -20,6 +21,7 @@ public abstract class SolidCollider implements Collider{
         this.initialOffset=offset;
         this.parent=null;
         this.colliderType=ColliderType.SOLID_INERT;
+        this.modifier=0;
     }
 
     public SolidCollider(boolean inverted, double friction,Vec2 offset, DynamicSprite parent){
@@ -29,6 +31,7 @@ public abstract class SolidCollider implements Collider{
         this.initialOffset=offset;
         this.parent=parent;
         this.colliderType=ColliderType.SOLID_INERT;
+        this.modifier=0;
     }
 
     public SolidCollider(boolean inverted, double friction,Vec2 offset, DynamicSprite parent, ColliderType colliderType){
@@ -38,6 +41,17 @@ public abstract class SolidCollider implements Collider{
         this.initialOffset=offset;
         this.parent=parent;
         this.colliderType=colliderType;
+        this.modifier=0;
+    }
+
+    public SolidCollider(boolean inverted, double friction,Vec2 offset, DynamicSprite parent, ColliderType colliderType, double modifier){
+        this.inverted=inverted;
+        this.friction=friction;
+        this.offset=offset;
+        this.initialOffset=offset;
+        this.parent=parent;
+        this.colliderType=colliderType;
+        this.modifier=modifier;
     }
 
     public boolean isInverted() {return inverted;}
@@ -47,6 +61,11 @@ public abstract class SolidCollider implements Collider{
     @Override
     public void onCollide(ColliderType colliderType, Collision collision) {
 
+    }
+
+    @Override
+    public Collision getReverseCollision(Collision collision) {
+        return new Collision(collision.collisions,modifier);
     }
 
     @Override

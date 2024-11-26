@@ -4,7 +4,6 @@ import main.game.DynamicSprite;
 import main.game.projectiles.Projectile;
 import main.physics.ColliderType;
 import main.physics.Collision;
-import main.utils.data.Config;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;
 import main.utils.vectors.Vec4;
@@ -16,15 +15,7 @@ public class PointCollider implements Collider{
     protected final Vec2 initialOffset;
     protected final Projectile parent;
     protected final ColliderType colliderType;
-
-    public PointCollider(Vec2 offset, ColliderType colliderType) {
-        this.inverted=false;
-        this.friction=1;
-        this.offset=offset;
-        this.initialOffset=offset;
-        this.parent=null;
-        this.colliderType=colliderType;
-    }
+    protected final double modifier;
 
     public PointCollider(Vec2 offset, ColliderType colliderType, Projectile parent) {
         this.inverted=false;
@@ -33,6 +24,7 @@ public class PointCollider implements Collider{
         this.initialOffset=offset;
         this.parent=parent;
         this.colliderType=colliderType;
+        this.modifier=10;
     }
 
     private Collision boxColliderHandler(BoxCollider bc, Vec2 offset){
@@ -50,29 +42,10 @@ public class PointCollider implements Collider{
             if(hitbox.contains(yPoint)) didCollide.y=true;
         }
         if(didCollide.isFalse())return null;
-        return new Collision(didCollide);
+        return new Collision(didCollide,modifier);
     }
 
     private Collision tilemapCollisionHandler(TilemapCollider tc, Vec2 offset){
-        //BVec2 didCollide = new BVec2(tc.isInverted(),tc.isInverted());
-        //Vec2 previousCenterDiff = Vec2.substract(this.offset,tc.getOffset());
-        //Vec2 newCenterDiff = Vec2.add(previousCenterDiff,offset);
-        //Vec2 xPoint = new Vec2(newCenterDiff.x, previousCenterDiff.y);
-        //Vec2 yPoint = new Vec2(previousCenterDiff.x, newCenterDiff.y);
-        //Vec4[] collisionBoxes = tc.getCollisionBoxes(this.offset);
-        //for (Vec4 collisionBox : collisionBoxes){
-        //    if(collisionBox==null)continue;
-        //    if(tc.isInverted()){
-        //        if(collisionBox.contains(xPoint)) didCollide.x=false;
-        //        if(collisionBox.contains(yPoint)) didCollide.y=false;
-        //    }else{
-        //        if(collisionBox.contains(xPoint)) didCollide.x=true;
-        //        if(collisionBox.contains(yPoint)) didCollide.y=true;
-        //    }
-        //}
-        //if(didCollide.isFalse())return null;
-        //return new Collision(didCollide);
-
         BVec2 didCollide = new BVec2(tc.isInverted(),tc.isInverted());
         Vec2 previousCenterDiff = Vec2.substract(this.offset,tc.getOffset());
         Vec2 newCenterDiff = Vec2.add(previousCenterDiff,offset);
@@ -90,7 +63,7 @@ public class PointCollider implements Collider{
             }
         }
         if(didCollide.isFalse())return null;
-        return new Collision(didCollide);
+        return new Collision(didCollide,modifier);
     }
 
     @Override
@@ -103,6 +76,11 @@ public class PointCollider implements Collider{
                 yield null;
             }
         };
+    }
+
+    @Override
+    public Collision getReverseCollision(Collision collision) {
+        return new Collision(collision.collisions,modifier);
     }
 
     @Override

@@ -13,7 +13,7 @@ public class Collision {
         this.collisions = collisions;
         this.angle=0;
         this.normal=new Vec2();
-        this.modifier=10;
+        this.modifier=0;
     }
 
     public Collision(BVec2 collisions, double modifier){

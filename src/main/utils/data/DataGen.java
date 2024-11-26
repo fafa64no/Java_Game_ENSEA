@@ -52,12 +52,14 @@ public class DataGen {
                 new Vec2(64,0),
                 "./assets/textures/characters/tanks/panzer_IV_brown/base.png",
                 "./assets/textures/characters/tanks/panzer_IV_brown/turret.png",
-                6,
+                "./assets/textures/characters/tanks/panzer_IV_gray/deadBase.png",
+                "./assets/textures/characters/tanks/panzer_IV_gray/deadTurret.png",
+                8,
                 new IVec2(38,72),
                 1,
                 0.1,
-                0.05,
-                15
+                0.15,
+                new Vec2(15,15)
         );
         return tanks;
     }

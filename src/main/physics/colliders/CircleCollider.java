@@ -45,6 +45,7 @@ public class CircleCollider extends SolidCollider{
 
     @Override
     public Collision doCollide(Collider c, Vec2 offset) {
+        System.out.println("Warning, using an outdated collider !");
         return switch (c) {
             case BoxCollider bc -> boxColliderHandler(bc, offset);
             case CircleCollider cc -> circleColliderHandler(cc, offset);

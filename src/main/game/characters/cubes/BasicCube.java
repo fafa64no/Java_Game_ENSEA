@@ -36,7 +36,8 @@ public class BasicCube extends Character implements RedCube{
                 0.1,
                 new Vec2(),
                 this,
-                ColliderType.NONE_DAMAGE_DEALER
+                ColliderType.NONE_DAMAGE_DEALER,
+                3
         );
         PhysicEngine.addCollider(collider, CollisionLayers.COLLISION_LAYER_ENNEMIES);
         PhysicEngine.addCollider(damageZone, CollisionLayers.COLLISION_LAYER_ENNEMIES);
