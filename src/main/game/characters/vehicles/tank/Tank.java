@@ -3,6 +3,7 @@ package main.game.characters.vehicles.tank;
 import main.game.GameEngine;
 import main.game.characters.LifeStates;
 import main.game.characters.vehicles.Vehicle;
+import main.physics.ColliderType;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.CircleCollider;
 import main.physics.colliders.Collider;
@@ -27,7 +28,8 @@ public class Tank extends Vehicle {
                 false,
                 0,
                 new Vec2(),
-                this
+                this,
+                ColliderType.SOLID_INERT_ALLY
         );
     }
 
@@ -40,19 +42,8 @@ public class Tank extends Vehicle {
                 false,
                 0,
                 new Vec2(),
-                this
-        );
-    }
-
-    public Tank(Vec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, double rotationSpeed, double turretRotationSpeed, double colliderRadius) {
-        super(position, texturePath, velocityMultiplier, textureSize, rotationSpeed);
-        this.tankTurret = new TankTurret(position,turretTexturePath,textureSize,this, turretRotationSpeed);
-        this.collider = new CircleCollider(
-                colliderRadius,
-                false,
-                0,
-                new Vec2(),
-                this
+                this,
+                ColliderType.SOLID_INERT_ALLY
         );
     }
 

@@ -217,7 +217,7 @@ public class DataGen {
                 mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        if (rangedCubeDeadTexture == null) rangedCubeDeadTexture = mediumCubes.getSubimage(Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+        if (rangedCubeDeadTexture == null) rangedCubeDeadTexture = mediumCubes.getSubimage(7*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
         return rangedCubeDeadTexture;
     }
 
@@ -228,11 +228,13 @@ public class DataGen {
             catch (IOException e) {throw new RuntimeException(e);}
         }
         if (rangedCubeDeploymentTextures == null){
-            rangedCubeDeploymentTextures=new BufferedImage[4];
+            rangedCubeDeploymentTextures=new BufferedImage[6];
             rangedCubeDeploymentTextures[0]=mediumCubes.getSubimage(0,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
             rangedCubeDeploymentTextures[1]=mediumCubes.getSubimage(Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
             rangedCubeDeploymentTextures[2]=mediumCubes.getSubimage(2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
             rangedCubeDeploymentTextures[3]=mediumCubes.getSubimage(3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            rangedCubeDeploymentTextures[4]=mediumCubes.getSubimage(4*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            rangedCubeDeploymentTextures[5]=mediumCubes.getSubimage(5*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
         }
         return rangedCubeDeploymentTextures;
     }
@@ -244,11 +246,13 @@ public class DataGen {
             catch (IOException e) {throw new RuntimeException(e);}
         }
         if (rangedCubeRetractionTextures == null){
-            rangedCubeRetractionTextures=new BufferedImage[4];
-            rangedCubeRetractionTextures[0]=mediumCubes.getSubimage(3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeRetractionTextures[1]=mediumCubes.getSubimage(2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeRetractionTextures[2]=mediumCubes.getSubimage(Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeRetractionTextures[3]=mediumCubes.getSubimage(0,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            rangedCubeRetractionTextures=new BufferedImage[6];
+            rangedCubeRetractionTextures[5]=mediumCubes.getSubimage(0,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            rangedCubeRetractionTextures[4]=mediumCubes.getSubimage(Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            rangedCubeRetractionTextures[3]=mediumCubes.getSubimage(2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            rangedCubeRetractionTextures[2]=mediumCubes.getSubimage(3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            rangedCubeRetractionTextures[1]=mediumCubes.getSubimage(4*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            rangedCubeRetractionTextures[0]=mediumCubes.getSubimage(5*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
         }
         return rangedCubeRetractionTextures;
     }
@@ -260,11 +264,13 @@ public class DataGen {
             catch (IOException e) {throw new RuntimeException(e);}
         }
         if (rangedCubeAttackTextures == null){
-            rangedCubeAttackTextures=new BufferedImage[4];
-            rangedCubeAttackTextures[0]=mediumCubes.getSubimage(2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeAttackTextures[1]=mediumCubes.getSubimage(3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeAttackTextures[2]=mediumCubes.getSubimage(2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeAttackTextures[3]=mediumCubes.getSubimage(3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            rangedCubeAttackTextures=new BufferedImage[6];
+            rangedCubeAttackTextures[0]=mediumCubes.getSubimage(5*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            rangedCubeAttackTextures[1]=mediumCubes.getSubimage(5*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            rangedCubeAttackTextures[2]=mediumCubes.getSubimage(5*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            rangedCubeAttackTextures[3]=mediumCubes.getSubimage(5*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            rangedCubeAttackTextures[4]=mediumCubes.getSubimage(5*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            rangedCubeAttackTextures[5]=mediumCubes.getSubimage(5*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
         }
         return rangedCubeAttackTextures;
     }

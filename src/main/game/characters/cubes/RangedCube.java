@@ -8,12 +8,13 @@ import main.physics.CollisionLayers;
 import main.physics.PhysicEngine;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
+import main.utils.data.Config;
 import main.utils.vectors.Vec2;
 
 import java.awt.image.BufferedImage;
 
 public class RangedCube extends BasicCube implements AIdriven {
-    private final int animationDuration=100;
+    private final int animationDuration=20;
     private int remainingAnimationTime=0;
     private int currentAnimationFrame=0;
 
@@ -30,8 +31,8 @@ public class RangedCube extends BasicCube implements AIdriven {
         this.attackTextures = attackTextures;
 
         detectionZone = new BoxCollider(
-                new Vec2(-20,-20),
-                new Vec2(20,20),
+                new Vec2(-Config.cubeDetectionRange,-Config.cubeDetectionRange),
+                new Vec2(Config.cubeDetectionRange,Config.cubeDetectionRange),
                 false,
                 1,
                 new Vec2(),
@@ -41,6 +42,8 @@ public class RangedCube extends BasicCube implements AIdriven {
 
         GameEngine.addAIdriven(this);
         PhysicEngine.addCollider(detectionZone, CollisionLayers.COLLISION_LAYER_ENNEMIES);
+        
+        detectionZone.setOffset();
     }
 
     @Override

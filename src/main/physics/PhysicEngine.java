@@ -66,7 +66,8 @@ public class PhysicEngine implements Engine {
                 ColliderType colliderType = colliderTerrain.getColliderType();
                 boolean doesPreventMovement = colliderType==ColliderType.SOLID_INERT
                         || colliderType==ColliderType.SOLID_DAMAGE_DEALER
-                        || colliderType==ColliderType.SOLID_THICK_INERT;
+                        || colliderType==ColliderType.SOLID_THICK_INERT
+                        || colliderType==ColliderType.SOLID_INERT_ALLY;
                 if(collision.collisions.x&&doesPreventMovement){
                     canMove.x=false;
                     currentInverseFriction=Math.min(currentInverseFriction,colliderTerrain.getFriction());
@@ -88,7 +89,8 @@ public class PhysicEngine implements Engine {
                 ColliderType colliderType = colliderEnemy.getColliderType();
                 boolean doesPreventMovement = colliderType==ColliderType.SOLID_INERT
                         || colliderType==ColliderType.SOLID_DAMAGE_DEALER
-                        || colliderType==ColliderType.SOLID_THICK_INERT;
+                        || colliderType==ColliderType.SOLID_THICK_INERT
+                        || colliderType==ColliderType.SOLID_INERT_ALLY;
                 if(collision.collisions.x&&doesPreventMovement){
                     canMove.x=false;
                     currentInverseFriction=Math.min(currentInverseFriction, colliderEnemy.getFriction());
@@ -121,7 +123,8 @@ public class PhysicEngine implements Engine {
                 ColliderType colliderType = colliderAllyProjectile.getColliderType();
                 boolean doesPreventMovement = colliderType==ColliderType.SOLID_INERT
                         || colliderType==ColliderType.SOLID_DAMAGE_DEALER
-                        || colliderType==ColliderType.SOLID_THICK_INERT;
+                        || colliderType==ColliderType.SOLID_THICK_INERT
+                        || colliderType==ColliderType.SOLID_INERT_ALLY;
                 if(collision.collisions.x&&doesPreventMovement){
                     canMove.x=false;
                     currentInverseFriction=Math.min(currentInverseFriction,colliderAllyProjectile.getFriction());

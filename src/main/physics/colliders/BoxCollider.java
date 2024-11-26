@@ -134,14 +134,19 @@ public class BoxCollider extends SolidCollider{
                 if(parent instanceof Character){
                     ((Character) parent).takeDamage(collision.modifier);
                 }
+                if(parent instanceof AIdriven){
+                    ((AIdriven) parent).startAI();
+                }
+                break;
+            case SOLID_INERT_ALLY:
+                if(this.colliderType==ColliderType.NONE_TRIGGER){
+                    if(parent instanceof AIdriven){
+                        ((AIdriven) parent).startAI();
+                    }
+                }
                 break;
             default:
                 break;
-        }
-        if(this.colliderType==ColliderType.NONE_TRIGGER){
-            if(parent instanceof AIdriven){
-                ((AIdriven) parent).startAI();
-            }
         }
     }
 }
