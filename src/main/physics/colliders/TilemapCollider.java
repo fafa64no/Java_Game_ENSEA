@@ -1,6 +1,7 @@
 package main.physics.colliders;
 
 import main.game.level.Level;
+import main.physics.ColliderType;
 import main.physics.Collision;
 import main.utils.data.Config;
 import main.utils.vectors.IVec2;
@@ -27,7 +28,7 @@ public class TilemapCollider extends SolidCollider{
     );
 
     public TilemapCollider(Level parent) {
-        super(false, 0.5, parent.getMapOffset());
+        super(false, 0.5, parent.getMapOffset(),null, ColliderType.SOLID_THICK_INERT);
         this.parent = parent;
         this.map = parent.getMap();
         this.collisionBoxMap = new Vec4[map.length][map[0].length];

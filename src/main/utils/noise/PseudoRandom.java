@@ -17,4 +17,8 @@ public class PseudoRandom {
         double randFactor=noiseGenerator.noise(a,b,0,size);
         return (randFactor>min&&randFactor<max);
     }
+
+    public static double getRandomDouble(double a,double b,int size){
+        return noiseGenerator.noise(a,b,0,size);
+    }
 }

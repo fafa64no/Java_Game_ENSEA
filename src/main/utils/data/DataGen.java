@@ -70,6 +70,9 @@ public class DataGen {
     private static BufferedImage mediumCubes = null;
 
     private static BufferedImage basicCubeTexture = null;
+    private static BufferedImage basicCubeDeadTexture = null;
+    private static BufferedImage followerCubeTexture = null;
+    private static BufferedImage followerCubeDeadTexture = null;
 
     public static BufferedImage[][] getGrassTextures(){
         if(smallTiles == null) {
@@ -179,8 +182,38 @@ public class DataGen {
                 mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        if (basicCubeTexture==null)basicCubeTexture=mediumCubes.getSubimage(0,0,Config.largeTileSize,Config.largeTileSize);
+        if (basicCubeTexture == null)basicCubeTexture=mediumCubes.getSubimage(0,0,Config.largeTileSize,Config.largeTileSize);
         return basicCubeTexture;
+    }
+
+    public static BufferedImage getBasicCubeDeadTexture(){
+        if(mediumCubes == null) {
+            try {
+                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (basicCubeDeadTexture == null)basicCubeDeadTexture = mediumCubes.getSubimage(Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+        return basicCubeDeadTexture;
+    }
+
+    public static BufferedImage getFollowerCubeTextureCubeTexture(){
+        if(mediumCubes == null) {
+            try {
+                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (followerCubeTexture == null)followerCubeTexture=mediumCubes.getSubimage(0,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+        return followerCubeTexture;
+    }
+
+    public static BufferedImage getFollowerCubeDeadTextureCubeDeadTexture(){
+        if(mediumCubes == null) {
+            try {
+                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (followerCubeDeadTexture == null)followerCubeDeadTexture = mediumCubes.getSubimage(Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+        return followerCubeDeadTexture;
     }
 
 /*      ################ - Cameras - ################      */

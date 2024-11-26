@@ -115,18 +115,13 @@ public class BoxCollider extends SolidCollider{
     }
 
     @Override
-    public void onCollide(ColliderType colliderType) {
+    public void onCollide(ColliderType colliderType, Collision collision) {
         switch (colliderType){
             case SOLID_DAMAGE_DEALER:
-                if(parent==null)break;
-                if(parent instanceof Character){
-                    ((Character) parent).takeDamage(40);
-                }
-                break;
             case NONE_DAMAGE_DEALER:
                 if(parent==null)break;
                 if(parent instanceof Character){
-                    ((Character) parent).takeDamage(5);
+                    ((Character) parent).takeDamage(collision.modifier);
                 }
                 break;
             default:

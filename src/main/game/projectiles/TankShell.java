@@ -43,7 +43,9 @@ public class TankShell extends JPanel implements ProjectileHandler, Displayable 
                 2,
                 initialPosition,
                 projectileSpeed,
-                rotation
+                rotation,
+                projectilePointer,
+                this
         );
         projectilePointer=(projectilePointer+1)%projectiles.length;
     }
@@ -54,9 +56,13 @@ public class TankShell extends JPanel implements ProjectileHandler, Displayable 
             Projectile projectile=projectiles[i];
             if(projectile==null)continue;
             projectile.decrementTimeRemaining();
-            if(projectile.getRemainingMilliseconds()<=0)projectiles[i]=null;
             projectile.incrementPosition();
         }
+    }
+
+    @Override
+    public void removeProjectile(int id) {
+        projectiles[id]=null;
     }
 
     @Override

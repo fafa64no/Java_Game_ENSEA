@@ -61,9 +61,12 @@ public class PhysicEngine implements Engine {
             for(Collider colliderTerrain : colliderList_layer_terrain){
                 Collision collision=colliderAlly.doCollide(colliderTerrain,velocity);
                 if(collision==null)continue;
-                colliderAlly.onCollide(colliderTerrain.getColliderType());
-                colliderTerrain.onCollide(colliderAlly.getColliderType());
-                boolean doesPreventMovement = colliderTerrain.getColliderType()==ColliderType.SOLID_INERT ||colliderTerrain.getColliderType()==ColliderType.SOLID_DAMAGE_DEALER;
+                colliderAlly.onCollide(colliderTerrain.getColliderType(),collision);
+                colliderTerrain.onCollide(colliderAlly.getColliderType(),collision);
+                ColliderType colliderType = colliderTerrain.getColliderType();
+                boolean doesPreventMovement = colliderType==ColliderType.SOLID_INERT
+                        || colliderType==ColliderType.SOLID_DAMAGE_DEALER
+                        || colliderType==ColliderType.SOLID_THICK_INERT;
                 if(collision.collisions.x&&doesPreventMovement){
                     canMove.x=false;
                     currentInverseFriction=Math.min(currentInverseFriction,colliderTerrain.getFriction());
@@ -80,9 +83,12 @@ public class PhysicEngine implements Engine {
             for(Collider colliderEnemy : colliderList_layer_enemies){
                 Collision collision=colliderAlly.doCollide(colliderEnemy,velocity);
                 if(collision==null)continue;
-                colliderAlly.onCollide(colliderEnemy.getColliderType());
-                colliderEnemy.onCollide(colliderAlly.getColliderType());
-                boolean doesPreventMovement = colliderEnemy.getColliderType()==ColliderType.SOLID_INERT || colliderEnemy.getColliderType()==ColliderType.SOLID_DAMAGE_DEALER;
+                colliderAlly.onCollide(colliderEnemy.getColliderType(),collision);
+                colliderEnemy.onCollide(colliderAlly.getColliderType(),collision);
+                ColliderType colliderType = colliderEnemy.getColliderType();
+                boolean doesPreventMovement = colliderType==ColliderType.SOLID_INERT
+                        || colliderType==ColliderType.SOLID_DAMAGE_DEALER
+                        || colliderType==ColliderType.SOLID_THICK_INERT;
                 if(collision.collisions.x&&doesPreventMovement){
                     canMove.x=false;
                     currentInverseFriction=Math.min(currentInverseFriction, colliderEnemy.getFriction());
@@ -110,9 +116,12 @@ public class PhysicEngine implements Engine {
             for (Collider colliderAllyProjectile : colliderList_layer_ally_projectiles){
                 Collision collision=colliderEnemy.doCollide(colliderAllyProjectile,velocity);
                 if(collision==null)continue;
-                colliderEnemy.onCollide(colliderAllyProjectile.getColliderType());
-                colliderAllyProjectile.onCollide(colliderEnemy.getColliderType());
-                boolean doesPreventMovement = colliderAllyProjectile.getColliderType()==ColliderType.SOLID_INERT ||colliderAllyProjectile.getColliderType()==ColliderType.SOLID_DAMAGE_DEALER;
+                colliderEnemy.onCollide(colliderAllyProjectile.getColliderType(),collision);
+                colliderAllyProjectile.onCollide(colliderEnemy.getColliderType(),collision);
+                ColliderType colliderType = colliderAllyProjectile.getColliderType();
+                boolean doesPreventMovement = colliderType==ColliderType.SOLID_INERT
+                        || colliderType==ColliderType.SOLID_DAMAGE_DEALER
+                        || colliderType==ColliderType.SOLID_THICK_INERT;
                 if(collision.collisions.x&&doesPreventMovement){
                     canMove.x=false;
                     currentInverseFriction=Math.min(currentInverseFriction,colliderAllyProjectile.getFriction());
@@ -124,6 +133,15 @@ public class PhysicEngine implements Engine {
                 if(canMove.isFalse()){
                     break;
                 }
+            }
+        }
+
+        for (Collider colliderAllyProjectile : colliderList_layer_ally_projectiles) {
+            for (Collider colliderTerrain : colliderList_layer_terrain) {
+                Collision collision = colliderAllyProjectile.doCollide(colliderTerrain, new Vec2());
+                if (collision == null) continue;
+                colliderAllyProjectile.onCollide(colliderTerrain.getColliderType(), collision);
+                colliderTerrain.onCollide(colliderAllyProjectile.getColliderType(), collision);
             }
         }
 

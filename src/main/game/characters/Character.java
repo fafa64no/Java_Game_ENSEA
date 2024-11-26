@@ -60,7 +60,7 @@ public abstract class Character extends DynamicSprite {
         this.deadTexture=deadTexture;
     }
 
-    public Character(Vec2 position, BufferedImage texture, String deadTexturePath, double velocityMultiplier, int animationFrames, IVec2 textureSize) {
+    public Character(Vec2 position, BufferedImage texture, BufferedImage deadTexture, double velocityMultiplier, int animationFrames, IVec2 textureSize) {
         super(position, texture);
         this.velocityMultiplier = velocityMultiplier;
         this.animationFrames=animationFrames;
@@ -68,9 +68,6 @@ public abstract class Character extends DynamicSprite {
         this.maxHealth=100;
         this.currentHealth=maxHealth;
         this.lifeState=LifeStates.CURRENTLY_ALIVE;
-        BufferedImage deadTexture=null;
-        try {deadTexture = ImageIO.read(new File(deadTexturePath));}
-        catch (Exception e){e.printStackTrace();}
         this.deadTexture=deadTexture;
     }
 
@@ -90,7 +87,7 @@ public abstract class Character extends DynamicSprite {
 
     public void takeDamage(double damage){
         currentHealth-=damage;
-        if(currentHealth<0)killYourself();
+        if(currentHealth<0&&lifeState!=LifeStates.CURRENTLY_DEAD)killYourself();
     }
 
     public void killYourself(){

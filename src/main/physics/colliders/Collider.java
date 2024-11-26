@@ -7,7 +7,7 @@ import main.utils.vectors.Vec2;
 
 public interface Collider {
     Collision doCollide(Collider c, Vec2 offset);
-    void onCollide(ColliderType colliderType);
+    void onCollide(ColliderType colliderType, Collision collision);
     Vec2 getOffset();
     boolean isInverted();
     DynamicSprite getParent();

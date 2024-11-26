@@ -42,10 +42,6 @@ public class PointCollider implements Collider{
         Vec2 xPoint = new Vec2(newCenterDiff.x, previousCenterDiff.y);
         Vec2 yPoint = new Vec2(previousCenterDiff.x, newCenterDiff.y);
         Vec4 hitbox = bc.getHitbox();
-        if(Config.currentlyDebugging&&bc.getOffset().x>-170&&bc.getOffset().y>-160&&bc.getOffset().x<-160&&bc.getOffset().y<-150){
-            System.out.println("xPoint = "+xPoint+"\nyPoint = "+yPoint+"\nhitbox = "+hitbox+"\nbc.getOffset() = "+bc.getOffset()+"\nthis.getOffset() = "+this.getOffset());
-            Config.currentlyDebugging=false;
-        }
         if(bc.isInverted()){
             if(hitbox.contains(xPoint)) didCollide.x=false;
             if(hitbox.contains(yPoint)) didCollide.y=false;
@@ -57,10 +53,51 @@ public class PointCollider implements Collider{
         return new Collision(didCollide);
     }
 
+    private Collision tilemapCollisionHandler(TilemapCollider tc, Vec2 offset){
+        //BVec2 didCollide = new BVec2(tc.isInverted(),tc.isInverted());
+        //Vec2 previousCenterDiff = Vec2.substract(this.offset,tc.getOffset());
+        //Vec2 newCenterDiff = Vec2.add(previousCenterDiff,offset);
+        //Vec2 xPoint = new Vec2(newCenterDiff.x, previousCenterDiff.y);
+        //Vec2 yPoint = new Vec2(previousCenterDiff.x, newCenterDiff.y);
+        //Vec4[] collisionBoxes = tc.getCollisionBoxes(this.offset);
+        //for (Vec4 collisionBox : collisionBoxes){
+        //    if(collisionBox==null)continue;
+        //    if(tc.isInverted()){
+        //        if(collisionBox.contains(xPoint)) didCollide.x=false;
+        //        if(collisionBox.contains(yPoint)) didCollide.y=false;
+        //    }else{
+        //        if(collisionBox.contains(xPoint)) didCollide.x=true;
+        //        if(collisionBox.contains(yPoint)) didCollide.y=true;
+        //    }
+        //}
+        //if(didCollide.isFalse())return null;
+        //return new Collision(didCollide);
+
+        BVec2 didCollide = new BVec2(tc.isInverted(),tc.isInverted());
+        Vec2 previousCenterDiff = Vec2.substract(this.offset,tc.getOffset());
+        Vec2 newCenterDiff = Vec2.add(previousCenterDiff,offset);
+        Vec2 xPoint = new Vec2(newCenterDiff.x, previousCenterDiff.y);
+        Vec2 yPoint = new Vec2(previousCenterDiff.x, newCenterDiff.y);
+        Vec4[] collisionBoxes = tc.getCollisionBoxes(this.offset);
+        for (Vec4 collisionBox : collisionBoxes){
+            if(collisionBox==null)continue;
+            if(tc.isInverted()){
+                if(collisionBox.contains(xPoint)) didCollide.x=false;
+                if(collisionBox.contains(yPoint)) didCollide.y=false;
+            }else{
+                if(collisionBox.contains(xPoint)) didCollide.x=true;
+                if(collisionBox.contains(yPoint)) didCollide.y=true;
+            }
+        }
+        if(didCollide.isFalse())return null;
+        return new Collision(didCollide);
+    }
+
     @Override
     public Collision doCollide(Collider c, Vec2 offset) {
         return switch (c) {
             case BoxCollider bc -> boxColliderHandler(bc, offset);
+            case TilemapCollider tc -> tilemapCollisionHandler(tc, offset);
             default -> {
                 System.out.println("Collider type not handled by PointCollider");
                 yield null;
@@ -69,11 +106,11 @@ public class PointCollider implements Collider{
     }
 
     @Override
-    public void onCollide(ColliderType colliderType) {
+    public void onCollide(ColliderType colliderType, Collision collision) {
         switch (colliderType){
-            case SOLID_DAMAGE_DEALER:
-            case SOLID_INERT:
+            case SOLID_THICK_INERT:
                 if(parent==null)break;
+                parent.destroyProjectile();
                 break;
             default:
                 break;

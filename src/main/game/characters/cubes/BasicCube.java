@@ -1,6 +1,5 @@
 package main.game.characters.cubes;
 
-import main.game.GameEngine;
 import main.game.characters.Character;
 import main.physics.ColliderType;
 import main.physics.CollisionLayers;
@@ -19,8 +18,8 @@ public class BasicCube extends Character implements RedCube{
     private final Collider collider;
     private final Collider damageZone;
 
-    public BasicCube(Vec2 position, BufferedImage texture) {
-        super(position, texture, 0, 0, new IVec2(Config.largeTileSize,Config.largeTileSize));
+    public BasicCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture) {
+        super(position, texture, deadTexture, 0, 0, new IVec2(Config.largeTileSize,Config.largeTileSize));
         collider = new BoxCollider(
                 new Vec2(-14,-14),
                 new Vec2(14,14),
@@ -65,13 +64,15 @@ public class BasicCube extends Character implements RedCube{
 
     @Override
     public BufferedImage getTexture() {
-        return texture;
+        return switch (lifeState){
+            case CURRENTLY_DEAD -> deadTexture;
+            default -> texture;
+        };
     }
 
     @Override
     public void killYourself() {
         super.killYourself();
         PhysicEngine.removeCollider(damageZone);
-        GameEngine.getCurrentLevel().getCubeRenderer().removeCube(this);
     }
 }

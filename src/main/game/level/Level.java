@@ -141,12 +141,12 @@ public class Level extends JPanel implements Displayable {
                 switch (map[y][x]){
                     case '0':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        cubeRenderer.addCube(new BasicCube(spawnPosition.copy(),DataGen.getBasicCubeTexture()));
+                        cubeRenderer.addCube(new BasicCube(spawnPosition.copy(),DataGen.getBasicCubeTexture(),DataGen.getBasicCubeDeadTexture()));
                         cube0count++;
                         break;
                     case '1':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        cubeRenderer.addCube(new BasicCube(spawnPosition.copy(),DataGen.getBasicCubeTexture()));
+                        cubeRenderer.addCube(new BasicCube(spawnPosition.copy(),DataGen.getFollowerCubeTextureCubeTexture(),DataGen.getFollowerCubeDeadTextureCubeDeadTexture()));
                         cube1count++;
                         break;
                 }

@@ -2,6 +2,7 @@ package main.physics.colliders;
 
 import main.game.DynamicSprite;
 import main.physics.ColliderType;
+import main.physics.Collision;
 import main.utils.vectors.Vec2;
 
 public abstract class SolidCollider implements Collider{
@@ -44,7 +45,7 @@ public abstract class SolidCollider implements Collider{
     public double getFriction() {return friction;}
 
     @Override
-    public void onCollide(ColliderType colliderType) {
+    public void onCollide(ColliderType colliderType, Collision collision) {
 
     }
 

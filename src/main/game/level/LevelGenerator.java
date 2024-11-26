@@ -13,6 +13,7 @@ public class LevelGenerator {
         char[][] output=new char[size.y][size.x];
         for(int x=0;x<size.x;x++){
             for(int y=0;y<size.y;y++){
+                // Terrain
                 if(PseudoRandom.isRandomBetween(-0.05,0.05,-x+50,30+y, Config.noiseSizeTerrainPath)){
                     output[y][x]='P';
                     continue;
@@ -25,12 +26,14 @@ public class LevelGenerator {
                     output[y][x]='T';
                     continue;
                 }
-                if(PseudoRandom.isRandomBetween(0,0.0005,30*x,3-20*y, Config.noiseSizeTerrainTraps)){
-                    output[y][x]='0';
+                // Enemies
+                double spawnKey=Math.abs(PseudoRandom.getRandomDouble(30*x,3-20*y, Config.noiseSizeTerrainTraps));
+                if(spawnKey<0.0002){
+                    output[y][x]='1';
                     continue;
                 }
-                if(PseudoRandom.isRandomBetween(0,0.0005,-25*x,3-25*y, Config.noiseSizeTerrainTraps)){
-                    output[y][x]='1';
+                if(spawnKey<0.0005){
+                    output[y][x]='0';
                     continue;
                 }
                 output[y][x]='.';

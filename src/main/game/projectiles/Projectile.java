@@ -15,8 +15,11 @@ public class Projectile {
     private final Vec2 velocity;
     public final double rotation;
     public final Collider collider;
+    public final ProjectileHandler parent;
 
-    public Projectile(int remainingMilliseconds, int invisibilityFrames ,Vec2 currentPosition, double velocity, double rotation) {
+    private final int idInProjectileHandler;
+
+    public Projectile(int remainingMilliseconds, int invisibilityFrames ,Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent) {
         this.remainingMilliseconds = remainingMilliseconds;
         this.invisibilityFrames=invisibilityFrames;
         this.currentPosition = currentPosition.copy();
@@ -28,6 +31,8 @@ public class Projectile {
                 this
         );
         this.collider.setOffset();
+        this.idInProjectileHandler=idInProjectileHandler;
+        this.parent=parent;
         PhysicEngine.addCollider(this.collider, CollisionLayers.COLLISION_LAYER_ALLY_PROJECTILES);
     }
 
@@ -51,6 +56,11 @@ public class Projectile {
     public void decrementTimeRemaining(){
         remainingMilliseconds -= Config.delayBetweenFrames;
         invisibilityFrames--;
-        if(remainingMilliseconds<=0)PhysicEngine.removeCollider(collider);
+        if(remainingMilliseconds<=0)destroyProjectile();;
+    }
+
+    public void destroyProjectile(){
+        PhysicEngine.removeCollider(collider);
+        if (parent!=null) parent.removeProjectile(idInProjectileHandler);
     }
 }
