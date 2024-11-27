@@ -26,7 +26,7 @@ public class DataGen {
         tanks[0]=new Tank(
                 new Vec2(-150,100),
                 "panzer_IV_white",
-                5,
+                6,
                 new IVec2(38,72),
                 0.1,
                 0.20,
@@ -46,7 +46,7 @@ public class DataGen {
         tanks[2]=new Tank(
                 new Vec2(150,100),
                 "panzer_IV_brown",
-                5,
+                3,
                 new IVec2(38,72),
                 0.1,
                 0.05,
@@ -56,7 +56,7 @@ public class DataGen {
         tanks[3]=new Tank(
                 new Vec2(-75,150),
                 "panzer_IV_sand",
-                5,
+                8,
                 new IVec2(38,72),
                 0.1,
                 0.10,
@@ -66,7 +66,7 @@ public class DataGen {
         tanks[4]=new Tank(
                 new Vec2(75,150),
                 "panzer_IV_green",
-                5,
+                7,
                 new IVec2(38,72),
                 0.1,
                 0.05,
@@ -228,6 +228,24 @@ public class DataGen {
             catch (IOException e) {throw new RuntimeException(e);}
         }
         return bars.getSubimage(0, 3*Config.largeTileSize, Config.largeTileSize, Config.largeTileSize);
+    }
+
+/*      ################ - VFX - ################      */
+
+    private static BufferedImage largeVfxTiles = null;
+    private static BufferedImage[] electricTextures = null;
+
+    public static BufferedImage[] getElectricTextures(){
+        if(largeVfxTiles == null) {
+            try {
+                largeVfxTiles = ImageIO.read(new File("assets/textures/vfx/largeVFX.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if(electricTextures == null){
+            electricTextures = new BufferedImage[1];
+            electricTextures[0] = largeVfxTiles.getSubimage(0, 0, Config.largeTileSize, Config.largeTileSize);
+        }
+        return electricTextures;
     }
 
 /*      ################ - Cubes - ################      */

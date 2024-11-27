@@ -4,12 +4,13 @@ import main.game.GameEngine;
 import main.rendering.RenderEngine;
 import main.rendering.RenderingLayers;
 import main.utils.Engine;
+import main.utils.RequiresUpdates;
 import main.utils.data.DataGen;
 import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 
-public class HudEngine implements Engine {
-    private static HudEngine instance = null;
+public class HudManager implements RequiresUpdates {
+    private static HudManager instance = null;
 
     private final Cursor cursor = new Cursor(
             "assets/textures/hud/cursor.png",
@@ -19,21 +20,23 @@ public class HudEngine implements Engine {
 
     private final HealthBar healthBar;
 
-    public HudEngine(){
+    public HudManager(){
         if(instance == null)instance = this;
 
         healthBar = new HealthBar(DataGen.getBlueBarTexture());
 
         RenderEngine.addToRenderList(cursor, RenderingLayers.RENDERING_LAYER_HUD);
         RenderEngine.addToRenderList(healthBar, RenderingLayers.RENDERING_LAYER_HUD);
+
+        GameEngine.addRequiresUpdates(this);
     }
 
-    public static HudEngine getInstance(){
+    public static HudManager getInstance(){
         return instance;
     }
 
     @Override
-    public void update() {
+    public void updateRemainingTime() {
         healthBar.updateTarget();
     }
 }

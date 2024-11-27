@@ -3,7 +3,7 @@ package main.game;
 import main.game.characters.AIdriven;
 import main.game.characters.Target;
 import main.game.characters.vehicles.tank.Tank;
-import main.game.hud.HudEngine;
+import main.game.hud.HudManager;
 import main.game.level.Level;
 import main.game.projectiles.ProjectileHandler;
 import main.physics.CollisionLayers;
@@ -11,6 +11,8 @@ import main.physics.PhysicEngine;
 import main.physics.colliders.Collider;
 import main.rendering.RenderEngine;
 import main.rendering.RenderingLayers;
+import main.rendering.vfx.Vfx;
+import main.rendering.vfx.VfxManager;
 import main.utils.RequiresUpdates;
 import main.utils.data.Config;
 import main.utils.data.DataGen;
@@ -33,7 +35,6 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
     private int currentLevel=0;
     private int currentTank=0;
 
-    private final List<ProjectileHandler> projectileHandlers = new ArrayList<>();
     private final List<AIdriven> aIdrivens = new ArrayList<>();
     private final List<Target> targets = new ArrayList<>();
     private final List<RequiresUpdates> requiresUpdates = new ArrayList<>();
@@ -60,6 +61,9 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
         RenderEngine.setupCameras(tanks);
         RenderEngine.getInstance().addKeyListener(instance);
         RenderEngine.getInstance().addMouseListener(instance);
+
+        new HudManager();
+        new VfxManager();
     }
 
     private void goToLevel(int i){
@@ -91,10 +95,6 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
         return instance.levels[instance.currentLevel];
     }
 
-    public static void addProjectileHandler(ProjectileHandler projectileHandler){
-        if(projectileHandler!=null)instance.projectileHandlers.add(projectileHandler);
-    }
-
     public static void addAIdriven(AIdriven aIdriven){
         if(aIdriven!=null)instance.aIdrivens.add(aIdriven);
     }
@@ -122,7 +122,6 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
     @Override
     public void update() {
         tanks[currentTank].setInput(currentInputDir);
-        for(ProjectileHandler projectileHandler : instance.projectileHandlers)projectileHandler.updateLifetimes();
         for(AIdriven aIdriven : aIdrivens)if(aIdriven.isAIenabled())aIdriven.updateAI();
         for(RequiresUpdates requiresUpdate : requiresUpdates)requiresUpdate.updateRemainingTime();
     }
@@ -143,7 +142,8 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
             case 76: // Swap Level ("L")
                 instance.goToLevel((currentLevel+1)%levels.length); break;
             case 84: // Debug key ("T")
-                Config.currentlyDebugging=!Config.currentlyDebugging;  break;
+                Config.currentlyDebugging=!Config.currentlyDebugging;
+                break;
             default:
                 //if(Config.currentlyDebugging)System.out.println("Key pressed : "+e.getKeyCode());
         }
@@ -181,9 +181,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
     public void mousePressed(MouseEvent e) {
         switch (e.getButton()){
             case 1:     // Left Click
-                if(!tanks[currentTank].fireProjectile()){
-                    //System.out.println("Reloading ...");
-                }
+                tanks[currentTank].fireProjectile();
                 break;
             case 2:     // Right Click
                 break;

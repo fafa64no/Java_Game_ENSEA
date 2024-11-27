@@ -41,6 +41,7 @@ public class Config {
     public final static int noiseSizeTerrainTraps=8;
 
     public final static int maxProjectilesPerProjectileHandler=256;
+    public final static int maxVfxPerVfxHandler=256;
 
     public final static double cubeCollisionRange=32;
     public final static double cubeDetectionRange=128;

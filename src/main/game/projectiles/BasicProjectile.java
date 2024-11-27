@@ -5,6 +5,7 @@ import main.physics.CollisionLayers;
 import main.rendering.Displayable;
 import main.rendering.RenderEngine;
 import main.rendering.RenderingLayers;
+import main.utils.RequiresUpdates;
 import main.utils.data.Config;
 import main.utils.vectors.Vec2;
 
@@ -12,7 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public abstract class BasicProjectile extends JPanel implements ProjectileHandler, Displayable {
+public abstract class BasicProjectile extends JPanel implements ProjectileHandler, Displayable, RequiresUpdates {
     private final BufferedImage texture;
     private final Projectile[] projectiles = new Projectile[Config.maxProjectilesPerProjectileHandler];
     private int projectilePointer = 0;
@@ -32,7 +33,7 @@ public abstract class BasicProjectile extends JPanel implements ProjectileHandle
         this.setOpaque(false);
 
         RenderEngine.addToRenderList(this, RenderingLayers.RENDERING_LAYER_TANK);
-        GameEngine.addProjectileHandler(this);
+        GameEngine.addRequiresUpdates(this);
     }
 
     @Override
@@ -52,7 +53,7 @@ public abstract class BasicProjectile extends JPanel implements ProjectileHandle
     }
 
     @Override
-    public void updateLifetimes() {
+    public void updateRemainingTime() {
         for(int i=0; i<projectiles.length; i++){
             Projectile projectile=projectiles[i];
             if(projectile==null)continue;
