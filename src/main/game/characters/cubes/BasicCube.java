@@ -7,6 +7,7 @@ import main.physics.PhysicEngine;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
 import main.rendering.RenderEngine;
+import main.rendering.vfx.VfxType;
 import main.utils.data.Config;
 import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
@@ -37,7 +38,9 @@ public class BasicCube extends Character implements RedCube{
                 new Vec2(),
                 this,
                 ColliderType.NONE_DAMAGE_DEALER,
-                3
+                3,
+                VfxType.VFX_ELECTRICITY,
+                15
         );
         PhysicEngine.addCollider(collider, CollisionLayers.COLLISION_LAYER_ENNEMIES);
         PhysicEngine.addCollider(damageZone, CollisionLayers.COLLISION_LAYER_ENNEMIES);

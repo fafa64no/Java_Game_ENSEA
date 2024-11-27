@@ -3,6 +3,7 @@ package main.physics.colliders;
 import main.game.DynamicSprite;
 import main.physics.ColliderType;
 import main.physics.Collision;
+import main.rendering.vfx.VfxType;
 import main.utils.vectors.Vec2;
 
 public abstract class SolidCollider implements Collider{
@@ -14,6 +15,10 @@ public abstract class SolidCollider implements Collider{
     protected final ColliderType colliderType;
     protected final double modifier;
 
+    protected final VfxType vfxType;
+    protected final int vfxCooldown;
+    protected int remainingVfxDelay = 0;
+
     public SolidCollider(boolean inverted, double friction,Vec2 offset){
         this.inverted=inverted;
         this.friction=friction;
@@ -22,6 +27,8 @@ public abstract class SolidCollider implements Collider{
         this.parent=null;
         this.colliderType=ColliderType.SOLID_INERT;
         this.modifier=0;
+        this.vfxType=VfxType.VFX_NONE;
+        this.vfxCooldown=-1;
     }
 
     public SolidCollider(boolean inverted, double friction,Vec2 offset, DynamicSprite parent){
@@ -32,6 +39,8 @@ public abstract class SolidCollider implements Collider{
         this.parent=parent;
         this.colliderType=ColliderType.SOLID_INERT;
         this.modifier=0;
+        this.vfxType=VfxType.VFX_NONE;
+        this.vfxCooldown=-1;
     }
 
     public SolidCollider(boolean inverted, double friction,Vec2 offset, DynamicSprite parent, ColliderType colliderType){
@@ -42,6 +51,8 @@ public abstract class SolidCollider implements Collider{
         this.parent=parent;
         this.colliderType=colliderType;
         this.modifier=0;
+        this.vfxType=VfxType.VFX_NONE;
+        this.vfxCooldown=-1;
     }
 
     public SolidCollider(boolean inverted, double friction,Vec2 offset, DynamicSprite parent, ColliderType colliderType, double modifier){
@@ -52,6 +63,20 @@ public abstract class SolidCollider implements Collider{
         this.parent=parent;
         this.colliderType=colliderType;
         this.modifier=modifier;
+        this.vfxType=VfxType.VFX_NONE;
+        this.vfxCooldown=-1;
+    }
+
+    public SolidCollider(boolean inverted, double friction,Vec2 offset, DynamicSprite parent, ColliderType colliderType, double modifier, VfxType vfxType, int vfxCooldown){
+        this.inverted=inverted;
+        this.friction=friction;
+        this.offset=offset;
+        this.initialOffset=offset;
+        this.parent=parent;
+        this.colliderType=colliderType;
+        this.modifier=modifier;
+        this.vfxType=vfxType;
+        this.vfxCooldown=vfxCooldown;
     }
 
     public boolean isInverted() {return inverted;}

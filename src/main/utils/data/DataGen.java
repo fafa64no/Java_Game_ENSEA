@@ -242,8 +242,11 @@ public class DataGen {
             catch (IOException e) {throw new RuntimeException(e);}
         }
         if(electricTextures == null){
-            electricTextures = new BufferedImage[1];
+            electricTextures = new BufferedImage[4];
             electricTextures[0] = largeVfxTiles.getSubimage(0, 0, Config.largeTileSize, Config.largeTileSize);
+            electricTextures[1] = largeVfxTiles.getSubimage(Config.largeTileSize, 0, Config.largeTileSize, Config.largeTileSize);
+            electricTextures[2] = largeVfxTiles.getSubimage(2*Config.largeTileSize, 0, Config.largeTileSize, Config.largeTileSize);
+            electricTextures[3] = largeVfxTiles.getSubimage(3*Config.largeTileSize, 0, Config.largeTileSize, Config.largeTileSize);
         }
         return electricTextures;
     }

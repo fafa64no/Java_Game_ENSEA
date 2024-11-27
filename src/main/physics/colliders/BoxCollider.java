@@ -5,6 +5,10 @@ import main.game.characters.AIdriven;
 import main.game.characters.Character;
 import main.physics.ColliderType;
 import main.physics.Collision;
+import main.rendering.vfx.Vfx;
+import main.rendering.vfx.VfxType;
+import main.utils.data.Config;
+import main.utils.data.DataGen;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;
 import main.utils.vectors.Vec4;
@@ -24,16 +28,6 @@ public class BoxCollider extends SolidCollider{
         centerWithoutOffset =new Vec2((x1 + x2) * 0.5,(y1 + y2) * 0.5);
     }
 
-    public BoxCollider(Vec2 cornerA, Vec2 cornerB, boolean inverted, double friction, Vec2 offset, DynamicSprite parent) {
-        super(inverted,friction,offset,parent);
-        double x1,x2,y1,y2;
-        x1=Math.min(cornerA.x,cornerB.x);  y1=Math.min(cornerA.y,cornerB.y);
-        x2=Math.max(cornerA.x,cornerB.x);  y2=Math.max(cornerA.y,cornerB.y);
-        hitbox=new Vec4(x1,x2,y1,y2);
-        size=new Vec2(x2-x1,y2-y1);
-        centerWithoutOffset =new Vec2((x1 + x2) /2.0,(y1 + y2) /2.0);
-    }
-
     public BoxCollider(Vec2 cornerA, Vec2 cornerB, boolean inverted, double friction, Vec2 offset, DynamicSprite parent, ColliderType colliderType) {
         super(inverted,friction,offset,parent,colliderType);
         double x1,x2,y1,y2;
@@ -46,6 +40,16 @@ public class BoxCollider extends SolidCollider{
 
     public BoxCollider(Vec2 cornerA, Vec2 cornerB, boolean inverted, double friction, Vec2 offset, DynamicSprite parent, ColliderType colliderType, double modifier) {
         super(inverted,friction,offset,parent,colliderType,modifier);
+        double x1,x2,y1,y2;
+        x1=Math.min(cornerA.x,cornerB.x);  y1=Math.min(cornerA.y,cornerB.y);
+        x2=Math.max(cornerA.x,cornerB.x);  y2=Math.max(cornerA.y,cornerB.y);
+        hitbox=new Vec4(x1,x2,y1,y2);
+        size=new Vec2(x2-x1,y2-y1);
+        centerWithoutOffset =new Vec2((x1 + x2) /2.0,(y1 + y2) /2.0);
+    }
+
+    public BoxCollider(Vec2 cornerA, Vec2 cornerB, boolean inverted, double friction, Vec2 offset, DynamicSprite parent, ColliderType colliderType, double modifier, VfxType vfxType, int vfxCooldown) {
+        super(inverted,friction,offset,parent,colliderType,modifier,vfxType,vfxCooldown);
         double x1,x2,y1,y2;
         x1=Math.min(cornerA.x,cornerB.x);  y1=Math.min(cornerA.y,cornerB.y);
         x2=Math.max(cornerA.x,cornerB.x);  y2=Math.max(cornerA.y,cornerB.y);
@@ -149,6 +153,14 @@ public class BoxCollider extends SolidCollider{
                         ((AIdriven) parent).startAI();
                     }
                 }
+                break;
+            default:
+                break;
+        }
+
+        switch (vfxType){
+            case VFX_ELECTRICITY:
+                new Vfx(offset, Config.largeTileSize, DataGen.getElectricTextures(),10);
                 break;
             default:
                 break;
