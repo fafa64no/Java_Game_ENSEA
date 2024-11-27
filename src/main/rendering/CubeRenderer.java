@@ -49,7 +49,9 @@ public class CubeRenderer extends JPanel implements Displayable {
                     position.y-Math.round((float)0.5*textureSize.y)
             );
             g2d.translate(translation.x,translation.y);
+            g2d.rotate(redCube.getRotation(), Config.largeTileSize/2.0,Config.largeTileSize/2.0);
             g2d.drawRenderedImage(redCube.getTexture(),null);
+            g2d.rotate(-redCube.getRotation(), Config.largeTileSize/2.0,Config.largeTileSize/2.0);
             g2d.translate(-translation.x,-translation.y);
         }
     }

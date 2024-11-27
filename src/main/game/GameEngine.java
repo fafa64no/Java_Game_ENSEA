@@ -1,6 +1,7 @@
 package main.game;
 
 import main.game.characters.AIdriven;
+import main.game.characters.Target;
 import main.game.characters.vehicles.tank.Tank;
 import main.game.hud.HudManager;
 import main.game.level.Level;
@@ -33,6 +34,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
 
     private final List<ProjectileHandler> projectileHandlers = new ArrayList<>();
     private final List<AIdriven> aIdrivens = new ArrayList<>();
+    private final List<Target> targets = new ArrayList<>();
 
     private final Vec2 currentInputDir = new Vec2();
     private final HudManager hudManager=new HudManager();
@@ -94,6 +96,18 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
 
     public static void addAIdriven(AIdriven aIdriven){
         if(aIdriven!=null)instance.aIdrivens.add(aIdriven);
+    }
+
+    public static void addTarget(Target target){
+        instance.targets.add(target);
+    }
+
+    public static void removeTarget(Target target){
+        instance.targets.remove(target);
+    }
+
+    public static List<Target> getTargets(){
+        return instance.targets;
     }
 
     public static Tank getCurrentTank(){

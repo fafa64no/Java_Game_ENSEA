@@ -84,6 +84,10 @@ public class Vec2 {
         );
     }
 
+    public static double getSquareDistance(Vec2 a, Vec2 b){
+        return (a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y);
+    }
+
     public Vec2 copy(){
         return new Vec2(x,y);
     }

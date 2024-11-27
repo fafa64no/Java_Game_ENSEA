@@ -1,6 +1,7 @@
 package main.physics;
 
 import main.game.DynamicSprite;
+import main.game.characters.vehicles.tank.Tank;
 import main.physics.colliders.Collider;
 import main.utils.Engine;
 import main.utils.vectors.BVec2;
@@ -105,6 +106,7 @@ public class PhysicEngine implements Engine {
             }
 
             dynamicSprite.goToNextPosition(canMove,currentInverseFriction);
+            if(dynamicSprite instanceof Tank)((Tank) dynamicSprite).computeNewRotation();
         }
 
         for (Collider colliderEnemy : colliderList_layer_enemies){

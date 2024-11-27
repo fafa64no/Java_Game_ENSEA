@@ -10,4 +10,5 @@ public interface RedCube {
     Vec2 getPosition();
     IVec2 getTextureSize();
     BufferedImage getTexture();
+    double getRotation();
 }

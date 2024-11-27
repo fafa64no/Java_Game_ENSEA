@@ -42,6 +42,8 @@ public class Config {
 
     public final static double cubeCollisionRange=32;
     public final static double cubeDetectionRange=128;
+    public final static double cubeSquareFollowRange=36864;
+    public final static double cubeSquareAttackRange=22500;
 
     public final static long startTime=System.currentTimeMillis();
 

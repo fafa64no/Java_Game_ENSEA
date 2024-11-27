@@ -31,6 +31,7 @@ public class Tank extends Vehicle {
                 this,
                 ColliderType.SOLID_INERT_ALLY
         );
+        GameEngine.addTarget(this);
     }
 
     public Tank(Vec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, double rotationSpeed, double turretRotationSpeed, Vec2 scale, Vec2 colliderSize) {
@@ -45,6 +46,7 @@ public class Tank extends Vehicle {
                 this,
                 ColliderType.SOLID_INERT_ALLY
         );
+        GameEngine.addTarget(this);
     }
 
     protected Vec2 getTurretMount(){
@@ -79,7 +81,6 @@ public class Tank extends Vehicle {
         Vec2 actualVelocity=new Vec2();
         actualVelocity.x=-currentVelocity.y*Math.sin(rotation);
         actualVelocity.y= currentVelocity.y*Math.cos(rotation);
-        computeNewRotation();
         return actualVelocity;
     }
 
@@ -112,5 +113,11 @@ public class Tank extends Vehicle {
     public void killYourself() {
         super.killYourself();
         tankTurret.killYourself();
+        GameEngine.removeTarget(this);
+    }
+
+    @Override
+    public Vec2 getVelocity() {
+        return getCurrentVelocity();
     }
 }

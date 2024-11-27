@@ -90,4 +90,9 @@ public class TankTurret extends Vehicle {
             g2d.drawRenderedImage(deadTexture,null);
         }
     }
+
+    @Override
+    public Vec2 getVelocity() {
+        return currentVelocity;
+    }
 }

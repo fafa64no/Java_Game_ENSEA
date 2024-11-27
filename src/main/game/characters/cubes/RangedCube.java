@@ -2,8 +2,8 @@ package main.game.characters.cubes;
 
 import main.game.GameEngine;
 import main.game.characters.AIdriven;
-import main.game.characters.Character;
 import main.game.characters.LifeStates;
+import main.game.characters.Target;
 import main.physics.ColliderType;
 import main.physics.CollisionLayers;
 import main.physics.PhysicEngine;
@@ -13,25 +13,34 @@ import main.utils.data.Config;
 import main.utils.vectors.Vec2;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 public class RangedCube extends BasicCube implements AIdriven {
-    private final int animationDuration=30;
+    private final int animationDuration=10;
     private int remainingAnimationTime=0;
     private int currentAnimationFrame=0;
+
+    private double rotation=0;
+    private final double rotationSpeed;
+    private final double requiredAccuracy;
 
     private final BufferedImage[] deploymentTextures;
     private final BufferedImage[] retractionTextures;
     private final BufferedImage[] attackTextures;
 
-    private Character currentTarget=null;
+    private Target currentTarget=null;
 
     private final Collider detectionZone;
+
     public RangedCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures) {
         super(position, texture, deadTexture);
         this.lifeState = LifeStates.CURRENTLY_IDLE;
         this.deploymentTextures = deploymentTextures;
         this.retractionTextures = retractionTextures;
         this.attackTextures = attackTextures;
+
+        this.rotationSpeed = 0.05;
+        this.requiredAccuracy = 0.1;
 
         detectionZone = new BoxCollider(
                 new Vec2(-Config.cubeDetectionRange,-Config.cubeDetectionRange),
@@ -49,11 +58,64 @@ public class RangedCube extends BasicCube implements AIdriven {
         detectionZone.setOffset();
     }
 
+    private void seekClosestTarget(){
+        List<Target> targets = GameEngine.getTargets();
+        if(targets.isEmpty())return;
+        if(currentTarget == null)currentTarget=targets.getFirst();
+        for(Target target : targets){
+            if(Vec2.getSquareDistance(position,currentTarget.getPosition())>Vec2.getSquareDistance(position,target.getPosition())){
+                currentTarget=target;
+            }
+        }
+    }
+
+    private boolean isNotValidTarget(){
+        return (currentTarget == null) || (!(Vec2.getSquareDistance(position, currentTarget.getPosition()) < Config.cubeSquareFollowRange));
+    }
+
+    private Vec2 getTargetPosition(){
+        return Vec2.add(currentTarget.getPosition(),currentTarget.getVelocity());
+    }
+
+    private double getTargetRotation() {
+        Vec2 targetPosition=getTargetPosition();
+        return (new Vec2(
+                targetPosition.x- this.position.x,
+                targetPosition.y- this.position.y
+        ).getAngle()+5*Math.PI/2)%(2*Math.PI);
+    }
+
+    private void computeNewRotation(){
+        if(lifeState==LifeStates.CURRENTLY_DEAD)return;
+        double targetRotation = getTargetRotation();
+        int angleSign;  double angleToTravel;
+
+        angleToTravel=Math.abs(targetRotation-rotation);
+        angleSign=((targetRotation-rotation>=0)?1:-1)*((angleToTravel<Math.PI)?1:-1);
+
+        this.rotation+=angleSign*Math.min(angleToTravel,this.rotationSpeed)+2*Math.PI;
+        this.rotation=this.rotation%(2*Math.PI);
+    }
+
+    private boolean isRotationGood(){
+        double targetRotation = getTargetRotation();
+        double angleToTravel = targetRotation - rotation;
+        double angleSign = ((targetRotation-rotation>=0)?1:-1)*((angleToTravel<Math.PI)?1:-1);
+        return Math.abs(angleToTravel+angleSign*2*Math.PI)%(2*Math.PI) < requiredAccuracy;
+    }
+
+    @Override
+    public double getRotation() {
+        return rotation;
+    }
+
+
     @Override
     public void startAI() {
         if(lifeState == LifeStates.CURRENTLY_IDLE){
-            lifeState=LifeStates.CURRENTLY_DEPLOYING;
             remainingAnimationTime=animationDuration;
+            lifeState=LifeStates.CURRENTLY_DEPLOYING;
+            System.out.println("Deploying");
         }
     }
 
@@ -66,19 +128,36 @@ public class RangedCube extends BasicCube implements AIdriven {
     public void updateAI() {
         switch (lifeState){
             case CURRENTLY_DEPLOYING:
-                System.out.println("Deploying");
-                if(--remainingAnimationTime<0)lifeState=LifeStates.CURRENTLY_PURSUING;
+                if(--remainingAnimationTime<0){
+                    lifeState=LifeStates.CURRENTLY_PURSUING;
+                }
                 break;
             case CURRENTLY_RETRACTING:
-                System.out.println("Retracting");
-                if(--remainingAnimationTime<0)lifeState=LifeStates.CURRENTLY_IDLE;
+                if(--remainingAnimationTime<0){
+                    rotation=0;
+                    lifeState=LifeStates.CURRENTLY_IDLE;
+                }
                 break;
             case CURRENTLY_PURSUING:
-                System.out.println("Pursuing");
+                if(isNotValidTarget()){
+                    seekClosestTarget();
+                    if(isNotValidTarget()){
+                        remainingAnimationTime=animationDuration;
+                        lifeState=LifeStates.CURRENTLY_RETRACTING;
+                        break;
+                    }
+                }
+                computeNewRotation();
+                if(isRotationGood()){
+                    remainingAnimationTime=animationDuration;
+                    lifeState=LifeStates.CURRENTLY_ATTACKING;
+                }
                 break;
             case CURRENTLY_ATTACKING:
-                System.out.println("Attacking");
-                if(--remainingAnimationTime<0)lifeState=LifeStates.CURRENTLY_PURSUING;
+                if(--remainingAnimationTime<0){
+                    lifeState=LifeStates.CURRENTLY_PURSUING;
+                }
+                computeNewRotation();
                 break;
         }
         currentAnimationFrame=(deploymentTextures.length-1)*(animationDuration-remainingAnimationTime)/animationDuration;

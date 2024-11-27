@@ -76,4 +76,9 @@ public class BasicCube extends Character implements RedCube{
         super.killYourself();
         PhysicEngine.removeCollider(damageZone);
     }
+
+    @Override
+    public double getRotation() {
+        return 0;
+    }
 }
