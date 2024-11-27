@@ -3,7 +3,7 @@ package main.game;
 import main.game.characters.AIdriven;
 import main.game.characters.Target;
 import main.game.characters.vehicles.tank.Tank;
-import main.game.hud.HudManager;
+import main.game.hud.HudEngine;
 import main.game.level.Level;
 import main.game.projectiles.ProjectileHandler;
 import main.physics.CollisionLayers;
@@ -37,7 +37,6 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
     private final List<Target> targets = new ArrayList<>();
 
     private final Vec2 currentInputDir = new Vec2();
-    private final HudManager hudManager=new HudManager();
 
     public GameEngine() {
         if(instance==null)instance=this;

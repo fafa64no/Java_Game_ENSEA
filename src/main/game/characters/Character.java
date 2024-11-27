@@ -85,4 +85,8 @@ public abstract class Character extends DynamicSprite {
     public void killYourself(){
         lifeState=LifeStates.CURRENTLY_DEAD;
     }
+
+    public double getHealthRatio(){
+        return currentHealth/maxHealth;
+    }
 }

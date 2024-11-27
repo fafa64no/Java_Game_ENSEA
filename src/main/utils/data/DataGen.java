@@ -66,6 +66,7 @@ public class DataGen {
     private static BufferedImage smallTiles = null;
     private static BufferedImage largeTiles = null;
     private static BufferedImage smallShells = null;
+    private static BufferedImage bars = null;
 
     public static BufferedImage[][] getGrassTextures(){
         if(smallTiles == null) {
@@ -176,6 +177,42 @@ public class DataGen {
             catch (IOException e) {throw new RuntimeException(e);}
         }
         return smallShells.getSubimage(Config.smallTileSize,0, Config.smallTileSize, Config.smallTileSize);
+    }
+
+    public static BufferedImage getBlueBarTexture(){
+        if(bars == null) {
+            try {
+                bars = ImageIO.read(new File("assets/textures/hud/bars.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        return bars.getSubimage(0, 0, Config.largeTileSize, Config.largeTileSize);
+    }
+
+    public static BufferedImage getYellowBarTexture(){
+        if(bars == null) {
+            try {
+                bars = ImageIO.read(new File("assets/textures/hud/bars.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        return bars.getSubimage(0, Config.largeTileSize, Config.largeTileSize, Config.largeTileSize);
+    }
+
+    public static BufferedImage getRedBarTexture(){
+        if(bars == null) {
+            try {
+                bars = ImageIO.read(new File("assets/textures/hud/bars.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        return bars.getSubimage(0, 2*Config.largeTileSize, Config.largeTileSize, Config.largeTileSize);
+    }
+
+    public static BufferedImage getWhiteBarTexture(){
+        if(bars == null) {
+            try {
+                bars = ImageIO.read(new File("assets/textures/hud/bars.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        return bars.getSubimage(0, 3*Config.largeTileSize, Config.largeTileSize, Config.largeTileSize);
     }
 
 /*      ################ - Cubes - ################      */

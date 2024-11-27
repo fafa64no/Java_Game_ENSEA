@@ -21,7 +21,7 @@ public class MachineGunBullet extends JPanel implements ProjectileHandler, Displ
     private int projectilePointer = 0;
 
     public final int projectileLifeSpan = 500;
-    public final double projectileSpeed = 10;
+    public final double projectileSpeed = 15;
 
     public MachineGunBullet(){
         if(instance==null)instance=this;
