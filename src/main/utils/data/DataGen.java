@@ -232,8 +232,26 @@ public class DataGen {
 
 /*      ################ - VFX - ################      */
 
+    private static BufferedImage smallVfxTiles = null;
     private static BufferedImage largeVfxTiles = null;
+    private static BufferedImage[] piercingTextures = null;
     private static BufferedImage[] electricTextures = null;
+
+    public static BufferedImage[] getPiercingTextures(){
+        if(smallVfxTiles == null) {
+            try {
+                smallVfxTiles = ImageIO.read(new File("assets/textures/vfx/smallVFX.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if(piercingTextures == null){
+            piercingTextures = new BufferedImage[4];
+            piercingTextures[0] = smallVfxTiles.getSubimage(0, 0, Config.smallTileSize, Config.smallTileSize);
+            piercingTextures[1] = smallVfxTiles.getSubimage(Config.smallTileSize, 0, Config.smallTileSize, Config.smallTileSize);
+            piercingTextures[2] = smallVfxTiles.getSubimage(2*Config.smallTileSize, 0, Config.smallTileSize, Config.smallTileSize);
+            piercingTextures[3] = smallVfxTiles.getSubimage(3*Config.smallTileSize, 0, Config.smallTileSize, Config.smallTileSize);
+        }
+        return piercingTextures;
+    }
 
     public static BufferedImage[] getElectricTextures(){
         if(largeVfxTiles == null) {

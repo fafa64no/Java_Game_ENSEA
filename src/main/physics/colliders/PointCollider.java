@@ -4,6 +4,10 @@ import main.game.DynamicSprite;
 import main.game.projectiles.Projectile;
 import main.physics.ColliderType;
 import main.physics.Collision;
+import main.rendering.vfx.Vfx;
+import main.rendering.vfx.VfxType;
+import main.utils.data.Config;
+import main.utils.data.DataGen;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;
 import main.utils.vectors.Vec4;
@@ -17,6 +21,8 @@ public class PointCollider implements Collider{
     protected final ColliderType colliderType;
     protected final double modifier;
 
+    protected final VfxType vfxType;
+
     public PointCollider(Vec2 offset, ColliderType colliderType, Projectile parent, double modifier) {
         this.inverted=false;
         this.friction=1;
@@ -25,6 +31,18 @@ public class PointCollider implements Collider{
         this.parent=parent;
         this.colliderType=colliderType;
         this.modifier=modifier;
+        this.vfxType=VfxType.VFX_NONE;
+    }
+
+    public PointCollider(Vec2 offset, ColliderType colliderType, Projectile parent, double modifier, VfxType vfxType) {
+        this.inverted=false;
+        this.friction=1;
+        this.offset=offset;
+        this.initialOffset=offset;
+        this.parent=parent;
+        this.colliderType=colliderType;
+        this.modifier=modifier;
+        this.vfxType=vfxType;
     }
 
     private Collision boxColliderHandler(BoxCollider bc, Vec2 offset){
@@ -89,6 +107,15 @@ public class PointCollider implements Collider{
             case SOLID_THICK_INERT:
                 if(parent==null)break;
                 parent.destroyProjectile();
+                break;
+            default:
+                break;
+        }
+
+        switch (vfxType){
+            case VFX_PIERCING_METAL:
+                if(colliderType==ColliderType.NONE_TRIGGER || colliderType==ColliderType.NONE_DAMAGE_DEALER)break;
+                new Vfx(offset, Config.smallTileSize, DataGen.getPiercingTextures(),5);
                 break;
             default:
                 break;

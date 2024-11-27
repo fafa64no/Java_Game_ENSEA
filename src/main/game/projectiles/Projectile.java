@@ -5,6 +5,7 @@ import main.physics.CollisionLayers;
 import main.physics.PhysicEngine;
 import main.physics.colliders.Collider;
 import main.physics.colliders.PointCollider;
+import main.rendering.vfx.VfxType;
 import main.utils.data.Config;
 import main.utils.vectors.Vec2;
 
@@ -29,7 +30,8 @@ public class Projectile {
                 new Vec2(),
                 ColliderType.NONE_DAMAGE_DEALER,
                 this,
-                modifier
+                modifier,
+                VfxType.VFX_PIERCING_METAL
         );
         this.collider.setOffset();
         this.idInProjectileHandler=idInProjectileHandler;

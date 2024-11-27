@@ -31,8 +31,9 @@ public class VfxManager extends JPanel implements RequiresUpdates, Displayable {
 
     public static int addVfx(Vfx vfx){
         instance.vfxList[instance.vfxListPointer]=vfx;
-        instance.vfxListPointer=instance.vfxListPointer%Config.maxVfxPerVfxHandler;
-        return instance.vfxListPointer++;
+        int idToReturn=instance.vfxListPointer;
+        instance.vfxListPointer=(instance.vfxListPointer+1)%Config.maxVfxPerVfxHandler;
+        return idToReturn;
     }
 
     public static void removeVfx(int id){
