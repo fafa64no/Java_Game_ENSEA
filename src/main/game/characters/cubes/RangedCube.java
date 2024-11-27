@@ -74,7 +74,7 @@ public class RangedCube extends BasicCube implements AIdriven {
     }
 
     private boolean isNotValidTarget(){
-        return (currentTarget == null) || (!(Vec2.getSquareDistance(position, currentTarget.getPosition()) < Config.cubeSquareFollowRange));
+        return (currentTarget == null) || Vec2.getSquareDistance(position, currentTarget.getPosition()) > Config.cubeSquareFollowRange || !currentTarget.isTargetable();
     }
 
     private Vec2 getTargetPosition(){

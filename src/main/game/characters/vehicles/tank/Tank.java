@@ -4,8 +4,8 @@ import main.game.GameEngine;
 import main.game.characters.LifeStates;
 import main.game.characters.vehicles.Vehicle;
 import main.physics.ColliderType;
+import main.physics.PhysicEngine;
 import main.physics.colliders.BoxCollider;
-import main.physics.colliders.CircleCollider;
 import main.physics.colliders.Collider;
 import main.physics.colliders.SolidCollider;
 import main.rendering.RenderEngine;
@@ -114,10 +114,16 @@ public class Tank extends Vehicle {
         super.killYourself();
         tankTurret.killYourself();
         GameEngine.removeTarget(this);
+        PhysicEngine.removeCollider(collider);
     }
 
     @Override
     public Vec2 getVelocity() {
         return getCurrentVelocity();
+    }
+
+    @Override
+    public boolean isTargetable() {
+        return lifeState!=LifeStates.CURRENTLY_DEAD;
     }
 }

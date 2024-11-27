@@ -95,4 +95,9 @@ public class TankTurret extends Vehicle {
     public Vec2 getVelocity() {
         return currentVelocity;
     }
+
+    @Override
+    public boolean isTargetable() {
+        return false;
+    }
 }

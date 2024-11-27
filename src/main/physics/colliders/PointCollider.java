@@ -27,6 +27,16 @@ public class PointCollider implements Collider{
         this.modifier=10;
     }
 
+    public PointCollider(Vec2 offset, ColliderType colliderType, Projectile parent, double modifier) {
+        this.inverted=false;
+        this.friction=1;
+        this.offset=offset;
+        this.initialOffset=offset;
+        this.parent=parent;
+        this.colliderType=colliderType;
+        this.modifier=modifier;
+    }
+
     private Collision boxColliderHandler(BoxCollider bc, Vec2 offset){
         BVec2 didCollide = new BVec2(bc.isInverted(),bc.isInverted());
         Vec2 previousCenterDiff = Vec2.substract(this.offset,bc.getOffset());

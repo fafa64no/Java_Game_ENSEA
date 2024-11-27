@@ -22,6 +22,7 @@ public class TankShell extends JPanel implements ProjectileHandler, Displayable 
 
     public final int projectileLifeSpan = 500;
     public final double projectileSpeed = 15;
+    public final double modifier = 20;
 
     public TankShell(){
         if(instance==null)instance=this;
@@ -48,7 +49,8 @@ public class TankShell extends JPanel implements ProjectileHandler, Displayable 
                 rotation,
                 projectilePointer,
                 this,
-                CollisionLayers.COLLISION_LAYER_ALLY_PROJECTILES
+                CollisionLayers.COLLISION_LAYER_ALLY_PROJECTILES,
+                modifier
         );
         projectilePointer=(projectilePointer+1)%projectiles.length;
     }

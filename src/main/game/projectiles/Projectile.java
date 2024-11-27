@@ -36,6 +36,24 @@ public class Projectile {
         PhysicEngine.addCollider(this.collider, collisionLayer);
     }
 
+    public Projectile(int remainingMilliseconds, int invisibilityFrames ,Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent, CollisionLayers collisionLayer, double modifier) {
+        this.remainingMilliseconds = remainingMilliseconds;
+        this.invisibilityFrames=invisibilityFrames;
+        this.currentPosition = currentPosition.copy();
+        this.velocity = Vec2.multiply(new Vec2(0,1).rotateBy(rotation),velocity);
+        this.rotation = rotation;
+        this.collider = new PointCollider(
+                new Vec2(),
+                ColliderType.NONE_DAMAGE_DEALER,
+                this,
+                modifier
+        );
+        this.collider.setOffset();
+        this.idInProjectileHandler=idInProjectileHandler;
+        this.parent=parent;
+        PhysicEngine.addCollider(this.collider, collisionLayer);
+    }
+
     public void incrementPosition(){
         currentPosition=Vec2.add(currentPosition,velocity);
         collider.setOffset();

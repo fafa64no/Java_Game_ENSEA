@@ -22,6 +22,7 @@ public class MachineGunBullet extends JPanel implements ProjectileHandler, Displ
 
     public final int projectileLifeSpan = 500;
     public final double projectileSpeed = 15;
+    public final double modifier = 1;
 
     public MachineGunBullet(){
         if(instance==null)instance=this;
@@ -48,7 +49,8 @@ public class MachineGunBullet extends JPanel implements ProjectileHandler, Displ
                 rotation,
                 projectilePointer,
                 this,
-                CollisionLayers.COLLISION_LAYER_ENNEMY_PROJECTILES
+                CollisionLayers.COLLISION_LAYER_ENNEMY_PROJECTILES,
+                modifier
         );
         projectilePointer=(projectilePointer+1)%projectiles.length;
     }
