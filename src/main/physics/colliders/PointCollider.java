@@ -17,16 +17,6 @@ public class PointCollider implements Collider{
     protected final ColliderType colliderType;
     protected final double modifier;
 
-    public PointCollider(Vec2 offset, ColliderType colliderType, Projectile parent) {
-        this.inverted=false;
-        this.friction=1;
-        this.offset=offset;
-        this.initialOffset=offset;
-        this.parent=parent;
-        this.colliderType=colliderType;
-        this.modifier=10;
-    }
-
     public PointCollider(Vec2 offset, ColliderType colliderType, Projectile parent, double modifier) {
         this.inverted=false;
         this.friction=1;
