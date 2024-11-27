@@ -27,6 +27,8 @@ public class Config {
 
     public final static int defaultMapWidth=1024;
     public final static int defaultMapHeight=768;
+    public final static int spawnHalfWidth=19;
+    public final static int spawnHalfHeight=14;
 
     public final static int tilemapColliderRange=4;
 

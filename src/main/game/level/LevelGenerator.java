@@ -4,15 +4,13 @@ import main.utils.data.Config;
 import main.utils.noise.PseudoRandom;
 import main.utils.vectors.IVec2;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 
 public class LevelGenerator {
     public static char[][] genTerrain(IVec2 size){
         char[][] output=new char[size.y][size.x];
-        for(int x=0;x<size.x;x++){
-            for(int y=0;y<size.y;y++){
+        for(int x = 0; x < size.x; x++){
+            for(int y = 0; y < size.y; y++){
                 // Terrain
                 if(PseudoRandom.isRandomBetween(-0.05,0.05,-x+50,30+y, Config.noiseSizeTerrainPath)){
                     output[y][x]='P';
@@ -39,7 +37,36 @@ public class LevelGenerator {
                 output[y][x]='.';
             }
         }
+        addSpawnTiles(output);
         return output;
+    }
+
+    private static void addSpawnTiles(char[][] map){
+        int sizeX, sizeY, middleX,middleY,minX,maxX,minY,maxY;
+        sizeX = map[0].length;
+        sizeY = map.length;
+        middleX = sizeX/2;
+        middleY = sizeY/2;
+        minX = Math.clamp(middleX - Config.spawnHalfWidth ,0,sizeX);
+        maxX = Math.clamp(middleX + Config.spawnHalfWidth ,0,sizeX);
+        minY = Math.clamp(middleY - Config.spawnHalfHeight,0,sizeY);
+        maxY = Math.clamp(middleY + Config.spawnHalfHeight,0,sizeY);
+
+        char[][] spawnMap = new char[maxY-minY][maxX-minX];
+        try{
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("assets/data/defaultSpawn.txt"));
+            for (int i = 0; i < 2*Config.spawnHalfHeight; i++) spawnMap[i]=bufferedReader.readLine().toCharArray();
+        } catch (Exception e){e.printStackTrace();}
+
+        int i=0,j=0;
+        for(int x = minX; x < maxX; x++) {
+            for (int y = minY; y < maxY; y++) {
+                if(spawnMap[j][i]!='X') map[y][x]=spawnMap[j][i];
+                j++;
+            }
+            j=0;
+            i++;
+        }
     }
 
     private static void writeMap(char[][] map){

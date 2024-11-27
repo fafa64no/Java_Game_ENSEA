@@ -1,9 +1,0 @@
-TTTTTTTTTTTTTTTT
-T              T
-T            H T
-T            H T
-T            H T
-T            H T
-TRRTRT       H T
-T            H .
-TTTTTTTTTTTTTTTT
