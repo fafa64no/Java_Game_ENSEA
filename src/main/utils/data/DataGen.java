@@ -169,6 +169,15 @@ public class DataGen {
         return smallShells.getSubimage(0,0, Config.smallTileSize, Config.smallTileSize);
     }
 
+    public static BufferedImage getMachineGunBulletShellTexture(){
+        if(smallShells == null) {
+            try {
+                smallShells = ImageIO.read(new File("assets/textures/projectiles/smallShells.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        return smallShells.getSubimage(Config.smallTileSize,0, Config.smallTileSize, Config.smallTileSize);
+    }
+
 /*      ################ - Cubes - ################      */
 
     private static BufferedImage mediumCubes = null;

@@ -13,19 +13,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class TankShell extends JPanel implements ProjectileHandler, Displayable {
-    private static TankShell instance=null;
+public class MachineGunBullet extends JPanel implements ProjectileHandler, Displayable {
+    private static MachineGunBullet instance = null;
 
     private final BufferedImage texture;
     private final Projectile[] projectiles = new Projectile[Config.maxProjectilesPerProjectileHandler];
     private int projectilePointer = 0;
 
     public final int projectileLifeSpan = 500;
-    public final double projectileSpeed = 15;
+    public final double projectileSpeed = 10;
 
-    public TankShell(){
+    public MachineGunBullet(){
         if(instance==null)instance=this;
-        texture = DataGen.getTankShellTexture();
+        texture = DataGen.getMachineGunBulletShellTexture();
 
         instance.setOpaque(false);
 
@@ -33,9 +33,9 @@ public class TankShell extends JPanel implements ProjectileHandler, Displayable 
         GameEngine.addProjectileHandler(instance);
     }
 
-    public static TankShell getInstance(){
+    public static MachineGunBullet getInstance(){
         if(instance!=null)return instance;
-        return new TankShell();
+        return new MachineGunBullet();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class TankShell extends JPanel implements ProjectileHandler, Displayable 
                 rotation,
                 projectilePointer,
                 this,
-                CollisionLayers.COLLISION_LAYER_ALLY_PROJECTILES
+                CollisionLayers.COLLISION_LAYER_ENNEMY_PROJECTILES
         );
         projectilePointer=(projectilePointer+1)%projectiles.length;
     }

@@ -105,6 +105,29 @@ public class PhysicEngine implements Engine {
                 }
             }
 
+            for (Collider colliderEnemyProjectile : colliderList_layer_enemy_projectiles){
+                Collision collision=colliderAlly.doCollide(colliderEnemyProjectile,velocity);
+                if(collision==null)continue;
+                colliderAlly.onCollide(colliderEnemyProjectile.getColliderType(), colliderEnemyProjectile.getReverseCollision(collision));
+                colliderEnemyProjectile.onCollide(colliderAlly.getColliderType(),collision);
+                ColliderType colliderType = colliderEnemyProjectile.getColliderType();
+                boolean doesPreventMovement = colliderType==ColliderType.SOLID_INERT
+                        || colliderType==ColliderType.SOLID_DAMAGE_DEALER
+                        || colliderType==ColliderType.SOLID_THICK_INERT
+                        || colliderType==ColliderType.SOLID_INERT_ALLY;
+                if(collision.collisions.x&&doesPreventMovement){
+                    canMove.x=false;
+                    currentInverseFriction=Math.min(currentInverseFriction, colliderEnemyProjectile.getFriction());
+                }
+                if(collision.collisions.y&&doesPreventMovement){
+                    canMove.y=false;
+                    currentInverseFriction=Math.min(currentInverseFriction, colliderEnemyProjectile.getFriction());
+                }
+                if(canMove.isFalse()){
+                    break;
+                }
+            }
+
             dynamicSprite.goToNextPosition(canMove,currentInverseFriction);
             if(dynamicSprite instanceof Tank)((Tank) dynamicSprite).computeNewRotation();
         }
@@ -142,6 +165,15 @@ public class PhysicEngine implements Engine {
         }
 
         for (Collider colliderAllyProjectile : colliderList_layer_ally_projectiles) {
+            for (Collider colliderTerrain : colliderList_layer_terrain) {
+                Collision collision = colliderAllyProjectile.doCollide(colliderTerrain, new Vec2());
+                if (collision == null) continue;
+                colliderAllyProjectile.onCollide(colliderTerrain.getColliderType(), colliderTerrain.getReverseCollision(collision));
+                colliderTerrain.onCollide(colliderAllyProjectile.getColliderType(), collision);
+            }
+        }
+
+        for (Collider colliderAllyProjectile : colliderList_layer_enemy_projectiles) {
             for (Collider colliderTerrain : colliderList_layer_terrain) {
                 Collision collision = colliderAllyProjectile.doCollide(colliderTerrain, new Vec2());
                 if (collision == null) continue;

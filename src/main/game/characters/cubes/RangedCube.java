@@ -4,6 +4,8 @@ import main.game.GameEngine;
 import main.game.characters.AIdriven;
 import main.game.characters.LifeStates;
 import main.game.characters.Target;
+import main.game.projectiles.MachineGunBullet;
+import main.game.projectiles.ProjectileHandler;
 import main.physics.ColliderType;
 import main.physics.CollisionLayers;
 import main.physics.PhysicEngine;
@@ -31,6 +33,8 @@ public class RangedCube extends BasicCube implements AIdriven {
     private Target currentTarget=null;
 
     private final Collider detectionZone;
+
+    private final ProjectileHandler projectileHandler = MachineGunBullet.getInstance();
 
     public RangedCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures) {
         super(position, texture, deadTexture);
@@ -115,7 +119,6 @@ public class RangedCube extends BasicCube implements AIdriven {
         if(lifeState == LifeStates.CURRENTLY_IDLE){
             remainingAnimationTime=animationDuration;
             lifeState=LifeStates.CURRENTLY_DEPLOYING;
-            System.out.println("Deploying");
         }
     }
 
@@ -158,6 +161,7 @@ public class RangedCube extends BasicCube implements AIdriven {
                     lifeState=LifeStates.CURRENTLY_PURSUING;
                 }
                 computeNewRotation();
+                projectileHandler.fireInDirection(position,rotation);
                 break;
         }
         currentAnimationFrame=(deploymentTextures.length-1)*(animationDuration-remainingAnimationTime)/animationDuration;

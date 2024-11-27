@@ -19,7 +19,7 @@ public class Projectile {
 
     private final int idInProjectileHandler;
 
-    public Projectile(int remainingMilliseconds, int invisibilityFrames ,Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent) {
+    public Projectile(int remainingMilliseconds, int invisibilityFrames ,Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent, CollisionLayers collisionLayer) {
         this.remainingMilliseconds = remainingMilliseconds;
         this.invisibilityFrames=invisibilityFrames;
         this.currentPosition = currentPosition.copy();
@@ -33,7 +33,7 @@ public class Projectile {
         this.collider.setOffset();
         this.idInProjectileHandler=idInProjectileHandler;
         this.parent=parent;
-        PhysicEngine.addCollider(this.collider, CollisionLayers.COLLISION_LAYER_ALLY_PROJECTILES);
+        PhysicEngine.addCollider(this.collider, collisionLayer);
     }
 
     public void incrementPosition(){
