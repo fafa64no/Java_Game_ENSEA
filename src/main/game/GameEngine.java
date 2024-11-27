@@ -11,6 +11,7 @@ import main.physics.PhysicEngine;
 import main.physics.colliders.Collider;
 import main.rendering.RenderEngine;
 import main.rendering.RenderingLayers;
+import main.utils.RequiresUpdates;
 import main.utils.data.Config;
 import main.utils.data.DataGen;
 import main.utils.Engine;
@@ -35,6 +36,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
     private final List<ProjectileHandler> projectileHandlers = new ArrayList<>();
     private final List<AIdriven> aIdrivens = new ArrayList<>();
     private final List<Target> targets = new ArrayList<>();
+    private final List<RequiresUpdates> requiresUpdates = new ArrayList<>();
 
     private final Vec2 currentInputDir = new Vec2();
 
@@ -105,6 +107,10 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
         instance.targets.remove(target);
     }
 
+    public static void addRequiresUpdates(RequiresUpdates requiresUpdates){
+        instance.requiresUpdates.add(requiresUpdates);
+    }
+
     public static List<Target> getTargets(){
         return instance.targets;
     }
@@ -118,6 +124,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
         tanks[currentTank].setInput(currentInputDir);
         for(ProjectileHandler projectileHandler : instance.projectileHandlers)projectileHandler.updateLifetimes();
         for(AIdriven aIdriven : aIdrivens)if(aIdriven.isAIenabled())aIdriven.updateAI();
+        for(RequiresUpdates requiresUpdate : requiresUpdates)requiresUpdate.updateRemainingTime();
     }
 
     @Override
@@ -175,7 +182,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
         switch (e.getButton()){
             case 1:     // Left Click
                 if(!tanks[currentTank].fireProjectile()){
-                    System.out.println("Reloading ...");
+                    //System.out.println("Reloading ...");
                 }
                 break;
             case 2:     // Right Click

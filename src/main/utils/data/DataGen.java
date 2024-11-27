@@ -22,41 +22,56 @@ public class DataGen {
     }
 
     public static Tank[] genTanks(){
-        Tank[] tanks=new Tank[3];
+        Tank[] tanks=new Tank[5];
         tanks[0]=new Tank(
-                new Vec2(-64,0),
-                "./assets/textures/characters/tanks/test/base.png",
-                "./assets/textures/characters/tanks/test/turret.png",
-                15,
-                new IVec2(64,64),
-                0.2,
-                0.25,
-                new Vec2(0.2,0.2),
-                new Vec2(1,1)
+                new Vec2(-150,100),
+                "panzer_IV_white",
+                5,
+                new IVec2(38,72),
+                0.1,
+                0.20,
+                new Vec2(15,15),
+                15
         );
         tanks[1]=new Tank(
-                new Vec2(),
-                "./assets/textures/characters/tanks/panzer_IV_gray/base.png",
-                "./assets/textures/characters/tanks/panzer_IV_gray/turret.png",
-                "./assets/textures/characters/tanks/panzer_IV_gray/deadBase.png",
-                "./assets/textures/characters/tanks/panzer_IV_gray/deadTurret.png",
+                new Vec2(0,100),
+                "panzer_IV_gray",
+                5,
+                new IVec2(38,72),
+                0.1,
+                0.15,
+                new Vec2(15,15),
+                30
+        );
+        tanks[2]=new Tank(
+                new Vec2(150,100),
+                "panzer_IV_brown",
                 5,
                 new IVec2(38,72),
                 0.1,
                 0.05,
-                new Vec2(15,15)
+                new Vec2(15,15),
+                50
         );
-        tanks[2]=new Tank(
-                new Vec2(64,0),
-                "./assets/textures/characters/tanks/panzer_IV_brown/base.png",
-                "./assets/textures/characters/tanks/panzer_IV_brown/turret.png",
-                "./assets/textures/characters/tanks/panzer_IV_gray/deadBase.png",
-                "./assets/textures/characters/tanks/panzer_IV_gray/deadTurret.png",
-                8,
+        tanks[3]=new Tank(
+                new Vec2(-75,150),
+                "panzer_IV_sand",
+                5,
                 new IVec2(38,72),
                 0.1,
-                0.15,
-                new Vec2(15,15)
+                0.10,
+                new Vec2(15,15),
+                20
+        );
+        tanks[4]=new Tank(
+                new Vec2(75,150),
+                "panzer_IV_green",
+                5,
+                new IVec2(38,72),
+                0.1,
+                0.05,
+                new Vec2(15,15),
+                25
         );
         return tanks;
     }
@@ -324,12 +339,12 @@ public class DataGen {
     /*      ################ - Cameras - ################      */
 
     public static Camera[] genCameras(){
-        Camera[] output=new Camera[3];
+        Camera[] output=new Camera[5];
         output[0]=new Camera(
                 new Vec2(0,0),
                 new Vec2(
-                        2,
-                        2)
+                        3,
+                        3)
         );
         output[1]=new Camera(
                 new Vec2(0,0),
@@ -338,6 +353,18 @@ public class DataGen {
                         3)
         );
         output[2]=new Camera(
+                new Vec2(0,0),
+                new Vec2(
+                        3,
+                        3)
+        );
+        output[3]=new Camera(
+                new Vec2(0,0),
+                new Vec2(
+                        3,
+                        3)
+        );
+        output[4]=new Camera(
                 new Vec2(0,0),
                 new Vec2(
                         3,

@@ -128,6 +128,30 @@ public class PhysicEngine implements Engine {
                 }
             }
 
+            for(Collider colliderAlly2 : colliderList_layer_allies){
+                if(colliderAlly2==colliderAlly)continue;
+                Collision collision=colliderAlly.doCollide(colliderAlly2,velocity);
+                if(collision==null)continue;
+                colliderAlly.onCollide(colliderAlly2.getColliderType(), colliderAlly2.getReverseCollision(collision));
+                colliderAlly2.onCollide(colliderAlly.getColliderType(),collision);
+                ColliderType colliderType = colliderAlly2.getColliderType();
+                boolean doesPreventMovement = colliderType==ColliderType.SOLID_INERT
+                        || colliderType==ColliderType.SOLID_DAMAGE_DEALER
+                        || colliderType==ColliderType.SOLID_THICK_INERT
+                        || colliderType==ColliderType.SOLID_INERT_ALLY;
+                if(collision.collisions.x&&doesPreventMovement){
+                    canMove.x=false;
+                    currentInverseFriction=Math.min(currentInverseFriction, colliderAlly2.getFriction());
+                }
+                if(collision.collisions.y&&doesPreventMovement){
+                    canMove.y=false;
+                    currentInverseFriction=Math.min(currentInverseFriction, colliderAlly2.getFriction());
+                }
+                if(canMove.isFalse()){
+                    break;
+                }
+            }
+
             dynamicSprite.goToNextPosition(canMove,currentInverseFriction);
             if(dynamicSprite instanceof Tank)((Tank) dynamicSprite).computeNewRotation();
         }

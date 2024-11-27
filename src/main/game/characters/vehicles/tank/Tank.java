@@ -19,24 +19,9 @@ public class Tank extends Vehicle {
     private final TankTurret tankTurret;
     private final SolidCollider collider;
 
-    public Tank(Vec2 position, String texturePath, String turretTexturePath, String deadTexturePath, String deadTurretTexturePath, int velocityMultiplier, IVec2 textureSize, double rotationSpeed, double turretRotationSpeed, Vec2 colliderSize) {
-        super(position, texturePath, deadTexturePath, velocityMultiplier, textureSize, rotationSpeed);
-        this.tankTurret = new TankTurret(position,turretTexturePath,deadTurretTexturePath,textureSize,this, turretRotationSpeed);
-        this.collider = new BoxCollider(
-                new Vec2(-colliderSize.x,-colliderSize.y),
-                colliderSize,
-                false,
-                0,
-                new Vec2(),
-                this,
-                ColliderType.SOLID_INERT_ALLY
-        );
-        GameEngine.addTarget(this);
-    }
-
-    public Tank(Vec2 position, String texturePath, String turretTexturePath, int velocityMultiplier, IVec2 textureSize, double rotationSpeed, double turretRotationSpeed, Vec2 scale, Vec2 colliderSize) {
-        super(position, texturePath, velocityMultiplier, textureSize, rotationSpeed, scale);
-        this.tankTurret = new TankTurret(position,turretTexturePath,textureSize,this, turretRotationSpeed, scale);
+    public Tank(Vec2 position, String textureName, int velocityMultiplier, IVec2 textureSize, double rotationSpeed, double turretRotationSpeed, Vec2 colliderSize, int reloadFrames) {
+        super(position, "./assets/textures/characters/tanks/"+textureName+"/base.png", "./assets/textures/characters/tanks/"+textureName+"/deadBase.png", velocityMultiplier, textureSize, rotationSpeed);
+        this.tankTurret = new TankTurret(position, "./assets/textures/characters/tanks/"+textureName+"/turret.png", "./assets/textures/characters/tanks/"+textureName+"/deadTurret.png", textureSize,this, turretRotationSpeed, reloadFrames);
         this.collider = new BoxCollider(
                 new Vec2(-colliderSize.x,-colliderSize.y),
                 colliderSize,

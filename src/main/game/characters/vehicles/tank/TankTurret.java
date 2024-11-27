@@ -6,31 +6,25 @@ import main.game.characters.vehicles.Vehicle;
 import main.game.projectiles.ProjectileHandler;
 import main.game.projectiles.TankShell;
 import main.rendering.RenderEngine;
+import main.utils.RequiresUpdates;
 import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 
 import java.awt.*;
 
-public class TankTurret extends Vehicle {
+public class TankTurret extends Vehicle implements RequiresUpdates {
     private final Tank parent;
     private final ProjectileHandler projectile;
+    private final int reloadFrames;
+    private int remainingReloadFrames = 0;
 
-    public TankTurret(Vec2 position, String texturePath, IVec2 textureSize, Tank parent, double rotationSpeed) {
-        super(position, texturePath, 0, textureSize, rotationSpeed);
-        this.parent = parent;
-        this.projectile = TankShell.getInstance();
-    }
-
-    public TankTurret(Vec2 position, String texturePath, String deadTexturePath, IVec2 textureSize, Tank parent, double rotationSpeed) {
+    public TankTurret(Vec2 position, String texturePath, String deadTexturePath, IVec2 textureSize, Tank parent, double rotationSpeed, int reloadFrames) {
         super(position, texturePath, deadTexturePath, 0, textureSize, rotationSpeed);
         this.parent = parent;
         this.projectile = TankShell.getInstance();
-    }
+        this.reloadFrames = reloadFrames;
 
-    public TankTurret(Vec2 position, String texturePath, IVec2 textureSize, Tank parent, double rotationSpeed, Vec2 scale) {
-        super(position, texturePath, 0, textureSize, rotationSpeed, scale);
-        this.parent = parent;
-        this.projectile = TankShell.getInstance();
+        GameEngine.addRequiresUpdates(this);
     }
 
     protected void computeNewRotation(double parentRotationModifier){
@@ -62,10 +56,15 @@ public class TankTurret extends Vehicle {
     }
 
     public boolean fireProjectile(){
-        if(lifeState==LifeStates.CURRENTLY_DEAD)return false;
-        if(projectile==null)return false;
+        if(lifeState==LifeStates.CURRENTLY_DEAD || remainingReloadFrames>0 || projectile==null)return false;
         projectile.fireInDirection(this.position,this.rotation);
+        remainingReloadFrames=reloadFrames;
         return true;
+    }
+
+    @Override
+    public void updateRemainingTime(){
+        if(remainingReloadFrames>0)remainingReloadFrames--;
     }
 
     @Override
