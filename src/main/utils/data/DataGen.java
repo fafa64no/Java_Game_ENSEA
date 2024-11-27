@@ -236,6 +236,7 @@ public class DataGen {
     private static BufferedImage largeVfxTiles = null;
     private static BufferedImage[] piercingTextures = null;
     private static BufferedImage[] electricTextures = null;
+    private static BufferedImage[] explosionTextures = null;
 
     public static BufferedImage[] getPiercingTextures(){
         if(smallVfxTiles == null) {
@@ -267,6 +268,22 @@ public class DataGen {
             electricTextures[3] = largeVfxTiles.getSubimage(3*Config.largeTileSize, 0, Config.largeTileSize, Config.largeTileSize);
         }
         return electricTextures;
+    }
+
+    public static BufferedImage[] getExplosionTextures(){
+        if(largeVfxTiles == null) {
+            try {
+                largeVfxTiles = ImageIO.read(new File("assets/textures/vfx/largeVFX.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if(explosionTextures == null){
+            explosionTextures = new BufferedImage[4];
+            explosionTextures[0] = largeVfxTiles.getSubimage(0, Config.largeTileSize, Config.largeTileSize, Config.largeTileSize);
+            explosionTextures[1] = largeVfxTiles.getSubimage(Config.largeTileSize, Config.largeTileSize, Config.largeTileSize, Config.largeTileSize);
+            explosionTextures[2] = largeVfxTiles.getSubimage(2*Config.largeTileSize, Config.largeTileSize, Config.largeTileSize, Config.largeTileSize);
+            explosionTextures[3] = largeVfxTiles.getSubimage(3*Config.largeTileSize, Config.largeTileSize, Config.largeTileSize, Config.largeTileSize);
+        }
+        return explosionTextures;
     }
 
 /*      ################ - Cubes - ################      */

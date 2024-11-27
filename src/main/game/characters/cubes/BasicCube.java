@@ -7,8 +7,10 @@ import main.physics.PhysicEngine;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
 import main.rendering.RenderEngine;
+import main.rendering.vfx.Vfx;
 import main.rendering.vfx.VfxType;
 import main.utils.data.Config;
+import main.utils.data.DataGen;
 import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 
@@ -78,6 +80,7 @@ public class BasicCube extends Character implements RedCube{
     public void killYourself() {
         super.killYourself();
         PhysicEngine.removeCollider(damageZone);
+        new Vfx(position,Config.largeTileSize, DataGen.getExplosionTextures(),20);
     }
 
     @Override

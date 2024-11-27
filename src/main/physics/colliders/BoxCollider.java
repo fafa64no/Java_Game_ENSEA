@@ -160,7 +160,7 @@ public class BoxCollider extends SolidCollider{
 
         switch (vfxType){
             case VFX_ELECTRICITY:
-                new Vfx(offset, Config.largeTileSize, DataGen.getElectricTextures(),10);
+                new Vfx(offset, Config.largeTileSize, DataGen.getElectricTextures(),7);
                 break;
             default:
                 break;

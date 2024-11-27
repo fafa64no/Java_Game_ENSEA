@@ -9,6 +9,9 @@ import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
 import main.physics.colliders.SolidCollider;
 import main.rendering.RenderEngine;
+import main.rendering.vfx.Vfx;
+import main.utils.data.Config;
+import main.utils.data.DataGen;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
@@ -100,6 +103,7 @@ public class Tank extends Vehicle {
         tankTurret.killYourself();
         GameEngine.removeTarget(this);
         PhysicEngine.removeCollider(collider);
+        new Vfx(position, Config.largeTileSize, DataGen.getExplosionTextures(),20);
     }
 
     @Override
