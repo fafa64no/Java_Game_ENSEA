@@ -5,16 +5,22 @@ import main.utils.vectors.Vec2;
 import java.awt.image.BufferedImage;
 
 public class MovingCube extends RangedCube{
+    protected final double attackRange;
+
     public MovingCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures) {
         super(position, texture, deadTexture, deploymentTextures, retractionTextures, attackTextures);
+        this.attackRange=100;
     }
 
-    private void updatePosition(){
-        Vec2 direction = Vec2.substract(position,currentTarget.getPosition());
-        double distanceToTravel = Math.min(direction.getLength(),1);
-        Vec2 newPos = Vec2.multiply(direction.normalize(),distanceToTravel);
+    protected void updatePosition(){
+        double distanceToTravel = Vec2.getDistance(position,currentTarget.getPosition());
+        if(distanceToTravel<attackRange){
+            setInput(new Vec2());
+            return;
+        }
+        Vec2 direction = Vec2.substract(currentTarget.getPosition(),position);
 
-        position=Vec2.add(newPos,position);
+        setInput(direction.normalize());
 
         collider.setOffset();
         damageZone.setOffset();
@@ -25,5 +31,23 @@ public class MovingCube extends RangedCube{
     protected void pursuingState() {
         super.pursuingState();
         updatePosition();
+    }
+
+    @Override
+    protected void attackingState() {
+        super.attackingState();
+        updatePosition();
+    }
+
+    @Override
+    protected void retractingState() {
+        super.retractingState();
+        setInput(new Vec2());
+    }
+
+    @Override
+    public void killYourself() {
+        super.killYourself();
+        setInput(new Vec2());
     }
 }

@@ -186,6 +186,8 @@ public class PhysicEngine implements Engine {
                     break;
                 }
             }
+
+            dynamicSprite.goToNextPosition(canMove,currentInverseFriction);
         }
 
         for (Collider colliderAllyProjectile : colliderList_layer_ally_projectiles) {

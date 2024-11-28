@@ -154,8 +154,8 @@ public class Level extends JPanel implements Displayable {
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
                         cubeRenderer.addCube(new RangedCube(
                                 spawnPosition.copy(),
-                                DataGen.getFollowerCubeTextureCubeTexture(),
-                                DataGen.getFollowerCubeDeadTextureCubeDeadTexture(),
+                                DataGen.getRangedCubeTextureCubeTexture(),
+                                DataGen.getRangedCubeDeadTextureCubeDeadTexture(),
                                 DataGen.getRangedCubeDeploymentTextures(),
                                 DataGen.getRangedCubeRetractionTextures(),
                                 DataGen.getRangedCubeAttackTextures()
@@ -166,11 +166,11 @@ public class Level extends JPanel implements Displayable {
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
                         cubeRenderer.addCube(new MovingCube(
                                 spawnPosition.copy(),
-                                DataGen.getFollowerCubeTextureCubeTexture(),
-                                DataGen.getFollowerCubeDeadTextureCubeDeadTexture(),
-                                DataGen.getRangedCubeDeploymentTextures(),
-                                DataGen.getRangedCubeRetractionTextures(),
-                                DataGen.getRangedCubeAttackTextures()
+                                DataGen.getMovingCubeTextureCubeTexture(),
+                                DataGen.getMovingCubeDeadTextureCubeDeadTexture(),
+                                DataGen.getMovingCubeDeploymentTextures(),
+                                DataGen.getMovingCubeRetractionTextures(),
+                                DataGen.getMovingCubeAttackTextures()
                         ));
                         cube2count++;
                         break;
