@@ -31,7 +31,8 @@ public class DataGen {
                 0.1,
                 0.20,
                 new Vec2(15,15),
-                15
+                5,
+                1000000
         );
         tanks[1]=new Tank(
                 new Vec2(0,100),
@@ -41,7 +42,8 @@ public class DataGen {
                 0.1,
                 0.15,
                 new Vec2(15,15),
-                30
+                30,
+                100
         );
         tanks[2]=new Tank(
                 new Vec2(150,100),
@@ -51,7 +53,8 @@ public class DataGen {
                 0.1,
                 0.05,
                 new Vec2(15,15),
-                50
+                50,
+                200
         );
         tanks[3]=new Tank(
                 new Vec2(-75,150),
@@ -61,7 +64,8 @@ public class DataGen {
                 0.1,
                 0.10,
                 new Vec2(15,15),
-                20
+                20,
+                80
         );
         tanks[4]=new Tank(
                 new Vec2(75,150),
@@ -71,7 +75,8 @@ public class DataGen {
                 0.1,
                 0.05,
                 new Vec2(15,15),
-                25
+                25,
+                150
         );
         return tanks;
     }

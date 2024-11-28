@@ -27,8 +27,8 @@ public class Config {
 
     public final static int defaultMapWidth=1024;
     public final static int defaultMapHeight=768;
-    public final static int spawnHalfWidth=19;
-    public final static int spawnHalfHeight=14;
+    public final static int spawnWidth=38;
+    public final static int spawnHeight=28;
 
     public final static int tilemapColliderRange=4;
 
@@ -38,15 +38,21 @@ public class Config {
     public final static int noiseSizeTerrainPath=128;
     public final static int noiseSizeTerrainStones=64;
     public final static int noiseSizeTerrainTrees=1;
-    public final static int noiseSizeTerrainTraps=8;
+    public final static int noiseSizeTerrainCubes =8;
+    public final static int noiseSizeTerrainStructures=8;
 
-    public final static int maxProjectilesPerProjectileHandler=256;
+    public final static int maxProjectilesPerProjectileHandler=512;
     public final static int maxVfxPerVfxHandler=256;
 
     public final static double cubeCollisionRange=32;
     public final static double cubeDetectionRange=128;
-    public final static double cubeSquareFollowRange=36864;
-    public final static double cubeSquareAttackRange=22500;
+    public final static double cubeAttackRange =80;
+    public final static double cubeSquareFollowRange=90000;
+
+    public final static double defaultCubeRequiredAccuracy=0.2;
+    public final static double basicCubeHealth=100;
+    public final static double rangedCubeHealth=150;
+    public final static double movingCubeHealth=250;
 
     public final static long startTime=System.currentTimeMillis();
 

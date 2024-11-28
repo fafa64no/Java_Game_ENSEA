@@ -22,7 +22,7 @@ public class RangedCube extends BasicCube implements AIdriven {
     private int remainingAnimationTime=0;
     private int currentAnimationFrame=0;
 
-    private double rotation=0;
+    protected double rotation=0;
     private final double rotationSpeed;
     private final double requiredAccuracy;
 
@@ -37,14 +37,40 @@ public class RangedCube extends BasicCube implements AIdriven {
     private final ProjectileHandler projectileHandler = MachineGunBullet.getInstance();
 
     public RangedCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures) {
-        super(position, texture, deadTexture);
+        super(position, texture, deadTexture, Config.rangedCubeHealth);
         this.lifeState = LifeStates.CURRENTLY_IDLE;
         this.deploymentTextures = deploymentTextures;
         this.retractionTextures = retractionTextures;
         this.attackTextures = attackTextures;
 
         this.rotationSpeed = 0.05;
-        this.requiredAccuracy = 0.1;
+        this.requiredAccuracy = Config.defaultCubeRequiredAccuracy;
+
+        detectionZone = new BoxCollider(
+                new Vec2(-Config.cubeDetectionRange,-Config.cubeDetectionRange),
+                new Vec2(Config.cubeDetectionRange,Config.cubeDetectionRange),
+                false,
+                1,
+                new Vec2(),
+                this,
+                ColliderType.NONE_TRIGGER
+        );
+
+        GameEngine.addAIdriven(this);
+        PhysicEngine.addCollider(detectionZone, CollisionLayers.COLLISION_LAYER_ENNEMIES);
+
+        detectionZone.setOffset();
+    }
+
+    public RangedCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures, double rotationSpeed, double maxHealth) {
+        super(position, texture, deadTexture, maxHealth);
+        this.lifeState = LifeStates.CURRENTLY_IDLE;
+        this.deploymentTextures = deploymentTextures;
+        this.retractionTextures = retractionTextures;
+        this.attackTextures = attackTextures;
+
+        this.rotationSpeed = rotationSpeed;
+        this.requiredAccuracy = Config.defaultCubeRequiredAccuracy;
 
         detectionZone = new BoxCollider(
                 new Vec2(-Config.cubeDetectionRange,-Config.cubeDetectionRange),

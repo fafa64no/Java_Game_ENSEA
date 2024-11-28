@@ -111,6 +111,13 @@ public class Level extends JPanel implements Displayable {
                     case '0':
                     case '1':
                     case '2':
+                    case '3':
+                    case '4':
+                    case '5':
+                    case '6':
+                    case '7':
+                    case '8':
+                    case '9':
                         mapTextures[y][x]=trapTexture;
                         break;
                     default:
@@ -141,6 +148,13 @@ public class Level extends JPanel implements Displayable {
         for (int x=0;x<map[0].length;x++) {
             for (int y = 0; y < map.length; y++) {
                 switch (map[y][x]){
+                    case '3':
+                    case '4':
+                    case '5':
+                    case '6':
+                    case '7':
+                    case '8':
+                    case '9':
                     case '0':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
                         cubeRenderer.addCube(new BasicCube(
@@ -177,7 +191,7 @@ public class Level extends JPanel implements Displayable {
                 }
             }
         }
-        System.out.println("\nGenerated cubes : "+(cube0count+cube1count)+"\n\t0 : "+cube0count+"\n\t1 : "+cube1count+"\n\t2 : "+cube2count+"\n");
+        System.out.println("\nGenerated cubes : "+(cube0count+cube1count+cube2count)+"\n\t0 : "+cube0count+"\n\t1 : "+cube1count+"\n\t2 : "+cube2count+"\n");
     }
 
     public double getGroundSpeed(Vec2 position){

@@ -20,26 +20,6 @@ public abstract class Character extends DynamicSprite {
     protected LifeStates lifeState;
     protected final BufferedImage deadTexture;
 
-    public Character(Vec2 position, String texturePath, double velocityMultiplier, IVec2 textureSize) {
-        super(position, texturePath);
-        this.velocityMultiplier = velocityMultiplier;
-        this.textureSize=textureSize;
-        this.maxHealth=100;
-        this.currentHealth=maxHealth;
-        this.lifeState=LifeStates.CURRENTLY_ALIVE;
-        this.deadTexture=null;
-    }
-
-    public Character(Vec2 position, BufferedImage texture, double velocityMultiplier, IVec2 textureSize) {
-        super(position, texture);
-        this.velocityMultiplier = velocityMultiplier;
-        this.textureSize=textureSize;
-        this.maxHealth=100;
-        this.currentHealth=maxHealth;
-        this.lifeState=LifeStates.CURRENTLY_ALIVE;
-        this.deadTexture=null;
-    }
-
     public Character(Vec2 position, String texturePath, String deadTexturePath, double velocityMultiplier, IVec2 textureSize) {
         super(position, texturePath);
         this.velocityMultiplier = velocityMultiplier;
@@ -58,6 +38,29 @@ public abstract class Character extends DynamicSprite {
         this.velocityMultiplier = velocityMultiplier;
         this.textureSize=textureSize;
         this.maxHealth=100;
+        this.currentHealth=maxHealth;
+        this.lifeState=LifeStates.CURRENTLY_ALIVE;
+        this.deadTexture=deadTexture;
+    }
+
+    public Character(Vec2 position, String texturePath, String deadTexturePath, double velocityMultiplier, IVec2 textureSize, double maxHealth) {
+        super(position, texturePath);
+        this.velocityMultiplier = velocityMultiplier;
+        this.textureSize=textureSize;
+        this.maxHealth=maxHealth;
+        this.currentHealth=maxHealth;
+        this.lifeState=LifeStates.CURRENTLY_ALIVE;
+        BufferedImage deadTexture=null;
+        try {deadTexture = ImageIO.read(new File(deadTexturePath));}
+        catch (Exception e){e.printStackTrace();}
+        this.deadTexture=deadTexture;
+    }
+
+    public Character(Vec2 position, BufferedImage texture, BufferedImage deadTexture, double velocityMultiplier, IVec2 textureSize, double maxHealth) {
+        super(position, texture);
+        this.velocityMultiplier = velocityMultiplier;
+        this.textureSize=textureSize;
+        this.maxHealth=maxHealth;
         this.currentHealth=maxHealth;
         this.lifeState=LifeStates.CURRENTLY_ALIVE;
         this.deadTexture=deadTexture;

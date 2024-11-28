@@ -22,7 +22,36 @@ public class BasicCube extends Character implements RedCube{
     protected final Collider damageZone;
 
     public BasicCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture) {
-        super(position, texture, deadTexture, 1, new IVec2(Config.largeTileSize,Config.largeTileSize));
+        super(position, texture, deadTexture, 1, new IVec2(Config.largeTileSize,Config.largeTileSize), Config.basicCubeHealth);
+        collider = new BoxCollider(
+                new Vec2(-16,-16),
+                new Vec2(16,16),
+                false,
+                0.1,
+                new Vec2(),
+                this,
+                ColliderType.SOLID_INERT
+        );
+        damageZone = new BoxCollider(
+                new Vec2(-Config.cubeCollisionRange,-Config.cubeCollisionRange),
+                new Vec2(Config.cubeCollisionRange,Config.cubeCollisionRange),
+                false,
+                0.1,
+                new Vec2(),
+                this,
+                ColliderType.NONE_DAMAGE_DEALER,
+                3,
+                VfxType.VFX_ELECTRICITY,
+                15
+        );
+        PhysicEngine.addCollider(collider, CollisionLayers.COLLISION_LAYER_ENNEMIES);
+        PhysicEngine.addCollider(damageZone, CollisionLayers.COLLISION_LAYER_ENNEMIES);
+        collider.setOffset();
+        damageZone.setOffset();
+    }
+
+    protected BasicCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, double maxHealth) {
+        super(position, texture, deadTexture, 1, new IVec2(Config.largeTileSize,Config.largeTileSize), maxHealth);
         collider = new BoxCollider(
                 new Vec2(-16,-16),
                 new Vec2(16,16),

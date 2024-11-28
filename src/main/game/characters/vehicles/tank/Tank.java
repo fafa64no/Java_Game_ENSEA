@@ -22,8 +22,8 @@ public class Tank extends Vehicle {
     private final TankTurret tankTurret;
     private final SolidCollider collider;
 
-    public Tank(Vec2 position, String textureName, int velocityMultiplier, IVec2 textureSize, double rotationSpeed, double turretRotationSpeed, Vec2 colliderSize, int reloadFrames) {
-        super(position, "./assets/textures/characters/tanks/"+textureName+"/base.png", "./assets/textures/characters/tanks/"+textureName+"/deadBase.png", velocityMultiplier, textureSize, rotationSpeed);
+    public Tank(Vec2 position, String textureName, int velocityMultiplier, IVec2 textureSize, double rotationSpeed, double turretRotationSpeed, Vec2 colliderSize, int reloadFrames, double maxHealth) {
+        super(position, "./assets/textures/characters/tanks/"+textureName+"/base.png", "./assets/textures/characters/tanks/"+textureName+"/deadBase.png", velocityMultiplier, textureSize, rotationSpeed, maxHealth);
         this.tankTurret = new TankTurret(position, "./assets/textures/characters/tanks/"+textureName+"/turret.png", "./assets/textures/characters/tanks/"+textureName+"/deadTurret.png", textureSize,this, turretRotationSpeed, reloadFrames);
         this.collider = new BoxCollider(
                 new Vec2(-colliderSize.x,-colliderSize.y),
