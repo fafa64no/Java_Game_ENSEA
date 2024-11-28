@@ -11,9 +11,13 @@ import main.utils.vectors.Vec2;
 
 public class Projectile {
     private int remainingMilliseconds;
-    private int invisibilityFrames;
     private Vec2 currentPosition;
     private final Vec2 velocity;
+    private final int animationFrames;
+    private int currentAnimationFrame;
+    private final int initialLifeSpan;
+    private final int animationSpeed;
+
     public final double rotation;
     public final Collider collider;
     public final ProjectileHandler parent;
@@ -22,9 +26,9 @@ public class Projectile {
 
     public Projectile(int remainingMilliseconds, int invisibilityFrames ,Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent, CollisionLayers collisionLayer, double modifier) {
         this.remainingMilliseconds = remainingMilliseconds;
-        this.invisibilityFrames=invisibilityFrames;
-        this.currentPosition = currentPosition.copy();
+        this.initialLifeSpan = remainingMilliseconds;
         this.velocity = Vec2.multiply(new Vec2(0,1).rotateBy(rotation),velocity);
+        this.currentPosition = Vec2.add(currentPosition,Vec2.multiply(this.velocity,invisibilityFrames));
         this.rotation = rotation;
         this.collider = new PointCollider(
                 new Vec2(),
@@ -34,8 +38,33 @@ public class Projectile {
                 VfxType.VFX_PIERCING_METAL
         );
         this.collider.setOffset();
-        this.idInProjectileHandler=idInProjectileHandler;
-        this.parent=parent;
+        this.idInProjectileHandler = idInProjectileHandler;
+        this.parent = parent;
+        this.animationFrames = 1;
+        this.currentAnimationFrame = 0;
+        this.animationSpeed = 0;
+        PhysicEngine.addCollider(this.collider, collisionLayer);
+    }
+
+    public Projectile(int remainingMilliseconds, int invisibilityFrames ,Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent, CollisionLayers collisionLayer, double modifier, int animationFrames, int animationSpeed) {
+        this.remainingMilliseconds = remainingMilliseconds;
+        this.initialLifeSpan = remainingMilliseconds;
+        this.velocity = Vec2.multiply(new Vec2(0,1).rotateBy(rotation),velocity);
+        this.currentPosition = Vec2.add(currentPosition,Vec2.multiply(this.velocity,invisibilityFrames));
+        this.rotation = rotation;
+        this.collider = new PointCollider(
+                new Vec2(),
+                ColliderType.AERIAL_DAMAGE_DEALER,
+                this,
+                modifier,
+                VfxType.VFX_PIERCING_METAL
+        );
+        this.collider.setOffset();
+        this.idInProjectileHandler = idInProjectileHandler;
+        this.parent = parent;
+        this.animationFrames = animationFrames;
+        this.currentAnimationFrame = 0;
+        this.animationSpeed = animationSpeed;
         PhysicEngine.addCollider(this.collider, collisionLayer);
     }
 
@@ -48,22 +77,20 @@ public class Projectile {
         return currentPosition;
     }
 
-    public int getRemainingMilliseconds() {
-        return remainingMilliseconds;
-    }
-
-    public int getInvisibilityFrames() {
-        return invisibilityFrames;
-    }
-
     public void decrementTimeRemaining(){
         remainingMilliseconds -= Config.delayBetweenFrames;
-        invisibilityFrames--;
         if(remainingMilliseconds<=0)destroyProjectile();;
+        if(animationSpeed>0){
+            currentAnimationFrame=((animationFrames-1)*animationSpeed*(initialLifeSpan-remainingMilliseconds)/initialLifeSpan)%animationFrames;
+        }
     }
 
     public void destroyProjectile(){
         PhysicEngine.removeCollider(collider);
         if (parent!=null) parent.removeProjectile(idInProjectileHandler);
+    }
+
+    public int getCurrentAnimationFrame() {
+        return currentAnimationFrame;
     }
 }

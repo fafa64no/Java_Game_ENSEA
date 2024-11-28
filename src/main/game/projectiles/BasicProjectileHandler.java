@@ -13,18 +13,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public abstract class BasicProjectile extends JPanel implements ProjectileHandler, Displayable, RequiresUpdates {
-    private final BufferedImage texture;
-    private final Projectile[] projectiles = new Projectile[Config.maxProjectilesPerProjectileHandler];
-    private int projectilePointer = 0;
+public abstract class BasicProjectileHandler extends JPanel implements ProjectileHandler, Displayable, RequiresUpdates {
+    protected final BufferedImage[] textures;
+    protected final Projectile[] projectiles = new Projectile[Config.maxProjectilesPerProjectileHandler];
+    protected int projectilePointer = 0;
 
     protected final int projectileLifeSpan;
     protected final double projectileSpeed;
     protected final double modifier;
     protected final CollisionLayers collisionLayer;
 
-    public BasicProjectile(BufferedImage texture, int projectileLifeSpan, double projectileSpeed, double modifier, CollisionLayers collisionLayer) {
-        this.texture = texture;
+    public BasicProjectileHandler(BufferedImage[] textures, int projectileLifeSpan, double projectileSpeed, double modifier, CollisionLayers collisionLayer) {
+        this.textures = textures;
         this.projectileLifeSpan = projectileLifeSpan;
         this.projectileSpeed = projectileSpeed;
         this.modifier = modifier;
@@ -40,7 +40,7 @@ public abstract class BasicProjectile extends JPanel implements ProjectileHandle
     public void fireInDirection(Vec2 initialPosition, double rotation) {
         projectiles[projectilePointer]=new Projectile(
                 projectileLifeSpan,
-                3,
+                2,
                 initialPosition,
                 projectileSpeed,
                 rotation,
@@ -87,10 +87,10 @@ public abstract class BasicProjectile extends JPanel implements ProjectileHandle
         g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
 
         for(Projectile projectile : projectiles){
-            if(projectile==null||projectile.getInvisibilityFrames()>0)continue;
+            if(projectile==null)continue;
             g2d.translate(projectile.getCurrentPosition().x- (double) Config.smallTileSize /2,projectile.getCurrentPosition().y- (double) Config.smallTileSize /2);
             g2d.rotate(projectile.rotation,(double) Config.smallTileSize /2,(double) Config.smallTileSize /2);
-            g2d.drawRenderedImage(texture,null);
+            g2d.drawRenderedImage(textures[projectile.getCurrentAnimationFrame()],null);
             g2d.rotate(-projectile.rotation,(double) Config.smallTileSize /2,(double) Config.smallTileSize /2);
             g2d.translate(-projectile.getCurrentPosition().x+ (double) Config.smallTileSize /2,-projectile.getCurrentPosition().y+ (double) Config.smallTileSize /2);
         }

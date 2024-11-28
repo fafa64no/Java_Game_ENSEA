@@ -3,11 +3,13 @@ package main.game.projectiles;
 import main.physics.CollisionLayers;
 import main.utils.data.DataGen;
 
-public class TankShell extends BasicProjectile {
+import java.awt.image.BufferedImage;
+
+public class TankShell extends BasicProjectileHandler {
     private static TankShell instance=null;
 
     public TankShell(){
-        super(DataGen.getTankShellTexture(),800,15,40,CollisionLayers.COLLISION_LAYER_ALLY_PROJECTILES);
+        super(new BufferedImage[]{DataGen.getTankShellTexture()},800,15,40,CollisionLayers.COLLISION_LAYER_ALLY_PROJECTILES);
         if(instance==null)instance=this;
     }
 

@@ -1,7 +1,6 @@
-package main.game.characters.cubes.cubetypes;
+package main.game.characters.cubes;
 
 import main.game.characters.Character;
-import main.game.characters.cubes.RedCube;
 import main.physics.ColliderType;
 import main.physics.CollisionLayers;
 import main.physics.PhysicEngine;
@@ -17,44 +16,24 @@ import main.utils.vectors.Vec2;
 import java.awt.image.BufferedImage;
 
 public class BasicCube extends Character implements RedCube {
-    protected final Collider collider;
-    protected final Collider damageZone;
+    protected Collider collider;
+    protected Collider damageZone;
 
     public final int textureSize;
 
     public BasicCube(Vec2 position) {
         super(position, DataGen.getBasicCubeTexture(), DataGen.getBasicCubeDeadTexture(), 1, new IVec2(Config.largeTileSize,Config.largeTileSize), Config.basicCubeHealth);
         this.textureSize = Config.largeTileSize;
-        collider = new BoxCollider(
-                new Vec2(-16,-16),
-                new Vec2(16,16),
-                false,
-                0.1,
-                new Vec2(),
-                this,
-                ColliderType.SOLID_INERT
-        );
-        damageZone = new BoxCollider(
-                new Vec2(-Config.cubeCollisionRange,-Config.cubeCollisionRange),
-                new Vec2(Config.cubeCollisionRange,Config.cubeCollisionRange),
-                false,
-                0.1,
-                new Vec2(),
-                this,
-                ColliderType.NONE_DAMAGE_DEALER,
-                3,
-                VfxType.VFX_ELECTRICITY,
-                15
-        );
-        PhysicEngine.addCollider(collider, CollisionLayers.COLLISION_LAYER_ENNEMIES);
-        PhysicEngine.addCollider(damageZone, CollisionLayers.COLLISION_LAYER_ENNEMIES);
-        collider.setOffset();
-        damageZone.setOffset();
+        genColliders();
     }
 
     protected BasicCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, double maxHealth, int textureSize) {
         super(position, texture, deadTexture, 1, new IVec2(Config.largeTileSize,Config.largeTileSize), maxHealth);
         this.textureSize = textureSize;
+        genColliders();
+    }
+
+    protected void genColliders(){
         collider = new BoxCollider(
                 new Vec2(-16,-16),
                 new Vec2(16,16),

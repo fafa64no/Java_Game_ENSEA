@@ -1,10 +1,9 @@
 package main.game.level;
 
-import main.game.characters.cubes.cubetypes.ArtilleryCube;
-import main.game.characters.cubes.cubetypes.BasicCube;
-import main.game.characters.cubes.cubetypes.GatingWheelsCube;
-import main.game.characters.cubes.cubetypes.GatlingCube;
-import main.game.characters.cubes.MovingCube;
+import main.game.characters.cubes.cube_variants.ArtilleryCube;
+import main.game.characters.cubes.BasicCube;
+import main.game.characters.cubes.cube_variants.GatingWheelsCube;
+import main.game.characters.cubes.cube_variants.GatlingCube;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
 import main.physics.colliders.TilemapCollider;

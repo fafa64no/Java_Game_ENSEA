@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 public abstract class MovingCube extends RangedCube{
     protected final double attackRange;
 
-    public MovingCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures, double rotationSpeed, double maxHealth, int animationDuration, CubeHead cubeHead, int textureSize, ProjectileHandler projectileHandler, int firingDelay, double attackRange){
+    public MovingCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures, double rotationSpeed, double maxHealth, int animationDuration, CubeHead cubeHead, int textureSize, ProjectileHandler projectileHandler, int firingDelay, double attackRange, double followRange){
         super(
                 position,
                 texture,
@@ -23,7 +23,8 @@ public abstract class MovingCube extends RangedCube{
                 cubeHead,
                 textureSize,
                 projectileHandler,
-                firingDelay
+                firingDelay,
+                followRange
         );
         this.attackRange = attackRange;
     }

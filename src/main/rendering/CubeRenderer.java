@@ -41,7 +41,7 @@ public class CubeRenderer extends JPanel implements Displayable {
         g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
 
         for(RedCube redCube : redCubes){
-            if(!RenderEngine.getCurrentCamera().getDisplayWindow(new Vec2(2* Config.smallTileSize)).contains(redCube.getPosition()))continue;
+            if(!RenderEngine.getCurrentCamera().getDisplayWindow(new Vec2(Config.largeTileSize)).contains(redCube.getPosition()))continue;
             Vec2 position = redCube.getPosition();
             int textureSize = redCube.getTextureSize();
             Vec2 translation = new Vec2(

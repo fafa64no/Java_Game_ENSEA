@@ -4,7 +4,6 @@ import main.game.GameEngine;
 import main.game.characters.AIdriven;
 import main.game.characters.LifeStates;
 import main.game.characters.Target;
-import main.game.characters.cubes.cubetypes.BasicCube;
 import main.game.projectiles.ProjectileHandler;
 import main.physics.ColliderType;
 import main.physics.CollisionLayers;
@@ -33,13 +32,14 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
 
     protected Target currentTarget=null;
 
-    protected final Collider detectionZone;
+    protected Collider detectionZone;
+    private final double followRange;
 
     private final ProjectileHandler projectileHandler;
     private final int firingDelay;
     private int remainingFiringDelay = 0;
 
-    public RangedCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures, double rotationSpeed, double maxHealth, int animationDuration, CubeHead cubeHead, int textureSize, ProjectileHandler projectileHandler, int firingDelay) {
+    public RangedCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures, double rotationSpeed, double maxHealth, int animationDuration, CubeHead cubeHead, int textureSize, ProjectileHandler projectileHandler, int firingDelay, double followRange) {
         super(position, texture, deadTexture, maxHealth, textureSize);
         this.lifeState = LifeStates.CURRENTLY_IDLE;
         this.deploymentTextures = deploymentTextures;
@@ -54,6 +54,14 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
         this.rotationSpeed = rotationSpeed;
         this.requiredAccuracy = Config.defaultCubeRequiredAccuracy;
 
+        this.followRange = followRange;
+
+        GameEngine.addAIdriven(this);
+    }
+
+    @Override
+    protected void genColliders() {
+        super.genColliders();
         detectionZone = new BoxCollider(
                 new Vec2(-Config.cubeDetectionRange,-Config.cubeDetectionRange),
                 new Vec2(Config.cubeDetectionRange,Config.cubeDetectionRange),
@@ -63,10 +71,7 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
                 this,
                 ColliderType.NONE_TRIGGER
         );
-
-        GameEngine.addAIdriven(this);
         PhysicEngine.addCollider(detectionZone, CollisionLayers.COLLISION_LAYER_ENNEMIES);
-
         detectionZone.setOffset();
     }
 
@@ -83,7 +88,7 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
     }
 
     private boolean isNotValidTarget(){
-        return (currentTarget == null) || Vec2.getSquareDistance(position, currentTarget.getPosition()) > Config.cubeSquareFollowRange || !currentTarget.isTargetable();
+        return (currentTarget == null) || Vec2.getSquareDistance(position, currentTarget.getPosition()) > followRange || !currentTarget.isTargetable();
     }
 
     private Vec2 getTargetPosition(){

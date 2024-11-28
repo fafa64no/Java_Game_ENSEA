@@ -23,17 +23,6 @@ public class PointCollider implements Collider{
 
     protected final VfxType vfxType;
 
-    public PointCollider(Vec2 offset, ColliderType colliderType, Projectile parent, double modifier) {
-        this.inverted=false;
-        this.friction=1;
-        this.offset=offset;
-        this.initialOffset=offset;
-        this.parent=parent;
-        this.colliderType=colliderType;
-        this.modifier=modifier;
-        this.vfxType=VfxType.VFX_NONE;
-    }
-
     public PointCollider(Vec2 offset, ColliderType colliderType, Projectile parent, double modifier, VfxType vfxType) {
         this.inverted=false;
         this.friction=1;
@@ -106,7 +95,7 @@ public class PointCollider implements Collider{
         switch (colliderType){
             case SOLID_THICK_INERT:
                 if(parent==null)break;
-                parent.destroyProjectile();
+                if(this.colliderType==ColliderType.NONE_DAMAGE_DEALER)parent.destroyProjectile();
                 break;
             default:
                 break;

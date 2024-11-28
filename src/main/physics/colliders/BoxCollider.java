@@ -134,6 +134,7 @@ public class BoxCollider extends SolidCollider{
         switch (colliderType){
             case SOLID_DAMAGE_DEALER:
             case NONE_DAMAGE_DEALER:
+            case AERIAL_DAMAGE_DEALER:
                 if(parent==null)break;
                 if((
                         this.colliderType==ColliderType.SOLID_INERT||

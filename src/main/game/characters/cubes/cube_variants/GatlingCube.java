@@ -1,4 +1,4 @@
-package main.game.characters.cubes.cubetypes;
+package main.game.characters.cubes.cube_variants;
 
 import main.game.characters.cubes.CubeHead;
 import main.game.characters.cubes.RangedCube;
@@ -22,7 +22,8 @@ public class GatlingCube extends RangedCube {
                 CubeHead.CUBE_HEAD_MACHINE_GUN,
                 Config.largeTileSize,
                 MachineGunBullet.getInstance(),
-                0
+                0,
+                Config.cubeSquareFollowRange
         );
     }
 }

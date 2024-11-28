@@ -1,8 +1,8 @@
-package main.game.characters.cubes.cubetypes;
+package main.game.characters.cubes.cube_variants;
 
 import main.game.characters.cubes.CubeHead;
 import main.game.characters.cubes.RangedCube;
-import main.game.projectiles.MachineGunBullet;
+import main.game.projectiles.ArtilleryShell;
 import main.utils.data.Config;
 import main.utils.data.DataGen;
 import main.utils.vectors.Vec2;
@@ -19,11 +19,12 @@ public class ArtilleryCube extends RangedCube {
                 DataGen.getArtilleryCubeAttackTextures(),
                 0.05,
                 Config.artilleryCubeHealth,
-                30,
+                50,
                 CubeHead.CUBE_HEAD_ARTILLERY,
                 Config.veryLargeTileSize,
-                MachineGunBullet.getInstance(),
-                50
+                ArtilleryShell.getInstance(),
+                50,
+                Config.artillerySquareFollowRange
         );
     }
 }

@@ -1,4 +1,4 @@
-package main.game.characters.cubes.cubetypes;
+package main.game.characters.cubes.cube_variants;
 
 import main.game.characters.cubes.CubeHead;
 import main.game.characters.cubes.MovingCube;
@@ -23,7 +23,8 @@ public class GatingWheelsCube extends MovingCube {
                 Config.largeTileSize,
                 MachineGunBullet.getInstance(),
                 0,
-                Config.cubeAttackRange
+                Config.cubeAttackRange,
+                Config.cubeSquareFollowRange
         );
     }
 }
