@@ -1,8 +1,10 @@
 package main.game.level;
 
-import main.game.characters.cubes.BasicCube;
+import main.game.characters.cubes.cubetypes.ArtilleryCube;
+import main.game.characters.cubes.cubetypes.BasicCube;
+import main.game.characters.cubes.cubetypes.GatingWheelsCube;
+import main.game.characters.cubes.cubetypes.GatlingCube;
 import main.game.characters.cubes.MovingCube;
-import main.game.characters.cubes.RangedCube;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
 import main.physics.colliders.TilemapCollider;
@@ -19,8 +21,6 @@ import main.utils.vectors.Vec4;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,32 +40,6 @@ public class Level extends JPanel implements Displayable {
 
     private final LeavesRenderer leavesRenderer;
     private final CubeRenderer cubeRenderer;
-
-    public Level(IVec2 size,String path){
-        this.setOpaque(false);
-        map=new char[size.y][size.x];
-        mapTextures=new BufferedImage[size.y][size.x];
-        mapOffset.x=-map[0].length * Config.smallTileSize /2.0;
-        mapOffset.y=-map.length * Config.smallTileSize /2.0;
-        try{
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
-            for (int i = 0; i< size.y; i++) map[i]=bufferedReader.readLine().toCharArray();
-        } catch (Exception e){e.printStackTrace();}
-
-        grassTextures = DataGen.getGrassTextures();
-        stoneTextures = DataGen.getStoneTextures();
-        treeTextures = DataGen.getTreeTextures();
-        pathTextures = DataGen.getPathTextures();
-        trapTexture = DataGen.getTrapTexture();
-        barrierTexture = DataGen.getBarrierTexture();
-
-        initTextures();
-        initColliders();
-        spawnEnemies();
-
-        leavesRenderer = new LeavesRenderer(map,mapOffset);
-        cubeRenderer = new CubeRenderer();
-    }
 
     public Level(IVec2 size){
         this.setOpaque(false);
@@ -145,10 +119,10 @@ public class Level extends JPanel implements Displayable {
         int cube0count=0;
         int cube1count=0;
         int cube2count=0;
+        int cube3count=0;
         for (int x=0;x<map[0].length;x++) {
             for (int y = 0; y < map.length; y++) {
                 switch (map[y][x]){
-                    case '3':
                     case '4':
                     case '5':
                     case '6':
@@ -157,41 +131,28 @@ public class Level extends JPanel implements Displayable {
                     case '9':
                     case '0':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        cubeRenderer.addCube(new BasicCube(
-                                spawnPosition.copy(),
-                                DataGen.getBasicCubeTexture(),
-                                DataGen.getBasicCubeDeadTexture()
-                        ));
+                        cubeRenderer.addCube(new BasicCube(spawnPosition.copy()));
                         cube0count++;
                         break;
                     case '1':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        cubeRenderer.addCube(new RangedCube(
-                                spawnPosition.copy(),
-                                DataGen.getRangedCubeTextureCubeTexture(),
-                                DataGen.getRangedCubeDeadTextureCubeDeadTexture(),
-                                DataGen.getRangedCubeDeploymentTextures(),
-                                DataGen.getRangedCubeRetractionTextures(),
-                                DataGen.getRangedCubeAttackTextures()
-                        ));
+                        cubeRenderer.addCube(new GatlingCube(spawnPosition.copy()));
                         cube1count++;
                         break;
                     case '2':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        cubeRenderer.addCube(new MovingCube(
-                                spawnPosition.copy(),
-                                DataGen.getMovingCubeTextureCubeTexture(),
-                                DataGen.getMovingCubeDeadTextureCubeDeadTexture(),
-                                DataGen.getMovingCubeDeploymentTextures(),
-                                DataGen.getMovingCubeRetractionTextures(),
-                                DataGen.getMovingCubeAttackTextures()
-                        ));
+                        cubeRenderer.addCube(new GatingWheelsCube(spawnPosition.copy()));
                         cube2count++;
+                        break;
+                    case '3':
+                        spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
+                        cubeRenderer.addCube(new ArtilleryCube(spawnPosition.copy()));
+                        cube3count++;
                         break;
                 }
             }
         }
-        System.out.println("\nGenerated cubes : "+(cube0count+cube1count+cube2count)+"\n\t0 : "+cube0count+"\n\t1 : "+cube1count+"\n\t2 : "+cube2count+"\n");
+        System.out.println("\nGenerated cubes : "+(cube0count+cube1count+cube2count+cube3count)+"\n\t0 : "+cube0count+"\n\t1 : "+cube1count+"\n\t2 : "+cube2count+"\n\t3 : "+cube3count+"\n");
     }
 
     public double getGroundSpeed(Vec2 position){

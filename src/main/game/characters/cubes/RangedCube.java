@@ -4,7 +4,7 @@ import main.game.GameEngine;
 import main.game.characters.AIdriven;
 import main.game.characters.LifeStates;
 import main.game.characters.Target;
-import main.game.projectiles.MachineGunBullet;
+import main.game.characters.cubes.cubetypes.BasicCube;
 import main.game.projectiles.ProjectileHandler;
 import main.physics.ColliderType;
 import main.physics.CollisionLayers;
@@ -17,10 +17,11 @@ import main.utils.vectors.Vec2;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-public class RangedCube extends BasicCube implements AIdriven {
-    private final int animationDuration=10;
+public abstract class RangedCube extends BasicCube implements AIdriven {
+    private final int animationDuration;
     private int remainingAnimationTime=0;
     private int currentAnimationFrame=0;
+    public final CubeHead cubeHead;
 
     protected double rotation=0;
     private final double rotationSpeed;
@@ -34,40 +35,21 @@ public class RangedCube extends BasicCube implements AIdriven {
 
     protected final Collider detectionZone;
 
-    private final ProjectileHandler projectileHandler = MachineGunBullet.getInstance();
+    private final ProjectileHandler projectileHandler;
+    private final int firingDelay;
+    private int remainingFiringDelay = 0;
 
-    public RangedCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures) {
-        super(position, texture, deadTexture, Config.rangedCubeHealth);
+    public RangedCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures, double rotationSpeed, double maxHealth, int animationDuration, CubeHead cubeHead, int textureSize, ProjectileHandler projectileHandler, int firingDelay) {
+        super(position, texture, deadTexture, maxHealth, textureSize);
         this.lifeState = LifeStates.CURRENTLY_IDLE;
         this.deploymentTextures = deploymentTextures;
         this.retractionTextures = retractionTextures;
         this.attackTextures = attackTextures;
+        this.animationDuration = animationDuration;
+        this.cubeHead = cubeHead;
 
-        this.rotationSpeed = 0.05;
-        this.requiredAccuracy = Config.defaultCubeRequiredAccuracy;
-
-        detectionZone = new BoxCollider(
-                new Vec2(-Config.cubeDetectionRange,-Config.cubeDetectionRange),
-                new Vec2(Config.cubeDetectionRange,Config.cubeDetectionRange),
-                false,
-                1,
-                new Vec2(),
-                this,
-                ColliderType.NONE_TRIGGER
-        );
-
-        GameEngine.addAIdriven(this);
-        PhysicEngine.addCollider(detectionZone, CollisionLayers.COLLISION_LAYER_ENNEMIES);
-
-        detectionZone.setOffset();
-    }
-
-    public RangedCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures, double rotationSpeed, double maxHealth) {
-        super(position, texture, deadTexture, maxHealth);
-        this.lifeState = LifeStates.CURRENTLY_IDLE;
-        this.deploymentTextures = deploymentTextures;
-        this.retractionTextures = retractionTextures;
-        this.attackTextures = attackTextures;
+        this.projectileHandler = projectileHandler;
+        this.firingDelay = firingDelay;
 
         this.rotationSpeed = rotationSpeed;
         this.requiredAccuracy = Config.defaultCubeRequiredAccuracy;
@@ -169,7 +151,10 @@ public class RangedCube extends BasicCube implements AIdriven {
             lifeState=LifeStates.CURRENTLY_PURSUING;
         }
         computeNewRotation();
-        projectileHandler.fireInDirection(position,rotation);
+        if(remainingFiringDelay<=0){
+            remainingFiringDelay = firingDelay;
+            projectileHandler.fireInDirection(position,rotation);
+        }
     }
 
     @Override
@@ -189,6 +174,7 @@ public class RangedCube extends BasicCube implements AIdriven {
                 break;
         }
         currentAnimationFrame=(deploymentTextures.length-1)*(animationDuration-remainingAnimationTime)/animationDuration;
+        if(remainingFiringDelay>0)remainingFiringDelay--;
     }
 
     @Override
@@ -223,7 +209,11 @@ public class RangedCube extends BasicCube implements AIdriven {
             case CURRENTLY_RETRACTING -> retractionTextures[currentAnimationFrame];
             case CURRENTLY_ATTACKING -> attackTextures[currentAnimationFrame];
             case CURRENTLY_PURSUING -> deploymentTextures[deploymentTextures.length-1];
-            default -> texture;
+            case CURRENTLY_IDLE -> texture;
+            default -> {
+                System.out.println("Warning : Resorting to default texture");
+                yield texture;
+            }
         };
     }
 

@@ -43,15 +43,15 @@ public class CubeRenderer extends JPanel implements Displayable {
         for(RedCube redCube : redCubes){
             if(!RenderEngine.getCurrentCamera().getDisplayWindow(new Vec2(2* Config.smallTileSize)).contains(redCube.getPosition()))continue;
             Vec2 position = redCube.getPosition();
-            IVec2 textureSize = redCube.getTextureSize();
+            int textureSize = redCube.getTextureSize();
             Vec2 translation = new Vec2(
-                    position.x-Math.round((float)0.5*textureSize.x),
-                    position.y-Math.round((float)0.5*textureSize.y)
+                    position.x-Math.round((float)0.5*textureSize),
+                    position.y-Math.round((float)0.5*textureSize)
             );
             g2d.translate(translation.x,translation.y);
-            g2d.rotate(redCube.getRotation(), Config.largeTileSize/2.0,Config.largeTileSize/2.0);
+            g2d.rotate(redCube.getRotation(), textureSize/2.0,textureSize/2.0);
             g2d.drawRenderedImage(redCube.getTexture(),null);
-            g2d.rotate(-redCube.getRotation(), Config.largeTileSize/2.0,Config.largeTileSize/2.0);
+            g2d.rotate(-redCube.getRotation(), textureSize/2.0,textureSize/2.0);
             g2d.translate(-translation.x,-translation.y);
         }
     }

@@ -294,6 +294,7 @@ public class DataGen {
 /*      ################ - Cubes - ################      */
 
     private static BufferedImage mediumCubes = null;
+    private static BufferedImage largeCubes = null;
 
     private static BufferedImage basicCubeTexture = null;
     private static BufferedImage basicCubeDeadTexture = null;
@@ -307,6 +308,11 @@ public class DataGen {
     private static BufferedImage[] movingCubeDeploymentTextures = null;
     private static BufferedImage[] movingCubeRetractionTextures = null;
     private static BufferedImage[] movingCubeAttackTextures = null;
+    private static BufferedImage artilleryCubeTexture = null;
+    private static BufferedImage artilleryCubeDeadTexture = null;
+    private static BufferedImage[] artilleryCubeDeploymentTextures = null;
+    private static BufferedImage[] artilleryCubeRetractionTextures = null;
+    private static BufferedImage[] artilleryCubeAttackTextures = null;
 
     public static BufferedImage getBasicCubeTexture(){
         if(mediumCubes == null) {
@@ -328,7 +334,7 @@ public class DataGen {
         return basicCubeDeadTexture;
     }
 
-    public static BufferedImage getRangedCubeTextureCubeTexture(){
+    public static BufferedImage getRangedCubeTexture(){
         if(mediumCubes == null) {
             try {
                 mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
@@ -338,7 +344,7 @@ public class DataGen {
         return rangedCubeTexture;
     }
 
-    public static BufferedImage getRangedCubeDeadTextureCubeDeadTexture(){
+    public static BufferedImage getRangedCubeDeadTexture(){
         if(mediumCubes == null) {
             try {
                 mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
@@ -402,7 +408,7 @@ public class DataGen {
         return rangedCubeAttackTextures;
     }
 
-    public static BufferedImage getMovingCubeTextureCubeTexture(){
+    public static BufferedImage getMovingCubeTexture(){
         if(mediumCubes == null) {
             try {
                 mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
@@ -412,7 +418,7 @@ public class DataGen {
         return movingCubeTexture;
     }
 
-    public static BufferedImage getMovingCubeDeadTextureCubeDeadTexture(){
+    public static BufferedImage getMovingCubeDeadTexture(){
         if(mediumCubes == null) {
             try {
                 mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
@@ -474,6 +480,89 @@ public class DataGen {
             movingCubeAttackTextures[5]=mediumCubes.getSubimage(5*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
         }
         return movingCubeAttackTextures;
+    }
+
+    public static BufferedImage getArtilleryCubeTexture(){
+        if(largeCubes == null) {
+            try {
+                largeCubes = ImageIO.read(new File("assets/textures/characters/cubes/largeCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (artilleryCubeTexture == null){
+            artilleryCubeTexture=largeCubes.getSubimage(0, 0,Config.veryLargeTileSize,Config.veryLargeTileSize);
+        }
+        return artilleryCubeTexture;
+    }
+    public static BufferedImage getArtilleryCubeDeadTexture(){
+        if(largeCubes == null) {
+            try {
+                largeCubes = ImageIO.read(new File("assets/textures/characters/cubes/largeCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (artilleryCubeDeadTexture == null){
+            artilleryCubeDeadTexture=largeCubes.getSubimage(3*Config.veryLargeTileSize,3*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+        }
+        return artilleryCubeDeadTexture;
+    }
+
+    public static BufferedImage[] getArtilleryCubeDeploymentTextures(){
+        if(largeCubes == null) {
+            try {
+                largeCubes = ImageIO.read(new File("assets/textures/characters/cubes/largeCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (artilleryCubeDeploymentTextures == null){
+            artilleryCubeDeploymentTextures=new BufferedImage[8];
+            artilleryCubeDeploymentTextures[0]=largeCubes.getSubimage(1*Config.veryLargeTileSize,0*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeDeploymentTextures[1]=largeCubes.getSubimage(2*Config.veryLargeTileSize,0*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeDeploymentTextures[2]=largeCubes.getSubimage(3*Config.veryLargeTileSize,0*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeDeploymentTextures[3]=largeCubes.getSubimage(0*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeDeploymentTextures[4]=largeCubes.getSubimage(1*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeDeploymentTextures[5]=largeCubes.getSubimage(2*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeDeploymentTextures[6]=largeCubes.getSubimage(3*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeDeploymentTextures[7]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+        }
+        return artilleryCubeDeploymentTextures;
+    }
+
+    public static BufferedImage[] getArtilleryCubeRetractionTextures(){
+        if(largeCubes == null) {
+            try {
+                largeCubes = ImageIO.read(new File("assets/textures/characters/cubes/largeCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (artilleryCubeRetractionTextures == null){
+            artilleryCubeRetractionTextures=new BufferedImage[8];
+            artilleryCubeRetractionTextures[7]=largeCubes.getSubimage(1*Config.veryLargeTileSize,0*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeRetractionTextures[6]=largeCubes.getSubimage(2*Config.veryLargeTileSize,0*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeRetractionTextures[5]=largeCubes.getSubimage(3*Config.veryLargeTileSize,0*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeRetractionTextures[4]=largeCubes.getSubimage(0*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeRetractionTextures[3]=largeCubes.getSubimage(1*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeRetractionTextures[2]=largeCubes.getSubimage(2*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeRetractionTextures[1]=largeCubes.getSubimage(3*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeRetractionTextures[0]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+        }
+        return artilleryCubeRetractionTextures;
+    }
+
+    public static BufferedImage[] getArtilleryCubeAttackTextures(){
+        if(largeCubes == null) {
+            try {
+                largeCubes = ImageIO.read(new File("assets/textures/characters/cubes/largeCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (artilleryCubeAttackTextures == null){
+            artilleryCubeAttackTextures=new BufferedImage[8];
+            artilleryCubeAttackTextures[0]=largeCubes.getSubimage(2*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeAttackTextures[1]=largeCubes.getSubimage(3*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeAttackTextures[2]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeAttackTextures[3]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeAttackTextures[4]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeAttackTextures[5]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeAttackTextures[6]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+            artilleryCubeAttackTextures[7]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
+        }
+        return artilleryCubeAttackTextures;
     }
 
     /*      ################ - Cameras - ################      */

@@ -6,6 +6,7 @@ public class Config {
 
     public final static int smallTileSize=16;
     public final static int largeTileSize=64;
+    public final static int veryLargeTileSize=128;
 
     public final static int grassColorsNb=8;
     public final static int grassVariantsNb=4;
@@ -50,8 +51,10 @@ public class Config {
     public final static double cubeSquareFollowRange=90000;
 
     public final static double defaultCubeRequiredAccuracy=0.2;
+
     public final static double basicCubeHealth=100;
-    public final static double rangedCubeHealth=150;
+    public final static double gatlingCubeHealth=150;
+    public final static double artilleryCubeHealth=150;
     public final static double movingCubeHealth=250;
 
     public final static double defaultMinCameraZoom=1.5;

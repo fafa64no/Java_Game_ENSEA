@@ -1,17 +1,31 @@
 package main.game.characters.cubes;
 
-import main.utils.data.Config;
+import main.game.projectiles.ProjectileHandler;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;
 
 import java.awt.image.BufferedImage;
 
-public class MovingCube extends RangedCube{
+public abstract class MovingCube extends RangedCube{
     protected final double attackRange;
 
-    public MovingCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures) {
-        super(position, texture, deadTexture, deploymentTextures, retractionTextures, attackTextures, 0.15, Config.movingCubeHealth);
-        this.attackRange = Config.cubeAttackRange;
+    public MovingCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures, double rotationSpeed, double maxHealth, int animationDuration, CubeHead cubeHead, int textureSize, ProjectileHandler projectileHandler, int firingDelay, double attackRange){
+        super(
+                position,
+                texture,
+                deadTexture,
+                deploymentTextures,
+                retractionTextures,
+                attackTextures,
+                rotationSpeed,
+                maxHealth,
+                animationDuration,
+                cubeHead,
+                textureSize,
+                projectileHandler,
+                firingDelay
+        );
+        this.attackRange = attackRange;
     }
 
     protected void updatePosition(){
