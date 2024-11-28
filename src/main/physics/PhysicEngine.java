@@ -187,6 +187,29 @@ public class PhysicEngine implements Engine {
                 }
             }
 
+            //for(Collider colliderTerrain : colliderList_layer_terrain){
+            //    Collision collision=colliderEnemy.doCollide(colliderTerrain,velocity);
+            //    if(collision==null)continue;
+            //    colliderEnemy.onCollide(colliderTerrain.getColliderType(),colliderTerrain.getReverseCollision(collision));
+            //    colliderTerrain.onCollide(colliderEnemy.getColliderType(),collision);
+            //    ColliderType colliderType = colliderTerrain.getColliderType();
+            //    boolean doesPreventMovement = colliderType==ColliderType.SOLID_INERT
+            //            || colliderType==ColliderType.SOLID_DAMAGE_DEALER
+            //            || colliderType==ColliderType.SOLID_THICK_INERT
+            //            || colliderType==ColliderType.SOLID_INERT_ALLY;
+            //    if(collision.collisions.x&&doesPreventMovement){
+            //        canMove.x=false;
+            //        currentInverseFriction=Math.min(currentInverseFriction,colliderTerrain.getFriction());
+            //    }
+            //    if(collision.collisions.y&&doesPreventMovement){
+            //        canMove.y=false;
+            //        currentInverseFriction=Math.min(currentInverseFriction,colliderTerrain.getFriction());
+            //    }
+            //    if(canMove.isFalse()){
+            //        break;
+            //    }
+            //}
+
             dynamicSprite.goToNextPosition(canMove,currentInverseFriction);
         }
 
