@@ -2,8 +2,14 @@ package main.utils.noise;
 
 import main.utils.data.Config;
 
+import java.util.Random;
+
 public class PseudoRandom {
-    private static final NoiseGenerator noiseGenerator=new NoiseGenerator(Config.noiseSeed);
+    private static final NoiseGenerator noiseGenerator = new NoiseGenerator(Config.noiseSeed);
+
+    private static double[] preComputedRandomPattern = null;
+    private static int preComputedRandomPatternPointer = 0;
+
     public static int getRandomBetween(int minX, int maxX, double a, double b, int size){
         double randFactor= 0.5+(noiseGenerator.noise(a,b,0,size)/2);
         return Math.clamp(Math.round(randFactor*(maxX-minX))+minX,minX,maxX);
@@ -20,5 +26,18 @@ public class PseudoRandom {
 
     public static double getRandomDouble(double a,double b,int size){
         return noiseGenerator.noise(a,b,0,size);
+    }
+
+    public static double getRandomSpread(){
+        if(preComputedRandomPattern == null){
+            preComputedRandomPattern = new double[Config.preComputedRandomPatternSize];
+            for(int i = 0; i < Config.preComputedRandomPatternSize; i++){
+                Random random = new Random();
+                preComputedRandomPattern[i] = random.nextDouble() - 0.5;
+            }
+        }
+
+        preComputedRandomPatternPointer = (preComputedRandomPatternPointer +1)%Config.preComputedRandomPatternSize;
+        return preComputedRandomPattern[preComputedRandomPatternPointer];
     }
 }

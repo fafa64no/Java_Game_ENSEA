@@ -23,7 +23,8 @@ public class GatlingCube extends RangedCube {
                 Config.largeTileSize,
                 MachineGunBullet.getInstance(),
                 0,
-                Config.cubeSquareFollowRange
+                Config.cubeSquareFollowRange,
+                0.2
         );
     }
 }

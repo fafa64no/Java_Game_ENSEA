@@ -19,12 +19,13 @@ public class ArtilleryCube extends RangedCube {
                 DataGen.getArtilleryCubeAttackTextures(),
                 0.05,
                 Config.artilleryCubeHealth,
-                50,
+                30,
                 CubeHead.CUBE_HEAD_ARTILLERY,
                 Config.veryLargeTileSize,
                 ArtilleryShell.getInstance(),
-                50,
-                Config.artillerySquareFollowRange
+                30,
+                Config.artillerySquareFollowRange,
+                0.5
         );
     }
 }

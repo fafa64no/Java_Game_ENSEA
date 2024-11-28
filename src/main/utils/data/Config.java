@@ -33,6 +33,8 @@ public class Config {
 
     public final static int tilemapColliderRange=4;
 
+    public final static int preComputedRandomPatternSize=128;
+
     public final static double noiseSeed=6.6260755;
     public final static int noiseSizeTerrainColor=32;
     public final static int noiseSizeTerrainVariant=2;

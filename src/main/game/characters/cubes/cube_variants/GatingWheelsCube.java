@@ -16,7 +16,7 @@ public class GatingWheelsCube extends MovingCube {
                 DataGen.getMovingCubeDeploymentTextures(),
                 DataGen.getMovingCubeRetractionTextures(),
                 DataGen.getMovingCubeAttackTextures(),
-                0.15,
+                0.1,
                 Config.movingCubeHealth,
                 10,
                 CubeHead.CUBE_HEAD_MACHINE_GUN_WHEELS,
@@ -24,7 +24,8 @@ public class GatingWheelsCube extends MovingCube {
                 MachineGunBullet.getInstance(),
                 0,
                 Config.cubeAttackRange,
-                Config.cubeSquareFollowRange
+                Config.cubeSquareFollowRange,
+                0.3
         );
     }
 }

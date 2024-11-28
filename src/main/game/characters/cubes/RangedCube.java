@@ -11,6 +11,7 @@ import main.physics.PhysicEngine;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
 import main.utils.data.Config;
+import main.utils.noise.PseudoRandom;
 import main.utils.vectors.Vec2;
 
 import java.awt.image.BufferedImage;
@@ -38,8 +39,9 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
     private final ProjectileHandler projectileHandler;
     private final int firingDelay;
     private int remainingFiringDelay = 0;
+    private final double weaponSpread;
 
-    public RangedCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures, double rotationSpeed, double maxHealth, int animationDuration, CubeHead cubeHead, int textureSize, ProjectileHandler projectileHandler, int firingDelay, double followRange) {
+    public RangedCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures, double rotationSpeed, double maxHealth, int animationDuration, CubeHead cubeHead, int textureSize, ProjectileHandler projectileHandler, int firingDelay, double followRange, double weaponSpread) {
         super(position, texture, deadTexture, maxHealth, textureSize);
         this.lifeState = LifeStates.CURRENTLY_IDLE;
         this.deploymentTextures = deploymentTextures;
@@ -55,6 +57,8 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
         this.requiredAccuracy = Config.defaultCubeRequiredAccuracy;
 
         this.followRange = followRange;
+
+        this.weaponSpread = weaponSpread;
 
         GameEngine.addAIdriven(this);
     }
@@ -158,7 +162,7 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
         computeNewRotation();
         if(remainingFiringDelay<=0){
             remainingFiringDelay = firingDelay;
-            projectileHandler.fireInDirection(position,rotation);
+            projectileHandler.fireInDirection(position,rotation + weaponSpread*PseudoRandom.getRandomSpread());
         }
     }
 

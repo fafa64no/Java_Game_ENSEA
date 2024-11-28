@@ -8,7 +8,7 @@ public class ArtilleryShell extends BasicProjectileHandler {
     private static ArtilleryShell instance = null;
 
     public ArtilleryShell(){
-        super(DataGen.getArtilleryShellTexture(),4000,5,10,CollisionLayers.COLLISION_LAYER_ENNEMY_PROJECTILES);
+        super(DataGen.getArtilleryShellTexture(),4000,5,5,CollisionLayers.COLLISION_LAYER_ENNEMY_PROJECTILES);
         if(instance==null)instance=this;
     }
 
