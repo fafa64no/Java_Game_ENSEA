@@ -33,8 +33,11 @@ public class GameEngine implements KeyListener, Engine, MouseListener, MouseWhee
     private int currentTank=0;
 
     private final List<AIdriven> aIdrivens = new ArrayList<>();
+    private List<AIdriven> aIdrivensToAdd = new ArrayList<>();
     private final List<Target> targets = new ArrayList<>();
     private final List<RequiresUpdates> requiresUpdates = new ArrayList<>();
+    private List<RequiresUpdates> requiresUpdatesToAdd = new ArrayList<>();
+
 
     private final Vec2 currentInputDir = new Vec2();
 
@@ -94,7 +97,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener, MouseWhee
     }
 
     public static void addAIdriven(AIdriven aIdriven){
-        if(aIdriven!=null)instance.aIdrivens.add(aIdriven);
+        if(aIdriven!=null)instance.aIdrivensToAdd.add(aIdriven);
     }
 
     public static void addTarget(Target target){
@@ -106,7 +109,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener, MouseWhee
     }
 
     public static void addRequiresUpdates(RequiresUpdates requiresUpdates){
-        instance.requiresUpdates.add(requiresUpdates);
+        instance.requiresUpdatesToAdd.add(requiresUpdates);
     }
 
     public static List<Target> getTargets(){
@@ -121,7 +124,11 @@ public class GameEngine implements KeyListener, Engine, MouseListener, MouseWhee
     public void update() {
         tanks[currentTank].setInput(currentInputDir);
         for(AIdriven aIdriven : aIdrivens)if(aIdriven.isAIenabled())aIdriven.updateAI();
+        aIdrivens.addAll(aIdrivensToAdd);
+        aIdrivensToAdd = new ArrayList<>();
         for(RequiresUpdates requiresUpdate : requiresUpdates)requiresUpdate.updateRemainingTime();
+        requiresUpdates.addAll(requiresUpdatesToAdd);
+        requiresUpdatesToAdd = new ArrayList<>();
     }
 
     @Override

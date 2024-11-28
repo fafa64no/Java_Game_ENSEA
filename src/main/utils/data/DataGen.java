@@ -327,6 +327,11 @@ public class DataGen {
     private static BufferedImage[] artilleryCubeDeploymentTextures = null;
     private static BufferedImage[] artilleryCubeRetractionTextures = null;
     private static BufferedImage[] artilleryCubeAttackTextures = null;
+    private static BufferedImage beaconCubeTexture = null;
+    private static BufferedImage beaconCubeDeadTexture = null;
+    private static BufferedImage[] beaconCubeDeploymentTextures = null;
+    private static BufferedImage[] beaconCubeRetractionTextures = null;
+    private static BufferedImage[] beaconCubeAttackTextures = null;
 
     public static BufferedImage getBasicCubeTexture(){
         if(mediumCubes == null) {
@@ -577,6 +582,74 @@ public class DataGen {
             artilleryCubeAttackTextures[7]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
         }
         return artilleryCubeAttackTextures;
+    }
+
+    public static BufferedImage getBeaconCubeTexture(){
+        if(mediumCubes == null) {
+            try {
+                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (beaconCubeTexture == null) beaconCubeTexture =mediumCubes.getSubimage(2*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+        return beaconCubeTexture;
+    }
+
+    public static BufferedImage getBeaconCubeDeadTexture(){
+        if(mediumCubes == null) {
+            try {
+                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (beaconCubeDeadTexture == null) beaconCubeDeadTexture = mediumCubes.getSubimage(7*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+        return beaconCubeDeadTexture;
+    }
+
+    public static BufferedImage[] getBeaconCubeDeploymentTextures(){
+        if(mediumCubes == null) {
+            try {
+                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (beaconCubeDeploymentTextures == null){
+            beaconCubeDeploymentTextures=new BufferedImage[4];
+            beaconCubeDeploymentTextures[0]=mediumCubes.getSubimage(3*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+            beaconCubeDeploymentTextures[1]=mediumCubes.getSubimage(4*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+            beaconCubeDeploymentTextures[2]=mediumCubes.getSubimage(5*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+            beaconCubeDeploymentTextures[3]=mediumCubes.getSubimage(6*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+        }
+        return beaconCubeDeploymentTextures;
+    }
+
+    public static BufferedImage[] getBeaconCubeRetractionTextures(){
+        if(mediumCubes == null) {
+            try {
+                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (beaconCubeRetractionTextures == null){
+            beaconCubeRetractionTextures=new BufferedImage[4];
+            beaconCubeRetractionTextures[3]=mediumCubes.getSubimage(3*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+            beaconCubeRetractionTextures[2]=mediumCubes.getSubimage(4*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+            beaconCubeRetractionTextures[1]=mediumCubes.getSubimage(5*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+            beaconCubeRetractionTextures[0]=mediumCubes.getSubimage(6*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+        }
+        return beaconCubeRetractionTextures;
+    }
+
+    public static BufferedImage[] getBeaconCubeAttackTextures(){
+        if(mediumCubes == null) {
+            try {
+                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (beaconCubeAttackTextures == null){
+            beaconCubeAttackTextures=new BufferedImage[4];
+            beaconCubeAttackTextures[0]=mediumCubes.getSubimage(6*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+            beaconCubeAttackTextures[1]=mediumCubes.getSubimage(5*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+            beaconCubeAttackTextures[2]=mediumCubes.getSubimage(5*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+            beaconCubeAttackTextures[3]=mediumCubes.getSubimage(6*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
+        }
+        return beaconCubeAttackTextures;
     }
 
     /*      ################ - Cameras - ################      */

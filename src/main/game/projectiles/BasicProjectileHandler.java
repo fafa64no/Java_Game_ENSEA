@@ -5,6 +5,7 @@ import main.physics.CollisionLayers;
 import main.rendering.Displayable;
 import main.rendering.RenderEngine;
 import main.rendering.RenderingLayers;
+import main.rendering.vfx.VfxType;
 import main.utils.RequiresUpdates;
 import main.utils.data.Config;
 import main.utils.vectors.Vec2;
@@ -23,12 +24,15 @@ public abstract class BasicProjectileHandler extends JPanel implements Projectil
     protected final double modifier;
     protected final CollisionLayers collisionLayer;
 
-    public BasicProjectileHandler(BufferedImage[] textures, int projectileLifeSpan, double projectileSpeed, double modifier, CollisionLayers collisionLayer) {
+    protected final VfxType vfxType;
+
+    public BasicProjectileHandler(BufferedImage[] textures, int projectileLifeSpan, double projectileSpeed, double modifier, CollisionLayers collisionLayer, VfxType vfxType) {
         this.textures = textures;
         this.projectileLifeSpan = projectileLifeSpan;
         this.projectileSpeed = projectileSpeed;
         this.modifier = modifier;
         this.collisionLayer = collisionLayer;
+        this.vfxType = vfxType;
 
         this.setOpaque(false);
 
@@ -38,6 +42,10 @@ public abstract class BasicProjectileHandler extends JPanel implements Projectil
 
     @Override
     public void fireInDirection(Vec2 initialPosition, double rotation) {
+        if(projectiles[projectilePointer]!=null){
+            System.out.println("Too many projectiles");
+            return;
+        }
         projectiles[projectilePointer]=new Projectile(
                 projectileLifeSpan,
                 2,
@@ -47,7 +55,8 @@ public abstract class BasicProjectileHandler extends JPanel implements Projectil
                 projectilePointer,
                 this,
                 collisionLayer,
-                modifier
+                modifier,
+                vfxType
         );
         projectilePointer=(projectilePointer+1)%projectiles.length;
     }

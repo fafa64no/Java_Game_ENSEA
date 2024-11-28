@@ -106,6 +106,10 @@ public class PointCollider implements Collider{
                 if(colliderType==ColliderType.NONE_TRIGGER || colliderType==ColliderType.NONE_DAMAGE_DEALER)break;
                 new Vfx(offset, Config.smallTileSize, DataGen.getPiercingTextures(),5);
                 break;
+            case VFX_EXPLOSION:
+                if(colliderType==ColliderType.NONE_TRIGGER || colliderType==ColliderType.NONE_DAMAGE_DEALER)break;
+                new Vfx(offset, Config.largeTileSize, DataGen.getExplosionTextures(),5);
+                break;
             default:
                 break;
         }

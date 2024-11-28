@@ -1,6 +1,7 @@
 package main.game.projectiles;
 
 import main.physics.CollisionLayers;
+import main.rendering.vfx.VfxType;
 import main.utils.data.DataGen;
 
 import java.awt.image.BufferedImage;
@@ -9,7 +10,14 @@ public class MachineGunBullet extends BasicProjectileHandler {
     private static MachineGunBullet instance = null;
 
     public MachineGunBullet(){
-        super(new BufferedImage[]{DataGen.getMachineGunBulletShellTexture()},700,15,1,CollisionLayers.COLLISION_LAYER_ENNEMY_PROJECTILES);
+        super(
+                new BufferedImage[]{DataGen.getMachineGunBulletShellTexture()},
+                700,
+                15,
+                1,
+                CollisionLayers.COLLISION_LAYER_ENNEMY_PROJECTILES,
+                VfxType.VFX_PIERCING_METAL
+        );
         if(instance==null)instance=this;
     }
 

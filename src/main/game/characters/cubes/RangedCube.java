@@ -18,14 +18,14 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 public abstract class RangedCube extends BasicCube implements AIdriven {
-    private final int animationDuration;
-    private int remainingAnimationTime=0;
-    private int currentAnimationFrame=0;
+    protected final int animationDuration;
+    protected int remainingAnimationTime=0;
+    protected int currentAnimationFrame=0;
     public final CubeHead cubeHead;
 
     protected double rotation=0;
-    private final double rotationSpeed;
-    private final double requiredAccuracy;
+    protected final double rotationSpeed;
+    protected final double requiredAccuracy;
 
     private final BufferedImage[] deploymentTextures;
     private final BufferedImage[] retractionTextures;
@@ -34,12 +34,12 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
     protected Target currentTarget=null;
 
     protected Collider detectionZone;
-    private final double followRange;
+    protected final double followRange;
 
-    private final ProjectileHandler projectileHandler;
-    private final int firingDelay;
-    private int remainingFiringDelay = 0;
-    private final double weaponSpread;
+    protected final ProjectileHandler projectileHandler;
+    protected final int firingDelay;
+    protected int remainingFiringDelay = 0;
+    protected final double weaponSpread;
 
     public RangedCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures, double rotationSpeed, double maxHealth, int animationDuration, CubeHead cubeHead, int textureSize, ProjectileHandler projectileHandler, int firingDelay, double followRange, double weaponSpread) {
         super(position, texture, deadTexture, maxHealth, textureSize);
@@ -107,7 +107,7 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
         ).getAngle()+5*Math.PI/2)%(2*Math.PI);
     }
 
-    private void computeNewRotation(){
+    protected void computeNewRotation(){
         if(lifeState==LifeStates.CURRENTLY_DEAD)return;
         double targetRotation = getTargetRotation();
         int angleSign;  double angleToTravel;
@@ -119,7 +119,7 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
         this.rotation=this.rotation%(2*Math.PI);
     }
 
-    private boolean isRotationGood(){
+    protected boolean isRotationGood(){
         double targetRotation = getTargetRotation();
         double angleToTravel = targetRotation - rotation;
         double angleSign = ((targetRotation-rotation>=0)?1:-1)*((angleToTravel<Math.PI)?1:-1);

@@ -49,6 +49,10 @@ public class LevelGenerator {
                 map[y][x]='.';
                 // Structures
                 spawnKey=Math.abs(PseudoRandom.getRandomDouble(22*x,3-18*y, Config.noiseSizeTerrainStructures));
+                if(spawnKey<0.00001){
+                    map[y][x]='B';
+                    continue;
+                }
                 if(spawnKey<0.00002){
                     map[y][x]='V';
                     continue;
@@ -129,6 +133,7 @@ public class LevelGenerator {
     private static void addStructureTiles(char[][] map){
         int structures0Count=0;
         int structures1Count=0;
+        int structures2Count=0;
         for(int x = 0; x < map[0].length; x++) {
             for (int y = 0; y < map.length; y++) {
                 switch (map[y][x]){
@@ -140,10 +145,14 @@ public class LevelGenerator {
                         addStructure1Tiles(map,new IVec2(x,y));
                         structures1Count++;
                         break;
+                    case 'B':
+                        addStructure2Tiles(map,new IVec2(x,y));
+                        structures2Count++;
+                        break;
                 }
             }
         }
-        System.out.println("\nGenerated structures : "+(structures0Count+structures1Count)+"\n\t0 : "+structures0Count+"\n\t1 : "+structures1Count+"\n");
+        System.out.println("\nGenerated structures : "+(structures0Count+structures1Count+structures2Count)+"\n\t0 : "+structures0Count+"\n\t1 : "+structures1Count+"\n\t2 : "+structures2Count+"\n");
     }
 
     private static void addStructure0Tiles(char[][] map, IVec2 offset){
@@ -158,6 +167,13 @@ public class LevelGenerator {
         actualOffset.x = offset.x - map[0].length/2;
         actualOffset.y = offset.y - map.length/2;
         insertTiles(map,new IVec2(14,14),actualOffset,"structure1.txt");
+    }
+
+    private static void addStructure2Tiles(char[][] map, IVec2 offset){
+        IVec2 actualOffset = new IVec2();
+        actualOffset.x = offset.x - map[0].length/2;
+        actualOffset.y = offset.y - map.length/2;
+        insertTiles(map,new IVec2(14,14),actualOffset,"structure2.txt");
     }
 
     private static void writeMap(char[][] map){

@@ -33,7 +33,7 @@ public class Config {
 
     public final static int tilemapColliderRange=4;
 
-    public final static int preComputedRandomPatternSize=128;
+    public final static int preComputedRandomPatternSize=256;
 
     public final static double noiseSeed=6.6260755;
     public final static int noiseSizeTerrainColor=32;
@@ -44,13 +44,13 @@ public class Config {
     public final static int noiseSizeTerrainCubes =8;
     public final static int noiseSizeTerrainStructures=8;
 
-    public final static int maxProjectilesPerProjectileHandler=512;
-    public final static int maxVfxPerVfxHandler=256;
+    public final static int maxProjectilesPerProjectileHandler=1024;
+    public final static int maxVfxPerVfxHandler=1024;
 
     public final static double cubeCollisionRange=32;
     public final static double cubeDetectionRange=128;
     public final static double cubeAttackRange =80;
-    public final static double cubeSquareFollowRange=90000;
+    public final static double cubeSquareFollowRange=120000;
     public final static double artillerySquareFollowRange=360000;
 
     public final static double defaultCubeRequiredAccuracy=0.2;
@@ -59,10 +59,11 @@ public class Config {
     public final static double gatlingCubeHealth=150;
     public final static double artilleryCubeHealth=500;
     public final static double movingCubeHealth=250;
+    public final static double beaconCubeHealth=1000;
 
     public final static double defaultMinCameraZoom=1.5;
     public final static double defaultMaxCameraZoom=5;
-    public final static double defaultZoomSpeed=0.15;
+    public final static double defaultZoomSpeed=0.3;
 
     public final static long startTime=System.currentTimeMillis();
 

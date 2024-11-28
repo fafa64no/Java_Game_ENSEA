@@ -2,7 +2,8 @@ package main.game.level;
 
 import main.game.characters.cubes.cube_variants.ArtilleryCube;
 import main.game.characters.cubes.BasicCube;
-import main.game.characters.cubes.cube_variants.GatingWheelsCube;
+import main.game.characters.cubes.cube_variants.BeaconCube;
+import main.game.characters.cubes.cube_variants.GatlingWheelsCube;
 import main.game.characters.cubes.cube_variants.GatlingCube;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
@@ -119,10 +120,10 @@ public class Level extends JPanel implements Displayable {
         int cube1count=0;
         int cube2count=0;
         int cube3count=0;
+        int cube4count=0;
         for (int x=0;x<map[0].length;x++) {
             for (int y = 0; y < map.length; y++) {
                 switch (map[y][x]){
-                    case '4':
                     case '5':
                     case '6':
                     case '7':
@@ -140,7 +141,7 @@ public class Level extends JPanel implements Displayable {
                         break;
                     case '2':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        cubeRenderer.addCube(new GatingWheelsCube(spawnPosition.copy()));
+                        cubeRenderer.addCube(new GatlingWheelsCube(spawnPosition.copy()));
                         cube2count++;
                         break;
                     case '3':
@@ -148,10 +149,15 @@ public class Level extends JPanel implements Displayable {
                         cubeRenderer.addCube(new ArtilleryCube(spawnPosition.copy()));
                         cube3count++;
                         break;
+                    case '4':
+                        spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
+                        cubeRenderer.addCube(new BeaconCube(spawnPosition.copy()));
+                        cube4count++;
+                        break;
                 }
             }
         }
-        System.out.println("\nGenerated cubes : "+(cube0count+cube1count+cube2count+cube3count)+"\n\t0 : "+cube0count+"\n\t1 : "+cube1count+"\n\t2 : "+cube2count+"\n\t3 : "+cube3count+"\n");
+        System.out.println("\nGenerated cubes : "+(cube0count+cube1count+cube2count+cube3count+cube4count)+"\n\t0 : "+cube0count+"\n\t1 : "+cube1count+"\n\t2 : "+cube2count+"\n\t3 : "+cube3count+"\n\t4 : "+cube4count+"\n");
     }
 
     public double getGroundSpeed(Vec2 position){

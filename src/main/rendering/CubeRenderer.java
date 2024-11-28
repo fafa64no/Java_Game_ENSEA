@@ -2,7 +2,6 @@ package main.rendering;
 
 import main.game.characters.cubes.RedCube;
 import main.utils.data.Config;
-import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 
 import javax.swing.*;
@@ -11,14 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CubeRenderer extends JPanel implements Displayable {
+    private static CubeRenderer instance = null;
     private final List<RedCube> redCubes = new ArrayList<>();
+    private List<RedCube> redCubesToAdd = new ArrayList<>();
 
     public CubeRenderer() {
+        if(instance == null)instance = this;
         this.setOpaque(false);
     }
 
-    public void addCube(RedCube redCube){
-        redCubes.add(redCube);
+    public static void addCube(RedCube redCube){
+        instance.redCubesToAdd.add(redCube);
     }
 
     @Override
@@ -39,6 +41,9 @@ public class CubeRenderer extends JPanel implements Displayable {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.scale(RenderEngine.getCurrentCamera().getScale().x,RenderEngine.getCurrentCamera().getScale().y);
         g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
+
+        redCubes.addAll(redCubesToAdd);
+        redCubesToAdd = new ArrayList<>();
 
         for(RedCube redCube : redCubes){
             if(!RenderEngine.getCurrentCamera().getDisplayWindow(new Vec2(Config.largeTileSize)).contains(redCube.getPosition()))continue;

@@ -24,7 +24,7 @@ public class Projectile {
 
     private final int idInProjectileHandler;
 
-    public Projectile(int remainingMilliseconds, int invisibilityFrames ,Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent, CollisionLayers collisionLayer, double modifier) {
+    public Projectile(int remainingMilliseconds, int invisibilityFrames ,Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent, CollisionLayers collisionLayer, double modifier, VfxType vfxType) {
         this.remainingMilliseconds = remainingMilliseconds;
         this.initialLifeSpan = remainingMilliseconds;
         this.velocity = Vec2.multiply(new Vec2(0,1).rotateBy(rotation),velocity);
@@ -35,7 +35,7 @@ public class Projectile {
                 ColliderType.NONE_DAMAGE_DEALER,
                 this,
                 modifier,
-                VfxType.VFX_PIERCING_METAL
+                vfxType
         );
         this.collider.setOffset();
         this.idInProjectileHandler = idInProjectileHandler;
@@ -46,7 +46,7 @@ public class Projectile {
         PhysicEngine.addCollider(this.collider, collisionLayer);
     }
 
-    public Projectile(int remainingMilliseconds, int invisibilityFrames ,Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent, CollisionLayers collisionLayer, double modifier, int animationFrames, int animationSpeed) {
+    public Projectile(int remainingMilliseconds, int invisibilityFrames ,Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent, CollisionLayers collisionLayer, double modifier, int animationFrames, int animationSpeed, VfxType vfxType) {
         this.remainingMilliseconds = remainingMilliseconds;
         this.initialLifeSpan = remainingMilliseconds;
         this.velocity = Vec2.multiply(new Vec2(0,1).rotateBy(rotation),velocity);
@@ -57,7 +57,7 @@ public class Projectile {
                 ColliderType.AERIAL_DAMAGE_DEALER,
                 this,
                 modifier,
-                VfxType.VFX_PIERCING_METAL
+                vfxType
         );
         this.collider.setOffset();
         this.idInProjectileHandler = idInProjectileHandler;
