@@ -25,6 +25,7 @@ public class Main {
         Debug.printTimeSinceLast("Started GameEngine");
 
         ActionListener updateTasks = e -> {
+            RenderEngine.getCurrentCamera().updateScale();
             physicEngine.update();
             renderEngine.update();
             gameEngine.update();

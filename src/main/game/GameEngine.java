@@ -20,14 +20,11 @@ import main.utils.Engine;
 import main.utils.debug.Debug;
 import main.utils.vectors.Vec2;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameEngine implements KeyListener, Engine, MouseListener {
+public class GameEngine implements KeyListener, Engine, MouseListener, MouseWheelListener {
     private static GameEngine instance;
 
     private final Level[] levels;
@@ -61,6 +58,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
         RenderEngine.setupCameras(tanks);
         RenderEngine.getInstance().addKeyListener(instance);
         RenderEngine.getInstance().addMouseListener(instance);
+        RenderEngine.getInstance().addMouseWheelListener(instance);
 
         new HudManager();
         new VfxManager();
@@ -201,5 +199,10 @@ public class GameEngine implements KeyListener, Engine, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        RenderEngine.getCurrentCamera().changeScale(e.getWheelRotation());
     }
 }

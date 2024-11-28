@@ -2,6 +2,7 @@ package main.rendering;
 
 import main.game.DynamicSprite;
 import main.game.GameEngine;
+import main.utils.RequiresUpdates;
 import main.utils.data.Config;
 import main.utils.vectors.Vec2;
 import main.utils.vectors.Vec4;
@@ -9,8 +10,12 @@ import main.utils.vectors.Vec4;
 public class Camera {
     private Vec2 offset;
     private final Vec2 initialOffset;
-    private final Vec2 scale;
+    private Vec2 scale;
     private DynamicSprite targetSprite;
+
+    private final double minScale = Config.defaultMinCameraZoom;
+    private final double maxScale = Config.defaultMaxCameraZoom;
+    private int nextZoomFactor=0;
 
     public Camera(Vec2 offset, Vec2 scale) {
         this.offset = offset;
@@ -81,5 +86,17 @@ public class Camera {
                 Math.clamp(cameraCenter.y-halfWindowSize.y-extraSize.y,-lenY,lenY), // Minimum Y
                 Math.clamp(cameraCenter.y+halfWindowSize.y+extraSize.y,-lenY,lenY)  // Maximum Y
         );
+    }
+
+    public void updateScale(){
+        if(nextZoomFactor!=0){
+            scale.x=Math.clamp(scale.x+Config.defaultZoomSpeed*nextZoomFactor,minScale,maxScale);
+            scale.y=Math.clamp(scale.y+Config.defaultZoomSpeed*nextZoomFactor,minScale,maxScale);
+            nextZoomFactor=0;
+        }
+    }
+
+    public void changeScale(int factor){
+        nextZoomFactor=factor;
     }
 }

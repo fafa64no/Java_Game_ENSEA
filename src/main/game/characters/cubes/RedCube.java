@@ -1,6 +1,5 @@
 package main.game.characters.cubes;
 
-import main.game.characters.LifeStates;
 import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 

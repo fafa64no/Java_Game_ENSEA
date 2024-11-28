@@ -54,6 +54,10 @@ public class Config {
     public final static double rangedCubeHealth=150;
     public final static double movingCubeHealth=250;
 
+    public final static double defaultMinCameraZoom=1.5;
+    public final static double defaultMaxCameraZoom=5;
+    public final static double defaultZoomSpeed=0.15;
+
     public final static long startTime=System.currentTimeMillis();
 
     public static boolean currentlyDebugging=false;
