@@ -30,9 +30,9 @@ public class RangedCube extends BasicCube implements AIdriven {
     private final BufferedImage[] retractionTextures;
     private final BufferedImage[] attackTextures;
 
-    private Target currentTarget=null;
+    protected Target currentTarget=null;
 
-    private final Collider detectionZone;
+    protected final Collider detectionZone;
 
     private final ProjectileHandler projectileHandler = MachineGunBullet.getInstance();
 
@@ -67,9 +67,10 @@ public class RangedCube extends BasicCube implements AIdriven {
         if(targets.isEmpty())return;
         if(currentTarget == null)currentTarget=targets.getFirst();
         for(Target target : targets){
-            if(Vec2.getSquareDistance(position,currentTarget.getPosition())>Vec2.getSquareDistance(position,target.getPosition())){
+            if(target.isTargetable()&&Vec2.getSquareDistance(position,currentTarget.getPosition())>Vec2.getSquareDistance(position,target.getPosition())){
                 currentTarget=target;
             }
+            if(!currentTarget.isTargetable()&&target.isTargetable())currentTarget=target;
         }
     }
 
@@ -108,6 +109,62 @@ public class RangedCube extends BasicCube implements AIdriven {
         return Math.abs(angleToTravel+angleSign*2*Math.PI)%(2*Math.PI) < requiredAccuracy;
     }
 
+    protected void deployingState(){
+        if(--remainingAnimationTime<0){
+            lifeState=LifeStates.CURRENTLY_PURSUING;
+        }
+    }
+
+    protected void retractingState(){
+        if(--remainingAnimationTime<0){
+            rotation=0;
+            lifeState=LifeStates.CURRENTLY_IDLE;
+        }
+    }
+
+    protected void pursuingState(){
+        if(isNotValidTarget()){
+            seekClosestTarget();
+            if(isNotValidTarget()){
+                remainingAnimationTime=animationDuration;
+                lifeState=LifeStates.CURRENTLY_RETRACTING;
+                return;
+            }
+        }
+        computeNewRotation();
+        if(isRotationGood()){
+            remainingAnimationTime=animationDuration;
+            lifeState=LifeStates.CURRENTLY_ATTACKING;
+        }
+    }
+
+    protected void attackingState(){
+        if(--remainingAnimationTime<0){
+            lifeState=LifeStates.CURRENTLY_PURSUING;
+        }
+        computeNewRotation();
+        projectileHandler.fireInDirection(position,rotation);
+    }
+
+    @Override
+    public void updateAI() {
+        switch (lifeState){
+            case CURRENTLY_DEPLOYING:
+                deployingState();
+                break;
+            case CURRENTLY_RETRACTING:
+                retractingState();
+                break;
+            case CURRENTLY_PURSUING:
+                pursuingState();
+                break;
+            case CURRENTLY_ATTACKING:
+                attackingState();
+                break;
+        }
+        currentAnimationFrame=(deploymentTextures.length-1)*(animationDuration-remainingAnimationTime)/animationDuration;
+    }
+
     @Override
     public double getRotation() {
         return rotation;
@@ -125,46 +182,6 @@ public class RangedCube extends BasicCube implements AIdriven {
     @Override
     public void stopAI() {
 
-    }
-
-    @Override
-    public void updateAI() {
-        switch (lifeState){
-            case CURRENTLY_DEPLOYING:
-                if(--remainingAnimationTime<0){
-                    lifeState=LifeStates.CURRENTLY_PURSUING;
-                }
-                break;
-            case CURRENTLY_RETRACTING:
-                if(--remainingAnimationTime<0){
-                    rotation=0;
-                    lifeState=LifeStates.CURRENTLY_IDLE;
-                }
-                break;
-            case CURRENTLY_PURSUING:
-                if(isNotValidTarget()){
-                    seekClosestTarget();
-                    if(isNotValidTarget()){
-                        remainingAnimationTime=animationDuration;
-                        lifeState=LifeStates.CURRENTLY_RETRACTING;
-                        break;
-                    }
-                }
-                computeNewRotation();
-                if(isRotationGood()){
-                    remainingAnimationTime=animationDuration;
-                    lifeState=LifeStates.CURRENTLY_ATTACKING;
-                }
-                break;
-            case CURRENTLY_ATTACKING:
-                if(--remainingAnimationTime<0){
-                    lifeState=LifeStates.CURRENTLY_PURSUING;
-                }
-                computeNewRotation();
-                projectileHandler.fireInDirection(position,rotation);
-                break;
-        }
-        currentAnimationFrame=(deploymentTextures.length-1)*(animationDuration-remainingAnimationTime)/animationDuration;
     }
 
     @Override

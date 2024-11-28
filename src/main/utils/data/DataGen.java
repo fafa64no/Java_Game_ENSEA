@@ -56,7 +56,7 @@ public class DataGen {
         tanks[3]=new Tank(
                 new Vec2(-75,150),
                 "panzer_IV_sand",
-                8,
+                6,
                 new IVec2(38,72),
                 0.1,
                 0.10,
@@ -66,7 +66,7 @@ public class DataGen {
         tanks[4]=new Tank(
                 new Vec2(75,150),
                 "panzer_IV_green",
-                7,
+                4,
                 new IVec2(38,72),
                 0.1,
                 0.05,

@@ -18,8 +18,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class BasicCube extends Character implements RedCube{
-    private final Collider collider;
-    private final Collider damageZone;
+    protected final Collider collider;
+    protected final Collider damageZone;
 
     public BasicCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture) {
         super(position, texture, deadTexture, 0, new IVec2(Config.largeTileSize,Config.largeTileSize));

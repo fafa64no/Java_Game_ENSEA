@@ -1,11 +1,10 @@
 package main.game.level;
 
 import main.game.characters.cubes.BasicCube;
+import main.game.characters.cubes.MovingCube;
 import main.game.characters.cubes.RangedCube;
-import main.game.characters.cubes.RedCube;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
-import main.physics.colliders.SolidCollider;
 import main.physics.colliders.TilemapCollider;
 import main.rendering.*;
 import main.utils.data.Config;
@@ -111,6 +110,7 @@ public class Level extends JPanel implements Displayable {
                         break;
                     case '0':
                     case '1':
+                    case '2':
                         mapTextures[y][x]=trapTexture;
                         break;
                     default:
@@ -137,6 +137,7 @@ public class Level extends JPanel implements Displayable {
         Vec2 spawnPosition;
         int cube0count=0;
         int cube1count=0;
+        int cube2count=0;
         for (int x=0;x<map[0].length;x++) {
             for (int y = 0; y < map.length; y++) {
                 switch (map[y][x]){
@@ -161,10 +162,22 @@ public class Level extends JPanel implements Displayable {
                         ));
                         cube1count++;
                         break;
+                    case '2':
+                        spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
+                        cubeRenderer.addCube(new MovingCube(
+                                spawnPosition.copy(),
+                                DataGen.getFollowerCubeTextureCubeTexture(),
+                                DataGen.getFollowerCubeDeadTextureCubeDeadTexture(),
+                                DataGen.getRangedCubeDeploymentTextures(),
+                                DataGen.getRangedCubeRetractionTextures(),
+                                DataGen.getRangedCubeAttackTextures()
+                        ));
+                        cube2count++;
+                        break;
                 }
             }
         }
-        System.out.println("\nGenerated cubes : "+(cube0count+cube1count)+"\n\t0 : "+cube0count+"\n\t1 : "+cube1count+"\n");
+        System.out.println("\nGenerated cubes : "+(cube0count+cube1count)+"\n\t0 : "+cube0count+"\n\t1 : "+cube1count+"\n\t2 : "+cube2count+"\n");
     }
 
     public double getGroundSpeed(Vec2 position){

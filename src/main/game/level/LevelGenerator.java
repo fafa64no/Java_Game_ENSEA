@@ -26,6 +26,10 @@ public class LevelGenerator {
                 }
                 // Enemies
                 double spawnKey=Math.abs(PseudoRandom.getRandomDouble(30*x,3-20*y, Config.noiseSizeTerrainTraps));
+                if(spawnKey<0.00019){
+                    output[y][x]='2';
+                    continue;
+                }
                 if(spawnKey<0.0002){
                     output[y][x]='1';
                     continue;
