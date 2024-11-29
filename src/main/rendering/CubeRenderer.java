@@ -10,17 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CubeRenderer extends JPanel implements Displayable {
-    private static CubeRenderer instance = null;
     private final List<RedCube> redCubes = new ArrayList<>();
     private List<RedCube> redCubesToAdd = new ArrayList<>();
 
     public CubeRenderer() {
-        if(instance == null)instance = this;
         this.setOpaque(false);
     }
 
-    public static void addCube(RedCube redCube){
-        instance.redCubesToAdd.add(redCube);
+    public void addCube(RedCube redCube){
+        redCubesToAdd.add(redCube);
     }
 
     @Override

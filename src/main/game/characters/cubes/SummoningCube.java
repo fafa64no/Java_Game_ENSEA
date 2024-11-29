@@ -1,9 +1,8 @@
 package main.game.characters.cubes;
 
+import main.game.GameEngine;
 import main.game.characters.LifeStates;
 import main.game.characters.cubes.cube_variants.*;
-import main.rendering.CubeRenderer;
-import main.rendering.FlyingCubeRenderer;
 import main.utils.data.Config;
 import main.utils.vectors.Vec2;
 
@@ -26,12 +25,12 @@ public abstract class SummoningCube extends RangedCube{
         for(int i=0; i<numberOfSpawns;i++){
             Vec2 spawnOffset = Vec2.multiply(new Vec2(1,0),spawnDistance).rotateBy(2.0*i*Math.PI/numberOfSpawns);
             switch (spawnCubeHead){
-                case CUBE_HEAD_MACHINE_GUN_WHEELS -> CubeRenderer.addCube(new GatlingWheelsCube(Vec2.add(spawnOffset,position),currentTarget));
-                case CUBE_HEAD_BEACON -> CubeRenderer.addCube(new BeaconCube(Vec2.add(spawnOffset,position),currentTarget));
-                case CUBE_HEAD_ARTILLERY -> CubeRenderer.addCube(new ArtilleryCube(Vec2.add(spawnOffset,position),currentTarget));
-                case CUBE_HEAD_MACHINE_GUN -> CubeRenderer.addCube(new GatlingCube(Vec2.add(spawnOffset,position),currentTarget));
-                case CUBE_HEAD_NONE -> CubeRenderer.addCube(new BasicCube(Vec2.add(spawnOffset,position)));
-                case CUBE_HEAD_FIGHTER -> FlyingCubeRenderer.addCube(new FighterCube(Vec2.add(spawnOffset,position),currentTarget));
+                case CUBE_HEAD_MACHINE_GUN_WHEELS -> GameEngine.getCurrentLevel().getCubeRenderer().addCube(new GatlingWheelsCube(Vec2.add(spawnOffset,position),currentTarget));
+                case CUBE_HEAD_BEACON -> GameEngine.getCurrentLevel().getCubeRenderer().addCube(new BeaconCube(Vec2.add(spawnOffset,position),currentTarget));
+                case CUBE_HEAD_ARTILLERY -> GameEngine.getCurrentLevel().getCubeRenderer().addCube(new ArtilleryCube(Vec2.add(spawnOffset,position),currentTarget));
+                case CUBE_HEAD_MACHINE_GUN -> GameEngine.getCurrentLevel().getCubeRenderer().addCube(new GatlingCube(Vec2.add(spawnOffset,position),currentTarget));
+                case CUBE_HEAD_NONE -> GameEngine.getCurrentLevel().getCubeRenderer().addCube(new BasicCube(Vec2.add(spawnOffset,position)));
+                case CUBE_HEAD_FIGHTER -> GameEngine.getCurrentLevel().getFlyingCubeRenderer().addCube(new FighterCube(Vec2.add(spawnOffset,position),currentTarget));
             }
         }
     }

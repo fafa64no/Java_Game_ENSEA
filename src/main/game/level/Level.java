@@ -2,10 +2,13 @@ package main.game.level;
 
 import main.game.characters.cubes.cube_variants.*;
 import main.game.characters.cubes.BasicCube;
+import main.physics.CollisionLayers;
+import main.physics.PhysicEngine;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
 import main.physics.colliders.TilemapCollider;
 import main.rendering.*;
+import main.rendering.CubeRenderer;
 import main.utils.data.Config;
 import main.utils.data.DataGen;
 import main.utils.debug.Debug;
@@ -37,7 +40,7 @@ public class Level extends JPanel implements Displayable {
 
     private final LeavesRenderer leavesRenderer;
     private final CubeRenderer cubeRenderer;
-    private final FlyingCubeRenderer flyingCubeRenderer;
+    private final CubeRenderer flyingCubeRenderer;
 
     public Level(IVec2 size){
         this.setOpaque(false);
@@ -58,7 +61,7 @@ public class Level extends JPanel implements Displayable {
 
         leavesRenderer = new LeavesRenderer(map,mapOffset);
         cubeRenderer = new CubeRenderer();
-        flyingCubeRenderer = new FlyingCubeRenderer();
+        flyingCubeRenderer = new CubeRenderer();
 
         initTextures();
         initColliders();
@@ -130,32 +133,32 @@ public class Level extends JPanel implements Displayable {
                     case '9':
                     case '0':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        CubeRenderer.addCube(new BasicCube(spawnPosition.copy()));
+                        cubeRenderer.addCube(new BasicCube(spawnPosition.copy()));
                         cube0count++;
                         break;
                     case '1':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        CubeRenderer.addCube(new GatlingCube(spawnPosition.copy()));
+                        cubeRenderer.addCube(new GatlingCube(spawnPosition.copy()));
                         cube1count++;
                         break;
                     case '2':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        CubeRenderer.addCube(new GatlingWheelsCube(spawnPosition.copy()));
+                        cubeRenderer.addCube(new GatlingWheelsCube(spawnPosition.copy()));
                         cube2count++;
                         break;
                     case '3':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        CubeRenderer.addCube(new ArtilleryCube(spawnPosition.copy()));
+                        cubeRenderer.addCube(new ArtilleryCube(spawnPosition.copy()));
                         cube3count++;
                         break;
                     case '4':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        CubeRenderer.addCube(new BeaconCube(spawnPosition.copy()));
+                        cubeRenderer.addCube(new BeaconCube(spawnPosition.copy()));
                         cube4count++;
                         break;
                     case '5':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        FlyingCubeRenderer.addCube(new FighterCube(spawnPosition.copy()));
+                        flyingCubeRenderer.addCube(new FighterCube(spawnPosition.copy()));
                         cube5count++;
                         break;
                 }
@@ -217,6 +220,25 @@ public class Level extends JPanel implements Displayable {
         );
     }
 
+    public void loadLevel(){
+        for (Collider collider : this.colliders)
+            PhysicEngine.addCollider(collider, CollisionLayers.COLLISION_LAYER_TERRAIN);
+        RenderEngine.addToRenderList(this, RenderingLayers.RENDERING_LAYER_TERRAIN);
+        RenderEngine.addToRenderList(this.cubeRenderer, RenderingLayers.RENDERING_LAYER_TANK);
+        RenderEngine.addToRenderList(this.flyingCubeRenderer, RenderingLayers.RENDERING_LAYER_LEAVES);
+        RenderEngine.addToRenderList(this.leavesRenderer, RenderingLayers.RENDERING_LAYER_LEAVES);
+        RenderEngine.paint();
+    }
+
+    public void unloadLevel(){
+        for (Collider collider : this.colliders)
+            PhysicEngine.removeCollider(collider);
+        RenderEngine.removeFromRenderList(this);
+        RenderEngine.removeFromRenderList(this.cubeRenderer);
+        RenderEngine.removeFromRenderList(this.flyingCubeRenderer);
+        RenderEngine.removeFromRenderList(this.leavesRenderer);
+    }
+
     public LeavesRenderer getLeavesRenderer() {
         return leavesRenderer;
     }
@@ -225,7 +247,7 @@ public class Level extends JPanel implements Displayable {
         return cubeRenderer;
     }
 
-    public FlyingCubeRenderer getFlyingCubeRenderer() {
+    public CubeRenderer getFlyingCubeRenderer() {
         return flyingCubeRenderer;
     }
 

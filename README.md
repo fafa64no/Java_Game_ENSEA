@@ -49,7 +49,7 @@ Can also spawn a version of himself which spawns different cubes
 (this one can be done without crashing).
 
 Fighter cube : Just like Gatling cube with wheels, but goes through walls,
-is rendered above turret, and has a different behaviour to always move forward
+is rendered above terrain, and has a different behaviour to always move forward
 once triggered.
 
 ### - Auto Generated Terrain
