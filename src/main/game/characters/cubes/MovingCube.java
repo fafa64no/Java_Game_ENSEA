@@ -32,7 +32,15 @@ public abstract class MovingCube extends RangedCube{
         this.movementSpeed = movementSpeed;
     }
 
+    protected void updateChildrenPosition(){
+        for(DecorativeFollowerCube decorativeFollowerCube : decorativeFollowerCubes){
+            decorativeFollowerCube.updateRotation();
+            decorativeFollowerCube.updatePos();
+        }
+    }
+
     protected void updatePosition(){
+        updateChildrenPosition();
         double distanceToTravel = Vec2.getDistance(position,currentTarget.getPosition());
         if(distanceToTravel<attackRange){
             setInput(new Vec2());

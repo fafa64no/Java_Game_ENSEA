@@ -14,6 +14,8 @@ import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BasicCube extends Character implements RedCube {
     protected Collider collider;
@@ -21,16 +23,27 @@ public class BasicCube extends Character implements RedCube {
 
     public final int textureSize;
 
+    protected final List<DecorativeFollowerCube> decorativeFollowerCubes;
+
     public BasicCube(Vec2 position) {
         super(position, DataGen.getBasicCubeTexture(), DataGen.getBasicCubeDeadTexture(), 1, new IVec2(Config.largeTileSize,Config.largeTileSize), Config.basicCubeHealth);
         this.textureSize = Config.largeTileSize;
         genColliders();
+        this.decorativeFollowerCubes = new ArrayList<>();
     }
 
     protected BasicCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, double maxHealth, int textureSize) {
         super(position, texture, deadTexture, 1, new IVec2(Config.largeTileSize,Config.largeTileSize), maxHealth);
         this.textureSize = textureSize;
         genColliders();
+        this.decorativeFollowerCubes = new ArrayList<>();
+    }
+
+    protected BasicCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, double maxHealth, int textureSize, List<DecorativeFollowerCube> decorativeFollowerCubes) {
+        super(position, texture, deadTexture, 1, new IVec2(Config.largeTileSize,Config.largeTileSize), maxHealth);
+        this.textureSize = textureSize;
+        genColliders();
+        this.decorativeFollowerCubes = decorativeFollowerCubes;
     }
 
     protected void genColliders(){
@@ -67,6 +80,11 @@ public class BasicCube extends Character implements RedCube {
     }
 
     @Override
+    public List<DecorativeFollowerCube> getDecorativeFollowerCubes() {
+        return decorativeFollowerCubes;
+    }
+
+    @Override
     public BufferedImage getTexture() {
         return switch (lifeState){
             case CURRENTLY_DEAD -> deadTexture;
@@ -79,6 +97,7 @@ public class BasicCube extends Character implements RedCube {
         super.killYourself();
         PhysicEngine.removeCollider(damageZone);
         new Vfx(position,Config.largeTileSize, DataGen.getExplosionTextures(),20);
+        for(DecorativeFollowerCube decorativeFollowerCube : decorativeFollowerCubes)decorativeFollowerCube.killYourself();
     }
 
     @Override

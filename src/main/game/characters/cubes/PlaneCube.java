@@ -17,7 +17,25 @@ public abstract class PlaneCube extends MovingCube{
     protected int remainingDisengagingFrames = 0;
 
     public PlaneCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures, double rotationSpeed, double maxHealth, int animationDuration, CubeHead cubeHead, int textureSize, ProjectileHandler projectileHandler, int firingDelay, double attackRange, double followRange, double weaponSpread, double movementSpeed, int disengagingFrames) {
-        super(position, texture, deadTexture, deploymentTextures, retractionTextures, attackTextures, rotationSpeed, maxHealth, animationDuration, cubeHead, textureSize, projectileHandler, firingDelay, attackRange, followRange, weaponSpread, movementSpeed);
+        super(
+                position,
+                texture,
+                deadTexture,
+                deploymentTextures,
+                retractionTextures,
+                attackTextures,
+                rotationSpeed,
+                maxHealth,
+                animationDuration,
+                cubeHead,
+                textureSize,
+                projectileHandler,
+                firingDelay,
+                attackRange,
+                followRange,
+                weaponSpread,
+                movementSpeed
+        );
         this.disengagingFrames = disengagingFrames;
     }
 
@@ -69,6 +87,7 @@ public abstract class PlaneCube extends MovingCube{
 
     @Override
     protected void updatePosition() {
+        updateChildrenPosition();
         double distanceToTravel = Vec2.getDistance(position,currentTarget.getPosition());
         if(distanceToTravel < attackRange){
             lifeState = LifeStates.CURRENTLY_DISENGAGING;

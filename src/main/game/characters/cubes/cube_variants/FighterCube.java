@@ -23,11 +23,11 @@ public class FighterCube extends PlaneCube {
                 10,
                 CubeHead.CUBE_HEAD_FIGHTER,
                 Config.largeTileSize,
-                MachineGunBullet.getInstance(),
+                AerialMachineGunBullet.getInstance(),
                 0,
                 Config.cubeAttackRange,
                 0,
-                0.1,
+                0.05,
                 1.5,
                 100
         );

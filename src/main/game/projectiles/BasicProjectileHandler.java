@@ -1,6 +1,7 @@
 package main.game.projectiles;
 
 import main.game.GameEngine;
+import main.physics.ColliderType;
 import main.physics.CollisionLayers;
 import main.rendering.Displayable;
 import main.rendering.RenderEngine;
@@ -23,16 +24,23 @@ public abstract class BasicProjectileHandler extends JPanel implements Projectil
     protected final double projectileSpeed;
     protected final double modifier;
     protected final CollisionLayers collisionLayer;
+    protected final ColliderType colliderType;
 
     protected final VfxType vfxType;
 
-    public BasicProjectileHandler(BufferedImage[] textures, int projectileLifeSpan, double projectileSpeed, double modifier, CollisionLayers collisionLayer, VfxType vfxType) {
+    protected final int animationSpeed;
+    protected final int invisibilityFrames;
+
+    public BasicProjectileHandler(BufferedImage[] textures, int projectileLifeSpan, double projectileSpeed, double modifier, CollisionLayers collisionLayer, VfxType vfxType, ColliderType colliderType, int animationSpeed, int invisibilityFrames) {
         this.textures = textures;
         this.projectileLifeSpan = projectileLifeSpan;
         this.projectileSpeed = projectileSpeed;
         this.modifier = modifier;
         this.collisionLayer = collisionLayer;
+        this.colliderType = colliderType;
         this.vfxType = vfxType;
+        this.animationSpeed = animationSpeed;
+        this.invisibilityFrames = invisibilityFrames;
 
         this.setOpaque(false);
 
@@ -48,7 +56,7 @@ public abstract class BasicProjectileHandler extends JPanel implements Projectil
         }
         projectiles[projectilePointer]=new Projectile(
                 projectileLifeSpan,
-                2,
+                invisibilityFrames,
                 initialPosition,
                 projectileSpeed,
                 rotation,
@@ -56,7 +64,10 @@ public abstract class BasicProjectileHandler extends JPanel implements Projectil
                 this,
                 collisionLayer,
                 modifier,
-                vfxType
+                textures.length,
+                animationSpeed,
+                vfxType,
+                colliderType
         );
         projectilePointer=(projectilePointer+1)%projectiles.length;
     }

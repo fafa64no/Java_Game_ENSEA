@@ -1,5 +1,6 @@
 package main.game.projectiles;
 
+import main.physics.ColliderType;
 import main.physics.CollisionLayers;
 import main.rendering.vfx.VfxType;
 import main.utils.data.DataGen;
@@ -16,7 +17,11 @@ public class TankShell extends BasicProjectileHandler {
                 15,
                 40,
                 CollisionLayers.COLLISION_LAYER_ALLY_PROJECTILES,
-                VfxType.VFX_PIERCING_METAL
+                VfxType.VFX_PIERCING_METAL,
+                ColliderType.NONE_DAMAGE_DEALER,
+                0,
+                2
+
         );
         if(instance==null)instance=this;
     }

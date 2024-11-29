@@ -32,7 +32,7 @@ public class DataGen {
                 0.20,
                 new Vec2(15,15),
                 5,
-                1000000
+                100000
         );
         tanks[1]=new Tank(
                 new Vec2(0,100),

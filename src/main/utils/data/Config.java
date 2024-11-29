@@ -49,16 +49,16 @@ public class Config {
 
     public final static double cubeCollisionRange=32;
     public final static double cubeDetectionRange=128;
-    public final static double cubeAttackRange =80;
+    public final static double cubeAttackRange=80;
     public final static double cubeSquareFollowRange=120000;
     public final static double artillerySquareFollowRange=360000;
 
     public final static double defaultCubeRequiredAccuracy=0.2;
 
     public final static double basicCubeHealth=100;
-    public final static double gatlingCubeHealth=250;
+    public final static double gatlingCubeHealth=150;
     public final static double artilleryCubeHealth=500;
-    public final static double movingCubeHealth=150;
+    public final static double movingCubeHealth=120;
     public final static double beaconCubeHealth=350;
     public final static double fighterCubeHealth=40;
 

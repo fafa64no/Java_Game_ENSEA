@@ -1,5 +1,6 @@
 package main.game.projectiles;
 
+import main.physics.ColliderType;
 import main.physics.CollisionLayers;
 import main.rendering.vfx.VfxType;
 import main.utils.data.DataGen;
@@ -16,7 +17,10 @@ public class MachineGunBullet extends BasicProjectileHandler {
                 15,
                 0.5,
                 CollisionLayers.COLLISION_LAYER_ENNEMY_PROJECTILES,
-                VfxType.VFX_PIERCING_METAL
+                VfxType.VFX_PIERCING_METAL,
+                ColliderType.NONE_DAMAGE_DEALER,
+                0,
+                1
         );
         if(instance==null)instance=this;
     }

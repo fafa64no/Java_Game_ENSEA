@@ -24,7 +24,7 @@ public class Projectile {
 
     private final int idInProjectileHandler;
 
-    public Projectile(int remainingMilliseconds, int invisibilityFrames ,Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent, CollisionLayers collisionLayer, double modifier, VfxType vfxType) {
+    public Projectile(int remainingMilliseconds, int invisibilityFrames ,Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent, CollisionLayers collisionLayer, double modifier, int animationFrames, int animationSpeed, VfxType vfxType, ColliderType colliderType) {
         this.remainingMilliseconds = remainingMilliseconds;
         this.initialLifeSpan = remainingMilliseconds;
         this.velocity = Vec2.multiply(new Vec2(0,1).rotateBy(rotation),velocity);
@@ -32,29 +32,7 @@ public class Projectile {
         this.rotation = rotation;
         this.collider = new PointCollider(
                 new Vec2(),
-                ColliderType.NONE_DAMAGE_DEALER,
-                this,
-                modifier,
-                vfxType
-        );
-        this.collider.setOffset();
-        this.idInProjectileHandler = idInProjectileHandler;
-        this.parent = parent;
-        this.animationFrames = 1;
-        this.currentAnimationFrame = 0;
-        this.animationSpeed = 0;
-        PhysicEngine.addCollider(this.collider, collisionLayer);
-    }
-
-    public Projectile(int remainingMilliseconds, int invisibilityFrames ,Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent, CollisionLayers collisionLayer, double modifier, int animationFrames, int animationSpeed, VfxType vfxType) {
-        this.remainingMilliseconds = remainingMilliseconds;
-        this.initialLifeSpan = remainingMilliseconds;
-        this.velocity = Vec2.multiply(new Vec2(0,1).rotateBy(rotation),velocity);
-        this.currentPosition = Vec2.add(currentPosition,Vec2.multiply(this.velocity,invisibilityFrames));
-        this.rotation = rotation;
-        this.collider = new PointCollider(
-                new Vec2(),
-                ColliderType.AERIAL_DAMAGE_DEALER,
+                colliderType,
                 this,
                 modifier,
                 vfxType

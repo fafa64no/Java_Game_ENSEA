@@ -230,12 +230,12 @@ public class PhysicEngine implements Engine {
             }
         }
 
-        for (Collider colliderAllyProjectile : colliderList_layer_enemy_projectiles) {
+        for (Collider colliderEnemyProjectile : colliderList_layer_enemy_projectiles) {
             for (Collider colliderTerrain : colliderList_layer_terrain) {
-                Collision collision = colliderAllyProjectile.doCollide(colliderTerrain, new Vec2());
+                Collision collision = colliderEnemyProjectile.doCollide(colliderTerrain, new Vec2());
                 if (collision == null) continue;
-                colliderAllyProjectile.onCollide(colliderTerrain.getColliderType(), colliderTerrain.getReverseCollision(collision));
-                colliderTerrain.onCollide(colliderAllyProjectile.getColliderType(), collision);
+                colliderEnemyProjectile.onCollide(colliderTerrain.getColliderType(), colliderTerrain.getReverseCollision(collision));
+                colliderTerrain.onCollide(colliderEnemyProjectile.getColliderType(), collision);
             }
         }
 
