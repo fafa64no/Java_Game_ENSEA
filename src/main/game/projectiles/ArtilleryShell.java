@@ -13,7 +13,7 @@ public class ArtilleryShell extends BasicProjectileHandler {
                 DataGen.getArtilleryShellTexture(),
                 4000,
                 5,
-                50,
+                500,
                 CollisionLayers.COLLISION_LAYER_ENNEMY_PROJECTILES,
                 VfxType.VFX_PIERCING_METAL
         );

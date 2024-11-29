@@ -8,8 +8,9 @@ import java.awt.image.BufferedImage;
 
 public abstract class MovingCube extends RangedCube{
     protected final double attackRange;
+    protected final double movementSpeed;
 
-    public MovingCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures, double rotationSpeed, double maxHealth, int animationDuration, CubeHead cubeHead, int textureSize, ProjectileHandler projectileHandler, int firingDelay, double attackRange, double followRange, double weaponSpread){
+    public MovingCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures, double rotationSpeed, double maxHealth, int animationDuration, CubeHead cubeHead, int textureSize, ProjectileHandler projectileHandler, int firingDelay, double attackRange, double followRange, double weaponSpread, double movementSpeed){
         super(
                 position,
                 texture,
@@ -28,6 +29,7 @@ public abstract class MovingCube extends RangedCube{
                 weaponSpread
         );
         this.attackRange = attackRange;
+        this.movementSpeed = movementSpeed;
     }
 
     protected void updatePosition(){
@@ -37,7 +39,7 @@ public abstract class MovingCube extends RangedCube{
             return;
         }
 
-        setInput(new Vec2(0,-0.7));
+        setInput(new Vec2(0,-movementSpeed));
 
         collider.setOffset();
         damageZone.setOffset();
@@ -56,7 +58,7 @@ public abstract class MovingCube extends RangedCube{
     public void goToNextPosition(BVec2 canMove, double friction){
         if(canMove.x)   position.x=position.x-currentVelocity.y*Math.sin(rotation);
         if(canMove.y)   position.y=position.y+currentVelocity.y*Math.cos(rotation);
-        collider.setOffset();
+        if(collider!=null)collider.setOffset();
     }
 
     @Override

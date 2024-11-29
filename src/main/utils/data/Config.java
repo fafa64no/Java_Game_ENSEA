@@ -56,10 +56,11 @@ public class Config {
     public final static double defaultCubeRequiredAccuracy=0.2;
 
     public final static double basicCubeHealth=100;
-    public final static double gatlingCubeHealth=150;
+    public final static double gatlingCubeHealth=250;
     public final static double artilleryCubeHealth=500;
-    public final static double movingCubeHealth=250;
-    public final static double beaconCubeHealth=1000;
+    public final static double movingCubeHealth=150;
+    public final static double beaconCubeHealth=350;
+    public final static double fighterCubeHealth=40;
 
     public final static double defaultMinCameraZoom=1.5;
     public final static double defaultMaxCameraZoom=5;

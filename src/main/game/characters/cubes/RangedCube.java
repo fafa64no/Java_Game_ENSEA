@@ -79,7 +79,7 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
         detectionZone.setOffset();
     }
 
-    private void seekClosestTarget(){
+    protected void seekClosestTarget(){
         List<Target> targets = GameEngine.getTargets();
         if(targets.isEmpty())return;
         if(currentTarget == null)currentTarget=targets.getFirst();
@@ -91,7 +91,7 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
         }
     }
 
-    private boolean isNotValidTarget(){
+    protected boolean isNotValidTarget(){
         return (currentTarget == null) || Vec2.getSquareDistance(position, currentTarget.getPosition()) > followRange || !currentTarget.isTargetable();
     }
 
@@ -99,7 +99,7 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
         return Vec2.add(currentTarget.getPosition(),currentTarget.getVelocity());
     }
 
-    private double getTargetRotation() {
+    protected double getTargetRotation() {
         Vec2 targetPosition=getTargetPosition();
         return (new Vec2(
                 targetPosition.x- this.position.x,
@@ -166,6 +166,10 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
         }
     }
 
+    protected void disengagingState(){
+
+    }
+
     @Override
     public void updateAI() {
         switch (lifeState){
@@ -180,6 +184,9 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
                 break;
             case CURRENTLY_ATTACKING:
                 attackingState();
+                break;
+            case CURRENTLY_DISENGAGING:
+                disengagingState();
                 break;
         }
         currentAnimationFrame=(deploymentTextures.length-1)*(animationDuration-remainingAnimationTime)/animationDuration;
@@ -217,7 +224,7 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
             case CURRENTLY_DEPLOYING -> deploymentTextures[currentAnimationFrame];
             case CURRENTLY_RETRACTING -> retractionTextures[currentAnimationFrame];
             case CURRENTLY_ATTACKING -> attackTextures[currentAnimationFrame];
-            case CURRENTLY_PURSUING -> deploymentTextures[deploymentTextures.length-1];
+            case CURRENTLY_PURSUING, CURRENTLY_DISENGAGING -> deploymentTextures[deploymentTextures.length-1];
             case CURRENTLY_IDLE -> texture;
             default -> {
                 System.out.println("Warning : Resorting to default texture");

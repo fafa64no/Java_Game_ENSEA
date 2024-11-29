@@ -73,12 +73,14 @@ public class GameEngine implements KeyListener, Engine, MouseListener, MouseWhee
         RenderEngine.removeFromRenderList(levels[currentLevel]);
         RenderEngine.removeFromRenderList(levels[currentLevel].getLeavesRenderer());
         RenderEngine.removeFromRenderList(levels[currentLevel].getCubeRenderer());
+        RenderEngine.removeFromRenderList(levels[currentLevel].getFlyingCubeRenderer());
         currentLevel=i;
         for (Collider collider : levels[currentLevel].getColliders())
             PhysicEngine.addCollider(collider, CollisionLayers.COLLISION_LAYER_TERRAIN);
         RenderEngine.addToRenderList(levels[currentLevel], RenderingLayers.RENDERING_LAYER_TERRAIN);
         RenderEngine.addToRenderList(levels[currentLevel].getLeavesRenderer(), RenderingLayers.RENDERING_LAYER_LEAVES);
         RenderEngine.addToRenderList(levels[currentLevel].getCubeRenderer(), RenderingLayers.RENDERING_LAYER_TANK);
+        RenderEngine.addToRenderList(levels[currentLevel].getFlyingCubeRenderer(), RenderingLayers.RENDERING_LAYER_LEAVES);
         RenderEngine.paint();
     }
 

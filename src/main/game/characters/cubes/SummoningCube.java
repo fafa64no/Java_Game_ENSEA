@@ -1,11 +1,9 @@
 package main.game.characters.cubes;
 
 import main.game.characters.LifeStates;
-import main.game.characters.cubes.cube_variants.ArtilleryCube;
-import main.game.characters.cubes.cube_variants.BeaconCube;
-import main.game.characters.cubes.cube_variants.GatlingCube;
-import main.game.characters.cubes.cube_variants.GatlingWheelsCube;
+import main.game.characters.cubes.cube_variants.*;
 import main.rendering.CubeRenderer;
+import main.rendering.FlyingCubeRenderer;
 import main.utils.data.Config;
 import main.utils.vectors.Vec2;
 
@@ -33,6 +31,7 @@ public abstract class SummoningCube extends RangedCube{
                 case CUBE_HEAD_ARTILLERY -> CubeRenderer.addCube(new ArtilleryCube(Vec2.add(spawnOffset,position),currentTarget));
                 case CUBE_HEAD_MACHINE_GUN -> CubeRenderer.addCube(new GatlingCube(Vec2.add(spawnOffset,position),currentTarget));
                 case CUBE_HEAD_NONE -> CubeRenderer.addCube(new BasicCube(Vec2.add(spawnOffset,position)));
+                case CUBE_HEAD_FIGHTER -> FlyingCubeRenderer.addCube(new FighterCube(Vec2.add(spawnOffset,position),currentTarget));
             }
         }
     }

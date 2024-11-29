@@ -43,7 +43,7 @@ public class DataGen {
                 0.15,
                 new Vec2(15,15),
                 30,
-                100
+                400
         );
         tanks[2]=new Tank(
                 new Vec2(150,100),
@@ -54,7 +54,7 @@ public class DataGen {
                 0.05,
                 new Vec2(15,15),
                 50,
-                200
+                800
         );
         tanks[3]=new Tank(
                 new Vec2(-75,150),
@@ -65,7 +65,7 @@ public class DataGen {
                 0.10,
                 new Vec2(15,15),
                 20,
-                80
+                320
         );
         tanks[4]=new Tank(
                 new Vec2(75,150),
@@ -76,7 +76,7 @@ public class DataGen {
                 0.05,
                 new Vec2(15,15),
                 25,
-                150
+                600
         );
         return tanks;
     }
@@ -322,16 +322,22 @@ public class DataGen {
     private static BufferedImage[] movingCubeDeploymentTextures = null;
     private static BufferedImage[] movingCubeRetractionTextures = null;
     private static BufferedImage[] movingCubeAttackTextures = null;
-    private static BufferedImage artilleryCubeTexture = null;
-    private static BufferedImage artilleryCubeDeadTexture = null;
-    private static BufferedImage[] artilleryCubeDeploymentTextures = null;
-    private static BufferedImage[] artilleryCubeRetractionTextures = null;
-    private static BufferedImage[] artilleryCubeAttackTextures = null;
     private static BufferedImage beaconCubeTexture = null;
     private static BufferedImage beaconCubeDeadTexture = null;
     private static BufferedImage[] beaconCubeDeploymentTextures = null;
     private static BufferedImage[] beaconCubeRetractionTextures = null;
     private static BufferedImage[] beaconCubeAttackTextures = null;
+    private static BufferedImage fighterCubeTexture = null;
+    private static BufferedImage fighterCubeDeadTexture = null;
+    private static BufferedImage[] fighterCubeDeploymentTextures = null;
+    private static BufferedImage[] fighterCubeRetractionTextures = null;
+    private static BufferedImage[] fighterCubeAttackTextures = null;
+
+    private static BufferedImage artilleryCubeTexture = null;
+    private static BufferedImage artilleryCubeDeadTexture = null;
+    private static BufferedImage[] artilleryCubeDeploymentTextures = null;
+    private static BufferedImage[] artilleryCubeRetractionTextures = null;
+    private static BufferedImage[] artilleryCubeAttackTextures = null;
 
     public static BufferedImage getBasicCubeTexture(){
         if(mediumCubes == null) {
@@ -650,6 +656,80 @@ public class DataGen {
             beaconCubeAttackTextures[3]=mediumCubes.getSubimage(6*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
         }
         return beaconCubeAttackTextures;
+    }
+
+    public static BufferedImage getFighterCubeTexture(){
+        if(mediumCubes == null) {
+            try {
+                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (fighterCubeTexture == null) fighterCubeTexture =mediumCubes.getSubimage(0,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+        return fighterCubeTexture;
+    }
+
+    public static BufferedImage getFighterCubeDeadTexture(){
+        if(mediumCubes == null) {
+            try {
+                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (fighterCubeDeadTexture == null) fighterCubeDeadTexture = mediumCubes.getSubimage(7*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+        return fighterCubeDeadTexture;
+    }
+
+    public static BufferedImage[] getFighterCubeDeploymentTextures(){
+        if(mediumCubes == null) {
+            try {
+                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (fighterCubeDeploymentTextures == null){
+            fighterCubeDeploymentTextures=new BufferedImage[6];
+            fighterCubeDeploymentTextures[0]=mediumCubes.getSubimage(0,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            fighterCubeDeploymentTextures[1]=mediumCubes.getSubimage(Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            fighterCubeDeploymentTextures[2]=mediumCubes.getSubimage(2*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            fighterCubeDeploymentTextures[3]=mediumCubes.getSubimage(3*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            fighterCubeDeploymentTextures[4]=mediumCubes.getSubimage(4*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            fighterCubeDeploymentTextures[5]=mediumCubes.getSubimage(5*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+        }
+        return fighterCubeDeploymentTextures;
+    }
+
+    public static BufferedImage[] getFighterCubeRetractionTextures(){
+        if(mediumCubes == null) {
+            try {
+                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (fighterCubeRetractionTextures == null){
+            fighterCubeRetractionTextures=new BufferedImage[6];
+            fighterCubeRetractionTextures[5]=mediumCubes.getSubimage(0,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            fighterCubeRetractionTextures[4]=mediumCubes.getSubimage(Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            fighterCubeRetractionTextures[3]=mediumCubes.getSubimage(2*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            fighterCubeRetractionTextures[2]=mediumCubes.getSubimage(3*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            fighterCubeRetractionTextures[1]=mediumCubes.getSubimage(4*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            fighterCubeRetractionTextures[0]=mediumCubes.getSubimage(5*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+        }
+        return fighterCubeRetractionTextures;
+    }
+
+    public static BufferedImage[] getFighterCubeAttackTextures(){
+        if(mediumCubes == null) {
+            try {
+                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
+            catch (IOException e) {throw new RuntimeException(e);}
+        }
+        if (fighterCubeAttackTextures == null){
+            fighterCubeAttackTextures=new BufferedImage[6];
+            fighterCubeAttackTextures[0]=mediumCubes.getSubimage(6*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            fighterCubeAttackTextures[1]=mediumCubes.getSubimage(5*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            fighterCubeAttackTextures[2]=mediumCubes.getSubimage(6*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            fighterCubeAttackTextures[3]=mediumCubes.getSubimage(5*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            fighterCubeAttackTextures[4]=mediumCubes.getSubimage(6*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+            fighterCubeAttackTextures[5]=mediumCubes.getSubimage(5*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
+        }
+        return fighterCubeAttackTextures;
     }
 
     /*      ################ - Cameras - ################      */

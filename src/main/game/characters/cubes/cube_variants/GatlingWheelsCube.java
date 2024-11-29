@@ -26,7 +26,8 @@ public class GatlingWheelsCube extends MovingCube {
                 0,
                 Config.cubeAttackRange,
                 Config.cubeSquareFollowRange,
-                0.3
+                0.3,
+                0.7
         );
     }
 
@@ -47,7 +48,8 @@ public class GatlingWheelsCube extends MovingCube {
                 0,
                 Config.cubeAttackRange,
                 Config.cubeSquareFollowRange,
-                0.3
+                0.3,
+                0.9
         );
 
         this.currentTarget = target;

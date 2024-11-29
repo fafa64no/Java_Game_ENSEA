@@ -1,10 +1,7 @@
 package main.game.level;
 
-import main.game.characters.cubes.cube_variants.ArtilleryCube;
+import main.game.characters.cubes.cube_variants.*;
 import main.game.characters.cubes.BasicCube;
-import main.game.characters.cubes.cube_variants.BeaconCube;
-import main.game.characters.cubes.cube_variants.GatlingWheelsCube;
-import main.game.characters.cubes.cube_variants.GatlingCube;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
 import main.physics.colliders.TilemapCollider;
@@ -40,6 +37,7 @@ public class Level extends JPanel implements Displayable {
 
     private final LeavesRenderer leavesRenderer;
     private final CubeRenderer cubeRenderer;
+    private final FlyingCubeRenderer flyingCubeRenderer;
 
     public Level(IVec2 size){
         this.setOpaque(false);
@@ -60,6 +58,7 @@ public class Level extends JPanel implements Displayable {
 
         leavesRenderer = new LeavesRenderer(map,mapOffset);
         cubeRenderer = new CubeRenderer();
+        flyingCubeRenderer = new FlyingCubeRenderer();
 
         initTextures();
         initColliders();
@@ -121,43 +120,56 @@ public class Level extends JPanel implements Displayable {
         int cube2count=0;
         int cube3count=0;
         int cube4count=0;
+        int cube5count=0;
         for (int x=0;x<map[0].length;x++) {
             for (int y = 0; y < map.length; y++) {
                 switch (map[y][x]){
-                    case '5':
                     case '6':
                     case '7':
                     case '8':
                     case '9':
                     case '0':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        cubeRenderer.addCube(new BasicCube(spawnPosition.copy()));
+                        CubeRenderer.addCube(new BasicCube(spawnPosition.copy()));
                         cube0count++;
                         break;
                     case '1':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        cubeRenderer.addCube(new GatlingCube(spawnPosition.copy()));
+                        CubeRenderer.addCube(new GatlingCube(spawnPosition.copy()));
                         cube1count++;
                         break;
                     case '2':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        cubeRenderer.addCube(new GatlingWheelsCube(spawnPosition.copy()));
+                        CubeRenderer.addCube(new GatlingWheelsCube(spawnPosition.copy()));
                         cube2count++;
                         break;
                     case '3':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        cubeRenderer.addCube(new ArtilleryCube(spawnPosition.copy()));
+                        CubeRenderer.addCube(new ArtilleryCube(spawnPosition.copy()));
                         cube3count++;
                         break;
                     case '4':
                         spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
-                        cubeRenderer.addCube(new BeaconCube(spawnPosition.copy()));
+                        CubeRenderer.addCube(new BeaconCube(spawnPosition.copy()));
                         cube4count++;
+                        break;
+                    case '5':
+                        spawnPosition = Vec2.add(Vec2.multiply(new Vec2(x,y),Config.smallTileSize),mapOffset,new Vec2(Config.smallTileSize*0.5));
+                        FlyingCubeRenderer.addCube(new FighterCube(spawnPosition.copy()));
+                        cube5count++;
                         break;
                 }
             }
         }
-        System.out.println("\nGenerated cubes : "+(cube0count+cube1count+cube2count+cube3count+cube4count)+"\n\t0 : "+cube0count+"\n\t1 : "+cube1count+"\n\t2 : "+cube2count+"\n\t3 : "+cube3count+"\n\t4 : "+cube4count+"\n");
+        System.out.println("\nGenerated cubes : "+(cube0count+cube1count+cube2count+cube3count+cube4count+cube5count)
+                +"\n\t0 : "+cube0count
+                +"\n\t1 : "+cube1count
+                +"\n\t2 : "+cube2count
+                +"\n\t3 : "+cube3count
+                +"\n\t4 : "+cube4count
+                +"\n\t5 : "+cube5count
+                +"\n"
+        );
     }
 
     public double getGroundSpeed(Vec2 position){
@@ -211,6 +223,10 @@ public class Level extends JPanel implements Displayable {
 
     public CubeRenderer getCubeRenderer() {
         return cubeRenderer;
+    }
+
+    public FlyingCubeRenderer getFlyingCubeRenderer() {
+        return flyingCubeRenderer;
     }
 
     public char[][] getMap() {

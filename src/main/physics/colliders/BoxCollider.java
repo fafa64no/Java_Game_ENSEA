@@ -130,7 +130,8 @@ public class BoxCollider extends SolidCollider{
                         this.colliderType==ColliderType.SOLID_INERT||
                         this.colliderType==ColliderType.SOLID_INERT_ALLY||
                         this.colliderType==ColliderType.SOLID_DAMAGE_DEALER||
-                        this.colliderType==ColliderType.SOLID_THICK_INERT
+                        this.colliderType==ColliderType.SOLID_THICK_INERT||
+                        this.colliderType==ColliderType.AERIAL_INERT
                 )&& parent instanceof Character){
                     ((Character) parent).takeDamage(collision.modifier);
                 }

@@ -25,7 +25,7 @@ public class BeaconCube extends SummoningCube {
                 Config.artillerySquareFollowRange,
                 6,
                 100,
-                CubeHead.CUBE_HEAD_MACHINE_GUN_WHEELS
+                CubeHead.CUBE_HEAD_FIGHTER
         );
     }
 

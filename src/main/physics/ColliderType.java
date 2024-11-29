@@ -7,5 +7,6 @@ public enum ColliderType {
     SOLID_DAMAGE_DEALER,
     SOLID_THICK_INERT,
     NONE_TRIGGER,
-    SOLID_INERT_ALLY
+    SOLID_INERT_ALLY,
+    AERIAL_INERT
 }

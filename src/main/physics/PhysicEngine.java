@@ -170,15 +170,20 @@ public class PhysicEngine implements Engine {
                 colliderEnemy.onCollide(colliderAllyProjectile.getColliderType(),colliderAllyProjectile.getReverseCollision(collision));
                 colliderAllyProjectile.onCollide(colliderEnemy.getColliderType(),collision);
                 ColliderType colliderType = colliderAllyProjectile.getColliderType();
+                ColliderType colliderType2 = colliderEnemy.getColliderType();
                 boolean doesPreventMovement = colliderType==ColliderType.SOLID_INERT
                         || colliderType==ColliderType.SOLID_DAMAGE_DEALER
                         || colliderType==ColliderType.SOLID_THICK_INERT
                         || colliderType==ColliderType.SOLID_INERT_ALLY;
-                if(collision.collisions.x&&doesPreventMovement){
+                boolean isCollideable = colliderType2==ColliderType.SOLID_INERT
+                        || colliderType2==ColliderType.SOLID_DAMAGE_DEALER
+                        || colliderType2==ColliderType.SOLID_THICK_INERT
+                        || colliderType2==ColliderType.SOLID_INERT_ALLY;
+                if(collision.collisions.x&&doesPreventMovement&&isCollideable){
                     canMove.x=false;
                     currentInverseFriction=Math.min(currentInverseFriction,colliderAllyProjectile.getFriction());
                 }
-                if(collision.collisions.y&&doesPreventMovement){
+                if(collision.collisions.y&&doesPreventMovement&&isCollideable){
                     canMove.y=false;
                     currentInverseFriction=Math.min(currentInverseFriction,colliderAllyProjectile.getFriction());
                 }
@@ -191,15 +196,20 @@ public class PhysicEngine implements Engine {
                 Collision collision=colliderEnemy.doCollide(colliderTerrain,velocity);
                 if(collision==null)continue;
                 ColliderType colliderType = colliderTerrain.getColliderType();
+                ColliderType colliderType2 = colliderEnemy.getColliderType();
                 boolean doesPreventMovement = colliderType==ColliderType.SOLID_INERT
                         || colliderType==ColliderType.SOLID_DAMAGE_DEALER
                         || colliderType==ColliderType.SOLID_THICK_INERT
                         || colliderType==ColliderType.SOLID_INERT_ALLY;
-                if(collision.collisions.x&&doesPreventMovement){
+                boolean isCollideable = colliderType2==ColliderType.SOLID_INERT
+                        || colliderType2==ColliderType.SOLID_DAMAGE_DEALER
+                        || colliderType2==ColliderType.SOLID_THICK_INERT
+                        || colliderType2==ColliderType.SOLID_INERT_ALLY;
+                if(collision.collisions.x&&doesPreventMovement&&isCollideable){
                     canMove.x=false;
                     currentInverseFriction=Math.min(currentInverseFriction,colliderTerrain.getFriction());
                 }
-                if(collision.collisions.y&&doesPreventMovement){
+                if(collision.collisions.y&&doesPreventMovement&&isCollideable){
                     canMove.y=false;
                     currentInverseFriction=Math.min(currentInverseFriction,colliderTerrain.getFriction());
                 }
