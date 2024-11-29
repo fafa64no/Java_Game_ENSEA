@@ -14,7 +14,7 @@ public class MachineGunBullet extends BasicProjectileHandler {
                 new BufferedImage[]{DataGen.getMachineGunBulletShellTexture()},
                 700,
                 15,
-                1,
+                0.5,
                 CollisionLayers.COLLISION_LAYER_ENNEMY_PROJECTILES,
                 VfxType.VFX_PIERCING_METAL
         );

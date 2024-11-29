@@ -5,6 +5,9 @@ import main.game.characters.Target;
 import main.game.characters.vehicles.tank.Tank;
 import main.game.hud.HudManager;
 import main.game.level.Level;
+import main.game.projectiles.AerialMachineGunBullet;
+import main.game.projectiles.ArtilleryShell;
+import main.game.projectiles.MachineGunBullet;
 import main.game.projectiles.ProjectileHandler;
 import main.physics.CollisionLayers;
 import main.physics.PhysicEngine;
@@ -38,8 +41,11 @@ public class GameEngine implements KeyListener, Engine, MouseListener, MouseWhee
     private final List<RequiresUpdates> requiresUpdates = new ArrayList<>();
     private List<RequiresUpdates> requiresUpdatesToAdd = new ArrayList<>();
 
-
     private final Vec2 currentInputDir = new Vec2();
+
+    private final MachineGunBullet machineGunBullet;
+    private final ArtilleryShell artilleryShell;
+    private final AerialMachineGunBullet aerialMachineGunBullet;
 
     public GameEngine() {
         if(instance==null)instance=this;
@@ -62,6 +68,10 @@ public class GameEngine implements KeyListener, Engine, MouseListener, MouseWhee
         RenderEngine.getInstance().addKeyListener(instance);
         RenderEngine.getInstance().addMouseListener(instance);
         RenderEngine.getInstance().addMouseWheelListener(instance);
+
+        machineGunBullet = new MachineGunBullet();
+        artilleryShell = new ArtilleryShell();
+        aerialMachineGunBullet = new AerialMachineGunBullet();
 
         new HudManager();
         new VfxManager();

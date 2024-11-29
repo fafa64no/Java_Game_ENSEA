@@ -3,6 +3,7 @@ package main.game.characters.cubes.cube_variants;
 import main.game.characters.Target;
 import main.game.characters.cubes.CubeHead;
 import main.game.characters.cubes.PlaneCube;
+import main.game.projectiles.AerialMachineGunBullet;
 import main.game.projectiles.MachineGunBullet;
 import main.utils.data.Config;
 import main.utils.data.DataGen;
@@ -45,7 +46,7 @@ public class FighterCube extends PlaneCube {
                 10,
                 CubeHead.CUBE_HEAD_FIGHTER,
                 Config.largeTileSize,
-                MachineGunBullet.getInstance(),
+                AerialMachineGunBullet.getInstance(),
                 0,
                 Config.cubeAttackRange,
                 0,

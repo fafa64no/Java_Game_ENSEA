@@ -199,17 +199,22 @@ public class DataGen {
         return smallShells.getSubimage(Config.smallTileSize,0, Config.smallTileSize, Config.smallTileSize);
     }
 
+    public static BufferedImage[] artilleryShellTexture = null;
+
     public static BufferedImage[] getArtilleryShellTexture(){
         if(smallShells == null) {
             try {
                 smallShells = ImageIO.read(new File("assets/textures/projectiles/smallShells.png"));}
             catch (IOException e) {throw new RuntimeException(e);}
         }
-        BufferedImage[] artilleryShellTexture = new BufferedImage[4];
-        artilleryShellTexture[0] = smallShells.getSubimage(0,Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
-        artilleryShellTexture[1] = smallShells.getSubimage(Config.smallTileSize,Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
-        artilleryShellTexture[2] = smallShells.getSubimage(2*Config.smallTileSize,Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
-        artilleryShellTexture[3] = smallShells.getSubimage(3*Config.smallTileSize,Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
+        if(artilleryShellTexture == null){
+            artilleryShellTexture = new BufferedImage[4];
+            artilleryShellTexture[0] = smallShells.getSubimage(0,Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
+            artilleryShellTexture[1] = smallShells.getSubimage(Config.smallTileSize,Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
+            artilleryShellTexture[2] = smallShells.getSubimage(2*Config.smallTileSize,Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
+            artilleryShellTexture[3] = smallShells.getSubimage(3*Config.smallTileSize,Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
+
+        }
         return artilleryShellTexture;
     }
 
