@@ -12,7 +12,7 @@ public abstract class DecorativeFollowerCube extends BasicCube{
     protected double rotation = 0;
     protected final Vec2 rotationCenter;
 
-    protected DecorativeFollowerCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, int textureSize, Vec2 rotationCenter) {
+    protected DecorativeFollowerCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, int textureSize) {
         super(
                 position,
                 texture,
@@ -22,7 +22,7 @@ public abstract class DecorativeFollowerCube extends BasicCube{
         );
         this.parent = null;
         this.initialPosition = position;
-        this.rotationCenter = rotationCenter;
+        this.rotationCenter = new Vec2(textureSize*0.5);
     }
 
     protected DecorativeFollowerCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, double maxHealth, int textureSize) {
@@ -36,6 +36,32 @@ public abstract class DecorativeFollowerCube extends BasicCube{
         this.parent = null;
         this.initialPosition = position;
         this.rotationCenter = new Vec2(textureSize*0.5);
+    }
+
+    protected DecorativeFollowerCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, int textureSize, Vec2 rotationCenter) {
+        super(
+                position,
+                texture,
+                deadTexture,
+                100,
+                textureSize
+        );
+        this.parent = null;
+        this.initialPosition = position;
+        this.rotationCenter = rotationCenter;
+    }
+
+    protected DecorativeFollowerCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, double maxHealth, int textureSize, Vec2 rotationCenter) {
+        super(
+                position,
+                texture,
+                deadTexture,
+                maxHealth,
+                textureSize
+        );
+        this.parent = null;
+        this.initialPosition = position;
+        this.rotationCenter = rotationCenter;
     }
 
     public void updatePos(){

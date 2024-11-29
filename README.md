@@ -5,6 +5,7 @@
 This is a project made to learn OOP at ENSEA.
 
 Terrifying red cubes are everywhere, and they want to kill humanity.
+(including you)
 
 Your mission : Attrition defense.
 
