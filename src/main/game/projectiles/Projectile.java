@@ -1,7 +1,7 @@
 package main.game.projectiles;
 
 import main.physics.ColliderType;
-import main.physics.CollisionLayers;
+import main.physics.CollisionLayer;
 import main.physics.PhysicEngine;
 import main.physics.colliders.Collider;
 import main.physics.colliders.PointCollider;
@@ -24,7 +24,7 @@ public class Projectile {
 
     private final int idInProjectileHandler;
 
-    public Projectile(int remainingMilliseconds, int invisibilityFrames ,Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent, CollisionLayers collisionLayer, double modifier, int animationFrames, int animationSpeed, VfxType vfxType, ColliderType colliderType) {
+    public Projectile(int remainingMilliseconds, int invisibilityFrames , Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent, CollisionLayer collisionLayer, double modifier, int animationFrames, int animationSpeed, VfxType vfxType, ColliderType colliderType) {
         this.remainingMilliseconds = remainingMilliseconds;
         this.initialLifeSpan = remainingMilliseconds;
         this.velocity = Vec2.multiply(new Vec2(0,1).rotateBy(rotation),velocity);
@@ -37,7 +37,7 @@ public class Projectile {
                 modifier,
                 vfxType
         );
-        this.collider.setOffset();
+        this.collider.updateOffset();
         this.idInProjectileHandler = idInProjectileHandler;
         this.parent = parent;
         this.animationFrames = animationFrames;
@@ -48,7 +48,7 @@ public class Projectile {
 
     public void incrementPosition(){
         currentPosition=Vec2.add(currentPosition,velocity);
-        collider.setOffset();
+        collider.updateOffset();
     }
 
     public Vec2 getCurrentPosition() {

@@ -1,6 +1,6 @@
 package main.physics;
 
-public enum CollisionLayers {
+public enum CollisionLayer {
     COLLISION_LAYER_TERRAIN,
     COLLISION_LAYER_ALLIES,
     COLLISION_LAYER_ENNEMIES,

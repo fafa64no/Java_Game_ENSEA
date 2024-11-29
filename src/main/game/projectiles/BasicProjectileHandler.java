@@ -2,7 +2,7 @@ package main.game.projectiles;
 
 import main.game.GameEngine;
 import main.physics.ColliderType;
-import main.physics.CollisionLayers;
+import main.physics.CollisionLayer;
 import main.rendering.Displayable;
 import main.rendering.RenderEngine;
 import main.rendering.RenderingLayers;
@@ -23,7 +23,7 @@ public abstract class BasicProjectileHandler extends JPanel implements Projectil
     protected final int projectileLifeSpan;
     protected final double projectileSpeed;
     protected final double modifier;
-    protected final CollisionLayers collisionLayer;
+    protected final CollisionLayer collisionLayer;
     protected final ColliderType colliderType;
 
     protected final VfxType vfxType;
@@ -31,7 +31,7 @@ public abstract class BasicProjectileHandler extends JPanel implements Projectil
     protected final int animationSpeed;
     protected final int invisibilityFrames;
 
-    public BasicProjectileHandler(BufferedImage[] textures, int projectileLifeSpan, double projectileSpeed, double modifier, CollisionLayers collisionLayer, VfxType vfxType, ColliderType colliderType, int animationSpeed, int invisibilityFrames) {
+    public BasicProjectileHandler(BufferedImage[] textures, int projectileLifeSpan, double projectileSpeed, double modifier, CollisionLayer collisionLayer, VfxType vfxType, ColliderType colliderType, int animationSpeed, int invisibilityFrames) {
         this.textures = textures;
         this.projectileLifeSpan = projectileLifeSpan;
         this.projectileSpeed = projectileSpeed;

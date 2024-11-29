@@ -9,7 +9,7 @@ import main.utils.vectors.IVec4;
 import main.utils.vectors.Vec2;
 import main.utils.vectors.Vec4;
 
-public class TilemapCollider extends SolidCollider{
+public class TilemapCollider extends Collider{
     private final char[][] map;
     private final Vec4[][] collisionBoxMap;
     private final Level parent;
@@ -98,7 +98,7 @@ public class TilemapCollider extends SolidCollider{
     }
 
     @Override
-    public Collision doCollide(Collider c, Vec2 offset) {
+    public Collision doCollide(Collider c, Vec2 relativeVelocity) {
         System.out.println("Collider not handled by TilemapCollider");
         return null;
     }

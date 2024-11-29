@@ -1,81 +1,84 @@
 package main.physics.colliders;
 
-import main.game.DynamicSprite;
 import main.game.characters.AIdriven;
 import main.game.characters.Character;
 import main.physics.ColliderType;
 import main.physics.Collision;
+import main.physics.CollisionLayer;
 import main.rendering.vfx.Vfx;
-import main.rendering.vfx.VfxType;
 import main.utils.data.Config;
 import main.utils.data.DataGen;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;
 import main.utils.vectors.Vec4;
 
-public class BoxCollider extends SolidCollider{
-    private final Vec4 hitbox;
-    private final Vec2 size;
-    private final Vec2 centerWithoutOffset;
+public class BoxCollider extends Collider{
+    protected final Vec4 hitBox;
+    protected final Vec2 halfSizeOfHitBox;
+    protected final Vec2 centerWithoutOffset;
 
-    public BoxCollider(Vec2 cornerA, Vec2 cornerB, boolean inverted, double friction, Vec2 offset) {
-        super(inverted,friction,offset);
+    public BoxCollider(
+            Vec4 hitBox,
+            boolean inverted,
+            double friction,
+            double modifier,
+            ColliderType colliderType,
+            CollisionLayer collisionLayer,
+            Vec2 offset
+    ) {
+        super(
+                inverted,
+                friction,
+                modifier,
+                colliderType,
+                collisionLayer,
+                offset
+        );
         double x1,x2,y1,y2;
-        x1=Math.min(cornerA.x,cornerB.x);  y1=Math.min(cornerA.y,cornerB.y);
-        x2=Math.max(cornerA.x,cornerB.x);  y2=Math.max(cornerA.y,cornerB.y);
-        hitbox=new Vec4(x1,x2,y1,y2);
-        size=new Vec2(x2-x1,y2-y1);
-        centerWithoutOffset =new Vec2((x1 + x2) * 0.5,(y1 + y2) * 0.5);
+        x1=Math.min(hitBox.x,hitBox.y);  y1=Math.min(hitBox.z,hitBox.w);
+        x2=Math.max(hitBox.x,hitBox.y);  y2=Math.max(hitBox.z,hitBox.w);
+        this.hitBox=new Vec4(x1,x2,y1,y2);
+        this.halfSizeOfHitBox =new Vec2(0.5 * (x2-x1),0.5 * (y2-y1));
+        this.centerWithoutOffset =new Vec2((x1 + x2) * 0.5,(y1 + y2) * 0.5);
     }
 
-    public BoxCollider(Vec2 cornerA, Vec2 cornerB, boolean inverted, double friction, Vec2 offset, DynamicSprite parent, ColliderType colliderType) {
-        super(inverted,friction,offset,parent,colliderType);
-        double x1,x2,y1,y2;
-        x1=Math.min(cornerA.x,cornerB.x);  y1=Math.min(cornerA.y,cornerB.y);
-        x2=Math.max(cornerA.x,cornerB.x);  y2=Math.max(cornerA.y,cornerB.y);
-        hitbox=new Vec4(x1,x2,y1,y2);
-        size=new Vec2(x2-x1,y2-y1);
-        centerWithoutOffset =new Vec2((x1 + x2) /2.0,(y1 + y2) /2.0);
-    }
-
-    public BoxCollider(Vec2 cornerA, Vec2 cornerB, boolean inverted, double friction, Vec2 offset, DynamicSprite parent, ColliderType colliderType, double modifier, VfxType vfxType, int vfxCooldown) {
-        super(inverted,friction,offset,parent,colliderType,modifier,vfxType,vfxCooldown);
-        double x1,x2,y1,y2;
-        x1=Math.min(cornerA.x,cornerB.x);  y1=Math.min(cornerA.y,cornerB.y);
-        x2=Math.max(cornerA.x,cornerB.x);  y2=Math.max(cornerA.y,cornerB.y);
-        hitbox=new Vec4(x1,x2,y1,y2);
-        size=new Vec2(x2-x1,y2-y1);
-        centerWithoutOffset =new Vec2((x1 + x2) /2.0,(y1 + y2) /2.0);
-    }
-
-    public Vec4 getHitbox() {
-        return hitbox;//Vec4.add(hitbox,offset);
-    }
-
-    private Collision circleColliderHandler(CircleCollider cc, Vec2 offset){
-        return cc.doCollide(this,new Vec2(-offset.x,-offset.y));
+    public Vec4 getHitBox() {
+        return hitBox;
     }
 
     private Collision boxColliderHandler(BoxCollider bc, Vec2 offset){
-        BVec2 didCollide = new BVec2(bc.isInverted(),bc.isInverted());
+        BVec2 didCollide = new BVec2(bc.inverted,bc.inverted);
         Vec2 previousCenterDiff = Vec2.addSubstract(centerWithoutOffset,this.offset,bc.getOffset());
         Vec2 newCenterDiff = Vec2.add(previousCenterDiff,offset);
         Vec2 xPoint = new Vec2(newCenterDiff.x, previousCenterDiff.y);
         Vec2 yPoint = new Vec2(previousCenterDiff.x, newCenterDiff.y);
-        Vec4 widerHitbox = bc.getHitbox().makeItFat(Vec2.multiply(size,0.5));
-        if(bc.isInverted()){
-            if(widerHitbox.contains(xPoint)) didCollide.x=false;
-            if(widerHitbox.contains(yPoint)) didCollide.y=false;
+        Vec4 widerHitBox = bc.getHitBox().makeItFat(halfSizeOfHitBox);
+        if(bc.inverted){
+            if(widerHitBox.contains(xPoint)) didCollide.x=false;
+            if(widerHitBox.contains(yPoint)) didCollide.y=false;
         }else{
-            if(widerHitbox.contains(xPoint)) didCollide.x=true;
-            if(widerHitbox.contains(yPoint)) didCollide.y=true;
+            if(widerHitBox.contains(xPoint)) didCollide.x=true;
+            if(widerHitBox.contains(yPoint)) didCollide.y=true;
         }
         if(didCollide.isFalse())return null;
-        return new Collision(didCollide,modifier);
+        return new Collision(
+                this,
+                bc,
+                this.colliderType,
+                bc.colliderType,
+                this.collisionLayer,
+                bc.collisionLayer,
+                this.friction,
+                bc.friction,
+                this.modifier,
+                bc.modifier,
+                didCollide,
+                new Vec2()
+        );
     }
 
-    private Collision tilemapCollisionHandler(TilemapCollider tc, Vec2 offset){
-        BVec2 didCollide = new BVec2(tc.isInverted(),tc.isInverted());
+    private Collision tileMapCollisionHandler(TilemapCollider tc, Vec2 offset){
+        BVec2 didCollide = new BVec2(tc.inverted,tc.inverted);
         Vec2 previousCenterDiff = Vec2.add(centerWithoutOffset,tc.getOffset(),this.offset);
         Vec2 newCenterDiff = Vec2.add(previousCenterDiff,offset);
         Vec2 xPoint = new Vec2(newCenterDiff.x, previousCenterDiff.y);
@@ -83,30 +86,43 @@ public class BoxCollider extends SolidCollider{
         Vec4[] collisionBoxes = tc.getCollisionBoxes(this.offset);
         for (Vec4 collisionBox : collisionBoxes){
             if(collisionBox==null)continue;
-            Vec4 widerHitbox = collisionBox.makeItFat(Vec2.multiply(size,0.5));
-            if(tc.isInverted()){
-                if(widerHitbox.contains(xPoint)) didCollide.x=false;
-                if(widerHitbox.contains(yPoint)) didCollide.y=false;
+            Vec4 widerHitBox = collisionBox.makeItFat(halfSizeOfHitBox);
+            if(tc.inverted){
+                if(widerHitBox.contains(xPoint)) didCollide.x=false;
+                if(widerHitBox.contains(yPoint)) didCollide.y=false;
             }else{
-                if(widerHitbox.contains(xPoint)) didCollide.x=true;
-                if(widerHitbox.contains(yPoint)) didCollide.y=true;
+                if(widerHitBox.contains(xPoint)) didCollide.x=true;
+                if(widerHitBox.contains(yPoint)) didCollide.y=true;
             }
         }
         if(didCollide.isFalse())return null;
-        return new Collision(didCollide,modifier);
+        return new Collision(
+                this,
+                tc,
+                this.colliderType,
+                tc.colliderType,
+                this.collisionLayer,
+                tc.collisionLayer,
+                this.friction,
+                tc.friction,
+                this.modifier,
+                tc.modifier,
+                didCollide,
+                new Vec2()
+        );
     }
 
     private Collision pointColliderHandler(PointCollider pc, Vec2 offset){
-        return pc.doCollide(this,new Vec2(-offset.x,-offset.y));
+        return Collision.getReverseCollision(pc.doCollide(this,offset));
     }
 
     @Override
-    public Collision doCollide(Collider c, Vec2 offset) {
+    public Collision doCollide(Collider c, Vec2 relativeVelocity) {
         return switch (c) {
-            case BoxCollider bc -> boxColliderHandler(bc, offset);
-            case CircleCollider cc -> circleColliderHandler(cc, offset);
-            case TilemapCollider tc -> tilemapCollisionHandler(tc, offset);
-            case PointCollider pc -> pointColliderHandler(pc, offset);
+            case BoxCollider bc -> boxColliderHandler(bc, relativeVelocity);
+            case CircleCollider cc -> circleColliderHandler(cc, relativeVelocity);
+            case TilemapCollider tc -> tileMapCollisionHandler(tc, relativeVelocity);
+            case PointCollider pc -> pointColliderHandler(pc, relativeVelocity);
             default -> {
                 System.out.println("Collider type not handled by BoxCollider");
                 yield null;

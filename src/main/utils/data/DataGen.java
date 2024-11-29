@@ -3,6 +3,9 @@ package main.utils.data;
 import main.game.level.Level;
 import main.game.characters.vehicles.tank.Tank;
 import main.rendering.Camera;
+import main.utils.containers.SizedTexture;
+import main.utils.containers.SizedTextureArray;
+import main.utils.containers.SizedTextureMatrix;
 import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 
@@ -13,7 +16,7 @@ import java.io.IOException;
 
 public class DataGen {
 
-/*      ################ - Levels and Tanks - ################      */
+/*      ################ - Levels, Tanks and Cameras - ################      */
 
     public static Level[] genLevels(){
         Level[] levels=new Level[1];
@@ -81,664 +84,6 @@ public class DataGen {
         return tanks;
     }
 
-/*      ################ - Textures - ################      */
-
-    private static BufferedImage smallTiles = null;
-    private static BufferedImage largeTiles = null;
-    private static BufferedImage smallShells = null;
-    private static BufferedImage bars = null;
-
-    public static BufferedImage[][] getGrassTextures(){
-        if(smallTiles == null) {
-            try {
-                smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        BufferedImage[][] grassTextures = new BufferedImage[Config.grassColorsNb][Config.grassVariantsNb];
-        for (int i = 0; i< Config.grassColorsNb; i++){
-            for (int j = 0; j< Config.grassVariantsNb; j++){
-                grassTextures[i][j]= smallTiles.getSubimage((i* Config.grassVariantsNb+j)* Config.smallTileSize,0, Config.smallTileSize, Config.smallTileSize);
-            }
-        }
-        return grassTextures;
-    }
-
-    public static BufferedImage[][] getStoneTextures(){
-        if(smallTiles == null) {
-            try {
-                smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        BufferedImage[][] stoneTextures = new BufferedImage[Config.stoneColorsNb][Config.stoneVariantsNb];
-        for (int i = 0; i< Config.stoneColorsNb; i++){
-            for (int j = 0; j< Config.stoneVariantsNb; j++){
-                stoneTextures[i][j]= smallTiles.getSubimage((i* Config.stoneVariantsNb+j)* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
-            }
-        }
-        return stoneTextures;
-    }
-
-    public static BufferedImage[][] getTreeTextures(){
-        if(smallTiles == null) {
-            try {
-                smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        BufferedImage[][] treeTextures = new BufferedImage[Config.treeColorsNb][Config.treeVariantsNb];
-        for (int i = 0; i< Config.treeColorsNb; i++){
-            for (int j = 0; j< Config.treeVariantsNb; j++){
-                treeTextures[i][j]= smallTiles.getSubimage((i* Config.treeVariantsNb+j)* Config.smallTileSize,2* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
-            }
-        }
-        return treeTextures;
-    }
-
-    public static BufferedImage[][] getPathTextures(){
-        if(smallTiles == null) {
-            try {
-                smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        BufferedImage[][] pathTextures = new BufferedImage[Config.pathColorsNb][Config.pathVariantsNb];
-        for (int i = 0; i< Config.pathColorsNb; i++){
-            for (int j = 0; j< Config.pathVariantsNb; j++){
-                pathTextures[i][j]= smallTiles.getSubimage((i* Config.pathVariantsNb+j)* Config.smallTileSize,3* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
-            }
-        }
-        return pathTextures;
-    }
-
-    public static BufferedImage getTrapTexture(){
-        if(smallTiles == null) {
-            try {
-                smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        return smallTiles.getSubimage(Config.smallTileSize,4* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
-    }
-
-    public static BufferedImage getBarrierTexture(){
-        if(smallTiles == null) {
-            try {
-                smallTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        return smallTiles.getSubimage(0,4* Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
-    }
-
-    public static BufferedImage[][] getLeavesTextures(){
-        if(largeTiles == null) {
-            try {
-                largeTiles = ImageIO.read(new File("assets/textures/level/largeTiles.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        BufferedImage[][] leavesTextures = new BufferedImage[Config.leavesColorsNb][Config.leavesVariantsNb];
-        for (int i = 0; i< Config.leavesColorsNb; i++){
-            for (int j = 0; j< Config.leavesVariantsNb; j++){
-                leavesTextures[i][j]= largeTiles.getSubimage((i* Config.leavesVariantsNb+j)* Config.largeTileSize,0, Config.largeTileSize, Config.largeTileSize);
-            }
-        }
-        return leavesTextures;
-    }
-
-    public static BufferedImage getTankShellTexture(){
-        if(smallShells == null) {
-            try {
-                smallShells = ImageIO.read(new File("assets/textures/projectiles/smallShells.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        return smallShells.getSubimage(0,0, Config.smallTileSize, Config.smallTileSize);
-    }
-
-    public static BufferedImage getMachineGunBulletShellTexture(){
-        if(smallShells == null) {
-            try {
-                smallShells = ImageIO.read(new File("assets/textures/projectiles/smallShells.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        return smallShells.getSubimage(Config.smallTileSize,0, Config.smallTileSize, Config.smallTileSize);
-    }
-
-    public static BufferedImage[] artilleryShellTexture = null;
-
-    public static BufferedImage[] getArtilleryShellTexture(){
-        if(smallShells == null) {
-            try {
-                smallShells = ImageIO.read(new File("assets/textures/projectiles/smallShells.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if(artilleryShellTexture == null){
-            artilleryShellTexture = new BufferedImage[4];
-            artilleryShellTexture[0] = smallShells.getSubimage(0,Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
-            artilleryShellTexture[1] = smallShells.getSubimage(Config.smallTileSize,Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
-            artilleryShellTexture[2] = smallShells.getSubimage(2*Config.smallTileSize,Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
-            artilleryShellTexture[3] = smallShells.getSubimage(3*Config.smallTileSize,Config.smallTileSize, Config.smallTileSize, Config.smallTileSize);
-
-        }
-        return artilleryShellTexture;
-    }
-
-    public static BufferedImage getBlueBarTexture(){
-        if(bars == null) {
-            try {
-                bars = ImageIO.read(new File("assets/textures/hud/bars.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        return bars.getSubimage(0, 0, Config.largeTileSize, Config.largeTileSize);
-    }
-
-    public static BufferedImage getYellowBarTexture(){
-        if(bars == null) {
-            try {
-                bars = ImageIO.read(new File("assets/textures/hud/bars.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        return bars.getSubimage(0, Config.largeTileSize, Config.largeTileSize, Config.largeTileSize);
-    }
-
-    public static BufferedImage getRedBarTexture(){
-        if(bars == null) {
-            try {
-                bars = ImageIO.read(new File("assets/textures/hud/bars.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        return bars.getSubimage(0, 2*Config.largeTileSize, Config.largeTileSize, Config.largeTileSize);
-    }
-
-    public static BufferedImage getWhiteBarTexture(){
-        if(bars == null) {
-            try {
-                bars = ImageIO.read(new File("assets/textures/hud/bars.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        return bars.getSubimage(0, 3*Config.largeTileSize, Config.largeTileSize, Config.largeTileSize);
-    }
-
-/*      ################ - VFX - ################      */
-
-    private static BufferedImage smallVfxTiles = null;
-    private static BufferedImage largeVfxTiles = null;
-    private static BufferedImage[] piercingTextures = null;
-    private static BufferedImage[] electricTextures = null;
-    private static BufferedImage[] explosionTextures = null;
-
-    public static BufferedImage[] getPiercingTextures(){
-        if(smallVfxTiles == null) {
-            try {
-                smallVfxTiles = ImageIO.read(new File("assets/textures/vfx/smallVFX.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if(piercingTextures == null){
-            piercingTextures = new BufferedImage[4];
-            piercingTextures[0] = smallVfxTiles.getSubimage(0, 0, Config.smallTileSize, Config.smallTileSize);
-            piercingTextures[1] = smallVfxTiles.getSubimage(Config.smallTileSize, 0, Config.smallTileSize, Config.smallTileSize);
-            piercingTextures[2] = smallVfxTiles.getSubimage(2*Config.smallTileSize, 0, Config.smallTileSize, Config.smallTileSize);
-            piercingTextures[3] = smallVfxTiles.getSubimage(3*Config.smallTileSize, 0, Config.smallTileSize, Config.smallTileSize);
-        }
-        return piercingTextures;
-    }
-
-    public static BufferedImage[] getElectricTextures(){
-        if(largeVfxTiles == null) {
-            try {
-                largeVfxTiles = ImageIO.read(new File("assets/textures/vfx/largeVFX.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if(electricTextures == null){
-            electricTextures = new BufferedImage[4];
-            electricTextures[0] = largeVfxTiles.getSubimage(0, 0, Config.largeTileSize, Config.largeTileSize);
-            electricTextures[1] = largeVfxTiles.getSubimage(Config.largeTileSize, 0, Config.largeTileSize, Config.largeTileSize);
-            electricTextures[2] = largeVfxTiles.getSubimage(2*Config.largeTileSize, 0, Config.largeTileSize, Config.largeTileSize);
-            electricTextures[3] = largeVfxTiles.getSubimage(3*Config.largeTileSize, 0, Config.largeTileSize, Config.largeTileSize);
-        }
-        return electricTextures;
-    }
-
-    public static BufferedImage[] getExplosionTextures(){
-        if(largeVfxTiles == null) {
-            try {
-                largeVfxTiles = ImageIO.read(new File("assets/textures/vfx/largeVFX.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if(explosionTextures == null){
-            explosionTextures = new BufferedImage[4];
-            explosionTextures[0] = largeVfxTiles.getSubimage(0, Config.largeTileSize, Config.largeTileSize, Config.largeTileSize);
-            explosionTextures[1] = largeVfxTiles.getSubimage(Config.largeTileSize, Config.largeTileSize, Config.largeTileSize, Config.largeTileSize);
-            explosionTextures[2] = largeVfxTiles.getSubimage(2*Config.largeTileSize, Config.largeTileSize, Config.largeTileSize, Config.largeTileSize);
-            explosionTextures[3] = largeVfxTiles.getSubimage(3*Config.largeTileSize, Config.largeTileSize, Config.largeTileSize, Config.largeTileSize);
-        }
-        return explosionTextures;
-    }
-
-/*      ################ - Cubes - ################      */
-
-    private static BufferedImage mediumCubes = null;
-    private static BufferedImage largeCubes = null;
-
-    private static BufferedImage basicCubeTexture = null;
-    private static BufferedImage basicCubeDeadTexture = null;
-    private static BufferedImage rangedCubeTexture = null;
-    private static BufferedImage rangedCubeDeadTexture = null;
-    private static BufferedImage[] rangedCubeDeploymentTextures = null;
-    private static BufferedImage[] rangedCubeRetractionTextures = null;
-    private static BufferedImage[] rangedCubeAttackTextures = null;
-    private static BufferedImage movingCubeTexture = null;
-    private static BufferedImage movingCubeDeadTexture = null;
-    private static BufferedImage[] movingCubeDeploymentTextures = null;
-    private static BufferedImage[] movingCubeRetractionTextures = null;
-    private static BufferedImage[] movingCubeAttackTextures = null;
-    private static BufferedImage beaconCubeTexture = null;
-    private static BufferedImage beaconCubeDeadTexture = null;
-    private static BufferedImage[] beaconCubeDeploymentTextures = null;
-    private static BufferedImage[] beaconCubeRetractionTextures = null;
-    private static BufferedImage[] beaconCubeAttackTextures = null;
-    private static BufferedImage fighterCubeTexture = null;
-    private static BufferedImage fighterCubeDeadTexture = null;
-    private static BufferedImage[] fighterCubeDeploymentTextures = null;
-    private static BufferedImage[] fighterCubeRetractionTextures = null;
-    private static BufferedImage[] fighterCubeAttackTextures = null;
-
-    private static BufferedImage artilleryCubeTexture = null;
-    private static BufferedImage artilleryCubeDeadTexture = null;
-    private static BufferedImage[] artilleryCubeDeploymentTextures = null;
-    private static BufferedImage[] artilleryCubeRetractionTextures = null;
-    private static BufferedImage[] artilleryCubeAttackTextures = null;
-
-    public static BufferedImage getBasicCubeTexture(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (basicCubeTexture == null)basicCubeTexture=mediumCubes.getSubimage(0,0,Config.largeTileSize,Config.largeTileSize);
-        return basicCubeTexture;
-    }
-
-    public static BufferedImage getBasicCubeDeadTexture(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (basicCubeDeadTexture == null)basicCubeDeadTexture = mediumCubes.getSubimage(Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
-        return basicCubeDeadTexture;
-    }
-
-    public static BufferedImage getRangedCubeTexture(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (rangedCubeTexture == null) rangedCubeTexture =mediumCubes.getSubimage(0,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-        return rangedCubeTexture;
-    }
-
-    public static BufferedImage getRangedCubeDeadTexture(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (rangedCubeDeadTexture == null) rangedCubeDeadTexture = mediumCubes.getSubimage(7*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-        return rangedCubeDeadTexture;
-    }
-
-    public static BufferedImage[] getRangedCubeDeploymentTextures(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (rangedCubeDeploymentTextures == null){
-            rangedCubeDeploymentTextures=new BufferedImage[6];
-            rangedCubeDeploymentTextures[0]=mediumCubes.getSubimage(0,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeDeploymentTextures[1]=mediumCubes.getSubimage(Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeDeploymentTextures[2]=mediumCubes.getSubimage(2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeDeploymentTextures[3]=mediumCubes.getSubimage(3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeDeploymentTextures[4]=mediumCubes.getSubimage(4*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeDeploymentTextures[5]=mediumCubes.getSubimage(5*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-        }
-        return rangedCubeDeploymentTextures;
-    }
-
-    public static BufferedImage[] getRangedCubeRetractionTextures(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (rangedCubeRetractionTextures == null){
-            rangedCubeRetractionTextures=new BufferedImage[6];
-            rangedCubeRetractionTextures[5]=mediumCubes.getSubimage(0,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeRetractionTextures[4]=mediumCubes.getSubimage(Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeRetractionTextures[3]=mediumCubes.getSubimage(2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeRetractionTextures[2]=mediumCubes.getSubimage(3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeRetractionTextures[1]=mediumCubes.getSubimage(4*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeRetractionTextures[0]=mediumCubes.getSubimage(5*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-        }
-        return rangedCubeRetractionTextures;
-    }
-
-    public static BufferedImage[] getRangedCubeAttackTextures(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (rangedCubeAttackTextures == null){
-            rangedCubeAttackTextures=new BufferedImage[6];
-            rangedCubeAttackTextures[0]=mediumCubes.getSubimage(6*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeAttackTextures[1]=mediumCubes.getSubimage(5*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeAttackTextures[2]=mediumCubes.getSubimage(6*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeAttackTextures[3]=mediumCubes.getSubimage(5*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeAttackTextures[4]=mediumCubes.getSubimage(6*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            rangedCubeAttackTextures[5]=mediumCubes.getSubimage(5*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-        }
-        return rangedCubeAttackTextures;
-    }
-
-    public static BufferedImage getMovingCubeTexture(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (movingCubeTexture == null) movingCubeTexture =mediumCubes.getSubimage(0,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-        return movingCubeTexture;
-    }
-
-    public static BufferedImage getMovingCubeDeadTexture(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (movingCubeDeadTexture == null) movingCubeDeadTexture = mediumCubes.getSubimage(7*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-        return movingCubeDeadTexture;
-    }
-
-    public static BufferedImage[] getMovingCubeDeploymentTextures(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (movingCubeDeploymentTextures == null){
-            movingCubeDeploymentTextures=new BufferedImage[6];
-            movingCubeDeploymentTextures[0]=mediumCubes.getSubimage(0,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            movingCubeDeploymentTextures[1]=mediumCubes.getSubimage(Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            movingCubeDeploymentTextures[2]=mediumCubes.getSubimage(2*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            movingCubeDeploymentTextures[3]=mediumCubes.getSubimage(3*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            movingCubeDeploymentTextures[4]=mediumCubes.getSubimage(4*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            movingCubeDeploymentTextures[5]=mediumCubes.getSubimage(5*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-        }
-        return movingCubeDeploymentTextures;
-    }
-
-    public static BufferedImage[] getMovingCubeRetractionTextures(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (movingCubeRetractionTextures == null){
-            movingCubeRetractionTextures=new BufferedImage[6];
-            movingCubeRetractionTextures[5]=mediumCubes.getSubimage(0,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            movingCubeRetractionTextures[4]=mediumCubes.getSubimage(Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            movingCubeRetractionTextures[3]=mediumCubes.getSubimage(2*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            movingCubeRetractionTextures[2]=mediumCubes.getSubimage(3*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            movingCubeRetractionTextures[1]=mediumCubes.getSubimage(4*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            movingCubeRetractionTextures[0]=mediumCubes.getSubimage(5*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-        }
-        return movingCubeRetractionTextures;
-    }
-
-    public static BufferedImage[] getMovingCubeAttackTextures(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (movingCubeAttackTextures == null){
-            movingCubeAttackTextures=new BufferedImage[6];
-            movingCubeAttackTextures[0]=mediumCubes.getSubimage(6*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            movingCubeAttackTextures[1]=mediumCubes.getSubimage(5*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            movingCubeAttackTextures[2]=mediumCubes.getSubimage(6*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            movingCubeAttackTextures[3]=mediumCubes.getSubimage(5*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            movingCubeAttackTextures[4]=mediumCubes.getSubimage(6*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            movingCubeAttackTextures[5]=mediumCubes.getSubimage(5*Config.largeTileSize,2*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-        }
-        return movingCubeAttackTextures;
-    }
-
-    public static BufferedImage getArtilleryCubeTexture(){
-        if(largeCubes == null) {
-            try {
-                largeCubes = ImageIO.read(new File("assets/textures/characters/cubes/largeCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (artilleryCubeTexture == null){
-            artilleryCubeTexture=largeCubes.getSubimage(0, 0,Config.veryLargeTileSize,Config.veryLargeTileSize);
-        }
-        return artilleryCubeTexture;
-    }
-    public static BufferedImage getArtilleryCubeDeadTexture(){
-        if(largeCubes == null) {
-            try {
-                largeCubes = ImageIO.read(new File("assets/textures/characters/cubes/largeCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (artilleryCubeDeadTexture == null){
-            artilleryCubeDeadTexture=largeCubes.getSubimage(3*Config.veryLargeTileSize,3*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-        }
-        return artilleryCubeDeadTexture;
-    }
-
-    public static BufferedImage[] getArtilleryCubeDeploymentTextures(){
-        if(largeCubes == null) {
-            try {
-                largeCubes = ImageIO.read(new File("assets/textures/characters/cubes/largeCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (artilleryCubeDeploymentTextures == null){
-            artilleryCubeDeploymentTextures=new BufferedImage[8];
-            artilleryCubeDeploymentTextures[0]=largeCubes.getSubimage(1*Config.veryLargeTileSize,0*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeDeploymentTextures[1]=largeCubes.getSubimage(2*Config.veryLargeTileSize,0*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeDeploymentTextures[2]=largeCubes.getSubimage(3*Config.veryLargeTileSize,0*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeDeploymentTextures[3]=largeCubes.getSubimage(0*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeDeploymentTextures[4]=largeCubes.getSubimage(1*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeDeploymentTextures[5]=largeCubes.getSubimage(2*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeDeploymentTextures[6]=largeCubes.getSubimage(3*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeDeploymentTextures[7]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-        }
-        return artilleryCubeDeploymentTextures;
-    }
-
-    public static BufferedImage[] getArtilleryCubeRetractionTextures(){
-        if(largeCubes == null) {
-            try {
-                largeCubes = ImageIO.read(new File("assets/textures/characters/cubes/largeCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (artilleryCubeRetractionTextures == null){
-            artilleryCubeRetractionTextures=new BufferedImage[8];
-            artilleryCubeRetractionTextures[7]=largeCubes.getSubimage(1*Config.veryLargeTileSize,0*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeRetractionTextures[6]=largeCubes.getSubimage(2*Config.veryLargeTileSize,0*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeRetractionTextures[5]=largeCubes.getSubimage(3*Config.veryLargeTileSize,0*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeRetractionTextures[4]=largeCubes.getSubimage(0*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeRetractionTextures[3]=largeCubes.getSubimage(1*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeRetractionTextures[2]=largeCubes.getSubimage(2*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeRetractionTextures[1]=largeCubes.getSubimage(3*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeRetractionTextures[0]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-        }
-        return artilleryCubeRetractionTextures;
-    }
-
-    public static BufferedImage[] getArtilleryCubeAttackTextures(){
-        if(largeCubes == null) {
-            try {
-                largeCubes = ImageIO.read(new File("assets/textures/characters/cubes/largeCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (artilleryCubeAttackTextures == null){
-            artilleryCubeAttackTextures=new BufferedImage[8];
-            artilleryCubeAttackTextures[0]=largeCubes.getSubimage(2*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeAttackTextures[1]=largeCubes.getSubimage(3*Config.veryLargeTileSize,1*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeAttackTextures[2]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeAttackTextures[3]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeAttackTextures[4]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeAttackTextures[5]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeAttackTextures[6]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-            artilleryCubeAttackTextures[7]=largeCubes.getSubimage(0*Config.veryLargeTileSize,2*Config.veryLargeTileSize,Config.veryLargeTileSize,Config.veryLargeTileSize);
-        }
-        return artilleryCubeAttackTextures;
-    }
-
-    public static BufferedImage getBeaconCubeTexture(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (beaconCubeTexture == null) beaconCubeTexture =mediumCubes.getSubimage(2*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
-        return beaconCubeTexture;
-    }
-
-    public static BufferedImage getBeaconCubeDeadTexture(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (beaconCubeDeadTexture == null) beaconCubeDeadTexture = mediumCubes.getSubimage(7*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
-        return beaconCubeDeadTexture;
-    }
-
-    public static BufferedImage[] getBeaconCubeDeploymentTextures(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (beaconCubeDeploymentTextures == null){
-            beaconCubeDeploymentTextures=new BufferedImage[4];
-            beaconCubeDeploymentTextures[0]=mediumCubes.getSubimage(3*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
-            beaconCubeDeploymentTextures[1]=mediumCubes.getSubimage(4*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
-            beaconCubeDeploymentTextures[2]=mediumCubes.getSubimage(5*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
-            beaconCubeDeploymentTextures[3]=mediumCubes.getSubimage(6*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
-        }
-        return beaconCubeDeploymentTextures;
-    }
-
-    public static BufferedImage[] getBeaconCubeRetractionTextures(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (beaconCubeRetractionTextures == null){
-            beaconCubeRetractionTextures=new BufferedImage[4];
-            beaconCubeRetractionTextures[3]=mediumCubes.getSubimage(3*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
-            beaconCubeRetractionTextures[2]=mediumCubes.getSubimage(4*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
-            beaconCubeRetractionTextures[1]=mediumCubes.getSubimage(5*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
-            beaconCubeRetractionTextures[0]=mediumCubes.getSubimage(6*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
-        }
-        return beaconCubeRetractionTextures;
-    }
-
-    public static BufferedImage[] getBeaconCubeAttackTextures(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (beaconCubeAttackTextures == null){
-            beaconCubeAttackTextures=new BufferedImage[4];
-            beaconCubeAttackTextures[0]=mediumCubes.getSubimage(6*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
-            beaconCubeAttackTextures[1]=mediumCubes.getSubimage(5*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
-            beaconCubeAttackTextures[2]=mediumCubes.getSubimage(5*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
-            beaconCubeAttackTextures[3]=mediumCubes.getSubimage(6*Config.largeTileSize,0,Config.largeTileSize,Config.largeTileSize);
-        }
-        return beaconCubeAttackTextures;
-    }
-
-    public static BufferedImage getFighterCubeTexture(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (fighterCubeTexture == null) fighterCubeTexture =mediumCubes.getSubimage(0,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-        return fighterCubeTexture;
-    }
-
-    public static BufferedImage getFighterCubeDeadTexture(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (fighterCubeDeadTexture == null) fighterCubeDeadTexture = mediumCubes.getSubimage(7*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-        return fighterCubeDeadTexture;
-    }
-
-    public static BufferedImage[] getFighterCubeDeploymentTextures(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (fighterCubeDeploymentTextures == null){
-            fighterCubeDeploymentTextures=new BufferedImage[6];
-            fighterCubeDeploymentTextures[0]=mediumCubes.getSubimage(0,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            fighterCubeDeploymentTextures[1]=mediumCubes.getSubimage(Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            fighterCubeDeploymentTextures[2]=mediumCubes.getSubimage(2*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            fighterCubeDeploymentTextures[3]=mediumCubes.getSubimage(3*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            fighterCubeDeploymentTextures[4]=mediumCubes.getSubimage(4*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            fighterCubeDeploymentTextures[5]=mediumCubes.getSubimage(5*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-        }
-        return fighterCubeDeploymentTextures;
-    }
-
-    public static BufferedImage[] getFighterCubeRetractionTextures(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (fighterCubeRetractionTextures == null){
-            fighterCubeRetractionTextures=new BufferedImage[6];
-            fighterCubeRetractionTextures[5]=mediumCubes.getSubimage(0,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            fighterCubeRetractionTextures[4]=mediumCubes.getSubimage(Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            fighterCubeRetractionTextures[3]=mediumCubes.getSubimage(2*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            fighterCubeRetractionTextures[2]=mediumCubes.getSubimage(3*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            fighterCubeRetractionTextures[1]=mediumCubes.getSubimage(4*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            fighterCubeRetractionTextures[0]=mediumCubes.getSubimage(5*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-        }
-        return fighterCubeRetractionTextures;
-    }
-
-    public static BufferedImage[] getFighterCubeAttackTextures(){
-        if(mediumCubes == null) {
-            try {
-                mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));}
-            catch (IOException e) {throw new RuntimeException(e);}
-        }
-        if (fighterCubeAttackTextures == null){
-            fighterCubeAttackTextures=new BufferedImage[6];
-            fighterCubeAttackTextures[0]=mediumCubes.getSubimage(6*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            fighterCubeAttackTextures[1]=mediumCubes.getSubimage(5*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            fighterCubeAttackTextures[2]=mediumCubes.getSubimage(6*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            fighterCubeAttackTextures[3]=mediumCubes.getSubimage(5*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            fighterCubeAttackTextures[4]=mediumCubes.getSubimage(6*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-            fighterCubeAttackTextures[5]=mediumCubes.getSubimage(5*Config.largeTileSize,3*Config.largeTileSize,Config.largeTileSize,Config.largeTileSize);
-        }
-        return fighterCubeAttackTextures;
-    }
-
-    /*      ################ - Cameras - ################      */
-
     public static Camera[] genCameras(){
         Camera[] output=new Camera[5];
         output[0]=new Camera(
@@ -772,5 +117,595 @@ public class DataGen {
                         3)
         );
         return output;
+    }
+
+/*      ################ - TileSheets - ################      */
+
+    private static boolean needsToGenerateTileMaps = true;
+
+    private static BufferedImage smallTerrainTiles;
+    private static BufferedImage largeTerrainTiles;
+    private static BufferedImage smallShells;
+    private static BufferedImage largeHudTiles;
+    private static BufferedImage smallVfxTiles;
+    private static BufferedImage largeVfxTiles;
+    private static BufferedImage mediumCubes;
+    private static BufferedImage largeCubes;
+
+    private static void checkTileSheets() {
+        if(needsToGenerateTileMaps) {
+            generateTileSheets();
+            needsToGenerateTileMaps = false;
+        }
+    }
+
+    private static void generateTileSheets() {
+        try {
+            smallTerrainTiles = ImageIO.read(new File("assets/textures/level/smallTiles.png"));
+            largeTerrainTiles = ImageIO.read(new File("assets/textures/level/largeTiles.png"));
+            smallShells = ImageIO.read(new File("assets/textures/projectiles/smallShells.png"));
+            largeHudTiles = ImageIO.read(new File("assets/textures/hud/largeTiles.png"));
+            smallVfxTiles = ImageIO.read(new File("assets/textures/vfx/smallVFX.png"));
+            largeVfxTiles = ImageIO.read(new File("assets/textures/vfx/largeVFX.png"));
+            mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));
+            largeCubes = ImageIO.read(new File("assets/textures/characters/cubes/largeCubes.png"));
+        } catch (IOException e) {throw new RuntimeException(e);}
+    }
+
+/*      ################ - SizedTextures - ################      */
+
+    private static boolean needsToGenerateSizedTextures = true;
+
+    private static SizedTexture blueBarTexture;
+    private static SizedTexture yellowBarTexture;
+    private static SizedTexture redBarTexture;
+    private static SizedTexture whiteBarTexture;
+
+    private static SizedTexture cubeSpawnTexture;
+    private static SizedTexture borderTexture;
+
+    private static SizedTexture tankShellTexture;
+    private static SizedTexture machineGunBulletTexture;
+
+    private static SizedTexture basicCubeTexture;
+    private static SizedTexture basicCubeDeadTexture;
+    private static SizedTexture machineGunCubeTexture;
+    private static SizedTexture machineGunCubeDeadTexture;
+    private static SizedTexture machineGunWheelsCubeTexture;
+    private static SizedTexture machineGunWheelsCubeDeadTexture;
+    private static SizedTexture beaconCubeTexture;
+    private static SizedTexture beaconCubeDeadTexture;
+    private static SizedTexture fighterCubeTexture;
+    private static SizedTexture fighterCubeDeadTexture;
+    private static SizedTexture artilleryCubeTexture;
+    private static SizedTexture artilleryCubeDeadTexture;
+
+    private static SizedTextureArray piercingMetalVfxTextures;
+    private static SizedTextureArray electricVfxTextures;
+    private static SizedTextureArray explosionVfxTextures;
+
+    private static SizedTextureArray artilleryShellTextures;
+
+    private static SizedTextureArray machineGunCubeDeploymentTextures;
+    private static SizedTextureArray machineGunCubeRetractionTextures;
+    private static SizedTextureArray machineGunCubeAttackTextures;
+    private static SizedTextureArray machineGunWheelsCubeDeploymentTextures;
+    private static SizedTextureArray machineGunWheelsCubeRetractionTextures;
+    private static SizedTextureArray machineGunWheelsCubeAttackTextures;
+    private static SizedTextureArray beaconCubeDeploymentTextures;
+    private static SizedTextureArray beaconCubeRetractionTextures;
+    private static SizedTextureArray beaconCubeAttackTextures;
+    private static SizedTextureArray fighterCubeDeploymentTextures;
+    private static SizedTextureArray fighterCubeRetractionTextures;
+    private static SizedTextureArray fighterCubeAttackTextures;
+    private static SizedTextureArray artilleryCubeDeploymentTextures;
+    private static SizedTextureArray artilleryCubeRetractionTextures;
+    private static SizedTextureArray artilleryCubeAttackTextures;
+
+    private static SizedTextureMatrix grassTextures;
+    private static SizedTextureMatrix stoneTextures;
+    private static SizedTextureMatrix treeTextures;
+    private static SizedTextureMatrix pathTextures;
+    private static SizedTextureMatrix leavesTextures;
+
+    private static void checkSizedTextures() {
+        if(needsToGenerateSizedTextures) {
+            generateAllSizedTextures();
+            needsToGenerateSizedTextures = false;
+        }
+    }
+
+    private static void generateAllSizedTextures() {
+        checkTileSheets();
+
+        generateSizedTextures();
+        generateSizedTextureArrays();
+        generateSizedTextureMatrices();
+    }
+
+    private static void generateSizedTextures() {
+        blueBarTexture = new SizedTexture(
+                TextureConfig.largeTileSize,
+                largeHudTiles,
+                TextureMapping.blueBarTexturePosition
+        );
+        yellowBarTexture = new SizedTexture(
+                TextureConfig.largeTileSize,
+                largeHudTiles,
+                TextureMapping.yellowBarTexturePosition
+        );
+        redBarTexture = new SizedTexture(
+                TextureConfig.largeTileSize,
+                largeHudTiles,
+                TextureMapping.redBarTexturePosition
+        );
+        whiteBarTexture = new SizedTexture(
+                TextureConfig.largeTileSize,
+                largeHudTiles,
+                TextureMapping.whiteBarTexturePosition
+        );
+
+        cubeSpawnTexture = new SizedTexture(
+                TextureConfig.smallTileSize,
+                smallTerrainTiles,
+                TextureMapping.cubeSpawnTexturePosition
+        );
+        borderTexture = new SizedTexture(
+                TextureConfig.smallTileSize,
+                smallTerrainTiles,
+                TextureMapping.borderTexturePosition
+        );
+
+        tankShellTexture = new SizedTexture(
+                TextureConfig.smallTileSize,
+                smallShells,
+                TextureMapping.tankShellTexturePosition
+        );
+        machineGunBulletTexture = new SizedTexture(
+                TextureConfig.smallTileSize,
+                smallShells,
+                TextureMapping.machineGunBulletTexturePosition
+        );
+
+        basicCubeTexture = new SizedTexture(
+                TextureConfig.largeTileSize,
+                mediumCubes,
+                TextureMapping.basicCubeTexturePosition
+        );
+        basicCubeDeadTexture = new SizedTexture(
+                TextureConfig.largeTileSize,
+                mediumCubes,
+                TextureMapping.basicCubeDeadTexturePosition
+        );
+
+        machineGunCubeTexture = new SizedTexture(
+                TextureConfig.largeTileSize,
+                mediumCubes,
+                TextureMapping.machineGunCubeTexturePosition
+        );
+        machineGunCubeDeadTexture = new SizedTexture(
+                TextureConfig.largeTileSize,
+                mediumCubes,
+                TextureMapping.machineGunCubeDeadTexturePosition
+        );
+
+        machineGunWheelsCubeTexture = new SizedTexture(
+                TextureConfig.largeTileSize,
+                mediumCubes,
+                TextureMapping.machineGunWheelsCubeTexturePosition
+        );
+        machineGunWheelsCubeDeadTexture = new SizedTexture(
+                TextureConfig.largeTileSize,
+                mediumCubes,
+                TextureMapping.machineGunWheelsCubeDeadTexturePosition
+        );
+
+        beaconCubeTexture = new SizedTexture(
+                TextureConfig.largeTileSize,
+                mediumCubes,
+                TextureMapping.beaconCubeTexturePosition
+        );
+        beaconCubeDeadTexture = new SizedTexture(
+                TextureConfig.largeTileSize,
+                mediumCubes,
+                TextureMapping.beaconCubeDeadTexturePosition
+        );
+
+        fighterCubeTexture = new SizedTexture(
+                TextureConfig.largeTileSize,
+                mediumCubes,
+                TextureMapping.fighterCubeTexturePosition
+        );
+        fighterCubeDeadTexture = new SizedTexture(
+                TextureConfig.largeTileSize,
+                largeCubes,
+                TextureMapping.fighterCubeDeadTexturePosition
+        );
+
+        artilleryCubeTexture = new SizedTexture(
+                TextureConfig.veryLargeTileSize,
+                largeCubes,
+                TextureMapping.artilleryCubeTexturePosition
+        );
+        artilleryCubeDeadTexture = new SizedTexture(
+                TextureConfig.veryLargeTileSize,
+                largeCubes,
+                TextureMapping.artilleryCubeDeadTexturePosition
+        );
+
+    }
+
+    private static void generateSizedTextureArrays() {
+        piercingMetalVfxTextures = new SizedTextureArray(
+                TextureConfig.smallTileSize,
+                TextureConfig.piercingMetalVfxFrames,
+                smallVfxTiles,
+                TextureMapping.piercingMetalVfxTexturePositions
+        );
+        electricVfxTextures = new SizedTextureArray(
+                TextureConfig.largeTileSize,
+                TextureConfig.electricVfxFrames,
+                largeVfxTiles,
+                TextureMapping.electricVfxTexturePositions
+        );
+        explosionVfxTextures = new SizedTextureArray(
+                TextureConfig.largeTileSize,
+                TextureConfig.explosionVfxFrames,
+                largeVfxTiles,
+                TextureMapping.explosionVfxTexturePositions
+        );
+
+        artilleryShellTextures = new SizedTextureArray(
+                TextureConfig.smallTileSize,
+                TextureConfig.artilleryShellFrames,
+                smallShells,
+                TextureMapping.artilleryShellTexturePositions
+        );
+
+        machineGunCubeDeploymentTextures = new SizedTextureArray(
+                TextureConfig.largeTileSize,
+                TextureConfig.machineGunCubeDeployingFrames,
+                mediumCubes,
+                TextureMapping.machineGunCubeDeploymentTexturePositions
+        );
+        machineGunCubeRetractionTextures = new SizedTextureArray(
+                TextureConfig.largeTileSize,
+                TextureConfig.machineGunCubeRetractingFrames,
+                mediumCubes,
+                TextureMapping.machineGunCubeRetractionTexturePositions
+        );
+        machineGunCubeAttackTextures = new SizedTextureArray(
+                TextureConfig.largeTileSize,
+                TextureConfig.machineGunCubeAttackingFrames,
+                mediumCubes,
+                TextureMapping.machineGunCubeAttackTexturePositions
+        );
+        machineGunWheelsCubeDeploymentTextures = new SizedTextureArray(
+                TextureConfig.largeTileSize,
+                TextureConfig.machineGunWheelsCubeDeployingFrames,
+                mediumCubes,
+                TextureMapping.machineGunWheelsCubeDeploymentTexturePositions
+        );
+        machineGunWheelsCubeRetractionTextures = new SizedTextureArray(
+                TextureConfig.largeTileSize,
+                TextureConfig.machineGunWheelsCubeRetractingFrames,
+                mediumCubes,
+                TextureMapping.machineGunWheelsCubeRetractionTexturePositions
+        );
+        machineGunWheelsCubeAttackTextures = new SizedTextureArray(
+                TextureConfig.largeTileSize,
+                TextureConfig.machineGunWheelsCubeAttackingFrames,
+                mediumCubes,
+                TextureMapping.machineGunWheelsCubeAttackTexturePositions
+        );
+        beaconCubeDeploymentTextures = new SizedTextureArray(
+                TextureConfig.largeTileSize,
+                TextureConfig.beaconCubeDeployingFrames,
+                mediumCubes,
+                TextureMapping.beaconCubeDeploymentTexturePositions
+        );
+        beaconCubeRetractionTextures = new SizedTextureArray(
+                TextureConfig.largeTileSize,
+                TextureConfig.beaconCubeRetractingFrames,
+                mediumCubes,
+                TextureMapping.beaconCubeRetractionTexturePositions
+        );
+        beaconCubeAttackTextures = new SizedTextureArray(
+                TextureConfig.largeTileSize,
+                TextureConfig.beaconCubeAttackingFrames,
+                mediumCubes,
+                TextureMapping.beaconCubeAttackTexturePositions
+        );
+        fighterCubeDeploymentTextures = new SizedTextureArray(
+                TextureConfig.largeTileSize,
+                TextureConfig.fighterCubeDeployingFrames,
+                mediumCubes,
+                TextureMapping.fighterCubeDeploymentTexturePositions
+        );
+        fighterCubeRetractionTextures = new SizedTextureArray(
+                TextureConfig.largeTileSize,
+                TextureConfig.fighterCubeRetractingFrames,
+                mediumCubes,
+                TextureMapping.fighterCubeRetractionTexturePositions
+        );
+        fighterCubeAttackTextures = new SizedTextureArray(
+                TextureConfig.largeTileSize,
+                TextureConfig.fighterCubeAttackingFrames,
+                mediumCubes,
+                TextureMapping.fighterCubeAttackTexturePositions
+        );
+        artilleryCubeDeploymentTextures = new SizedTextureArray(
+                TextureConfig.veryLargeTileSize,
+                TextureConfig.artilleryCubeDeployingFrames,
+                largeCubes,
+                TextureMapping.artilleryCubeDeploymentTexturePositions
+        );
+        artilleryCubeRetractionTextures = new SizedTextureArray(
+                TextureConfig.veryLargeTileSize,
+                TextureConfig.artilleryCubeRetractingFrames,
+                largeCubes,
+                TextureMapping.artilleryCubeRetractionTexturePositions
+        );
+        artilleryCubeAttackTextures = new SizedTextureArray(
+                TextureConfig.veryLargeTileSize,
+                TextureConfig.artilleryCubeAttackingFrames,
+                largeCubes,
+                TextureMapping.artilleryCubeAttackTexturePositions
+        );
+    }
+
+    private static void generateSizedTextureMatrices() {
+        grassTextures = new SizedTextureMatrix(
+                TextureConfig.smallTileSize,
+                new IVec2(TextureConfig.grassColorsNb, TextureConfig.grassVariantsNb),
+                smallTerrainTiles,
+                TextureMapping.grassTexturePositions
+        );
+        stoneTextures = new SizedTextureMatrix(
+                TextureConfig.smallTileSize,
+                new IVec2(TextureConfig.stoneColorsNb, TextureConfig.stoneVariantsNb),
+                smallTerrainTiles,
+                TextureMapping.stoneTexturePositions
+        );
+        treeTextures = new SizedTextureMatrix(
+                TextureConfig.smallTileSize,
+                new IVec2(TextureConfig.treeColorsNb, TextureConfig.treeVariantsNb),
+                smallTerrainTiles,
+                TextureMapping.treeTexturePositions
+        );
+        pathTextures = new SizedTextureMatrix(
+                TextureConfig.smallTileSize,
+                new IVec2(TextureConfig.pathColorsNb, TextureConfig.pathVariantsNb),
+                smallTerrainTiles,
+                TextureMapping.pathTexturesPositions
+        );
+        leavesTextures = new SizedTextureMatrix(
+                TextureConfig.largeTileSize,
+                new IVec2(TextureConfig.leavesColorsNb, TextureConfig.leavesVariantsNb),
+                largeTerrainTiles,
+                TextureMapping.leavesTexturePositions
+        );
+    }
+
+/*      ################ - Getters - ################      */
+
+    public static SizedTexture getBlueBarTexture() {
+        checkSizedTextures();
+        return blueBarTexture;
+    }
+
+    public static SizedTexture getYellowBarTexture() {
+        checkSizedTextures();
+        return yellowBarTexture;
+    }
+
+    public static SizedTexture getRedBarTexture() {
+        checkSizedTextures();
+        return redBarTexture;
+    }
+
+    public static SizedTexture getWhiteBarTexture() {
+        checkSizedTextures();
+        return whiteBarTexture;
+    }
+
+    public static SizedTexture getCubeSpawnTexture() {
+        checkSizedTextures();
+        return cubeSpawnTexture;
+    }
+
+    public static SizedTexture getBorderTexture() {
+        checkSizedTextures();
+        return borderTexture;
+    }
+
+    public static SizedTexture getTankShellTexture() {
+        checkSizedTextures();
+        return tankShellTexture;
+    }
+
+    public static SizedTexture getMachineGunBulletTexture() {
+        checkSizedTextures();
+        return machineGunBulletTexture;
+    }
+
+    public static SizedTextureArray getArtilleryShellTextures() {
+        checkSizedTextures();
+        return artilleryShellTextures;
+    }
+
+    public static SizedTextureArray getPiercingMetalVfxTextures() {
+        checkSizedTextures();
+        return piercingMetalVfxTextures;
+    }
+
+    public static SizedTextureArray getElectricVfxTextures() {
+        checkSizedTextures();
+        return electricVfxTextures;
+    }
+
+    public static SizedTextureArray getExplosionVfxTextures() {
+        checkSizedTextures();
+        return explosionVfxTextures;
+    }
+
+    public static SizedTexture getBasicCubeTexture() {
+        checkSizedTextures();
+        return basicCubeTexture;
+    }
+
+    public static SizedTexture getBasicCubeDeadTexture() {
+        checkSizedTextures();
+        return basicCubeDeadTexture;
+    }
+
+    public static SizedTexture getMachineGunCubeTexture() {
+        checkSizedTextures();
+        return machineGunCubeTexture;
+    }
+
+    public static SizedTexture getMachineGunCubeDeadTexture() {
+        checkSizedTextures();
+        return machineGunCubeDeadTexture;
+    }
+
+    public static SizedTexture getMachineGunWheelsCubeTexture() {
+        checkSizedTextures();
+        return machineGunWheelsCubeTexture;
+    }
+
+    public static SizedTexture getMachineGunWheelsCubeDeadTexture() {
+        checkSizedTextures();
+        return machineGunWheelsCubeDeadTexture;
+    }
+
+    public static SizedTexture getBeaconCubeTexture() {
+        checkSizedTextures();
+        return beaconCubeTexture;
+    }
+
+    public static SizedTexture getBeaconCubeDeadTexture() {
+        checkSizedTextures();
+        return beaconCubeDeadTexture;
+    }
+
+    public static SizedTexture getFighterCubeTexture() {
+        checkSizedTextures();
+        return fighterCubeTexture;
+    }
+
+    public static SizedTexture getFighterCubeDeadTexture() {
+        checkSizedTextures();
+        return fighterCubeDeadTexture;
+    }
+
+    public static SizedTexture getArtilleryCubeTexture() {
+        checkSizedTextures();
+        return artilleryCubeTexture;
+    }
+
+    public static SizedTexture getArtilleryCubeDeadTexture() {
+        checkSizedTextures();
+        return artilleryCubeDeadTexture;
+    }
+
+    public static SizedTextureArray getMachineGunCubeDeploymentTextures() {
+        checkSizedTextures();
+        return machineGunCubeDeploymentTextures;
+    }
+
+    public static SizedTextureArray getMachineGunCubeRetractionTextures() {
+        checkSizedTextures();
+        return machineGunCubeRetractionTextures;
+    }
+
+    public static SizedTextureArray getMachineGunCubeAttackTextures() {
+        checkSizedTextures();
+        return machineGunCubeAttackTextures;
+    }
+
+    public static SizedTextureArray getMachineGunWheelsCubeDeploymentTextures() {
+        checkSizedTextures();
+        return machineGunWheelsCubeDeploymentTextures;
+    }
+
+    public static SizedTextureArray getMachineGunWheelsCubeRetractionTextures() {
+        checkSizedTextures();
+        return machineGunWheelsCubeRetractionTextures;
+    }
+
+    public static SizedTextureArray getMachineGunWheelsCubeAttackTextures() {
+        checkSizedTextures();
+        return machineGunWheelsCubeAttackTextures;
+    }
+
+    public static SizedTextureArray getBeaconCubeDeploymentTextures() {
+        checkSizedTextures();
+        return beaconCubeDeploymentTextures;
+    }
+
+    public static SizedTextureArray getBeaconCubeRetractionTextures() {
+        checkSizedTextures();
+        return beaconCubeRetractionTextures;
+    }
+
+    public static SizedTextureArray getBeaconCubeAttackTextures() {
+        checkSizedTextures();
+        return beaconCubeAttackTextures;
+    }
+
+    public static SizedTextureArray getFighterCubeDeploymentTextures() {
+        checkSizedTextures();
+        return fighterCubeDeploymentTextures;
+    }
+
+    public static SizedTextureArray getFighterCubeRetractionTextures() {
+        checkSizedTextures();
+        return fighterCubeRetractionTextures;
+    }
+
+    public static SizedTextureArray getFighterCubeAttackTextures() {
+        checkSizedTextures();
+        return fighterCubeAttackTextures;
+    }
+
+    public static SizedTextureArray getArtilleryCubeDeploymentTextures() {
+        checkSizedTextures();
+        return artilleryCubeDeploymentTextures;
+    }
+
+    public static SizedTextureArray getArtilleryCubeRetractionTextures() {
+        checkSizedTextures();
+        return artilleryCubeRetractionTextures;
+    }
+
+    public static SizedTextureArray getArtilleryCubeAttackTextures() {
+        checkSizedTextures();
+        return artilleryCubeAttackTextures;
+    }
+
+    public static SizedTextureMatrix getGrassTextures() {
+        checkSizedTextures();
+        return grassTextures;
+    }
+
+    public static SizedTextureMatrix getStoneTextures() {
+        checkSizedTextures();
+        return stoneTextures;
+    }
+
+    public static SizedTextureMatrix getTreeTextures() {
+        checkSizedTextures();
+        return treeTextures;
+    }
+
+    public static SizedTextureMatrix getPathTextures() {
+        checkSizedTextures();
+        return pathTextures;
+    }
+
+    public static SizedTextureMatrix getLeavesTextures() {
+        checkSizedTextures();
+        return leavesTextures;
     }
 }

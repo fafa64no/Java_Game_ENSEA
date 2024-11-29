@@ -3,7 +3,7 @@ package main.game.characters.cubes;
 import main.game.characters.LifeStates;
 import main.game.projectiles.ProjectileHandler;
 import main.physics.ColliderType;
-import main.physics.CollisionLayers;
+import main.physics.CollisionLayer;
 import main.physics.PhysicEngine;
 import main.physics.colliders.BoxCollider;
 import main.rendering.vfx.VfxType;
@@ -72,12 +72,12 @@ public abstract class PlaneCube extends MovingCube{
                 15
         );
 
-        PhysicEngine.addCollider(collider, CollisionLayers.COLLISION_LAYER_ENNEMIES);
-        PhysicEngine.addCollider(damageZone, CollisionLayers.COLLISION_LAYER_ENNEMIES);
-        PhysicEngine.addCollider(detectionZone, CollisionLayers.COLLISION_LAYER_ENNEMIES);
-        collider.setOffset();
-        damageZone.setOffset();
-        detectionZone.setOffset();
+        PhysicEngine.addCollider(collider, CollisionLayer.COLLISION_LAYER_ENNEMIES);
+        PhysicEngine.addCollider(damageZone, CollisionLayer.COLLISION_LAYER_ENNEMIES);
+        PhysicEngine.addCollider(detectionZone, CollisionLayer.COLLISION_LAYER_ENNEMIES);
+        collider.updateOffset();
+        damageZone.updateOffset();
+        detectionZone.updateOffset();
     }
 
     @Override
@@ -96,9 +96,9 @@ public abstract class PlaneCube extends MovingCube{
 
         setInput(new Vec2(0,-movementSpeed));
 
-        collider.setOffset();
-        damageZone.setOffset();
-        detectionZone.setOffset();
+        collider.updateOffset();
+        damageZone.updateOffset();
+        detectionZone.updateOffset();
     }
 
     @Override

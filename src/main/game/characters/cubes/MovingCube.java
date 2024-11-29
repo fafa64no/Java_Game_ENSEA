@@ -49,9 +49,9 @@ public abstract class MovingCube extends RangedCube{
 
         setInput(new Vec2(0,-movementSpeed));
 
-        collider.setOffset();
-        damageZone.setOffset();
-        detectionZone.setOffset();
+        collider.updateOffset();
+        damageZone.updateOffset();
+        detectionZone.updateOffset();
     }
 
     @Override
@@ -66,7 +66,7 @@ public abstract class MovingCube extends RangedCube{
     public void goToNextPosition(BVec2 canMove, double friction){
         if(canMove.x)   position.x=position.x-currentVelocity.y*Math.sin(rotation);
         if(canMove.y)   position.y=position.y+currentVelocity.y*Math.cos(rotation);
-        if(collider!=null)collider.setOffset();
+        if(collider!=null)collider.updateOffset();
     }
 
     @Override

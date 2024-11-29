@@ -7,7 +7,6 @@ import main.physics.ColliderType;
 import main.physics.PhysicEngine;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
-import main.physics.colliders.SolidCollider;
 import main.rendering.RenderEngine;
 import main.rendering.vfx.Vfx;
 import main.utils.data.Config;
@@ -76,7 +75,7 @@ public class Tank extends Vehicle {
     public void goToNextPosition(BVec2 canMove, double friction){
         if(canMove.x)   position.x=position.x-currentVelocity.y*Math.sin(rotation);
         if(canMove.y)   position.y=position.y+currentVelocity.y*Math.cos(rotation);
-        collider.setOffset();
+        collider.updateOffset();
     }
 
     @Override

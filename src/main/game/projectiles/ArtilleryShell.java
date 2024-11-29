@@ -1,7 +1,7 @@
 package main.game.projectiles;
 
 import main.physics.ColliderType;
-import main.physics.CollisionLayers;
+import main.physics.CollisionLayer;
 import main.rendering.vfx.VfxType;
 import main.utils.data.DataGen;
 
@@ -14,7 +14,7 @@ public class ArtilleryShell extends BasicProjectileHandler {
                 4000,
                 5,
                 500,
-                CollisionLayers.COLLISION_LAYER_ENNEMY_PROJECTILES,
+                CollisionLayer.COLLISION_LAYER_ENNEMY_PROJECTILES,
                 VfxType.VFX_PIERCING_METAL,
                 ColliderType.AERIAL_DAMAGE_DEALER,
                 10,

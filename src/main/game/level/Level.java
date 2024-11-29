@@ -2,7 +2,7 @@ package main.game.level;
 
 import main.game.characters.cubes.cube_variants.*;
 import main.game.characters.cubes.BasicCube;
-import main.physics.CollisionLayers;
+import main.physics.CollisionLayer;
 import main.physics.PhysicEngine;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
@@ -222,7 +222,7 @@ public class Level extends JPanel implements Displayable {
 
     public void loadLevel(){
         for (Collider collider : this.colliders)
-            PhysicEngine.addCollider(collider, CollisionLayers.COLLISION_LAYER_TERRAIN);
+            PhysicEngine.addCollider(collider, CollisionLayer.COLLISION_LAYER_TERRAIN);
         RenderEngine.addToRenderList(this, RenderingLayers.RENDERING_LAYER_TERRAIN);
         RenderEngine.addToRenderList(this.cubeRenderer, RenderingLayers.RENDERING_LAYER_TANK);
         RenderEngine.addToRenderList(this.flyingCubeRenderer, RenderingLayers.RENDERING_LAYER_LEAVES);

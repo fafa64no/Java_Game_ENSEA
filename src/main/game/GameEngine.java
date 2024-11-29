@@ -8,13 +8,10 @@ import main.game.level.Level;
 import main.game.projectiles.AerialMachineGunBullet;
 import main.game.projectiles.ArtilleryShell;
 import main.game.projectiles.MachineGunBullet;
-import main.game.projectiles.ProjectileHandler;
-import main.physics.CollisionLayers;
+import main.physics.CollisionLayer;
 import main.physics.PhysicEngine;
-import main.physics.colliders.Collider;
 import main.rendering.RenderEngine;
 import main.rendering.RenderingLayers;
-import main.rendering.vfx.Vfx;
 import main.rendering.vfx.VfxManager;
 import main.utils.RequiresUpdates;
 import main.utils.data.Config;
@@ -61,7 +58,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener, MouseWhee
         for(Tank tank : tanks){
             RenderEngine.addToRenderList(tank,RenderingLayers.RENDERING_LAYER_TANK);
             RenderEngine.addToRenderList(tank.getTurret(),RenderingLayers.RENDERING_LAYER_TURRET);
-            PhysicEngine.addCollider(tank.getCollider(),CollisionLayers.COLLISION_LAYER_ALLIES);
+            PhysicEngine.addCollider(tank.getCollider(), CollisionLayer.COLLISION_LAYER_ALLIES);
         }
 
         RenderEngine.setupCameras(tanks);

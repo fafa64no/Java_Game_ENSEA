@@ -6,7 +6,7 @@ import main.game.characters.LifeStates;
 import main.game.characters.Target;
 import main.game.projectiles.ProjectileHandler;
 import main.physics.ColliderType;
-import main.physics.CollisionLayers;
+import main.physics.CollisionLayer;
 import main.physics.PhysicEngine;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
@@ -75,8 +75,8 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
                 this,
                 ColliderType.NONE_TRIGGER
         );
-        PhysicEngine.addCollider(detectionZone, CollisionLayers.COLLISION_LAYER_ENNEMIES);
-        detectionZone.setOffset();
+        PhysicEngine.addCollider(detectionZone, CollisionLayer.COLLISION_LAYER_ENNEMIES);
+        detectionZone.updateOffset();
     }
 
     protected void seekClosestTarget(){

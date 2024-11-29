@@ -12,16 +12,7 @@ import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;
 import main.utils.vectors.Vec4;
 
-public class PointCollider implements Collider{
-    protected final boolean inverted;
-    protected final double friction;
-    protected Vec2 offset;
-    protected final Vec2 initialOffset;
-    protected final Projectile parent;
-    protected final ColliderType colliderType;
-    protected final double modifier;
-
-    protected final VfxType vfxType;
+public class PointCollider extends Collider{
 
     public PointCollider(Vec2 offset, ColliderType colliderType, Projectile parent, double modifier, VfxType vfxType) {
         this.inverted=false;
@@ -74,10 +65,10 @@ public class PointCollider implements Collider{
     }
 
     @Override
-    public Collision doCollide(Collider c, Vec2 offset) {
+    public Collision doCollide(Collider c, Vec2 relativeVelocity) {
         return switch (c) {
-            case BoxCollider bc -> boxColliderHandler(bc, offset);
-            case TilemapCollider tc -> tilemapCollisionHandler(tc, offset);
+            case BoxCollider bc -> boxColliderHandler(bc, relativeVelocity);
+            case TilemapCollider tc -> tilemapCollisionHandler(tc, relativeVelocity);
             default -> {
                 System.out.println("Collider type not handled by PointCollider");
                 yield null;
@@ -136,7 +127,7 @@ public class PointCollider implements Collider{
     }
 
     @Override
-    public void setOffset() {
+    public void updateOffset() {
         if(parent==null)return;
         this.offset=Vec2.add(initialOffset,parent.getCurrentPosition());
     }

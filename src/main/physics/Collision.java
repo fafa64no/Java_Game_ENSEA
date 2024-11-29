@@ -1,25 +1,50 @@
 package main.physics;
 
+import main.physics.colliders.Collider;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;
 
-public class Collision {
-    public final BVec2 collisions;
-    public final double angle;
-    public final Vec2 normal;
-    public final double modifier;
+public record Collision(
+    Collider colliderSource,
+    Collider colliderTarget,
 
-    public Collision(BVec2 collisions){
-        this.collisions = collisions;
-        this.angle=0;
-        this.normal=new Vec2();
-        this.modifier=0;
-    }
+    ColliderType colliderTypeSource,
+    ColliderType colliderTypeTarget,
 
-    public Collision(BVec2 collisions, double modifier){
-        this.collisions = collisions;
-        this.angle=0;
-        this.normal=new Vec2();
-        this.modifier=modifier;
+    CollisionLayer collisionLayerSource,
+    CollisionLayer collisionLayerTarget,
+
+    double colliderSourceFriction,
+    double colliderTargetFriction,
+
+    double colliderSourceModifier,
+    double colliderTargetModifier,
+
+    BVec2 didCollide,
+    Vec2 normal
+) {
+    public static Collision getReverseCollision(Collision collision) {
+        return new Collision(
+            collision.colliderTarget,
+            collision.colliderSource,
+
+            collision.colliderTypeTarget,
+            collision.colliderTypeSource,
+
+            collision.collisionLayerTarget,
+            collision.collisionLayerSource,
+
+            collision.colliderTargetFriction,
+            collision.colliderSourceFriction,
+
+            collision.colliderTargetModifier,
+            collision.colliderSourceModifier,
+
+            collision.didCollide,
+            new Vec2(
+                    -collision.normal.x,
+                    -collision.normal.y
+            )
+        );
     }
 }

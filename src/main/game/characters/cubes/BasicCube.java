@@ -2,7 +2,7 @@ package main.game.characters.cubes;
 
 import main.game.characters.Character;
 import main.physics.ColliderType;
-import main.physics.CollisionLayers;
+import main.physics.CollisionLayer;
 import main.physics.PhysicEngine;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
@@ -68,10 +68,10 @@ public class BasicCube extends Character implements RedCube {
                 VfxType.VFX_ELECTRICITY,
                 15
         );
-        PhysicEngine.addCollider(collider, CollisionLayers.COLLISION_LAYER_ENNEMIES);
-        PhysicEngine.addCollider(damageZone, CollisionLayers.COLLISION_LAYER_ENNEMIES);
-        collider.setOffset();
-        damageZone.setOffset();
+        PhysicEngine.addCollider(collider, CollisionLayer.COLLISION_LAYER_ENNEMIES);
+        PhysicEngine.addCollider(damageZone, CollisionLayer.COLLISION_LAYER_ENNEMIES);
+        collider.updateOffset();
+        damageZone.updateOffset();
     }
 
     @Override
