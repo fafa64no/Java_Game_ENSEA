@@ -16,7 +16,7 @@ public class MachineGunBullet extends BasicProjectileHandler {
                 700,
                 15,
                 0.5,
-                CollisionLayer.COLLISION_LAYER_ENNEMY_PROJECTILES,
+                CollisionLayer.COLLISION_LAYER_ENEMY_PROJECTILES,
                 VfxType.VFX_PIERCING_METAL,
                 ColliderType.NONE_DAMAGE_DEALER,
                 0,

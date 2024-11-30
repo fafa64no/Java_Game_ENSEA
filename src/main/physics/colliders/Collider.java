@@ -1,10 +1,13 @@
 package main.physics.colliders;
 
+import main.game.effects.Effect;
 import main.physics.ColliderType;
 import main.physics.Collision;
 import main.physics.CollisionLayer;
+import main.physics.dynamic_objects.DynamicPoint;
 import main.rendering.vfx.Vfx;
 import main.rendering.vfx.VfxType;
+import main.utils.data.CollisionConfig;
 import main.utils.data.DataGen;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;
@@ -28,13 +31,16 @@ public abstract class Collider {
     protected BVec2 blockedAlongAxis = new BVec2();
     protected double encounteredInverseFriction = 1;
 
+    protected final DynamicPoint parent;
+
     public Collider(
             boolean inverted,
             double friction,
             double modifier,
             ColliderType colliderType,
             CollisionLayer collisionLayer,
-            Vec2 initialOffset
+            Vec2 initialOffset,
+            DynamicPoint parent
     ) {
         this.inverted = inverted;
         this.friction = friction;
@@ -48,6 +54,8 @@ public abstract class Collider {
         this.vfxType = VfxType.VFX_NONE;
         this.vfxCooldown = 0;
         this.vfxDuration = 1;
+
+        this.parent = parent;
     }
 
     public Collider(
@@ -59,7 +67,8 @@ public abstract class Collider {
             Vec2 initialOffset,
             VfxType vfxType,
             int vfxCooldown,
-            int vfxDuration
+            int vfxDuration,
+            DynamicPoint parent
     ) {
         this.inverted = inverted;
         this.friction = friction;
@@ -73,16 +82,31 @@ public abstract class Collider {
         this.vfxType = vfxType;
         this.vfxCooldown = vfxCooldown;
         this.vfxDuration = vfxDuration;
+
+        this.parent = parent;
     }
 
-    public void resetCollisions() {
+    public void updateCollider() {
+        if(remainingVfxDelay>0)remainingVfxDelay--;
+        resetCollisions();
+        updateOffset();
+    }
+
+    protected void resetCollisions() {
         blockedAlongAxis = new BVec2();
         encounteredInverseFriction = 1;
     }
 
     public void onCollide(Collision collision) {
-        updateVfx(collision);
-        updatePhysics(collision);
+        if(CollisionConfig.doesCollisionApplyVfx(collision)) {
+            updateVfx(collision);
+        }
+        if(CollisionConfig.doesCollisionApplyPhysics(collision)) {
+            updatePhysics(collision);
+        }
+        if(CollisionConfig.doesCollisionApplyEffects(collision)) {
+            updateEffects(collision);
+        }
     }
 
     protected void updateVfx(Collision collision) {
@@ -108,7 +132,7 @@ public abstract class Collider {
         }
     }
 
-    protected void updatePhysics(Collision collision){
+    protected void updatePhysics(Collision collision) {
         if(collision.didCollide().x) {
             blockedAlongAxis.x = true;
             encounteredInverseFriction = Math.min(encounteredInverseFriction, collision.colliderTargetFriction());
@@ -119,10 +143,58 @@ public abstract class Collider {
         }
     }
 
-    public abstract Collision doCollide(Collider c, Vec2 relativeVelocity);
+    protected void updateEffects(Collision collision) {
+        if(parent != null) {
+            switch (collision.colliderTypeTarget()){
+                case SOLID_DAMAGE_DEALER,
+                     SOLID_THICK_DAMAGE_DEALER,
+                     AERIAL_DAMAGE_DEALER,
+                     AERIAL_THICK_DAMAGE_DEALER,
+                     POINT_DAMAGE_DEALER
+                        -> parent.applyEffect(Effect.DAMAGE, collision.colliderTargetModifier());
+            }
+        }
+    }
 
-    public abstract void updateOffset();
+    protected void updateOffset() {
+        if(parent != null) {
+            offset = Vec2.add(initialOffset, parent.getPosition());
+        }
+    }
 
-    public abstract Vec2 getOffset();
-    public abstract Vec2 getVelocity();
+    public Vec2 getOffset() {
+        return offset;
+    }
+
+    public Vec2 getVelocity() {
+        if(parent != null) {
+            return parent.getCurrentVelocity();
+        } else {
+            return new Vec2();
+        }
+    }
+
+    public BVec2 isBlockedAlongAxis() {
+        return blockedAlongAxis;
+    }
+
+    public double getEncounteredInverseFriction() {
+        return encounteredInverseFriction;
+    }
+
+    public Collision doCollide(Collider c, Vec2 relativeVelocity) {
+        return switch (c) {
+            case BoxCollider bc -> boxColliderHandler(bc, relativeVelocity);
+            case TileMapCollider tc -> tileMapColliderHandler(tc, relativeVelocity);
+            case PointCollider pc -> pointColliderHandler(pc, relativeVelocity);
+            default -> {
+                System.out.println("Collider type not handled.");
+                yield null;
+            }
+        };
+    }
+
+    protected abstract Collision boxColliderHandler(BoxCollider bc, Vec2 relativeVelocity);
+    protected abstract Collision tileMapColliderHandler(TileMapCollider tc, Vec2 relativeVelocity);
+    protected abstract Collision pointColliderHandler(PointCollider pc, Vec2 relativeVelocity);
 }

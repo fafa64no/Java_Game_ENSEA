@@ -1,13 +1,10 @@
 package main.physics.colliders;
 
-import main.game.characters.AIdriven;
-import main.game.characters.Character;
 import main.physics.ColliderType;
 import main.physics.Collision;
 import main.physics.CollisionLayer;
-import main.rendering.vfx.Vfx;
-import main.utils.data.Config;
-import main.utils.data.DataGen;
+import main.physics.dynamic_objects.DynamicPoint;
+import main.rendering.vfx.VfxType;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;
 import main.utils.vectors.Vec4;
@@ -24,7 +21,8 @@ public class BoxCollider extends Collider{
             double modifier,
             ColliderType colliderType,
             CollisionLayer collisionLayer,
-            Vec2 offset
+            Vec2 offset,
+            DynamicPoint parent
     ) {
         super(
                 inverted,
@@ -32,7 +30,8 @@ public class BoxCollider extends Collider{
                 modifier,
                 colliderType,
                 collisionLayer,
-                offset
+                offset,
+                parent
         );
         double x1,x2,y1,y2;
         x1=Math.min(hitBox.x,hitBox.y);  y1=Math.min(hitBox.z,hitBox.w);
@@ -42,14 +41,44 @@ public class BoxCollider extends Collider{
         this.centerWithoutOffset =new Vec2((x1 + x2) * 0.5,(y1 + y2) * 0.5);
     }
 
-    public Vec4 getHitBox() {
-        return hitBox;
+    public BoxCollider(
+            Vec4 hitBox,
+            boolean inverted,
+            double friction,
+            double modifier,
+            ColliderType colliderType,
+            CollisionLayer collisionLayer,
+            Vec2 offset,
+            VfxType vfxType,
+            int vfxCooldown,
+            int vfxDuration,
+            DynamicPoint parent
+    ) {
+        super(
+                inverted,
+                friction,
+                modifier,
+                colliderType,
+                collisionLayer,
+                offset,
+                vfxType,
+                vfxCooldown,
+                vfxDuration,
+                parent
+        );
+        double x1,x2,y1,y2;
+        x1=Math.min(hitBox.x,hitBox.y);  y1=Math.min(hitBox.z,hitBox.w);
+        x2=Math.max(hitBox.x,hitBox.y);  y2=Math.max(hitBox.z,hitBox.w);
+        this.hitBox=new Vec4(x1,x2,y1,y2);
+        this.halfSizeOfHitBox =new Vec2(0.5 * (x2-x1),0.5 * (y2-y1));
+        this.centerWithoutOffset =new Vec2((x1 + x2) * 0.5,(y1 + y2) * 0.5);
     }
 
-    private Collision boxColliderHandler(BoxCollider bc, Vec2 offset){
+    @Override
+    protected Collision boxColliderHandler(BoxCollider bc, Vec2 relativeVelocity){
         BVec2 didCollide = new BVec2(bc.inverted,bc.inverted);
         Vec2 previousCenterDiff = Vec2.addSubstract(centerWithoutOffset,this.offset,bc.getOffset());
-        Vec2 newCenterDiff = Vec2.add(previousCenterDiff,offset);
+        Vec2 newCenterDiff = Vec2.add(previousCenterDiff,relativeVelocity);
         Vec2 xPoint = new Vec2(newCenterDiff.x, previousCenterDiff.y);
         Vec2 yPoint = new Vec2(previousCenterDiff.x, newCenterDiff.y);
         Vec4 widerHitBox = bc.getHitBox().makeItFat(halfSizeOfHitBox);
@@ -77,10 +106,11 @@ public class BoxCollider extends Collider{
         );
     }
 
-    private Collision tileMapCollisionHandler(TilemapCollider tc, Vec2 offset){
+    @Override
+    protected Collision tileMapColliderHandler(TileMapCollider tc, Vec2 relativeVelocity){
         BVec2 didCollide = new BVec2(tc.inverted,tc.inverted);
         Vec2 previousCenterDiff = Vec2.add(centerWithoutOffset,tc.getOffset(),this.offset);
-        Vec2 newCenterDiff = Vec2.add(previousCenterDiff,offset);
+        Vec2 newCenterDiff = Vec2.add(previousCenterDiff,relativeVelocity);
         Vec2 xPoint = new Vec2(newCenterDiff.x, previousCenterDiff.y);
         Vec2 yPoint = new Vec2(previousCenterDiff.x, newCenterDiff.y);
         Vec4[] collisionBoxes = tc.getCollisionBoxes(this.offset);
@@ -112,66 +142,16 @@ public class BoxCollider extends Collider{
         );
     }
 
-    private Collision pointColliderHandler(PointCollider pc, Vec2 offset){
-        return Collision.getReverseCollision(pc.doCollide(this,offset));
+    @Override
+    protected Collision pointColliderHandler(PointCollider pc, Vec2 relativeVelocity){
+        return Collision.getReverseCollision(pc.doCollide(this,relativeVelocity));
     }
 
-    @Override
-    public Collision doCollide(Collider c, Vec2 relativeVelocity) {
-        return switch (c) {
-            case BoxCollider bc -> boxColliderHandler(bc, relativeVelocity);
-            case CircleCollider cc -> circleColliderHandler(cc, relativeVelocity);
-            case TilemapCollider tc -> tileMapCollisionHandler(tc, relativeVelocity);
-            case PointCollider pc -> pointColliderHandler(pc, relativeVelocity);
-            default -> {
-                System.out.println("Collider type not handled by BoxCollider");
-                yield null;
-            }
-        };
-
+    public Vec4 getHitBox() {
+        return hitBox;
     }
 
     public Vec2 getCenterWithoutOffset() {
         return centerWithoutOffset;
-    }
-
-    @Override
-    public void onCollide(ColliderType colliderType, Collision collision) {
-        switch (colliderType){
-            case SOLID_DAMAGE_DEALER:
-            case NONE_DAMAGE_DEALER:
-            case AERIAL_DAMAGE_DEALER:
-                if(parent==null)break;
-                if((
-                        this.colliderType==ColliderType.SOLID_INERT||
-                        this.colliderType==ColliderType.SOLID_INERT_ALLY||
-                        this.colliderType==ColliderType.SOLID_DAMAGE_DEALER||
-                        this.colliderType==ColliderType.SOLID_THICK_INERT||
-                        this.colliderType==ColliderType.AERIAL_INERT
-                )&& parent instanceof Character){
-                    ((Character) parent).takeDamage(collision.modifier);
-                }
-                if(parent instanceof AIdriven){
-                    ((AIdriven) parent).startAI();
-                }
-                break;
-            case SOLID_INERT_ALLY:
-                if(this.colliderType==ColliderType.NONE_TRIGGER){
-                    if(parent instanceof AIdriven){
-                        ((AIdriven) parent).startAI();
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-
-        switch (vfxType){
-            case VFX_ELECTRICITY:
-                new Vfx(offset, Config.largeTileSize, DataGen.getElectricTextures(),7);
-                break;
-            default:
-                break;
-        }
     }
 }

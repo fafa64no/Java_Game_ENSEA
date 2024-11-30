@@ -75,7 +75,7 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
                 this,
                 ColliderType.NONE_TRIGGER
         );
-        PhysicEngine.addCollider(detectionZone, CollisionLayer.COLLISION_LAYER_ENNEMIES);
+        PhysicEngine.addCollider(detectionZone, CollisionLayer.COLLISION_LAYER_ENEMIES);
         detectionZone.updateOffset();
     }
 

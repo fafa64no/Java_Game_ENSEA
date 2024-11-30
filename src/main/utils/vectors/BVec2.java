@@ -18,6 +18,10 @@ public class BVec2 {
         return (!x)&&(!y);
     }
 
+    public BVec2 copy() {
+        return new BVec2(x,y);
+    }
+
 
     @Override
     public String toString() {

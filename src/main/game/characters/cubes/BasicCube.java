@@ -68,8 +68,8 @@ public class BasicCube extends Character implements RedCube {
                 VfxType.VFX_ELECTRICITY,
                 15
         );
-        PhysicEngine.addCollider(collider, CollisionLayer.COLLISION_LAYER_ENNEMIES);
-        PhysicEngine.addCollider(damageZone, CollisionLayer.COLLISION_LAYER_ENNEMIES);
+        PhysicEngine.addCollider(collider, CollisionLayer.COLLISION_LAYER_ENEMIES);
+        PhysicEngine.addCollider(damageZone, CollisionLayer.COLLISION_LAYER_ENEMIES);
         collider.updateOffset();
         damageZone.updateOffset();
     }

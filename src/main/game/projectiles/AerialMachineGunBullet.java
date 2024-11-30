@@ -16,7 +16,7 @@ public class AerialMachineGunBullet extends BasicProjectileHandler {
                 600,
                 20,
                 1,
-                CollisionLayer.COLLISION_LAYER_ENNEMY_PROJECTILES,
+                CollisionLayer.COLLISION_LAYER_ENEMY_PROJECTILES,
                 VfxType.VFX_PIERCING_METAL,
                 ColliderType.AERIAL_DAMAGE_DEALER,
                 0,

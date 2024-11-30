@@ -6,7 +6,7 @@ import main.physics.CollisionLayer;
 import main.physics.PhysicEngine;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;
-import main.physics.colliders.TilemapCollider;
+import main.physics.colliders.TileMapCollider;
 import main.rendering.*;
 import main.rendering.CubeRenderer;
 import main.utils.data.Config;
@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Level extends JPanel implements Displayable {
+    public final int tileSize;
+
     private final char[][] map;
     private final BufferedImage[][] mapTextures;
     private final List<Collider> colliders = new ArrayList<>();
@@ -113,7 +115,7 @@ public class Level extends JPanel implements Displayable {
                 0.5,
                 new Vec2()
         ));
-        colliders.add(new TilemapCollider(this));
+        colliders.add(new TileMapCollider(this));
     }
 
     private void spawnEnemies(){

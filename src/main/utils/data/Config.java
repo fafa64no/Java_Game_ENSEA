@@ -16,8 +16,6 @@ public class Config {
     public final static int spawnWidth=38;
     public final static int spawnHeight=28;
 
-    public final static int tilemapColliderRange=4;
-
     public final static int preComputedRandomPatternSize=256;
 
     public final static double noiseSeed=6.6260755;

@@ -1,7 +1,7 @@
 package main.physics;
 
-import main.game.DynamicSprite;
 import main.physics.colliders.Collider;
+import main.physics.dynamic_objects.DynamicPoint;
 import main.utils.Engine;
 import main.utils.containers.BufferedList;
 import main.utils.vectors.Vec2;
@@ -17,7 +17,7 @@ public class PhysicEngine implements Engine {
     private final BufferedList<Collider> collider_layer_ally_projectiles = new BufferedList<>();
     private final BufferedList<Collider> collider_layer_enemy_projectiles = new BufferedList<>();
 
-    private final BufferedList<DynamicSprite> dynamicSpriteList = new BufferedList<>();
+    private final BufferedList<DynamicPoint> dynamicPointBufferedList = new BufferedList<>();
 
     public PhysicEngine() {
         if(instance==null)instance=this;
@@ -30,9 +30,16 @@ public class PhysicEngine implements Engine {
 
     @Override
     public void update() {
+        updateMovements();
         testAllCollisions();
         updatePositions();
         updateColliderLists();
+    }
+
+    private void updateMovements() {
+        for(DynamicPoint dynamicPoint : dynamicPointBufferedList.elements) {
+            dynamicPoint.updatePhysics();
+        }
     }
 
     private void testAllCollisions() {
@@ -62,8 +69,8 @@ public class PhysicEngine implements Engine {
     }
 
     private void updatePositions() {
-        for(DynamicSprite dynamicSprite : dynamicSpriteList.elements) {
-            dynamicSprite.goToNextPosition();
+        for(DynamicPoint dynamicPoint : dynamicPointBufferedList.elements) {
+            dynamicPoint.applyCurrentVelocity();
         }
     }
 
@@ -74,7 +81,7 @@ public class PhysicEngine implements Engine {
         instance.collider_layer_ally_projectiles.flush();
         instance.collider_layer_enemy_projectiles.flush();
 
-        instance.dynamicSpriteList.flush();
+        instance.dynamicPointBufferedList.flush();
     }
 
 
@@ -83,9 +90,9 @@ public class PhysicEngine implements Engine {
         switch (layer){
             case COLLISION_LAYER_TERRAIN            -> instance.collider_layer_terrain.addElement(collider);
             case COLLISION_LAYER_ALLIES             -> instance.collider_layer_allies.addElement(collider);
-            case COLLISION_LAYER_ENNEMIES           -> instance.collider_layer_enemies.addElement(collider);
+            case COLLISION_LAYER_ENEMIES -> instance.collider_layer_enemies.addElement(collider);
             case COLLISION_LAYER_ALLY_PROJECTILES   -> instance.collider_layer_ally_projectiles.addElement(collider);
-            case COLLISION_LAYER_ENNEMY_PROJECTILES -> instance.collider_layer_enemy_projectiles.addElement(collider);
+            case COLLISION_LAYER_ENEMY_PROJECTILES -> instance.collider_layer_enemy_projectiles.addElement(collider);
         }
     }
 
@@ -97,11 +104,11 @@ public class PhysicEngine implements Engine {
         instance.collider_layer_enemy_projectiles.removeElement(collider);
     }
 
-    public static void addDynamicSprite(DynamicSprite dynamicSprite) {
-        instance.dynamicSpriteList.addElement(dynamicSprite);
+    public static void addDynamicPoint(DynamicPoint dynamicPoint) {
+        instance.dynamicPointBufferedList.addElement(dynamicPoint);
     }
 
-    public static void removeDynamicSprite(DynamicSprite dynamicSprite) {
-        instance.dynamicSpriteList.removeElement(dynamicSprite);
+    public static void removeDynamicPoint(DynamicPoint dynamicPoint) {
+        instance.dynamicPointBufferedList.removeElement(dynamicPoint);
     }
 }

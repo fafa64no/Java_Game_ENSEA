@@ -14,7 +14,7 @@ public class ArtilleryShell extends BasicProjectileHandler {
                 4000,
                 5,
                 500,
-                CollisionLayer.COLLISION_LAYER_ENNEMY_PROJECTILES,
+                CollisionLayer.COLLISION_LAYER_ENEMY_PROJECTILES,
                 VfxType.VFX_PIERCING_METAL,
                 ColliderType.AERIAL_DAMAGE_DEALER,
                 10,

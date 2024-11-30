@@ -72,9 +72,9 @@ public abstract class PlaneCube extends MovingCube{
                 15
         );
 
-        PhysicEngine.addCollider(collider, CollisionLayer.COLLISION_LAYER_ENNEMIES);
-        PhysicEngine.addCollider(damageZone, CollisionLayer.COLLISION_LAYER_ENNEMIES);
-        PhysicEngine.addCollider(detectionZone, CollisionLayer.COLLISION_LAYER_ENNEMIES);
+        PhysicEngine.addCollider(collider, CollisionLayer.COLLISION_LAYER_ENEMIES);
+        PhysicEngine.addCollider(damageZone, CollisionLayer.COLLISION_LAYER_ENEMIES);
+        PhysicEngine.addCollider(detectionZone, CollisionLayer.COLLISION_LAYER_ENEMIES);
         collider.updateOffset();
         damageZone.updateOffset();
         detectionZone.updateOffset();
