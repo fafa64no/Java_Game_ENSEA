@@ -63,7 +63,7 @@ public class TankTurret extends Vehicle implements RequiresUpdates {
     }
 
     @Override
-    public void updateRemainingTime(){
+    public void doUpdate(){
         if(remainingReloadFrames>0)remainingReloadFrames--;
     }
 

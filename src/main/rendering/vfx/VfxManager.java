@@ -41,7 +41,7 @@ public class VfxManager extends JPanel implements RequiresUpdates, Displayable {
     }
 
     @Override
-    public void updateRemainingTime() {
+    public void doUpdate() {
         for(Vfx vfx : vfxList){
             if(vfx == null)continue;
             vfx.updateRemainingTime();

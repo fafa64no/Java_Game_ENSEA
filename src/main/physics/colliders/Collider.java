@@ -32,7 +32,7 @@ public abstract class Collider {
     protected BVec2 blockedAlongAxis = new BVec2();
     protected double encounteredInverseFriction = 1;
 
-    protected final DynamicPoint parent;
+    protected DynamicPoint parent;
 
     public Collider(
             boolean inverted,
@@ -205,6 +205,14 @@ public abstract class Collider {
                 yield null;
             }
         };
+    }
+
+    public void addParent(DynamicPoint dynamicPoint) {
+        if(parent == null) {
+            parent = dynamicPoint;
+        } else {
+            System.out.println("Trying to assign a parent to collider which already has one.");
+        }
     }
 
     protected abstract Collision boxColliderHandler(BoxCollider bc, Vec2 relativeVelocity);

@@ -2,7 +2,6 @@ package main.utils.data;
 
 import main.game.level.Level;
 import main.game.vehicles.tanks.Tank;
-import main.rendering.Camera;
 import main.utils.containers.SizedTexture;
 import main.utils.containers.SizedTextureArray;
 import main.utils.containers.SizedTextureMatrix;
@@ -82,41 +81,6 @@ public class DataGen {
                 600
         );
         return tanks;
-    }
-
-    public static Camera[] genCameras(){
-        Camera[] output=new Camera[5];
-        output[0]=new Camera(
-                new Vec2(0,0),
-                new Vec2(
-                        3,
-                        3)
-        );
-        output[1]=new Camera(
-                new Vec2(0,0),
-                new Vec2(
-                        3,
-                        3)
-        );
-        output[2]=new Camera(
-                new Vec2(0,0),
-                new Vec2(
-                        3,
-                        3)
-        );
-        output[3]=new Camera(
-                new Vec2(0,0),
-                new Vec2(
-                        3,
-                        3)
-        );
-        output[4]=new Camera(
-                new Vec2(0,0),
-                new Vec2(
-                        3,
-                        3)
-        );
-        return output;
     }
 
 /*      ################ - TileSheets - ################      */

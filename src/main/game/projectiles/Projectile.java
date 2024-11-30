@@ -1,70 +1,67 @@
 package main.game.projectiles;
 
-import main.physics.ColliderType;
-import main.physics.CollisionLayer;
-import main.physics.PhysicEngine;
 import main.physics.colliders.Collider;
-import main.physics.colliders.PointCollider;
-import main.rendering.vfx.VfxType;
+import main.physics.dynamic_objects.NoControlDynamicPoint;
+import main.utils.RequiresUpdates;
 import main.utils.data.Config;
 import main.utils.vectors.Vec2;
 
-public class Projectile {
+public class Projectile extends NoControlDynamicPoint implements RequiresUpdates {
     private int remainingMilliseconds;
-    private Vec2 currentPosition;
-    private final Vec2 velocity;
     private final int animationFrames;
     private int currentAnimationFrame;
+
     private final int initialLifeSpan;
     private final int animationSpeed;
 
-    public final double rotation;
-    public final Collider collider;
     public final ProjectileHandler parent;
 
     private final int idInProjectileHandler;
 
-    public Projectile(int remainingMilliseconds, int invisibilityFrames , Vec2 currentPosition, double velocity, double rotation, int idInProjectileHandler, ProjectileHandler parent, CollisionLayer collisionLayer, double modifier, int animationFrames, int animationSpeed, VfxType vfxType, ColliderType colliderType) {
-        this.remainingMilliseconds = remainingMilliseconds;
-        this.initialLifeSpan = remainingMilliseconds;
-        this.velocity = Vec2.multiply(new Vec2(0,1).rotateBy(rotation),velocity);
-        this.currentPosition = Vec2.add(currentPosition,Vec2.multiply(this.velocity,invisibilityFrames));
-        this.rotation = rotation;
-        this.collider = new PointCollider(
-                new Vec2(),
-                colliderType,
-                this,
-                modifier,
-                vfxType
+    public Projectile(
+            Collider mainCollider,
+            Vec2 initialPosition,
+            double initialVelocity,
+            double initialRotation,
+            int animationFrames,
+            int initialLifeSpan,
+            int animationSpeed,
+            ProjectileHandler parent,
+            int idInProjectileHandler
+    ) {
+        super(
+                mainCollider,
+                0,
+                0,
+                initialPosition,
+                new Vec2(0,initialVelocity).rotateBy(initialRotation),
+                initialRotation
         );
-        this.collider.updateOffset();
-        this.idInProjectileHandler = idInProjectileHandler;
-        this.parent = parent;
         this.animationFrames = animationFrames;
-        this.currentAnimationFrame = 0;
+        this.initialLifeSpan = initialLifeSpan;
         this.animationSpeed = animationSpeed;
-        PhysicEngine.addCollider(this.collider, collisionLayer);
+        this.parent = parent;
+        this.idInProjectileHandler = idInProjectileHandler;
+
+        addToPhysicsEngine();
     }
 
-    public void incrementPosition(){
-        currentPosition=Vec2.add(currentPosition,velocity);
-        collider.updateOffset();
-    }
-
-    public Vec2 getCurrentPosition() {
-        return currentPosition;
-    }
-
-    public void decrementTimeRemaining(){
+    @Override
+    public void doUpdate() {
         remainingMilliseconds -= Config.delayBetweenFrames;
-        if(remainingMilliseconds<=0)destroyProjectile();;
-        if(animationSpeed>0){
-            currentAnimationFrame=((animationFrames-1)*animationSpeed*(initialLifeSpan-remainingMilliseconds)/initialLifeSpan)%animationFrames;
+        if(remainingMilliseconds <= 0) destroyProjectile();;
+        if(animationSpeed > 0){
+            currentAnimationFrame = (
+                (animationFrames - 1)
+                    * animationSpeed
+                    * (initialLifeSpan - remainingMilliseconds)
+                    / initialLifeSpan
+            ) % animationFrames;
         }
     }
 
     public void destroyProjectile(){
-        PhysicEngine.removeCollider(collider);
+        removeFromRemovePhysicsEngine();
         if (parent!=null) parent.removeProjectile(idInProjectileHandler);
     }
 

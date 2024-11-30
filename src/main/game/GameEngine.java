@@ -123,7 +123,7 @@ public class GameEngine implements KeyListener, Engine, MouseListener, MouseWhee
         for(AIdriven aIdriven : aIdrivens)if(aIdriven.isAIenabled())aIdriven.updateAI();
         aIdrivens.addAll(aIdrivensToAdd);
         aIdrivensToAdd = new ArrayList<>();
-        for(RequiresUpdates requiresUpdate : requiresUpdates)requiresUpdate.updateRemainingTime();
+        for(RequiresUpdates requiresUpdate : requiresUpdates)requiresUpdate.doUpdate();
         requiresUpdates.addAll(requiresUpdatesToAdd);
         requiresUpdatesToAdd = new ArrayList<>();
     }

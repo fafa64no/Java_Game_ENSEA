@@ -17,6 +17,7 @@ public abstract class DynamicPoint {
 
     protected Vec2 position;
     protected Vec2 currentVelocity;
+    protected Vec2 initialVelocity;
 
     protected double rotation;
     protected double currentRotationSpeed;
@@ -33,10 +34,12 @@ public abstract class DynamicPoint {
             double initialRotation
     ) {
         this.mainCollider = mainCollider;
+        this.mainCollider.addParent(this);
         this.velocityModifier = velocityModifier;
         this.rotationModifier = rotationModifier;
         this.position = initialPosition;
         this.currentVelocity = initialVelocity;
+        this.initialVelocity = currentVelocity;
         this.rotation = initialRotation;
 
         this.parent = null;
@@ -60,8 +63,8 @@ public abstract class DynamicPoint {
         }
     }
 
-    public void addInput(Vec3 input) {
-        currentInput = Vec3.add(currentInput, input);
+    public void setInput(Vec3 input) {
+        currentInput = input;
     }
 
     public void updatePhysics(){
@@ -101,7 +104,7 @@ public abstract class DynamicPoint {
 
     protected void readVelocityFromParent() {
         if (parent == null) {
-            System.out.println("Where's dad ???????????????");
+            System.out.println("Where's my dad ???????????????");
         } else {
             position = Vec2.add(position, parent.getCurrentVelocity());
         }
@@ -113,6 +116,10 @@ public abstract class DynamicPoint {
 
     public Vec2 getCurrentVelocity() {
         return currentVelocity;
+    }
+
+    public double getRotation() {
+        return rotation;
     }
 
     public void applyEffect(Effect effect, double modifier) {

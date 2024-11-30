@@ -35,7 +35,7 @@ public class HudManager implements RequiresUpdates {
     }
 
     @Override
-    public void updateRemainingTime() {
+    public void doUpdate() {
         healthBar.updateTarget();
     }
 }
