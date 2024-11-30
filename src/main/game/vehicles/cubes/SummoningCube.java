@@ -1,7 +1,7 @@
 package main.game.vehicles.cubes;
 
 import main.game.GameEngine;
-import main.game.vehicles.LifeStates;
+import main.game.vehicles.LifeState;
 import main.game.vehicles.cubes.cube_variants.*;
 import main.utils.data.Config;
 import main.utils.vectors.Vec2;
@@ -38,7 +38,7 @@ public abstract class SummoningCube extends RangedCube{
     @Override
     protected void attackingState() {
         if(--remainingAnimationTime<0){
-            lifeState = LifeStates.CURRENTLY_PURSUING;
+            lifeState = LifeState.CURRENTLY_PURSUING;
         }
         if(rotationSpeed > Config.minimumVectorSize)computeNewRotation();
         if(remainingFiringDelay<=0){

@@ -1,22 +1,18 @@
 package main.game.projectiles;
 
 import main.physics.ColliderType;
-import main.physics.CollisionLayer;
 import main.rendering.vfx.VfxType;
 import main.utils.data.DataGen;
-
-import java.awt.image.BufferedImage;
 
 public class AerialMachineGunBullet extends BasicProjectileHandler {
     private static AerialMachineGunBullet instance = null;
 
     public AerialMachineGunBullet(){
         super(
-                new BufferedImage[]{DataGen.getMachineGunBulletShellTexture()},
+                DataGen.getMachineGunBulletTexture().toArray(),
                 600,
                 20,
                 1,
-                CollisionLayer.COLLISION_LAYER_ENEMY_PROJECTILES,
                 VfxType.VFX_PIERCING_METAL,
                 ColliderType.AERIAL_DAMAGE_DEALER,
                 0,

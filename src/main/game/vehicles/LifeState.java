@@ -1,0 +1,12 @@
+package main.game.vehicles;
+
+public enum LifeState {
+    LIFE_STATE_ALIVE,
+    LIFE_STATE_DEAD,
+    LIFE_STATE_IDLE,
+    LIFE_STATE_DEPLOYING,
+    LIFE_STATE_RETRACTING,
+    LIFE_STATE_PURSUING,
+    LIFE_STATE_ATTACKING,
+    LIFE_STATE_DISENGAGING
+}

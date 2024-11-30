@@ -110,4 +110,14 @@ public abstract class BasicProjectileHandler implements ProjectileHandler {
     public void removeProjectile(int id) {
         projectiles[id]=null;
     }
+
+    @Override
+    public Projectile[] getProjectiles() {
+        return projectiles;
+    }
+
+    @Override
+    public SizedTextureArray getTextures() {
+        return textures;
+    }
 }

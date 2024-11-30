@@ -15,6 +15,10 @@ public class PseudoRandom {
         return Math.clamp(Math.round(randFactor*(maxValue - minValue))+ minValue, minValue, maxValue);
     }
 
+    public static int getNotReallyRandomBelow(int maxValue, int a, int b){
+        return (a + b) % (maxValue);
+    }
+
     public static boolean isRandomAbove(double min,double a,double b,int size){
         return (noiseGenerator.noise(a,b,0,size)>min);
     }

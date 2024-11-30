@@ -1,7 +1,7 @@
 package main.game.vehicles.cubes;
 
 import main.game.GameEngine;
-import main.game.vehicles.LifeStates;
+import main.game.vehicles.LifeState;
 import main.game.vehicles.Target;
 import main.game.projectiles.ProjectileHandler;
 import main.physics.ColliderType;
@@ -42,7 +42,7 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
 
     public RangedCube(Vec2 position, BufferedImage texture, BufferedImage deadTexture, BufferedImage[] deploymentTextures, BufferedImage[] retractionTextures, BufferedImage[] attackTextures, double rotationSpeed, double maxHealth, int animationDuration, CubeHead cubeHead, int textureSize, ProjectileHandler projectileHandler, int firingDelay, double followRange, double weaponSpread) {
         super(position, texture, deadTexture, maxHealth, textureSize);
-        this.lifeState = LifeStates.CURRENTLY_IDLE;
+        this.lifeState = LifeState.CURRENTLY_IDLE;
         this.deploymentTextures = deploymentTextures;
         this.retractionTextures = retractionTextures;
         this.attackTextures = attackTextures;
@@ -107,7 +107,7 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
     }
 
     protected void computeNewRotation(){
-        if(lifeState==LifeStates.CURRENTLY_DEAD)return;
+        if(lifeState== LifeState.CURRENTLY_DEAD)return;
         double targetRotation = getTargetRotation();
         int angleSign;  double angleToTravel;
 
@@ -127,14 +127,14 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
 
     protected void deployingState(){
         if(--remainingAnimationTime<0){
-            lifeState=LifeStates.CURRENTLY_PURSUING;
+            lifeState= LifeState.CURRENTLY_PURSUING;
         }
     }
 
     protected void retractingState(){
         if(--remainingAnimationTime<0){
             rotation=0;
-            lifeState=LifeStates.CURRENTLY_IDLE;
+            lifeState= LifeState.CURRENTLY_IDLE;
         }
     }
 
@@ -143,20 +143,20 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
             seekClosestTarget();
             if(isNotValidTarget()){
                 remainingAnimationTime=animationDuration;
-                lifeState=LifeStates.CURRENTLY_RETRACTING;
+                lifeState= LifeState.CURRENTLY_RETRACTING;
                 return;
             }
         }
         computeNewRotation();
         if(isRotationGood()){
             remainingAnimationTime=animationDuration;
-            lifeState=LifeStates.CURRENTLY_ATTACKING;
+            lifeState= LifeState.CURRENTLY_ATTACKING;
         }
     }
 
     protected void attackingState(){
         if(--remainingAnimationTime<0){
-            lifeState=LifeStates.CURRENTLY_PURSUING;
+            lifeState= LifeState.CURRENTLY_PURSUING;
         }
         computeNewRotation();
         if(remainingFiringDelay<=0){
@@ -200,9 +200,9 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
 
     @Override
     public void startAI() {
-        if(lifeState == LifeStates.CURRENTLY_IDLE){
+        if(lifeState == LifeState.CURRENTLY_IDLE){
             remainingAnimationTime=animationDuration;
-            lifeState=LifeStates.CURRENTLY_DEPLOYING;
+            lifeState= LifeState.CURRENTLY_DEPLOYING;
         }
     }
 
@@ -213,7 +213,7 @@ public abstract class RangedCube extends BasicCube implements AIdriven {
 
     @Override
     public boolean isAIenabled(){
-        return (lifeState != LifeStates.CURRENTLY_DEAD) && (lifeState != LifeStates.CURRENTLY_IDLE);
+        return (lifeState != LifeState.CURRENTLY_DEAD) && (lifeState != LifeState.CURRENTLY_IDLE);
     }
 
     @Override

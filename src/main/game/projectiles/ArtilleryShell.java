@@ -1,7 +1,6 @@
 package main.game.projectiles;
 
 import main.physics.ColliderType;
-import main.physics.CollisionLayer;
 import main.rendering.vfx.VfxType;
 import main.utils.data.DataGen;
 
@@ -10,11 +9,10 @@ public class ArtilleryShell extends BasicProjectileHandler {
 
     public ArtilleryShell(){
         super(
-                DataGen.getArtilleryShellTexture(),
+                DataGen.getArtilleryShellTextures(),
                 4000,
                 5,
-                500,
-                CollisionLayer.COLLISION_LAYER_ENEMY_PROJECTILES,
+                100,
                 VfxType.VFX_PIERCING_METAL,
                 ColliderType.AERIAL_DAMAGE_DEALER,
                 10,

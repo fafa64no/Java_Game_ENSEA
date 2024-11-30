@@ -17,4 +17,13 @@ public class SizedTexture {
                 textureSize
         );
     }
+
+    public SizedTextureArray toArray() {
+        return new SizedTextureArray(
+                textureSize,
+                1,
+                texture,
+                new IVec2[]{new IVec2()}
+        );
+    }
 }

@@ -1,7 +1,7 @@
 package main.game.vehicles.tanks;
 
 import main.game.GameEngine;
-import main.game.vehicles.LifeStates;
+import main.game.vehicles.LifeState;
 import main.game.vehicles.Vehicle;
 import main.physics.ColliderType;
 import main.physics.PhysicEngine;
@@ -52,14 +52,14 @@ public class Tank extends Vehicle {
     }
 
     public void computeNewRotation(){
-        if(lifeState == LifeStates.CURRENTLY_DEAD || this != GameEngine.getCurrentTank()) return;
+        if(lifeState == LifeState.CURRENTLY_DEAD || this != GameEngine.getCurrentTank()) return;
         double rotationModifier=super.rotationSpeed*super.currentDir.x;
         super.rotation=(super.rotation+rotationModifier)%(2*Math.PI);
         tankTurret.computeNewRotation(rotationModifier);
     }
 
     public boolean fireProjectile(){
-        if(lifeState==LifeStates.CURRENTLY_DEAD)return false;
+        if(lifeState== LifeState.CURRENTLY_DEAD)return false;
         return tankTurret.fireProjectile();
     }
 
@@ -89,7 +89,7 @@ public class Tank extends Vehicle {
         g2d.translate(position.x-scale.x*Math.round((float) textureSize.x /2), position.y-scale.y*Math.round((float) textureSize.y /2));
         g2d.rotate(super.rotation, scale.x*Math.round((float) textureSize.x /2),scale.y*Math.round((float) textureSize.y /2));
         g2d.scale(scale.x, scale.y);
-        if(lifeState!=LifeStates.CURRENTLY_DEAD){
+        if(lifeState!= LifeState.CURRENTLY_DEAD){
             g2d.drawRenderedImage(texture,null);
         }else if(deadTexture!=null){
             g2d.drawRenderedImage(deadTexture,null);
@@ -112,6 +112,6 @@ public class Tank extends Vehicle {
 
     @Override
     public boolean isTargetable() {
-        return lifeState!=LifeStates.CURRENTLY_DEAD;
+        return lifeState!= LifeState.CURRENTLY_DEAD;
     }
 }

@@ -1,6 +1,6 @@
 package main.game.vehicles.cubes;
 
-import main.game.vehicles.LifeStates;
+import main.game.vehicles.LifeState;
 import main.game.projectiles.ProjectileHandler;
 import main.physics.ColliderType;
 import main.physics.CollisionLayer;
@@ -90,7 +90,7 @@ public abstract class PlaneCube extends MovingCube{
         updateChildrenPosition();
         double distanceToTravel = Vec2.getDistance(position,currentTarget.getPosition());
         if(distanceToTravel < attackRange){
-            lifeState = LifeStates.CURRENTLY_DISENGAGING;
+            lifeState = LifeState.CURRENTLY_DISENGAGING;
             remainingDisengagingFrames = disengagingFrames;
         }
 
@@ -103,7 +103,7 @@ public abstract class PlaneCube extends MovingCube{
 
     @Override
     protected void computeNewRotation() {
-        if(lifeState==LifeStates.CURRENTLY_DEAD||lifeState==LifeStates.CURRENTLY_DISENGAGING)return;
+        if(lifeState== LifeState.CURRENTLY_DEAD||lifeState== LifeState.CURRENTLY_DISENGAGING)return;
         double targetRotation = getTargetRotation();
         int angleSign;  double angleToTravel;
 
@@ -117,7 +117,7 @@ public abstract class PlaneCube extends MovingCube{
     @Override
     protected void disengagingState() {
         if(--remainingDisengagingFrames<0){
-            lifeState = LifeStates.CURRENTLY_PURSUING;
+            lifeState = LifeState.CURRENTLY_PURSUING;
         }
         updatePosition();
     }

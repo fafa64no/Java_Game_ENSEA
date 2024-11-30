@@ -1,6 +1,5 @@
 package main.game.hud;
 
-import main.game.DynamicSprite;
 import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 

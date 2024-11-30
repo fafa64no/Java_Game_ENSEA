@@ -1,7 +1,7 @@
 package main.game.vehicles.tanks;
 
 import main.game.GameEngine;
-import main.game.vehicles.LifeStates;
+import main.game.vehicles.LifeState;
 import main.game.projectiles.ProjectileHandler;
 import main.game.projectiles.TankShell;
 import main.game.vehicles.Vehicle;
@@ -29,7 +29,7 @@ public class TankTurret extends Vehicle implements RequiresUpdates {
 
     protected void computeNewRotation(double parentRotationModifier){
         this.rotation=(this.rotation+parentRotationModifier)%(2*Math.PI);
-        if(lifeState==LifeStates.CURRENTLY_DEAD)return;
+        if(lifeState== LifeState.CURRENTLY_DEAD)return;
         double targetRotation = getTargetRotation();
         int angleSign;  double angleToTravel;
 
@@ -56,7 +56,7 @@ public class TankTurret extends Vehicle implements RequiresUpdates {
     }
 
     public boolean fireProjectile(){
-        if(lifeState==LifeStates.CURRENTLY_DEAD || remainingReloadFrames>0 || projectile==null)return false;
+        if(lifeState== LifeState.CURRENTLY_DEAD || remainingReloadFrames>0 || projectile==null)return false;
         projectile.fireInDirection(this.position,this.rotation);
         remainingReloadFrames=reloadFrames;
         return true;
@@ -78,7 +78,7 @@ public class TankTurret extends Vehicle implements RequiresUpdates {
         g2d.translate(position.x-scale.x*textureSize.x /2, position.y-scale.y*textureSize.y /2);
         g2d.rotate(super.rotation, scale.x*textureSize.x /2,scale.y*textureSize.y /2);
         g2d.scale(super.scale.x,super.scale.y);
-        if(lifeState!=LifeStates.CURRENTLY_DEAD){
+        if(lifeState!= LifeState.CURRENTLY_DEAD){
             g2d.drawRenderedImage(super.texture.getSubimage(
                     0,
                     0,
