@@ -1,6 +1,5 @@
-package main.game.characters.cubes;
+package main.game.vehicles.cubes;
 
-import main.game.characters.Character;
 import main.physics.ColliderType;
 import main.physics.CollisionLayer;
 import main.physics.PhysicEngine;

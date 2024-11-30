@@ -2,8 +2,7 @@ package main.game.hud;
 
 import main.game.GameEngine;
 import main.rendering.RenderEngine;
-import main.rendering.RenderingLayers;
-import main.utils.Engine;
+import main.rendering.RenderingLayer;
 import main.utils.RequiresUpdates;
 import main.utils.data.DataGen;
 import main.utils.vectors.IVec2;
@@ -25,8 +24,8 @@ public class HudManager implements RequiresUpdates {
 
         healthBar = new HealthBar(DataGen.getBlueBarTexture());
 
-        RenderEngine.addToRenderList(cursor, RenderingLayers.RENDERING_LAYER_HUD);
-        RenderEngine.addToRenderList(healthBar, RenderingLayers.RENDERING_LAYER_HUD);
+        RenderEngine.addToRenderList(cursor, RenderingLayer.RENDERING_LAYER_HUD);
+        RenderEngine.addToRenderList(healthBar, RenderingLayer.RENDERING_LAYER_HUD);
 
         GameEngine.addRequiresUpdates(this);
     }

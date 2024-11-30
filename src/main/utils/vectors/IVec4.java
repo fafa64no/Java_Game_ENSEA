@@ -20,6 +20,14 @@ public class IVec4 {
         this.w = w;
     }
 
+    public boolean contains(IVec2 position){
+        return
+            position.x <= this.y &&  // Compare to maximum X
+            position.x >= this.x &&  // Compare to minimum X
+            position.y <= this.w &&  // Compare to maximum Y
+            position.y >= this.z ;   // Compare to minimum Y
+    }
+
     @Override
     public String toString() {
         return "IVec4{" +

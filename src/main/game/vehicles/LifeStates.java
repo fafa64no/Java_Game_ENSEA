@@ -1,4 +1,4 @@
-package main.game.characters;
+package main.game.vehicles;
 
 public enum LifeStates {
     CURRENTLY_ALIVE,

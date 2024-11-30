@@ -2,10 +2,11 @@ package main.rendering;
 
 import main.game.DynamicSprite;
 import main.game.GameEngine;
-import main.utils.RequiresUpdates;
 import main.utils.data.Config;
 import main.utils.vectors.Vec2;
 import main.utils.vectors.Vec4;
+
+import java.awt.*;
 
 public class Camera {
     private Vec2 offset;
@@ -24,7 +25,15 @@ public class Camera {
     }
 
     public void setCameraTarget(DynamicSprite targetSprite){
-        if(this.targetSprite==null)this.targetSprite=targetSprite;
+        if(this.targetSprite==null)
+            this.targetSprite=targetSprite;
+        else
+            System.out.println("Attempting to assign already assigned camera.");
+    }
+
+    public void transformGraphicsToCamera(Graphics2D g2d) {
+        g2d.scale(RenderEngine.getCurrentCamera().getScale().x,RenderEngine.getCurrentCamera().getScale().y);
+        g2d.translate(-RenderEngine.getCurrentCamera().getOffset().x,-RenderEngine.getCurrentCamera().getOffset().y);
     }
 
     public Vec2 getOffset() {

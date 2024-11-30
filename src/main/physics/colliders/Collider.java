@@ -4,6 +4,7 @@ import main.game.effects.Effect;
 import main.physics.ColliderType;
 import main.physics.Collision;
 import main.physics.CollisionLayer;
+import main.physics.PhysicEngine;
 import main.physics.dynamic_objects.DynamicPoint;
 import main.rendering.vfx.Vfx;
 import main.rendering.vfx.VfxType;
@@ -56,6 +57,8 @@ public abstract class Collider {
         this.vfxDuration = 1;
 
         this.parent = parent;
+
+        PhysicEngine.addCollider(this, collisionLayer);
     }
 
     public Collider(
@@ -84,6 +87,16 @@ public abstract class Collider {
         this.vfxDuration = vfxDuration;
 
         this.parent = parent;
+
+        PhysicEngine.addCollider(this, collisionLayer);
+    }
+
+    public void addColliderToColliderList() {
+        PhysicEngine.addCollider(this,collisionLayer);
+    }
+
+    public void removeColliderFromColliderList() {
+        PhysicEngine.removeCollider(this);
     }
 
     public void updateCollider() {

@@ -4,7 +4,6 @@ import main.game.DynamicSprite;
 import main.game.GameEngine;
 import main.utils.Engine;
 import main.utils.data.DataGen;
-import main.utils.debug.Debug;
 import main.utils.vectors.Vec2;
 
 import javax.swing.*;
@@ -40,7 +39,7 @@ public class RenderEngine extends JFrame implements Engine {
         );
     }
 
-    public static void addToRenderList(Displayable displayable,RenderingLayers layer){
+    public static void addToRenderList(Displayable displayable, RenderingLayer layer){
         switch (layer){
             case RENDERING_LAYER_HUD:
                 instance.displayableList_layer0.add(displayable);    break;

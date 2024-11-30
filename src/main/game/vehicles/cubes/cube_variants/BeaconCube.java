@@ -1,8 +1,8 @@
-package main.game.characters.cubes.cube_variants;
+package main.game.vehicles.cubes.cube_variants;
 
-import main.game.characters.Target;
-import main.game.characters.cubes.CubeHead;
-import main.game.characters.cubes.SummoningCube;
+import main.game.vehicles.Target;
+import main.game.vehicles.cubes.CubeHead;
+import main.game.vehicles.cubes.SummoningCube;
 import main.utils.data.Config;
 import main.utils.data.DataGen;
 import main.utils.vectors.Vec2;

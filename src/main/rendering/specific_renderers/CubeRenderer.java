@@ -1,6 +1,8 @@
-package main.rendering;
+package main.rendering.specific_renderers;
 
-import main.game.characters.cubes.RedCube;
+import main.game.vehicles.cubes.RedCube;
+import main.rendering.Displayable;
+import main.rendering.RenderEngine;
 import main.utils.data.Config;
 import main.utils.vectors.Vec2;
 

@@ -1,4 +1,4 @@
-package main.game.characters.cubes;
+package main.game.vehicles.cubes;
 
 public enum CubeHead {
     CUBE_HEAD_MACHINE_GUN,

@@ -1,9 +1,8 @@
-package main.game.characters.cubes;
+package main.game.vehicles.cubes;
 
 import main.game.GameEngine;
-import main.game.characters.AIdriven;
-import main.game.characters.LifeStates;
-import main.game.characters.Target;
+import main.game.vehicles.LifeStates;
+import main.game.vehicles.Target;
 import main.game.projectiles.ProjectileHandler;
 import main.physics.ColliderType;
 import main.physics.CollisionLayer;

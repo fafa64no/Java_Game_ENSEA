@@ -3,7 +3,7 @@ package main.rendering.vfx;
 import main.game.GameEngine;
 import main.rendering.Displayable;
 import main.rendering.RenderEngine;
-import main.rendering.RenderingLayers;
+import main.rendering.RenderingLayer;
 import main.utils.RequiresUpdates;
 import main.utils.data.Config;
 
@@ -21,7 +21,7 @@ public class VfxManager extends JPanel implements RequiresUpdates, Displayable {
 
         this.setOpaque(false);
 
-        RenderEngine.addToRenderList(this, RenderingLayers.RENDERING_LAYER_HUD);
+        RenderEngine.addToRenderList(this, RenderingLayer.RENDERING_LAYER_HUD);
         GameEngine.addRequiresUpdates(this);
     }
 

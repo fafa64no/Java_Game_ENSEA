@@ -5,7 +5,7 @@ import main.physics.ColliderType;
 import main.physics.CollisionLayer;
 import main.rendering.Displayable;
 import main.rendering.RenderEngine;
-import main.rendering.RenderingLayers;
+import main.rendering.RenderingLayer;
 import main.rendering.vfx.VfxType;
 import main.utils.RequiresUpdates;
 import main.utils.data.Config;
@@ -44,7 +44,7 @@ public abstract class BasicProjectileHandler extends JPanel implements Projectil
 
         this.setOpaque(false);
 
-        RenderEngine.addToRenderList(this, RenderingLayers.RENDERING_LAYER_TANK);
+        RenderEngine.addToRenderList(this, RenderingLayer.RENDERING_LAYER_TANK);
         GameEngine.addRequiresUpdates(this);
     }
 

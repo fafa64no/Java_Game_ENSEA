@@ -10,9 +10,9 @@ public class PseudoRandom {
     private static double[] preComputedRandomPattern = null;
     private static int preComputedRandomPatternPointer = 0;
 
-    public static int getRandomBetween(int minX, int maxX, double a, double b, int size){
+    public static int getRandomBetween(int minValue, int maxValue, double a, double b, int size){
         double randFactor= 0.5+(noiseGenerator.noise(a,b,0,size)/2);
-        return Math.clamp(Math.round(randFactor*(maxX-minX))+minX,minX,maxX);
+        return Math.clamp(Math.round(randFactor*(maxValue - minValue))+ minValue, minValue, maxValue);
     }
 
     public static boolean isRandomAbove(double min,double a,double b,int size){

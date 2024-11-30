@@ -1,8 +1,7 @@
 package main.game;
 
-import main.game.characters.AIdriven;
-import main.game.characters.Target;
-import main.game.characters.vehicles.tank.Tank;
+import main.game.vehicles.Target;
+import main.game.vehicles.tanks.Tank;
 import main.game.hud.HudManager;
 import main.game.level.Level;
 import main.game.projectiles.AerialMachineGunBullet;
@@ -11,7 +10,7 @@ import main.game.projectiles.MachineGunBullet;
 import main.physics.CollisionLayer;
 import main.physics.PhysicEngine;
 import main.rendering.RenderEngine;
-import main.rendering.RenderingLayers;
+import main.rendering.RenderingLayer;
 import main.rendering.vfx.VfxManager;
 import main.utils.RequiresUpdates;
 import main.utils.data.Config;
@@ -56,8 +55,8 @@ public class GameEngine implements KeyListener, Engine, MouseListener, MouseWhee
         swapTank(1);
 
         for(Tank tank : tanks){
-            RenderEngine.addToRenderList(tank,RenderingLayers.RENDERING_LAYER_TANK);
-            RenderEngine.addToRenderList(tank.getTurret(),RenderingLayers.RENDERING_LAYER_TURRET);
+            RenderEngine.addToRenderList(tank, RenderingLayer.RENDERING_LAYER_TANK);
+            RenderEngine.addToRenderList(tank.getTurret(), RenderingLayer.RENDERING_LAYER_TURRET);
             PhysicEngine.addCollider(tank.getCollider(), CollisionLayer.COLLISION_LAYER_ALLIES);
         }
 

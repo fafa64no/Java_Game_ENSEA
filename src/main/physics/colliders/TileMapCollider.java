@@ -25,7 +25,8 @@ public class TileMapCollider extends Collider{
             ColliderType colliderType,
             CollisionLayer collisionLayer,
             Vec2 offset,
-            Level mapParent
+            Level mapParent,
+            int tileSize
     ) {
         super(
                 inverted,
@@ -40,7 +41,7 @@ public class TileMapCollider extends Collider{
         this.map = mapParent.getMap();
         this.collisionBoxMap = new Vec4[map.length][map[0].length];
 
-        this.tileSize = mapParent.tileSize;
+        this.tileSize = tileSize;
         this.inverseTileSize = 1.0/tileSize;
 
         initCollisionBoxes();

@@ -1,4 +1,4 @@
-package main.game.characters.cubes;
+package main.game.vehicles.cubes;
 
 import main.game.projectiles.ProjectileHandler;
 import main.utils.vectors.BVec2;

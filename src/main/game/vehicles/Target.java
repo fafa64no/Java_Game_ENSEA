@@ -1,4 +1,4 @@
-package main.game.characters;
+package main.game.vehicles;
 
 import main.utils.vectors.Vec2;
 

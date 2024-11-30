@@ -70,7 +70,7 @@ public class PhysicEngine implements Engine {
 
     private void updatePositions() {
         for(DynamicPoint dynamicPoint : dynamicPointBufferedList.elements) {
-            dynamicPoint.applyCurrentVelocity();
+            dynamicPoint.applyPhysics();
         }
     }
 

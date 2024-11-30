@@ -1,7 +1,7 @@
 package main.utils.data;
 
 import main.game.level.Level;
-import main.game.characters.vehicles.tank.Tank;
+import main.game.vehicles.tanks.Tank;
 import main.rendering.Camera;
 import main.utils.containers.SizedTexture;
 import main.utils.containers.SizedTextureArray;
@@ -147,8 +147,8 @@ public class DataGen {
             largeHudTiles = ImageIO.read(new File("assets/textures/hud/largeTiles.png"));
             smallVfxTiles = ImageIO.read(new File("assets/textures/vfx/smallVFX.png"));
             largeVfxTiles = ImageIO.read(new File("assets/textures/vfx/largeVFX.png"));
-            mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));
-            largeCubes = ImageIO.read(new File("assets/textures/characters/cubes/largeCubes.png"));
+            mediumCubes = ImageIO.read(new File("assets/textures/tanks/cubes/mediumCubes.png"));
+            largeCubes = ImageIO.read(new File("assets/textures/tanks/cubes/largeCubes.png"));
         } catch (IOException e) {throw new RuntimeException(e);}
     }
 

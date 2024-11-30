@@ -1,7 +1,6 @@
 package main.game.hud;
 
 import main.game.GameEngine;
-import main.game.characters.Character;
 import main.rendering.Displayable;
 import main.rendering.RenderEngine;
 import main.utils.vectors.Vec2;

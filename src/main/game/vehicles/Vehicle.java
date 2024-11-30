@@ -1,7 +1,5 @@
-package main.game.characters.vehicles;
+package main.game.vehicles;
 
-import main.game.characters.Character;
-import main.game.characters.Target;
 import main.utils.vectors.IVec2;
 import main.utils.vectors.Vec2;
 

@@ -1,10 +1,10 @@
-package main.game.characters.vehicles.tank;
+package main.game.vehicles.tanks;
 
 import main.game.GameEngine;
-import main.game.characters.LifeStates;
-import main.game.characters.vehicles.Vehicle;
+import main.game.vehicles.LifeStates;
 import main.game.projectiles.ProjectileHandler;
 import main.game.projectiles.TankShell;
+import main.game.vehicles.Vehicle;
 import main.rendering.RenderEngine;
 import main.utils.RequiresUpdates;
 import main.utils.vectors.IVec2;
