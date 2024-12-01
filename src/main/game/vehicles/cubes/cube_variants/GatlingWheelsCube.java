@@ -1,6 +1,6 @@
 package main.game.vehicles.cubes.cube_variants;
 
-import main.game.vehicles.Target;
+import main.game.target.Target;
 import main.game.vehicles.cubes.CubeHead;
 import main.game.vehicles.cubes.MovingCube;
 import main.game.projectiles.MachineGunBullet;

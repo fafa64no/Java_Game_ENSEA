@@ -2,7 +2,7 @@ package main.game.vehicles.cubes;
 
 import main.game.GameEngine;
 import main.game.vehicles.LifeState;
-import main.game.vehicles.Target;
+import main.game.target.Target;
 import main.game.projectiles.ProjectileHandler;
 import main.physics.ColliderType;
 import main.physics.CollisionLayer;

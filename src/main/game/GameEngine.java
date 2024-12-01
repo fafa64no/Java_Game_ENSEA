@@ -1,6 +1,6 @@
 package main.game;
 
-import main.game.vehicles.Target;
+import main.game.target.Target;
 import main.game.vehicles.tanks.Tank;
 import main.game.hud.HudManager;
 import main.game.level.Level;
