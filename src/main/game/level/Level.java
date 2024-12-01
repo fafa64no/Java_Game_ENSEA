@@ -2,11 +2,13 @@ package main.game.level;
 
 import main.game.vehicles.cubes.cube_variants.*;
 import main.physics.ColliderType;
-import main.physics.CollisionLayer;
+import main.physics.layers.CollisionLayer;
 import main.physics.colliders.Collider;
 import main.physics.colliders.TileMapCollider;
 import main.rendering.*;
+import main.rendering.layers.RenderingLayer;
 import main.rendering.specific_renderers.LeavesRenderer;
+import main.rendering.specific_renderers.SpriteRenderer;
 import main.rendering.specific_renderers.TileMapRenderer;
 import main.utils.data.Config;
 import main.utils.data.TextureConfig;
@@ -24,6 +26,7 @@ public class Level {
     private final Vec2 mapOffset = new Vec2();
 
     private final List<Displayable> renderers = new ArrayList<>();
+    private final SpriteRenderer spriteRenderer = new SpriteRenderer();
     private final List<Collider> colliders = new ArrayList<>();
 
     public Level(IVec2 size){
@@ -44,6 +47,7 @@ public class Level {
             collider.addColliderToColliderList();
         for (Displayable renderer : renderers)
             renderer.addToRenderList();
+        spriteRenderer.load();
         RenderEngine.paint();
     }
 
@@ -52,6 +56,7 @@ public class Level {
             collider.removeColliderFromColliderList();
         for (Displayable renderer : renderers)
             renderer.removeFromRenderList();
+        spriteRenderer.unLoad();
         RenderEngine.paint();
     }
 
@@ -131,5 +136,9 @@ public class Level {
 
     public Vec2 getMapOffset() {
         return mapOffset;
+    }
+
+    public SpriteRenderer getSpriteRenderer() {
+        return spriteRenderer;
     }
 }

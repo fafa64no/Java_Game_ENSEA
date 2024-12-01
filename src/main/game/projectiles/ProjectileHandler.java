@@ -1,6 +1,6 @@
 package main.game.projectiles;
 
-import main.physics.CollisionLayer;
+import main.physics.layers.CollisionLayer;
 import main.utils.containers.SizedTextureArray;
 import main.utils.vectors.Vec2;
 

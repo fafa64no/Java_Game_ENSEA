@@ -1,9 +1,12 @@
 package main.rendering.sprites;
 
+import main.game.GameEngine;
 import main.physics.dynamic_objects.DynamicPoint;
+import main.rendering.layers.RenderingLayer;
 import main.utils.containers.SizedTexture;
 import main.utils.vectors.Vec2;
 
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class Sprite {
@@ -11,9 +14,20 @@ public class Sprite {
 
     protected final DynamicPoint parent;
 
-    public Sprite(SizedTexture texture, DynamicPoint parent) {
+    protected final RenderingLayer renderingLayer;
+
+    public Sprite(SizedTexture texture, DynamicPoint parent, RenderingLayer renderingLayer) {
         this.texture = texture;
         this.parent = parent;
+        this.renderingLayer = renderingLayer;
+    }
+
+    public void addToRenderList() {
+        GameEngine.getCurrentLevel().getSpriteRenderer().addSpriteToRenderList(this,renderingLayer);
+    }
+
+    public void removeFromRenderList() {
+        GameEngine.getCurrentLevel().getSpriteRenderer().removeSprite(this);
     }
 
     public BufferedImage getCurrentTexture() {
@@ -24,7 +38,21 @@ public class Sprite {
         return parent.getPosition();
     }
 
-    public double getRotation() {
-        return parent.getRotation();
+    public AffineTransform getAffineTransform() {
+        AffineTransform affineTransform = new AffineTransform();
+        affineTransform.translate(
+            parent.getPosition().x - 0.5 * texture.textureSize,
+            parent.getPosition().y - 0.5 * texture.textureSize
+        );
+        affineTransform.rotate(
+            parent.getRotation(),
+            0.5 * texture.textureSize,
+            0.5 * texture.textureSize
+        );
+        return affineTransform;
+    }
+
+    public int getTextureSize() {
+        return texture.textureSize;
     }
 }

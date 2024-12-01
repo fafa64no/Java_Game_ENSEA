@@ -5,7 +5,7 @@ import main.game.vehicles.LifeState;
 import main.game.target.Target;
 import main.game.projectiles.ProjectileHandler;
 import main.physics.ColliderType;
-import main.physics.CollisionLayer;
+import main.physics.layers.CollisionLayer;
 import main.physics.PhysicEngine;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;

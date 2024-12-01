@@ -2,7 +2,7 @@ package main.game.weapons.machine_guns;
 
 import main.game.projectiles.MachineGunBullet;
 import main.game.weapons.BasicWeapon;
-import main.physics.CollisionLayer;
+import main.physics.layers.CollisionLayer;
 import main.physics.dynamic_objects.DynamicPoint;
 import main.utils.vectors.Vec2;
 

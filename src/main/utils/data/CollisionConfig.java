@@ -4,7 +4,7 @@ import main.physics.Collision;
 import main.utils.vectors.Vec4;
 
 public class CollisionConfig {
-    public final static int tilemapColliderRange=4;
+    public final static int tileMapColliderRange = 4;
 
     public static final Vec4 wallCollisionBox = new Vec4(
             0,

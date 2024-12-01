@@ -3,7 +3,7 @@ package main.physics.colliders;
 import main.game.effects.Effect;
 import main.physics.ColliderType;
 import main.physics.Collision;
-import main.physics.CollisionLayer;
+import main.physics.layers.CollisionLayer;
 import main.physics.PhysicEngine;
 import main.physics.dynamic_objects.DynamicPoint;
 import main.rendering.vfx.Vfx;

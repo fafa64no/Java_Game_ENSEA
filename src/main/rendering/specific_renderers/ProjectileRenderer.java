@@ -4,11 +4,12 @@ import main.game.projectiles.Projectile;
 import main.game.projectiles.ProjectileHandler;
 import main.rendering.Displayable;
 import main.rendering.RenderEngine;
-import main.rendering.RenderingLayer;
+import main.rendering.layers.RenderingLayer;
 import main.utils.containers.SizedTextureArray;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,13 +45,11 @@ public class ProjectileRenderer extends JPanel implements Displayable {
         double posY = projectile.getPosition().y - 0.5 * textures.textureSize;
         double rotationCenter = 0.5 * textures.textureSize;
 
-        g2d.translate(posX,posY);
-        g2d.rotate(projectile.getRotation(),rotationCenter,rotationCenter);
+        AffineTransform tx = new AffineTransform();
+        tx.translate(posX,posY);
+        tx.rotate(projectile.getRotation(),rotationCenter,rotationCenter);
 
-        g2d.drawRenderedImage(textures.textures[projectile.getCurrentAnimationFrame()],null);
-
-        g2d.rotate(-projectile.getRotation(),rotationCenter,rotationCenter);
-        g2d.translate(-posX,-posY);
+        g2d.drawRenderedImage(textures.textures[projectile.getCurrentAnimationFrame()],tx);
     }
 
     public void addProjectileHandle(ProjectileHandler projectileHandler) {

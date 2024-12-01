@@ -7,10 +7,10 @@ import main.game.level.Level;
 import main.game.projectiles.AerialMachineGunBullet;
 import main.game.projectiles.ArtilleryShell;
 import main.game.projectiles.MachineGunBullet;
-import main.physics.CollisionLayer;
+import main.physics.layers.CollisionLayer;
 import main.physics.PhysicEngine;
 import main.rendering.RenderEngine;
-import main.rendering.RenderingLayer;
+import main.rendering.layers.RenderingLayer;
 import main.rendering.vfx.VfxManager;
 import main.utils.RequiresUpdates;
 import main.utils.data.Config;
@@ -107,6 +107,10 @@ public class GameEngine implements KeyListener, Engine, MouseListener, MouseWhee
 
     public static void addRequiresUpdates(RequiresUpdates requiresUpdates){
         instance.requiresUpdatesToAdd.add(requiresUpdates);
+    }
+
+    public static void removeRequiresUpdates(RequiresUpdates requiresUpdates){
+        instance.requiresUpdatesToAdd.remove(requiresUpdates);
     }
 
     public static List<Target> getTargets(){

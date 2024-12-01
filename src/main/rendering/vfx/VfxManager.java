@@ -3,7 +3,7 @@ package main.rendering.vfx;
 import main.game.GameEngine;
 import main.rendering.Displayable;
 import main.rendering.RenderEngine;
-import main.rendering.RenderingLayer;
+import main.rendering.layers.RenderingLayer;
 import main.utils.RequiresUpdates;
 import main.utils.data.Config;
 

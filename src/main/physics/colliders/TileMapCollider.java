@@ -3,7 +3,7 @@ package main.physics.colliders;
 import main.game.level.Level;
 import main.physics.ColliderType;
 import main.physics.Collision;
-import main.physics.CollisionLayer;
+import main.physics.layers.CollisionLayer;
 import main.utils.data.CollisionConfig;
 import main.utils.vectors.IVec2;
 import main.utils.vectors.IVec4;

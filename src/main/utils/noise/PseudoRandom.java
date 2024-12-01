@@ -11,21 +11,21 @@ public class PseudoRandom {
     private static int preComputedRandomPatternPointer = 0;
 
     public static int getRandomBetween(int minValue, int maxValue, double a, double b, int size){
-        double randFactor= 0.5+(noiseGenerator.noise(a,b,0,size)/2);
-        return Math.clamp(Math.round(randFactor*(maxValue - minValue))+ minValue, minValue, maxValue);
+        double randFactor = 0.5 + (noiseGenerator.noise(a, b, 0, size) / 2);
+        return Math.clamp(Math.round(randFactor * (maxValue - minValue)) + minValue, minValue, maxValue);
     }
 
     public static int getNotReallyRandomBelow(int maxValue, int a, int b){
-        return (a + b) % (maxValue);
+        return (a + b + a * b) % (maxValue);
     }
 
     public static boolean isRandomAbove(double min,double a,double b,int size){
-        return (noiseGenerator.noise(a,b,0,size)>min);
+        return (noiseGenerator.noise(a,b,0,size) > min);
     }
 
     public static boolean isRandomBetween(double min,double max,double a,double b,int size){
-        double randFactor=noiseGenerator.noise(a,b,0,size);
-        return (randFactor>min&&randFactor<max);
+        double randFactor = noiseGenerator.noise(a,b,0,size);
+        return (randFactor > min && randFactor < max);
     }
 
     public static double getRandomDouble(double a,double b,int size){
@@ -41,7 +41,7 @@ public class PseudoRandom {
             }
         }
 
-        preComputedRandomPatternPointer = (preComputedRandomPatternPointer +1)%Config.preComputedRandomPatternSize;
+        preComputedRandomPatternPointer = (preComputedRandomPatternPointer +1) % Config.preComputedRandomPatternSize;
         return preComputedRandomPattern[preComputedRandomPatternPointer];
     }
 }

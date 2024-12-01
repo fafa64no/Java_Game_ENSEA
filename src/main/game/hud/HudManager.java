@@ -2,7 +2,7 @@ package main.game.hud;
 
 import main.game.GameEngine;
 import main.rendering.RenderEngine;
-import main.rendering.RenderingLayer;
+import main.rendering.layers.RenderingLayer;
 import main.utils.RequiresUpdates;
 import main.utils.data.DataGen;
 import main.utils.vectors.IVec2;

@@ -1,7 +1,7 @@
 package main.game.vehicles.cubes;
 
 import main.physics.ColliderType;
-import main.physics.CollisionLayer;
+import main.physics.layers.CollisionLayer;
 import main.physics.PhysicEngine;
 import main.physics.colliders.BoxCollider;
 import main.physics.colliders.Collider;

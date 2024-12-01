@@ -1,7 +1,7 @@
 package main.game.projectiles;
 
 import main.physics.ColliderType;
-import main.physics.CollisionLayer;
+import main.physics.layers.CollisionLayer;
 import main.physics.colliders.PointCollider;
 import main.rendering.vfx.VfxType;
 import main.utils.containers.SizedTextureArray;

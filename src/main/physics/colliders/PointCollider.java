@@ -2,7 +2,7 @@ package main.physics.colliders;
 
 import main.physics.ColliderType;
 import main.physics.Collision;
-import main.physics.CollisionLayer;
+import main.physics.layers.CollisionLayer;
 import main.physics.dynamic_objects.DynamicPoint;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;

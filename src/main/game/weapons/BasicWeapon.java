@@ -2,7 +2,7 @@ package main.game.weapons;
 
 import main.game.GameEngine;
 import main.game.projectiles.ProjectileHandler;
-import main.physics.CollisionLayer;
+import main.physics.layers.CollisionLayer;
 import main.physics.dynamic_objects.DynamicPoint;
 import main.utils.RequiresUpdates;
 import main.utils.noise.PseudoRandom;

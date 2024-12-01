@@ -1,6 +1,7 @@
-package main.rendering;
+package main.rendering.camera;
 
 import main.physics.dynamic_objects.DynamicPoint;
+import main.rendering.RenderEngine;
 import main.utils.RequiresUpdates;
 import main.utils.data.Config;
 import main.utils.vectors.Vec2;

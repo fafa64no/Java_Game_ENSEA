@@ -1,6 +1,7 @@
 package main.physics;
 
 import main.physics.colliders.Collider;
+import main.physics.layers.CollisionLayer;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;
 

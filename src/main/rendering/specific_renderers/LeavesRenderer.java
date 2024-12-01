@@ -1,7 +1,7 @@
 package main.rendering.specific_renderers;
 
 import main.game.level.Level;
-import main.rendering.RenderingLayer;
+import main.rendering.layers.RenderingLayer;
 import main.utils.data.Config;
 import main.utils.data.DataGen;
 import main.utils.noise.PseudoRandom;

@@ -1,7 +1,9 @@
 package main.rendering.sprites;
 
+import main.game.GameEngine;
 import main.game.target.Target;
 import main.physics.dynamic_objects.DynamicPoint;
+import main.rendering.layers.RenderingLayer;
 import main.utils.RequiresUpdates;
 import main.utils.containers.SizedTexture;
 import main.utils.containers.SizedTextureArray;
@@ -31,6 +33,7 @@ public class AnimatedSprite extends Sprite implements RequiresUpdates {
     public AnimatedSprite(
             SizedTexture texture,
             DynamicPoint parent,
+            RenderingLayer renderingLayer,
             Target animationSource,
             int animationDuration,
             SizedTextureArray deadAnimation,
@@ -43,7 +46,7 @@ public class AnimatedSprite extends Sprite implements RequiresUpdates {
             SizedTextureArray retreatingAnimation,
             SizedTextureArray goingToAnimation
     ) {
-        super(texture, parent);
+        super(texture, parent, renderingLayer);
         this.animationSource = animationSource;
         this.animationDuration = animationDuration;
 
@@ -56,6 +59,18 @@ public class AnimatedSprite extends Sprite implements RequiresUpdates {
         this.disengagingAnimation = disengagingAnimation;
         this.retreatingAnimation = retreatingAnimation;
         this.goingToAnimation = goingToAnimation;
+    }
+
+    @Override
+    public void addToRenderList() {
+        super.addToRenderList();
+        GameEngine.addRequiresUpdates(this);
+    }
+
+    @Override
+    public void removeFromRenderList() {
+        super.removeFromRenderList();
+        GameEngine.removeRequiresUpdates(this);
     }
 
     @Override
@@ -83,9 +98,9 @@ public class AnimatedSprite extends Sprite implements RequiresUpdates {
     public void doUpdate() {
         remainingAnimationDuration -= Config.delayBetweenFrames;
         currentAnimationFrame = Math.round((float)
-                currentAnimation.textureCount
-                * (animationDuration - remainingAnimationDuration)
-                / animationDuration
+            currentAnimation.textureCount
+            * (animationDuration - remainingAnimationDuration)
+            / animationDuration
         );
         if (remainingAnimationDuration <= 0 ) remainingAnimationDuration = animationDuration;
     }
