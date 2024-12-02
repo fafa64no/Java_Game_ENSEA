@@ -1,6 +1,6 @@
 package main.game.level;
 
-import main.game.vehicles.cubes.cube_variants.*;
+import main.game.level.vehicles.cubes.cube_variants.*;
 import main.physics.ColliderType;
 import main.physics.layers.CollisionLayer;
 import main.physics.colliders.Collider;

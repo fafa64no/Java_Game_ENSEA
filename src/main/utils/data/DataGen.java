@@ -1,7 +1,6 @@
 package main.utils.data;
 
 import main.game.level.Level;
-import main.game.vehicles.tanks.Tank;
 import main.utils.containers.SizedTexture;
 import main.utils.containers.SizedTextureArray;
 import main.utils.containers.SizedTextureMatrix;

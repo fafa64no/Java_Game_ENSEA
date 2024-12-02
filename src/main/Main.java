@@ -19,13 +19,10 @@ public class Main {
 
         physicEngine = new PhysicEngine();
         renderEngine = new RenderEngine();
-        Debug.printTimeSinceLast("Started RenderEngine and PhysicEngine");
 
         gameEngine = new GameEngine();
-        Debug.printTimeSinceLast("Started GameEngine");
 
         ActionListener updateTasks = e -> {
-            RenderEngine.getCurrentCamera().updateScale();
             physicEngine.update();
             renderEngine.update();
             gameEngine.update();

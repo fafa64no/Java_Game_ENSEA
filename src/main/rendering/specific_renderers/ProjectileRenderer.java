@@ -1,7 +1,7 @@
 package main.rendering.specific_renderers;
 
-import main.game.projectiles.Projectile;
-import main.game.projectiles.ProjectileHandler;
+import main.game.level.weapons.projectiles.Projectile;
+import main.game.level.weapons.projectiles.ProjectileHandler;
 import main.rendering.Displayable;
 import main.rendering.RenderEngine;
 import main.rendering.layers.RenderingLayer;

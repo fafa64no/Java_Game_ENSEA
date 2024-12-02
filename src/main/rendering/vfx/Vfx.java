@@ -1,40 +1,92 @@
 package main.rendering.vfx;
 
+import main.physics.dynamic_objects.NoControlDynamicPoint;
+import main.rendering.layers.RenderingLayer;
+import main.rendering.sprites.Sprite;
+import main.utils.RequiresUpdates;
 import main.utils.containers.SizedTextureArray;
 import main.utils.vectors.Vec2;
 
 import java.awt.image.BufferedImage;
 
-public class Vfx {
-    public final Vec2 position;
-    public final int textureSize;
+public class Vfx extends Sprite implements RequiresUpdates {
+    protected SizedTextureArray textures;
 
-    private final SizedTextureArray textures;
+    protected final int animationDuration;
+    protected int remainingAnimationTime;
+    protected int currentAnimationFrame;
 
-    private final int animationDuration;
-    private int remainingAnimationTime;
-    private int currentAnimationFrame;
-
-    private final int idInVfxManager;
-
-    public Vfx(Vec2 position, SizedTextureArray textures, int animationDuration) {
-        this.position = position;
-        this.textureSize = textures.textureSize;
-        this.textures = textures;
+    public Vfx(
+            Vec2 initialPosition,
+            VfxType vfxType,
+            int animationDuration,
+            RenderingLayer renderingLayer
+    ) {
+        super(
+            null,
+            new NoControlDynamicPoint(
+                null,
+                initialPosition,
+                new Vec2(),
+                0
+            ),
+            renderingLayer
+        );
+        this.textures = VfxType.getCorrespondingTexture(vfxType);
         this.animationDuration = animationDuration;
         this.remainingAnimationTime = animationDuration;
-        this.idInVfxManager = VfxManager.addVfx(this);
+
+        this.addToRenderList();
+        parent.addToPhysicsEngine();
+    }
+
+    public Vfx(
+            Vec2 initialPosition,
+            VfxType vfxType,
+            int animationDuration,
+            RenderingLayer renderingLayer,
+            double initialVelocity,
+            double initialRotation
+    ) {
+        super(
+            null,
+            new NoControlDynamicPoint(
+                null,
+                initialPosition,
+                new Vec2(0,initialVelocity).rotateBy(initialRotation),
+                initialRotation
+            ),
+            renderingLayer
+        );
+        this.textures = VfxType.getCorrespondingTexture(vfxType);
+        this.animationDuration = animationDuration;
+        this.remainingAnimationTime = animationDuration;
+
+        this.addToRenderList();
+        parent.addToPhysicsEngine();
     }
 
     public void updateRemainingTime(){
-        if(--remainingAnimationTime<0){
-            VfxManager.removeVfx(idInVfxManager);
-        }else{
-            currentAnimationFrame=(textures.textureCount-1)*(animationDuration-remainingAnimationTime)/animationDuration;
-        }
     }
 
     public BufferedImage getCurrentTexture(){
         return textures.textures[currentAnimationFrame];
+    }
+
+    @Override
+    public int getTextureSize() {
+        return textures.textureSize;
+    }
+
+    @Override
+    public void doUpdate() {
+        if(--remainingAnimationTime<0){
+            parent.removeFromRemovePhysicsEngine();
+            this.removeFromRenderList();
+        }else{
+            currentAnimationFrame=(textures.textureCount-1)
+                * (animationDuration-remainingAnimationTime)
+                / animationDuration;
+        }
     }
 }

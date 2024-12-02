@@ -1,11 +1,10 @@
 package main.rendering.sprites;
 
 import main.game.GameEngine;
-import main.game.target.Target;
+import main.game.level.target.Target;
 import main.physics.dynamic_objects.DynamicPoint;
 import main.rendering.layers.RenderingLayer;
 import main.utils.RequiresUpdates;
-import main.utils.containers.SizedTexture;
 import main.utils.containers.SizedTextureArray;
 import main.utils.data.Config;
 
@@ -31,7 +30,6 @@ public class AnimatedSprite extends Sprite implements RequiresUpdates {
     private final SizedTextureArray goingToAnimation;
 
     public AnimatedSprite(
-            SizedTexture texture,
             DynamicPoint parent,
             RenderingLayer renderingLayer,
             Target animationSource,
@@ -46,7 +44,7 @@ public class AnimatedSprite extends Sprite implements RequiresUpdates {
             SizedTextureArray retreatingAnimation,
             SizedTextureArray goingToAnimation
     ) {
-        super(texture, parent, renderingLayer);
+        super(null, parent, renderingLayer);
         this.animationSource = animationSource;
         this.animationDuration = animationDuration;
 
@@ -98,10 +96,15 @@ public class AnimatedSprite extends Sprite implements RequiresUpdates {
     public void doUpdate() {
         remainingAnimationDuration -= Config.delayBetweenFrames;
         currentAnimationFrame = Math.round((float)
-            currentAnimation.textureCount
+            (currentAnimation.textureCount - 1)
             * (animationDuration - remainingAnimationDuration)
             / animationDuration
         );
         if (remainingAnimationDuration <= 0 ) remainingAnimationDuration = animationDuration;
+    }
+
+    @Override
+    public int getTextureSize() {
+        return idleAnimation.textureSize;
     }
 }

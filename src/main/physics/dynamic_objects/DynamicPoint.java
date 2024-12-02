@@ -1,6 +1,6 @@
 package main.physics.dynamic_objects;
 
-import main.game.effects.Effect;
+import main.game.level.target.effects.Effect;
 import main.physics.PhysicEngine;
 import main.physics.colliders.Collider;
 import main.utils.containers.BufferedList;

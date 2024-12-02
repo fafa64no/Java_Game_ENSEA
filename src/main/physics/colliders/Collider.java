@@ -1,11 +1,12 @@
 package main.physics.colliders;
 
-import main.game.effects.Effect;
+import main.game.level.target.effects.Effect;
 import main.physics.ColliderType;
 import main.physics.Collision;
 import main.physics.layers.CollisionLayer;
 import main.physics.PhysicEngine;
 import main.physics.dynamic_objects.DynamicPoint;
+import main.rendering.layers.RenderingLayer;
 import main.rendering.vfx.Vfx;
 import main.rendering.vfx.VfxType;
 import main.utils.data.CollisionConfig;
@@ -125,23 +126,7 @@ public abstract class Collider {
     protected void updateVfx(Collision collision) {
         if(remainingVfxDelay<=0) {
             remainingVfxDelay = vfxCooldown;
-            switch (vfxType){
-                case VFX_PIERCING_METAL -> new Vfx(
-                        offset,
-                        DataGen.getPiercingMetalVfxTextures(),
-                        vfxDuration
-                );
-                case VFX_ELECTRICITY -> new Vfx(
-                        offset,
-                        DataGen.getElectricVfxTextures(),
-                        vfxDuration
-                );
-                case VFX_EXPLOSION -> new Vfx(
-                        offset,
-                        DataGen.getExplosionVfxTextures(),
-                        vfxDuration
-                );
-            }
+            new Vfx(offset, vfxType, vfxDuration, RenderingLayer.RENDERING_LAYER_FLYING_TOP);
         }
     }
 

@@ -6,16 +6,14 @@ import main.utils.vectors.Vec2;
 public class NoControlDynamicPoint extends DynamicPoint{
     public NoControlDynamicPoint(
             Collider mainCollider,
-            double velocityModifier,
-            double rotationModifier,
             Vec2 initialPosition,
             Vec2 initialVelocity,
             double initialRotation
     ) {
         super(
                 mainCollider,
-                velocityModifier,
-                rotationModifier,
+                0,
+                0,
                 initialPosition,
                 initialVelocity,
                 initialRotation

@@ -41,13 +41,13 @@ public class Sprite {
     public AffineTransform getAffineTransform() {
         AffineTransform affineTransform = new AffineTransform();
         affineTransform.translate(
-            parent.getPosition().x - 0.5 * texture.textureSize,
-            parent.getPosition().y - 0.5 * texture.textureSize
+            parent.getPosition().x - 0.5 * getTextureSize(),
+            parent.getPosition().y - 0.5 * getTextureSize()
         );
         affineTransform.rotate(
             parent.getRotation(),
-            0.5 * texture.textureSize,
-            0.5 * texture.textureSize
+            0.5 * getTextureSize(),
+            0.5 * getTextureSize()
         );
         return affineTransform;
     }
