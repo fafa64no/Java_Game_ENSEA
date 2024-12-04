@@ -3,11 +3,14 @@ package main.game;
 import main.game.input.InputManager;
 import main.game.level.Level;
 import main.game.level.weapons.projectiles.*;
+import main.physics.dynamic_objects.NoControlDynamicPoint;
 import main.rendering.RenderEngine;
+import main.rendering.camera.Camera;
 import main.utils.RequiresUpdates;
 import main.utils.containers.BufferedList;
 import main.utils.data.DataGen;
 import main.utils.Engine;
+import main.utils.vectors.Vec2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,16 +37,27 @@ public class GameEngine implements Engine {
         initGame();
     }
 
+    private void initGame() {
+        RenderEngine.setCurrentCamera(new Camera(
+                new Vec2(),
+                new Vec2(3),
+                new Vec2(0.5,5),
+                new NoControlDynamicPoint(
+                        null,
+                        new Vec2(),
+                        new Vec2(0,0),
+                        0
+                )
+        ));
+        initProjectileHandlers();
+        currentLevel=0;
+        levels[currentLevel].loadLevel();
+    }
+
     @Override
     public void update() {
         requiresUpdates.flush();
         for(RequiresUpdates requiresUpdate : requiresUpdates.elements)requiresUpdate.doUpdate();
-    }
-
-    private void initGame() {
-        initProjectileHandlers();
-        currentLevel = 0;
-        goToLevel(currentLevel);
     }
 
     private void goToLevel(int i){

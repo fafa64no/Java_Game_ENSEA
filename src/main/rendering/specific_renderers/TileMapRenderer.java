@@ -14,6 +14,7 @@ import main.utils.vectors.Vec4;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class TileMapRenderer extends JPanel implements Displayable {
@@ -52,24 +53,26 @@ public class TileMapRenderer extends JPanel implements Displayable {
         Graphics2D g2d=(Graphics2D)g.create();
         RenderEngine.getCurrentCamera().transformGraphicsToCamera(g2d);
         // Don't render outside of camera range because lag
-        IVec4 tileIDWindow = getTilesIDWindowFromCamera(new IVec2(1,1));
+        IVec4 tileIDWindow = getTilesIDWindowFromCamera(new IVec2(0,0));
+        //System.out.println(tileIDWindow+"\n | "+map[0].length+"\n | "+map.length);
         for (int x = tileIDWindow.x; x < tileIDWindow.y; x++) {
             for (int y = tileIDWindow.z; y < tileIDWindow.w; y++) {
                 double posX = mapParent.getMapOffset().x + x * tileSize;
                 double posY = mapParent.getMapOffset().y + y * tileSize;
-                g2d.translate(posX,posY);
-                paintTexture(g2d,x,y);
-                g2d.translate(-posX,-posY);
+                //System.out.println(posX+" | "+posY);
+                AffineTransform affineTransform = new AffineTransform();
+                affineTransform.translate(posX,posY);
+                paintTexture(g2d,x,y,affineTransform);
             }
         }
     }
 
-    protected void paintTexture(Graphics2D g2d, int x, int y) {
+    protected void paintTexture(Graphics2D g2d, int x, int y, AffineTransform affineTransform) {
         if(mapBox.contains(new IVec2(x,y))){
             if(mapTextures[y][x] == null) return;
-            g2d.drawRenderedImage(mapTextures[y][x],null);
+            g2d.drawRenderedImage(mapTextures[y][x],affineTransform);
         }else{
-            g2d.drawRenderedImage(DataGen.getBorderTexture().texture,null);
+            g2d.drawRenderedImage(DataGen.getBorderTexture().texture,affineTransform);
         }
     }
 
@@ -105,25 +108,25 @@ public class TileMapRenderer extends JPanel implements Displayable {
     protected void initTextureAtPosition(int x, int y) {
         mapTextures[y][x] = switch (map[y][x]){
             case 'R'-> DataGen.getStoneTextures().textures
-                [PseudoRandom.getRandomBetween(0,DataGen.getStoneTextures().textureCount.y,
+                [PseudoRandom.getRandomBetween(0,DataGen.getStoneTextures().textureCount.y-1,
                     x,y, Config.noiseSizeTerrainColor)]
-                [PseudoRandom.getRandomBetween(0,DataGen.getStoneTextures().textureCount.x,
+                [PseudoRandom.getRandomBetween(0,DataGen.getStoneTextures().textureCount.x-1,
                     x,y, Config.noiseSizeTerrainVariant)];
             case 'T'-> DataGen.getTreeTextures().textures
-                [PseudoRandom.getRandomBetween(0,DataGen.getTreeTextures().textureCount.y,
+                [PseudoRandom.getRandomBetween(0,DataGen.getTreeTextures().textureCount.y-1,
                     x,y, Config.noiseSizeTerrainColor)]
-                [PseudoRandom.getRandomBetween(0,DataGen.getTreeTextures().textureCount.x,
+                [PseudoRandom.getRandomBetween(0,DataGen.getTreeTextures().textureCount.x-1,
                     x,y, Config.noiseSizeTerrainVariant)];
             case 'P'-> DataGen.getPathTextures().textures
-                [PseudoRandom.getRandomBetween(0,DataGen.getPathTextures().textureCount.y,
+                [PseudoRandom.getRandomBetween(0,DataGen.getPathTextures().textureCount.y-1,
                     x,y, Config.noiseSizeTerrainColor)]
-                [PseudoRandom.getRandomBetween(0,DataGen.getPathTextures().textureCount.x,
+                [PseudoRandom.getRandomBetween(0,DataGen.getPathTextures().textureCount.x-1,
                     x,y, Config.noiseSizeTerrainVariant)];
             case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' -> DataGen.getCubeSpawnTexture().texture;
             default -> DataGen.getGrassTextures().textures
-                [PseudoRandom.getRandomBetween(0,DataGen.getGrassTextures().textureCount.y,
+                [PseudoRandom.getRandomBetween(0,DataGen.getGrassTextures().textureCount.y-1,
                     x,y, Config.noiseSizeTerrainColor)]
-                [PseudoRandom.getRandomBetween(0,DataGen.getGrassTextures().textureCount.x,
+                [PseudoRandom.getRandomBetween(0,DataGen.getGrassTextures().textureCount.x-1,
                     x,y, Config.noiseSizeTerrainVariant)];
         };
     }
@@ -131,12 +134,13 @@ public class TileMapRenderer extends JPanel implements Displayable {
     private IVec4 getTilesIDWindowFromCamera(IVec2 additionalCameraSize){
         Vec4 visibleWindow = RenderEngine
                 .getCurrentCamera()
-                .getDisplayWindow(Vec2.multiply(additionalCameraSize,tileSize));
-        return new IVec4(
-                (int) Math.floor(visibleWindow.x - mapParent.getMapOffset().x * tileSize),
-                (int) Math.ceil( visibleWindow.y - mapParent.getMapOffset().x * tileSize),
-                (int) Math.floor(visibleWindow.z - mapParent.getMapOffset().y * tileSize),
-                (int) Math.ceil( visibleWindow.w - mapParent.getMapOffset().y * tileSize)
-        );
+                .getDisplayWindow(Vec2.multiply(additionalCameraSize, tileSize));
+        IVec2 mapOffset = new IVec2(map[0].length/2,map.length/2);
+        IVec4 output = new IVec4();
+        output.x = (int) Math.floor(visibleWindow.x / tileSize + mapOffset.x);
+        output.y = (int) Math.ceil( visibleWindow.y / tileSize + mapOffset.x);
+        output.z = (int) Math.floor(visibleWindow.z / tileSize + mapOffset.y);
+        output.w = (int) Math.ceil( visibleWindow.w / tileSize + mapOffset.y);
+        return output;
     }
 }

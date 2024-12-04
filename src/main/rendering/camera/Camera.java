@@ -53,14 +53,19 @@ public class Camera implements RequiresUpdates {
     }
 
     public Vec4 getDisplayWindow(Vec2 extraSize){
-        Vec2 cameraCenter = target.getPosition();
+        Vec2 cameraCenter;
+        if (target == null) {
+            cameraCenter = new Vec2();
+        } else {
+            cameraCenter = target.getPosition();
+        }
         Vec2 halfWindowSize = RenderEngine.getMiddleOfFrame();
-        return new Vec4(
-                cameraCenter.x - halfWindowSize.x - extraSize.x, // Minimum X
-                cameraCenter.x + halfWindowSize.x + extraSize.x, // Maximum X
-                cameraCenter.y - halfWindowSize.y - extraSize.y, // Minimum Y
-                cameraCenter.y + halfWindowSize.y + extraSize.y  // Maximum Y
-        );
+        Vec4 output = new Vec4();
+        output.x = cameraCenter.x + halfWindowSize.x - extraSize.x;     // Min X
+        output.y = cameraCenter.x - halfWindowSize.x + extraSize.x;     // Max X
+        output.z = cameraCenter.y + halfWindowSize.y - extraSize.y;     // Min Y
+        output.w = cameraCenter.y - halfWindowSize.y + extraSize.y;     // Max Y
+        return output;
     }
 
     public void zoom(int factor){

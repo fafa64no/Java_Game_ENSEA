@@ -19,7 +19,6 @@ public class Main {
 
         physicEngine = new PhysicEngine();
         renderEngine = new RenderEngine();
-
         gameEngine = new GameEngine();
 
         ActionListener updateTasks = e -> {

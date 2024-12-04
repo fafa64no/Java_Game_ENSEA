@@ -15,13 +15,14 @@ public class SizedTextureMatrix {
         this.textures = new BufferedImage[textureCount.y][textureCount.x];
 
         for(int x = 0; x < textureCount.x; x++) {
-            for(int y = 0; y < textureCount.y; y++){
+            for(int y = 0; y < textureCount.y; y++) {
                 this.textures[y][x] = tileMap.getSubimage(
                     textureSize * positionsInTileMap[y][x].x,
                     textureSize * positionsInTileMap[y][x].y,
                     textureSize,
                     textureSize
                 );
+                System.out.println();
             }
         }
     }

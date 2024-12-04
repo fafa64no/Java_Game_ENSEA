@@ -34,7 +34,8 @@ public abstract class DynamicPoint {
             double initialRotation
     ) {
         this.mainCollider = mainCollider;
-        this.mainCollider.addParent(this);
+        if(mainCollider != null)
+            this.mainCollider.addParent(this);
         this.velocityModifier = velocityModifier;
         this.rotationModifier = rotationModifier;
         this.position = initialPosition;

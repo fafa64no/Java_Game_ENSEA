@@ -7,8 +7,6 @@ import main.utils.Engine;
 import main.utils.vectors.Vec2;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class RenderEngine extends JFrame implements Engine {
     private static RenderEngine instance;
@@ -22,15 +20,16 @@ public class RenderEngine extends JFrame implements Engine {
         super("COHOMA - Simulator - 2024");
         if(instance==null)instance=this;
         instance.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        instance.setUndecorated(true);
+        //instance.setUndecorated(true);
         instance.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        instance.getContentPane().setCursor(
-            Toolkit.getDefaultToolkit().createCustomCursor(
-                new BufferedImage(9,9,BufferedImage.TYPE_INT_ARGB),
-                new Point(0,0),
-                "blank cursor"
-            )
-        );
+        //instance.getContentPane().setCursor(
+        //    Toolkit.getDefaultToolkit().createCustomCursor(
+        //        new BufferedImage(9,9,BufferedImage.TYPE_INT_ARGB),
+        //        new Point(0,0),
+        //        "blank cursor"
+        //    )
+        //);
+        instance.setVisible(true);
 
         initRenderingLayers();
     }
@@ -43,8 +42,8 @@ public class RenderEngine extends JFrame implements Engine {
 
     public static Vec2 getMiddleOfFrame(){
         return new Vec2(
-            - 0.5 * instance.getContentPane().getSize().width /currentCamera.getScale().x,
-            - 0.5 * instance.getContentPane().getSize().height/currentCamera.getScale().y
+            - 0.5 * instance.getContentPane().getSize().width,
+            - 0.5 * instance.getContentPane().getSize().height
         );
     }
 
@@ -67,7 +66,6 @@ public class RenderEngine extends JFrame implements Engine {
 
     @Override
     public void update() {
-        updateRenderLists();
         SwingUtilities.updateComponentTreeUI(instance);
     }
 
@@ -89,6 +87,7 @@ public class RenderEngine extends JFrame implements Engine {
     }
 
     public static void paint(){
+        updateRenderLists();
         for (LayerRenderer layerRenderer : layerRenderers) {
             layerRenderer.drawLayer();
         }

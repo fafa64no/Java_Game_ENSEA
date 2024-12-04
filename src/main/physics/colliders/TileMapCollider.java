@@ -104,7 +104,7 @@ public class TileMapCollider extends Collider{
     }
 
     private IVec4 getCollisionWindow(Vec2 offset){
-        Vec2 halfWindowSize = new Vec2(CollisionConfig.tilemapColliderRange);
+        Vec2 halfWindowSize = new Vec2(CollisionConfig.tileMapColliderRange);
         return new IVec4(
                 (int) Math.floor(Math.clamp(offset.x-halfWindowSize.x,0,map[0].length)),        // Minimum X
                 (int) Math.ceil( Math.clamp(offset.x+halfWindowSize.x,0,map[0].length)),        // Maximum X

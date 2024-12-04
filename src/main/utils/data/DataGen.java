@@ -22,66 +22,6 @@ public class DataGen {
         return levels;
     }
 
-    public static Tank[] genTanks(){
-        Tank[] tanks=new Tank[5];
-        tanks[0]=new Tank(
-                new Vec2(-150,100),
-                "panzer_IV_white",
-                6,
-                new IVec2(38,72),
-                0.1,
-                0.20,
-                new Vec2(15,15),
-                5,
-                100000
-        );
-        tanks[1]=new Tank(
-                new Vec2(0,100),
-                "panzer_IV_gray",
-                5,
-                new IVec2(38,72),
-                0.1,
-                0.15,
-                new Vec2(15,15),
-                30,
-                400
-        );
-        tanks[2]=new Tank(
-                new Vec2(150,100),
-                "panzer_IV_brown",
-                3,
-                new IVec2(38,72),
-                0.1,
-                0.05,
-                new Vec2(15,15),
-                50,
-                800
-        );
-        tanks[3]=new Tank(
-                new Vec2(-75,150),
-                "panzer_IV_sand",
-                6,
-                new IVec2(38,72),
-                0.1,
-                0.10,
-                new Vec2(15,15),
-                20,
-                320
-        );
-        tanks[4]=new Tank(
-                new Vec2(75,150),
-                "panzer_IV_green",
-                4,
-                new IVec2(38,72),
-                0.1,
-                0.05,
-                new Vec2(15,15),
-                25,
-                600
-        );
-        return tanks;
-    }
-
 /*      ################ - TileSheets - ################      */
 
     private static boolean needsToGenerateTileMaps = true;
@@ -110,8 +50,8 @@ public class DataGen {
             largeHudTiles = ImageIO.read(new File("assets/textures/hud/largeTiles.png"));
             smallVfxTiles = ImageIO.read(new File("assets/textures/vfx/smallVFX.png"));
             largeVfxTiles = ImageIO.read(new File("assets/textures/vfx/largeVFX.png"));
-            mediumCubes = ImageIO.read(new File("assets/textures/tanks/cubes/mediumCubes.png"));
-            largeCubes = ImageIO.read(new File("assets/textures/tanks/cubes/largeCubes.png"));
+            mediumCubes = ImageIO.read(new File("assets/textures/characters/cubes/mediumCubes.png"));
+            largeCubes = ImageIO.read(new File("assets/textures/characters/cubes/largeCubes.png"));
         } catch (IOException e) {throw new RuntimeException(e);}
     }
 
@@ -173,6 +113,7 @@ public class DataGen {
 
     private static void checkSizedTextures() {
         if(needsToGenerateSizedTextures) {
+            System.out.println("Generating textures");
             generateAllSizedTextures();
             needsToGenerateSizedTextures = false;
         }
@@ -420,31 +361,31 @@ public class DataGen {
     private static void generateSizedTextureMatrices() {
         grassTextures = new SizedTextureMatrix(
                 TextureConfig.smallTileSize,
-                new IVec2(TextureConfig.grassColorsNb, TextureConfig.grassVariantsNb),
+                new IVec2(TextureConfig.grassVariantsNb, TextureConfig.grassColorsNb),
                 smallTerrainTiles,
                 TextureMapping.grassTexturePositions
         );
         stoneTextures = new SizedTextureMatrix(
                 TextureConfig.smallTileSize,
-                new IVec2(TextureConfig.stoneColorsNb, TextureConfig.stoneVariantsNb),
+                new IVec2(TextureConfig.stoneVariantsNb, TextureConfig.stoneColorsNb),
                 smallTerrainTiles,
                 TextureMapping.stoneTexturePositions
         );
         treeTextures = new SizedTextureMatrix(
                 TextureConfig.smallTileSize,
-                new IVec2(TextureConfig.treeColorsNb, TextureConfig.treeVariantsNb),
+                new IVec2(TextureConfig.treeVariantsNb, TextureConfig.treeColorsNb),
                 smallTerrainTiles,
                 TextureMapping.treeTexturePositions
         );
         pathTextures = new SizedTextureMatrix(
                 TextureConfig.smallTileSize,
-                new IVec2(TextureConfig.pathColorsNb, TextureConfig.pathVariantsNb),
+                new IVec2(TextureConfig.pathVariantsNb, TextureConfig.pathColorsNb),
                 smallTerrainTiles,
                 TextureMapping.pathTexturesPositions
         );
         leavesTextures = new SizedTextureMatrix(
                 TextureConfig.largeTileSize,
-                new IVec2(TextureConfig.leavesColorsNb, TextureConfig.leavesVariantsNb),
+                new IVec2(TextureConfig.leavesVariantsNb, TextureConfig.leavesColorsNb),
                 largeTerrainTiles,
                 TextureMapping.leavesTexturePositions
         );

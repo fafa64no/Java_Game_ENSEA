@@ -1,6 +1,5 @@
 package main.game.level;
 
-import main.game.level.vehicles.cubes.cube_variants.*;
 import main.physics.ColliderType;
 import main.physics.layers.CollisionLayer;
 import main.physics.colliders.Collider;
@@ -103,17 +102,17 @@ public class Level {
     private void initVehicleAtPosition(Vec2 spawnPosition, int x, int y) {
         switch (map[y][x]){
             case '1' ->
-                groundCubeRenderer.addCube(new GatlingCube(spawnPosition.copy()));
+                {}
             case '2' ->
-                groundCubeRenderer.addCube(new GatlingWheelsCube(spawnPosition.copy()));
+                {}
             case '3' ->
-                groundCubeRenderer.addCube(new ArtilleryCube(spawnPosition.copy()));
+                {}
             case '4' ->
-                groundCubeRenderer.addCube(new BeaconCube(spawnPosition.copy()));
+                {}
             case '5' ->
-                flyingCubeRenderer.addCube(new FighterCube(spawnPosition.copy()));
+                {}
             case '6' ->
-                flyingCubeRenderer.addCube(new FighterCube(spawnPosition.copy()));
+                {}
             case '0' -> {}
             case '7', '8', '9' -> System.out.println("Cube not implemented.");
         }
