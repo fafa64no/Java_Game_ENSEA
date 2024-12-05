@@ -33,7 +33,7 @@ public class GameEngine implements Engine {
         RenderEngine.getInstance().addMouseListener(inputManager);
         RenderEngine.getInstance().addKeyListener(inputManager);
 
-        levels=DataGen.genLevels();
+        levels = DataGen.genLevels();
         initGame();
     }
 
@@ -50,7 +50,7 @@ public class GameEngine implements Engine {
                 )
         ));
         initProjectileHandlers();
-        currentLevel=0;
+        currentLevel = 0;
         levels[currentLevel].loadLevel();
     }
 
@@ -62,7 +62,7 @@ public class GameEngine implements Engine {
 
     private void goToLevel(int i){
         levels[currentLevel].unloadLevel();
-        currentLevel=i;
+        currentLevel = i;
         levels[currentLevel].loadLevel();
     }
 

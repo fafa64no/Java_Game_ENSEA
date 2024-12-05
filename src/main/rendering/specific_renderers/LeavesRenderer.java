@@ -4,6 +4,7 @@ import main.game.level.Level;
 import main.rendering.layers.RenderingLayer;
 import main.utils.data.Config;
 import main.utils.data.DataGen;
+import main.utils.data.TextureConfig;
 import main.utils.noise.PseudoRandom;
 import main.utils.vectors.IVec2;
 
@@ -11,6 +12,8 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 public class LeavesRenderer extends TileMapRenderer {
+    private final int treeSize = TextureConfig.largeTileSize;
+
     public LeavesRenderer(Level mapParent, int tileSize, RenderingLayer renderingLayer) {
         super(mapParent, tileSize, renderingLayer);
     }
@@ -29,6 +32,8 @@ public class LeavesRenderer extends TileMapRenderer {
 
     @Override
     protected void paintTexture(Graphics2D g2d, int x, int y, AffineTransform affineTransform) {
+        double texOffset = - 0.5 * treeSize;
+        affineTransform.translate(texOffset,texOffset);
         if(mapBox.contains(new IVec2(x,y)) && mapTextures[y][x] != null){
             g2d.drawRenderedImage(mapTextures[y][x],affineTransform);
         }

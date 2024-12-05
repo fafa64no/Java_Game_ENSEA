@@ -22,7 +22,6 @@ public class SizedTextureMatrix {
                     textureSize,
                     textureSize
                 );
-                System.out.println();
             }
         }
     }

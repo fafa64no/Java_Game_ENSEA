@@ -54,12 +54,10 @@ public class TileMapRenderer extends JPanel implements Displayable {
         RenderEngine.getCurrentCamera().transformGraphicsToCamera(g2d);
         // Don't render outside of camera range because lag
         IVec4 tileIDWindow = getTilesIDWindowFromCamera(new IVec2(0,0));
-        //System.out.println(tileIDWindow+"\n | "+map[0].length+"\n | "+map.length);
         for (int x = tileIDWindow.x; x < tileIDWindow.y; x++) {
             for (int y = tileIDWindow.z; y < tileIDWindow.w; y++) {
                 double posX = mapParent.getMapOffset().x + x * tileSize;
                 double posY = mapParent.getMapOffset().y + y * tileSize;
-                //System.out.println(posX+" | "+posY);
                 AffineTransform affineTransform = new AffineTransform();
                 affineTransform.translate(posX,posY);
                 paintTexture(g2d,x,y,affineTransform);

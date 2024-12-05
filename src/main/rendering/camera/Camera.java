@@ -48,6 +48,8 @@ public class Camera implements RequiresUpdates {
     }
 
     public void transformGraphicsToCamera(Graphics2D g2d) {
+        Vec2 middle = RenderEngine.getMiddleOfFrame();
+        g2d.translate(-middle.x,-middle.y);
         g2d.scale(scale.x,scale.y);
         g2d.translate(-offset.x,-offset.y);
     }

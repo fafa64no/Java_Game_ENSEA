@@ -1,6 +1,6 @@
 package main.game.level.target;
 
-import main.game.level.vehicles.LifeState;
+import main.game.vehicles.LifeState;
 import main.utils.vectors.Vec2;
 
 public interface Target {
