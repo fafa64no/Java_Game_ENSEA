@@ -23,6 +23,9 @@ public class PseudoRandom {
         double randFactor=noiseGenerator.noise(a,b,0,size);
         return (randFactor>min&&randFactor<max);
     }
+    public static int getNotReallyRandomBelow(int maxValue, int a, int b){
+        return (a*7 + b+a*b*b) % (maxValue);
+    }
 
     public static double getRandomDouble(double a,double b,int size){
         return noiseGenerator.noise(a,b,0,size);

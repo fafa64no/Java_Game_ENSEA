@@ -74,15 +74,15 @@ public class Level extends JPanel implements Displayable {
                 switch (map[y][x]){
                     case 'R':
                         mapTextures[y][x]=stoneTextures[PseudoRandom.getRandomBetween(0,stoneTextures.length-1,x,y, Config.noiseSizeTerrainColor)]
-                                [PseudoRandom.getRandomBetween(0,stoneTextures[0].length-1,x,y, Config.noiseSizeTerrainVariant)];
+                                [PseudoRandom.getNotReallyRandomBelow(stoneTextures[0].length-1,x,y)];
                         break;
                     case 'T':
                         mapTextures[y][x]=treeTextures[PseudoRandom.getRandomBetween(0,treeTextures.length-1,x,y, Config.noiseSizeTerrainColor)]
-                                [PseudoRandom.getRandomBetween(0,treeTextures[0].length-1,x,y, Config.noiseSizeTerrainVariant)];
+                                [0];
                         break;
                     case 'P':
                         mapTextures[y][x]=pathTextures[PseudoRandom.getRandomBetween(0,pathTextures.length-1,x,y, Config.noiseSizeTerrainColor)]
-                                [PseudoRandom.getRandomBetween(0,pathTextures[0].length-1,x,y, Config.noiseSizeTerrainVariant)];
+                                [PseudoRandom.getNotReallyRandomBelow(pathTextures[0].length-1,x,y)];
                         break;
                     case '0':
                     case '1':
@@ -98,7 +98,7 @@ public class Level extends JPanel implements Displayable {
                         break;
                     default:
                         mapTextures[y][x]=grassTextures[PseudoRandom.getRandomBetween(0,grassTextures.length-1,x,y, Config.noiseSizeTerrainColor)]
-                                [PseudoRandom.getRandomBetween(0,grassTextures[0].length-1,x,y, Config.noiseSizeTerrainVariant)];
+                                [PseudoRandom.getNotReallyRandomBelow(grassTextures[0].length-1,x,y)];
                         break;
                 }
             }

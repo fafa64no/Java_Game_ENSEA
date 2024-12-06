@@ -37,7 +37,7 @@ public class Config {
 
     public final static double noiseSeed=6.6260755;
     public final static int noiseSizeTerrainColor=32;
-    public final static int noiseSizeTerrainVariant=2;
+    public final static int noiseSizeTerrainVariant=1;
     public final static int noiseSizeTerrainPath=128;
     public final static int noiseSizeTerrainStones=64;
     public final static int noiseSizeTerrainTrees=1;
