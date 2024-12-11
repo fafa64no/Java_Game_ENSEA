@@ -80,4 +80,11 @@ public class Camera implements RequiresUpdates {
     public void setTarget(DynamicPoint target) {
         this.target = target;
     }
+
+    public Vec2 getCursorPosInCamera() {
+        return new Vec2(
+                (MouseInfo.getPointerInfo().getLocation().x + RenderEngine.getMiddleOfFrame().x) / scale.x + offset.x,
+                (MouseInfo.getPointerInfo().getLocation().y + RenderEngine.getMiddleOfFrame().y) / scale.y + offset.y
+        );
+    }
 }

@@ -51,6 +51,7 @@ public abstract class Collider {
         this.collisionLayer = collisionLayer;
 
         this.initialOffset = initialOffset;
+        this.offset = initialOffset.copy();
 
         this.vfxType = VfxType.VFX_NONE;
         this.vfxCooldown = 0;
@@ -81,6 +82,7 @@ public abstract class Collider {
         this.collisionLayer = collisionLayer;
 
         this.initialOffset = initialOffset;
+        this.offset = initialOffset.copy();
 
         this.vfxType = vfxType;
         this.vfxCooldown = vfxCooldown;

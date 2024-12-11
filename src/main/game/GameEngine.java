@@ -43,7 +43,7 @@ public class GameEngine implements Engine {
         currentLevel = 0;
         levels[currentLevel].loadLevel();
 
-        DynamicPoint tank = TankBuilder.genTestTank(new Vec2(0,100));
+        DynamicPoint tank = TankBuilder.genTestTank(new Vec2(50,100));
         tank.addToPhysicsEngine().addToRenderList();
         currentPlayer.setCurrentVehicle(tank);
     }

@@ -67,12 +67,15 @@ public class BasicTurret extends DynamicPoint {
 
     @Override
     protected void convertInputToRotation() {
-        Vec2 targetPosition = new Vec2(
-                currentInput.x,
-                currentInput.y
-        );
+        if (target == null) return;
+        Vec2 targetPosition = target.getCurrentAimPoint();
         double targetRotation = getTargetRotation(targetPosition);
-        currentRotationSpeed = rotationModifier * (targetRotation - rotation);
+
+        int angleSign;  double angleToTravel;
+        angleToTravel = Math.abs(targetRotation-rotation);
+        angleSign = ((targetRotation-rotation>=0)?1:-1) * ((angleToTravel<Math.PI)?1:-1);
+
+        currentRotationSpeed = angleSign*Math.min(angleToTravel,rotationModifier) + 2*Math.PI;
     }
 
     @Override

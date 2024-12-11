@@ -1,5 +1,6 @@
 package main.physics.dynamic_objects;
 
+import main.game.controllers.Controller;
 import main.game.level.target.Target;
 import main.game.level.target.effects.Effect;
 import main.physics.PhysicEngine;
@@ -132,11 +133,11 @@ public abstract class DynamicPoint {
     }
 
     protected void applyCurrentRotationSpeed() {
-        rotation = (rotation + currentRotationSpeed) % (2 * Math.PI);
-
         for (DynamicPoint child : children.elements) {
             child.readRotationFromParent();
         }
+
+        rotation = (rotation + currentRotationSpeed) % (2 * Math.PI);
     }
 
     protected void readVelocityFromParent() {
@@ -151,7 +152,7 @@ public abstract class DynamicPoint {
         if (parent == null) {
             System.out.println("Where's my dad ???????????????");
         } else {
-            rotation = (rotation + parent.rotation) % (2 * Math.PI);
+            rotation = (rotation + parent.currentRotationSpeed) % (2 * Math.PI);
         }
     }
 
@@ -213,6 +214,11 @@ public abstract class DynamicPoint {
         sprite.setParent(this);
         sprites.addElement(sprite);
         return this;
+    }
+
+    public void setController(Controller controller) {
+        if (target == null) return;
+        target.setController(controller);
     }
 
     protected abstract void convertInputToVelocity();
