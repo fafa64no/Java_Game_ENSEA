@@ -27,8 +27,14 @@ public class TextureMapping {
     public final static IVec2 beaconCubeDeadTexturePosition = new IVec2(7,0);
     public final static IVec2 fighterCubeTexturePosition = new IVec2(0,3);
     public final static IVec2 fighterCubeDeadTexturePosition = new IVec2(1,3);
+
     public final static IVec2 artilleryCubeTexturePosition = new IVec2(0,0);
     public final static IVec2 artilleryCubeDeadTexturePosition = new IVec2(3,3);
+
+    public final static IVec2 panzerIV_texturePosition = new IVec2(0,0);
+    public final static IVec2 panzerIV_deadTexturePosition = new IVec2(0,1);
+    public final static IVec2 panzerIV_turret_texturePosition = new IVec2(0,2);
+    public final static IVec2 panzerIV_turret_deadTexturePosition = new IVec2(0,3);
 
     /*      ################ - SizedTexturesArray - ################      */
 

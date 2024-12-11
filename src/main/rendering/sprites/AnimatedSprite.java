@@ -30,36 +30,6 @@ public class AnimatedSprite extends Sprite implements RequiresUpdates {
     private final SizedTextureArray goingToAnimation;
 
     public AnimatedSprite(
-            DynamicPoint parent,
-            RenderingLayer renderingLayer,
-            int animationDuration,
-            SizedTextureArray deadAnimation,
-            SizedTextureArray idleAnimation,
-            SizedTextureArray deployingAnimation,
-            SizedTextureArray retractingAnimation,
-            SizedTextureArray pursuingAnimation,
-            SizedTextureArray attackingAnimation,
-            SizedTextureArray disengagingAnimation,
-            SizedTextureArray retreatingAnimation,
-            SizedTextureArray goingToAnimation
-    ) {
-        super(null, parent, renderingLayer);
-        this.animationSource = null;
-        this.animationDuration = animationDuration;
-
-        this.deadAnimation = deadAnimation;
-        this.idleAnimation = idleAnimation;
-        this.deployingAnimation = deployingAnimation;
-        this.retractingAnimation = retractingAnimation;
-        this.pursuingAnimation = pursuingAnimation;
-        this.attackingAnimation = attackingAnimation;
-        this.disengagingAnimation = disengagingAnimation;
-        this.retreatingAnimation = retreatingAnimation;
-        this.goingToAnimation = goingToAnimation;
-    }
-
-    public AnimatedSprite(
-            DynamicPoint parent,
             RenderingLayer renderingLayer,
             Target animationSource,
             int animationDuration,
@@ -73,7 +43,7 @@ public class AnimatedSprite extends Sprite implements RequiresUpdates {
             SizedTextureArray retreatingAnimation,
             SizedTextureArray goingToAnimation
     ) {
-        super(null, parent, renderingLayer);
+        super(null, renderingLayer);
         this.animationSource = animationSource;
         this.animationDuration = animationDuration;
 

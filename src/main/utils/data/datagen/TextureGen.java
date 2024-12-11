@@ -32,6 +32,11 @@ public class TextureGen {
     private static SizedTexture artilleryCubeTexture;
     private static SizedTexture artilleryCubeDeadTexture;
 
+    private static SizedTexture panzerIV_texture;
+    private static SizedTexture panzerIV_deadTexture;
+    private static SizedTexture panzerIV_turret_texture;
+    private static SizedTexture panzerIV_turret_deadTexture;
+
     private static SizedTextureArray piercingMetalVfxTextures;
     private static SizedTextureArray electricVfxTextures;
     private static SizedTextureArray explosionVfxTextures;
@@ -97,6 +102,11 @@ public class TextureGen {
 
         artilleryCubeTexture        = new SizedTexture(TileMapGen.getLargeCubes(), TextureMapping.artilleryCubeTexturePosition);
         artilleryCubeDeadTexture    = new SizedTexture(TileMapGen.getLargeCubes(), TextureMapping.artilleryCubeDeadTexturePosition);
+
+        panzerIV_texture            = new SizedTexture(TileMapGen.getMediumTanks(), TextureMapping.panzerIV_texturePosition);
+        panzerIV_deadTexture        = new SizedTexture(TileMapGen.getMediumTanks(), TextureMapping.panzerIV_deadTexturePosition);
+        panzerIV_turret_texture     = new SizedTexture(TileMapGen.getMediumTanks(), TextureMapping.panzerIV_turret_texturePosition);
+        panzerIV_turret_deadTexture = new SizedTexture(TileMapGen.getMediumTanks(), TextureMapping.panzerIV_turret_deadTexturePosition);
     }
 
     private static void generateSizedTextureArrays() {
@@ -356,5 +366,25 @@ public class TextureGen {
     public static SizedTextureMatrix getLeavesTextures() {
         checkSizedTextures();
         return leavesTextures;
+    }
+
+    public static SizedTexture getPanzerIV_texture() {
+        checkSizedTextures();
+        return panzerIV_texture;
+    }
+
+    public static SizedTexture getPanzerIV_deadTexture() {
+        checkSizedTextures();
+        return panzerIV_deadTexture;
+    }
+
+    public static SizedTexture getPanzerIV_turret_texture() {
+        checkSizedTextures();
+        return panzerIV_turret_texture;
+    }
+
+    public static SizedTexture getPanzerIV_turret_deadTexture() {
+        checkSizedTextures();
+        return panzerIV_turret_deadTexture;
     }
 }

@@ -1,5 +1,6 @@
 package main.physics.dynamic_objects;
 
+import main.game.level.target.Target;
 import main.game.level.target.effects.Effect;
 import main.physics.PhysicEngine;
 import main.physics.colliders.Collider;
@@ -12,6 +13,7 @@ public abstract class DynamicPoint {
     protected DynamicPoint parent;
     protected final BufferedList<DynamicPoint> children = new BufferedList<>();
     protected final BufferedList<Sprite> sprites = new BufferedList<>();
+    protected Target target;
 
     protected Collider mainCollider;
 
@@ -43,6 +45,9 @@ public abstract class DynamicPoint {
         this.rotation = initialRotation;
 
         this.parent = null;
+        this.target = null;
+
+        this.currentInput = new Vec3();
     }
 
     public DynamicPoint addToPhysicsEngine() {
@@ -88,6 +93,10 @@ public abstract class DynamicPoint {
     }
 
     public void setInput(Vec3 input) {
+        if (target != null && !target.canMove()) {
+            currentInput = new Vec3();
+            return;
+        }
         currentInput = input;
     }
 
@@ -159,7 +168,11 @@ public abstract class DynamicPoint {
     }
 
     public void applyEffect(Effect effect, double modifier) {
-
+        switch (effect) {
+            case DAMAGE:
+                if (target != null) target.dealDamage(modifier);
+                break;
+        }
     }
 
     public DynamicPoint addChild(DynamicPoint child) {
@@ -174,6 +187,15 @@ public abstract class DynamicPoint {
         } else {
             System.out.println("Trying to overwrite parent.");
         }
+    }
+
+    public DynamicPoint setTarget(Target target) {
+        if (this.target == null) {
+            this.target = target;
+        } else {
+            System.out.println("Trying to overwrite target.");
+        }
+        return this;
     }
 
     public DynamicPoint setMainCollider(Collider collider) {

@@ -16,15 +16,15 @@ public class Sprite {
 
     protected final RenderingLayer renderingLayer;
 
-    public Sprite(SizedTexture texture, DynamicPoint parent, RenderingLayer renderingLayer) {
-        this.texture = texture;
-        this.parent = parent;
-        this.renderingLayer = renderingLayer;
-    }
-
     public Sprite(SizedTexture texture, RenderingLayer renderingLayer) {
         this.texture = texture;
         this.parent = null;
+        this.renderingLayer = renderingLayer;
+    }
+
+    public Sprite(SizedTexture texture, DynamicPoint parent, RenderingLayer renderingLayer) {
+        this.texture = texture;
+        this.parent = parent;
         this.renderingLayer = renderingLayer;
     }
 

@@ -1,5 +1,6 @@
 package main.rendering.specific_renderers;
 
+import main.game.GameEngine;
 import main.rendering.layers.RenderingLayer;
 import main.rendering.sprites.Sprite;
 import main.utils.RequiresUpdates;
@@ -12,6 +13,7 @@ public class SpriteRenderer implements RequiresUpdates {
         for (int i = 0; i < spriteLayerRenderers.length; i++) {
             spriteLayerRenderers[i] = new SpriteLayerRenderer(RenderingLayer.getRenderingLayer(i));
         }
+        GameEngine.addRequiresUpdates(this);
     }
 
     public void addSpriteToRenderList(Sprite sprite, RenderingLayer renderingLayer) {

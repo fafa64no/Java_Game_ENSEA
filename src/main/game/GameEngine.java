@@ -3,6 +3,8 @@ package main.game;
 import main.game.input.InputManager;
 import main.game.level.Level;
 import main.game.level.weapons.projectiles.*;
+import main.game.vehicles.ground.TankBuilder;
+import main.physics.dynamic_objects.DynamicPoint;
 import main.physics.dynamic_objects.NoControlDynamicPoint;
 import main.rendering.RenderEngine;
 import main.rendering.camera.Camera;
@@ -51,6 +53,9 @@ public class GameEngine implements Engine {
         initProjectileHandlers();
         currentLevel = 0;
         levels[currentLevel].loadLevel();
+
+        DynamicPoint tank = TankBuilder.genTestTank(new Vec2());
+        tank.addToPhysicsEngine().addToRenderList();
     }
 
     @Override

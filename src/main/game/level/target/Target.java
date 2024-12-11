@@ -1,19 +1,63 @@
 package main.game.level.target;
 
-import main.game.vehicles.LifeState;
 import main.physics.dynamic_objects.DynamicPoint;
 import main.utils.vectors.Vec2;
 
-public interface Target {
-    Vec2 getPosition();
-    Vec2 getVelocity();
+public class Target {
+    protected DynamicPoint mainNode;
 
-    void addPositionSource(DynamicPoint dynamicPoint);
-    void addInputSource();
+    protected final double maxHealth;
+    protected double currentHealth;
+    protected LifeState currentLifeState = LifeState.LIFE_STATE_IDLE;
 
-    boolean isTargetable();
-    LifeState getLifeState();
+    public Target(double maxHealth) {
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth;
+    }
 
-    void dealDamage(double damage);
-    double getHealthPercentage();
+    public void addMainNode(DynamicPoint mainNode) {
+        if (this.mainNode != null) {
+            System.out.println("Trying to overwrite mainNode.");
+            return;
+        }
+        this.mainNode = mainNode;
+    }
+
+    public boolean isTargetable() {
+        return currentLifeState != LifeState.LIFE_STATE_DEAD;
+    }
+
+    public boolean canMove() {
+        return currentLifeState != LifeState.LIFE_STATE_DEAD;
+    }
+
+    public LifeState getLifeState() {
+        return currentLifeState;
+    }
+
+    public void dealDamage(double damage) {
+        currentHealth -= damage;
+        if (currentHealth <= 0) {
+            killYourSelf();
+            return;
+        }
+        currentHealth = Math.clamp(currentHealth, 0, maxHealth);
+    }
+
+    public double getHealthPercentage() {
+        if (maxHealth == 0) return 0;
+        return currentHealth/maxHealth;
+    }
+
+    public Vec2 getPosition() {
+        return mainNode.getPosition();
+    }
+
+    public Vec2 getVelocity() {
+        return mainNode.getCurrentVelocity();
+    }
+
+    protected void killYourSelf() {
+        currentLifeState = LifeState.LIFE_STATE_DEAD;
+    }
 }

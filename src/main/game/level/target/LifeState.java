@@ -1,4 +1,4 @@
-package main.game.vehicles;
+package main.game.level.target;
 
 public enum LifeState {
     LIFE_STATE_DEAD,
