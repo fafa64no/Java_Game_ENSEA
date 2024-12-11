@@ -31,17 +31,19 @@ public class TankBuilder {
                 100
         );
 
+        int boxSize = 15;
+
         tank
-            //.setMainCollider(new BoxCollider(
-            //        new Vec4(),
-            //        false,
-            //        0.5,
-            //        0,
-            //        ColliderType.SOLID_INERT,
-            //        CollisionLayer.COLLISION_LAYER_ALLIES,
-            //        new Vec2(),
-            //        tank
-            //))
+            .setMainCollider(new BoxCollider(
+                    new Vec4(-boxSize,boxSize,-boxSize,boxSize),
+                    false,
+                    0.5,
+                    0,
+                    ColliderType.SOLID_INERT,
+                    CollisionLayer.COLLISION_LAYER_ALLIES,
+                    new Vec2(),
+                    null
+            ))
             .setTarget(target)
             .addSprite(new AnimatedSprite(
                 RenderingLayer.RENDERING_LAYER_GROUND_BOTTOM,

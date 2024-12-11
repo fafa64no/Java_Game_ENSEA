@@ -29,7 +29,7 @@ public abstract class Collider {
     protected final int vfxDuration;
     protected int remainingVfxDelay = 0;
 
-    protected BVec2 blockedAlongAxis = new BVec2();
+    protected BVec2 blockedAlongAxis = new BVec2(false, false);
     protected double encounteredInverseFriction = 1;
 
     protected DynamicPoint parent;
@@ -108,7 +108,8 @@ public abstract class Collider {
     }
 
     protected void resetCollisions() {
-        blockedAlongAxis = new BVec2();
+        blockedAlongAxis.x = false;
+        blockedAlongAxis.y = false;
         encounteredInverseFriction = 1;
     }
 
@@ -125,6 +126,7 @@ public abstract class Collider {
     }
 
     protected void updateVfx(Collision collision) {
+        if (vfxType == VfxType.VFX_NONE) return;
         if(remainingVfxDelay<=0) {
             remainingVfxDelay = vfxCooldown;
             new Vfx(offset, vfxType, vfxDuration, RenderingLayer.RENDERING_LAYER_FLYING_TOP);

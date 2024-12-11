@@ -16,7 +16,7 @@ public enum VfxType {
             case VFX_EXPLOSION -> TextureGen.getExplosionVfxTextures();
 
             default -> {
-                System.out.println("Unknown VFX type requested.");
+                System.out.println("Unknown VFX type requested : " + vfxType);
                 yield null;
             }
         };

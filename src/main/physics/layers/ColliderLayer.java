@@ -11,6 +11,7 @@ public class ColliderLayer {
     public ColliderLayer testCollisionsWith(ColliderLayer colliderLayer) {
         for(Collider collider1 : colliderList.elements){
             for(Collider collider2 : colliderLayer.getColliderList().elements){
+                if(collider2 == collider1) continue;
                 Vec2 relativeVelocity = Vec2.add(collider1.getVelocity(),collider2.getVelocity());
                 Collision collision = collider1.doCollide(collider2, relativeVelocity);
                 if(collision == null)continue;
