@@ -139,4 +139,8 @@ public class InputManager implements KeyListener, MouseListener, MouseWheelListe
         lastScrollFactor = 0;
         return output;
     }
+
+    public Vec3 getCurrentInputDir() {
+        return currentInputDir;
+    }
 }

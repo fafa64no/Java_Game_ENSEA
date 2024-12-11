@@ -184,6 +184,7 @@ public abstract class DynamicPoint {
     public void setParent(DynamicPoint parent) {
         if (this.parent == null) {
             this.parent = parent;
+            this.position = Vec2.add(position,parent.getPosition());
         } else {
             System.out.println("Trying to overwrite parent.");
         }

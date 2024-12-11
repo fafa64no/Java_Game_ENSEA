@@ -1,9 +1,10 @@
-package main.utils.data;
+package main.utils.data.datagen;
 
 import main.game.level.Level;
+import main.utils.data.Config;
 import main.utils.vectors.IVec2;
 
-public class DataGen {
+public class MiscellaneousGen {
 
 /*      ################ - Levels, Tanks and Cameras - ################      */
 

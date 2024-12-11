@@ -11,14 +11,14 @@ import main.utils.vectors.Vec2;
 public class TankBuilder {
     public static TankControlDynamicPoint genTestTank(Vec2 position) {
         TankControlDynamicPoint tank = new TankControlDynamicPoint(
-                1,
-                0.5,
+                8,
+                0.15,
                 position,
                 new Vec2(),
                 0
         );
         BasicTurret turret = new BasicTurret(
-                0.5,
+                0.05,
                 new Vec2(),
                 0,
                 null

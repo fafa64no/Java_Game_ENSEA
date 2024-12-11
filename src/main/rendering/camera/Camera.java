@@ -41,8 +41,7 @@ public class Camera implements RequiresUpdates {
         if(target != null) {
             offset = Vec2.add(
                 initialOffset,
-                target.getPosition(),
-                RenderEngine.getMiddleOfFrame()
+                target.getPosition()
             );
         }
     }
@@ -76,5 +75,9 @@ public class Camera implements RequiresUpdates {
 
     public Vec2 getScale() {
         return scale;
+    }
+
+    public void setTarget(DynamicPoint target) {
+        this.target = target;
     }
 }

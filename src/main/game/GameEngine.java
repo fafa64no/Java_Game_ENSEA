@@ -1,6 +1,6 @@
 package main.game;
 
-import main.game.input.InputManager;
+import main.game.input.Player;
 import main.game.level.Level;
 import main.game.level.weapons.projectiles.*;
 import main.game.vehicles.ground.TankBuilder;
@@ -10,7 +10,7 @@ import main.rendering.RenderEngine;
 import main.rendering.camera.Camera;
 import main.utils.RequiresUpdates;
 import main.utils.containers.BufferedList;
-import main.utils.data.DataGen;
+import main.utils.data.datagen.MiscellaneousGen;
 import main.utils.Engine;
 import main.utils.vectors.Vec2;
 
@@ -27,35 +27,25 @@ public class GameEngine implements Engine {
 
     private final List<ProjectileHandler> projectileHandlers = new ArrayList<>();
 
-    private final InputManager inputManager = new InputManager();
+    private Player currentPlayer;
 
     public GameEngine() {
         if(instance==null)instance=this;
-        RenderEngine.getInstance().addMouseWheelListener(inputManager);
-        RenderEngine.getInstance().addMouseListener(inputManager);
-        RenderEngine.getInstance().addKeyListener(inputManager);
 
-        levels = DataGen.genLevels();
+        levels = MiscellaneousGen.genLevels();
+        currentPlayer = new Player();
         initGame();
     }
 
     private void initGame() {
-        RenderEngine.setCurrentCamera(new Camera(
-                new Vec2(),
-                new Vec2(3),
-                new Vec2(0.5,5),
-                new NoControlDynamicPoint(
-                        new Vec2(),
-                        new Vec2(0,0),
-                        0
-                )
-        ));
+        RenderEngine.setCurrentCamera(currentPlayer.camera);
         initProjectileHandlers();
         currentLevel = 0;
         levels[currentLevel].loadLevel();
 
-        DynamicPoint tank = TankBuilder.genTestTank(new Vec2());
+        DynamicPoint tank = TankBuilder.genTestTank(new Vec2(0,100));
         tank.addToPhysicsEngine().addToRenderList();
+        currentPlayer.setCurrentVehicle(tank);
     }
 
     @Override
