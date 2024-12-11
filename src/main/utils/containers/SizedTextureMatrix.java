@@ -9,18 +9,19 @@ public class SizedTextureMatrix {
     public final IVec2 textureCount;
     public final BufferedImage[][] textures;
 
-    public SizedTextureMatrix(int textureSize, IVec2 textureCount, BufferedImage tileMap, IVec2[][] positionsInTileMap) {
-        this.textureSize = textureSize;
-        this.textureCount = textureCount;
+    public SizedTextureMatrix(TileMap tileMap, IVec2[][] positionsInTileMap) {
+        this.textureSize = tileMap.getTextureSize();
+        this.textureCount = new IVec2(
+                positionsInTileMap[0].length,
+                positionsInTileMap.length
+        );
         this.textures = new BufferedImage[textureCount.y][textureCount.x];
 
         for(int x = 0; x < textureCount.x; x++) {
             for(int y = 0; y < textureCount.y; y++) {
-                this.textures[y][x] = tileMap.getSubimage(
-                    textureSize * positionsInTileMap[y][x].x,
-                    textureSize * positionsInTileMap[y][x].y,
-                    textureSize,
-                    textureSize
+                this.textures[y][x] = tileMap.getTextureAt(
+                    positionsInTileMap[y][x].x,
+                    positionsInTileMap[y][x].y
                 );
             }
         }

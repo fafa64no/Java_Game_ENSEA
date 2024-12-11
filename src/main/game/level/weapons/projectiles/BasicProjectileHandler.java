@@ -53,17 +53,7 @@ public abstract class BasicProjectileHandler implements ProjectileHandler {
             double modifier,
             CollisionLayer collisionLayer
     ) {
-        PointCollider collider = new PointCollider(
-        false,
-            0,
-            modifier,
-            colliderType,
-            collisionLayer,
-            new Vec2(),
-            null
-        );
         projectiles[projectilePointer] = new Projectile(
-            collider,
             initialPosition,
             projectileSpeed,
             rotation,
@@ -73,6 +63,15 @@ public abstract class BasicProjectileHandler implements ProjectileHandler {
             this,
             projectilePointer
         );
+        projectiles[projectilePointer].setMainCollider(new PointCollider(
+                false,
+                0,
+                modifier,
+                colliderType,
+                collisionLayer,
+                new Vec2(),
+                null
+        ));
     }
 
     @Override

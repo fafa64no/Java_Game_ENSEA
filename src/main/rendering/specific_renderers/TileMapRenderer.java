@@ -5,7 +5,7 @@ import main.rendering.Displayable;
 import main.rendering.RenderEngine;
 import main.rendering.layers.RenderingLayer;
 import main.utils.data.Config;
-import main.utils.data.DataGen;
+import main.utils.data.datagen.TextureGen;
 import main.utils.noise.PseudoRandom;
 import main.utils.vectors.IVec2;
 import main.utils.vectors.IVec4;
@@ -70,7 +70,7 @@ public class TileMapRenderer extends JPanel implements Displayable {
             if(mapTextures[y][x] == null) return;
             g2d.drawRenderedImage(mapTextures[y][x],affineTransform);
         }else{
-            g2d.drawRenderedImage(DataGen.getBorderTexture().texture,affineTransform);
+            g2d.drawRenderedImage(TextureGen.getBorderTexture().texture,affineTransform);
         }
     }
 
@@ -105,26 +105,26 @@ public class TileMapRenderer extends JPanel implements Displayable {
 
     protected void initTextureAtPosition(int x, int y) {
         mapTextures[y][x] = switch (map[y][x]){
-            case 'R'-> DataGen.getStoneTextures().textures
-                [PseudoRandom.getRandomBetween(0,DataGen.getStoneTextures().textureCount.y-1,
+            case 'R'-> TextureGen.getStoneTextures().textures
+                [PseudoRandom.getRandomBetween(0,TextureGen.getStoneTextures().textureCount.y-1,
                     x,y, Config.noiseSizeTerrainColor)]
-                [PseudoRandom.getRandomBetween(0,DataGen.getStoneTextures().textureCount.x-1,
+                [PseudoRandom.getRandomBetween(0,TextureGen.getStoneTextures().textureCount.x-1,
                     x,y, Config.noiseSizeTerrainVariant)];
-            case 'T'-> DataGen.getTreeTextures().textures
-                [PseudoRandom.getRandomBetween(0,DataGen.getTreeTextures().textureCount.y-1,
+            case 'T'-> TextureGen.getTreeTextures().textures
+                [PseudoRandom.getRandomBetween(0,TextureGen.getTreeTextures().textureCount.y-1,
                     x,y, Config.noiseSizeTerrainColor)]
-                [PseudoRandom.getRandomBetween(0,DataGen.getTreeTextures().textureCount.x-1,
+                [PseudoRandom.getRandomBetween(0,TextureGen.getTreeTextures().textureCount.x-1,
                     x,y, Config.noiseSizeTerrainVariant)];
-            case 'P'-> DataGen.getPathTextures().textures
-                [PseudoRandom.getRandomBetween(0,DataGen.getPathTextures().textureCount.y-1,
+            case 'P'-> TextureGen.getPathTextures().textures
+                [PseudoRandom.getRandomBetween(0,TextureGen.getPathTextures().textureCount.y-1,
                     x,y, Config.noiseSizeTerrainColor)]
-                [PseudoRandom.getRandomBetween(0,DataGen.getPathTextures().textureCount.x-1,
+                [PseudoRandom.getRandomBetween(0,TextureGen.getPathTextures().textureCount.x-1,
                     x,y, Config.noiseSizeTerrainVariant)];
-            case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' -> DataGen.getCubeSpawnTexture().texture;
-            default -> DataGen.getGrassTextures().textures
-                [PseudoRandom.getRandomBetween(0,DataGen.getGrassTextures().textureCount.y-1,
+            case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' -> TextureGen.getCubeSpawnTexture().texture;
+            default -> TextureGen.getGrassTextures().textures
+                [PseudoRandom.getRandomBetween(0,TextureGen.getGrassTextures().textureCount.y-1,
                     x,y, Config.noiseSizeTerrainColor)]
-                [PseudoRandom.getRandomBetween(0,DataGen.getGrassTextures().textureCount.x-1,
+                [PseudoRandom.getRandomBetween(0,TextureGen.getGrassTextures().textureCount.x-1,
                     x,y, Config.noiseSizeTerrainVariant)];
         };
     }

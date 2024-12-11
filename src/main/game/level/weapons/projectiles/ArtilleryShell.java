@@ -2,14 +2,14 @@ package main.game.level.weapons.projectiles;
 
 import main.physics.ColliderType;
 import main.rendering.vfx.VfxType;
-import main.utils.data.DataGen;
+import main.utils.data.datagen.TextureGen;
 
 public class ArtilleryShell extends BasicProjectileHandler {
     private static ArtilleryShell instance = null;
 
     public ArtilleryShell(){
         super(
-                DataGen.getArtilleryShellTextures(),
+                TextureGen.getArtilleryShellTextures(),
                 4000,
                 5,
                 100,

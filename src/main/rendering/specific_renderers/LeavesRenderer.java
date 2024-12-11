@@ -3,8 +3,8 @@ package main.rendering.specific_renderers;
 import main.game.level.Level;
 import main.rendering.layers.RenderingLayer;
 import main.utils.data.Config;
-import main.utils.data.DataGen;
 import main.utils.data.TextureConfig;
+import main.utils.data.datagen.TextureGen;
 import main.utils.noise.PseudoRandom;
 import main.utils.vectors.IVec2;
 
@@ -21,10 +21,10 @@ public class LeavesRenderer extends TileMapRenderer {
     @Override
     protected void initTextureAtPosition(int x, int y) {
         mapTextures[y][x] = switch (map[y][x]){
-            case 'T'-> DataGen.getLeavesTextures().textures
-                    [PseudoRandom.getRandomBetween(0,DataGen.getLeavesTextures().textureCount.y-1,
+            case 'T'-> TextureGen.getLeavesTextures().textures
+                    [PseudoRandom.getRandomBetween(0,TextureGen.getLeavesTextures().textureCount.y-1,
                     x,y, Config.noiseSizeTerrainColor)]
-                    [PseudoRandom.getRandomBetween(0,DataGen.getLeavesTextures().textureCount.x-1,
+                    [PseudoRandom.getRandomBetween(0,TextureGen.getLeavesTextures().textureCount.x-1,
                     x,y, Config.noiseSizeTerrainVariant)];
             default -> null;
         };
@@ -32,10 +32,9 @@ public class LeavesRenderer extends TileMapRenderer {
 
     @Override
     protected void paintTexture(Graphics2D g2d, int x, int y, AffineTransform affineTransform) {
+        if(!mapBox.contains(new IVec2(x,y)) || mapTextures[y][x] == null) return;
         double texOffset = - 0.5 * treeSize;
         affineTransform.translate(texOffset,texOffset);
-        if(mapBox.contains(new IVec2(x,y)) && mapTextures[y][x] != null){
-            g2d.drawRenderedImage(mapTextures[y][x],affineTransform);
-        }
+        g2d.drawRenderedImage(mapTextures[y][x],affineTransform);
     }
 }

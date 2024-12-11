@@ -8,20 +8,17 @@ public class SizedTexture {
     public final int textureSize;
     public final BufferedImage texture;
 
-    public SizedTexture(int textureSize, BufferedImage tileMap, IVec2 positionsInTileMap) {
-        this.textureSize = textureSize;
-        this.texture = tileMap.getSubimage(
-                textureSize * positionsInTileMap.x,
-                textureSize * positionsInTileMap.y,
-                textureSize,
-                textureSize
+    public SizedTexture(TileMap tileMap, IVec2 positionsInTileMap) {
+        this.textureSize = tileMap.getTextureSize();
+        this.texture = tileMap.getTextureAt(
+                positionsInTileMap.x,
+                positionsInTileMap.y
         );
     }
 
     public SizedTextureArray toArray() {
         return new SizedTextureArray(
                 textureSize,
-                1,
                 texture,
                 new IVec2[]{new IVec2()}
         );

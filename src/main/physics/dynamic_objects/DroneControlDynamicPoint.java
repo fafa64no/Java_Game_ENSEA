@@ -5,14 +5,13 @@ import main.utils.vectors.Vec2;
 
 public class DroneControlDynamicPoint extends DynamicPoint {
     public DroneControlDynamicPoint(
-            Collider mainCollider,
             double velocityModifier,
             double rotationModifier,
             Vec2 initialPosition,
             Vec2 initialVelocity,
             double initialRotation
     ) {
-        super(mainCollider, velocityModifier, rotationModifier, initialPosition, initialVelocity, initialRotation);
+        super(velocityModifier, rotationModifier, initialPosition, initialVelocity, initialRotation);
     }
 
     @Override

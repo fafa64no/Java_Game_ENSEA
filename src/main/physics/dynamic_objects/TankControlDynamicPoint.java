@@ -1,18 +1,16 @@
 package main.physics.dynamic_objects;
 
-import main.physics.colliders.Collider;
 import main.utils.vectors.Vec2;
 
 public class TankControlDynamicPoint extends DynamicPoint {
     public TankControlDynamicPoint(
-            Collider mainCollider,
             double velocityModifier,
             double rotationModifier,
             Vec2 initialPosition,
             Vec2 initialVelocity,
             double initialRotation
     ) {
-        super(mainCollider, velocityModifier, rotationModifier, initialPosition, initialVelocity, initialRotation);
+        super(velocityModifier, rotationModifier, initialPosition, initialVelocity, initialRotation);
     }
 
     @Override

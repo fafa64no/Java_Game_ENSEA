@@ -10,16 +10,31 @@ public class BasicTurret extends DynamicPoint {
     public BasicTurret(
             double rotationModifier,
             Vec2 initialPosition,
-            Vec2 initialVelocity,
+            double initialRotation
+    ) {
+        super(
+                0,
+                rotationModifier,
+                initialPosition,
+                new Vec2(),
+                initialRotation
+        );
+
+        this.rotationOffset = initialRotation;
+        this.rotationRange = null;
+    }
+
+    public BasicTurret(
+            double rotationModifier,
+            Vec2 initialPosition,
             double initialRotation,
             Vec2 rotationRange
     ) {
         super(
-                null,
                 0,
                 rotationModifier,
                 initialPosition,
-                initialVelocity,
+                new Vec2(),
                 initialRotation
         );
 
@@ -57,7 +72,7 @@ public class BasicTurret extends DynamicPoint {
                 currentInput.y
         );
         double targetRotation = getTargetRotation(targetPosition);
-        currentRotationSpeed = targetRotation;
+        currentRotationSpeed = rotationModifier * (targetRotation - rotation);
     }
 
     @Override

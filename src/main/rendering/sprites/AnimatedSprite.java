@@ -11,7 +11,7 @@ import main.utils.data.Config;
 import java.awt.image.BufferedImage;
 
 public class AnimatedSprite extends Sprite implements RequiresUpdates {
-    private final Target animationSource;
+    private Target animationSource;
 
     private final int animationDuration;
     private int remainingAnimationDuration = 0;
@@ -28,6 +28,35 @@ public class AnimatedSprite extends Sprite implements RequiresUpdates {
     private final SizedTextureArray disengagingAnimation;
     private final SizedTextureArray retreatingAnimation;
     private final SizedTextureArray goingToAnimation;
+
+    public AnimatedSprite(
+            DynamicPoint parent,
+            RenderingLayer renderingLayer,
+            int animationDuration,
+            SizedTextureArray deadAnimation,
+            SizedTextureArray idleAnimation,
+            SizedTextureArray deployingAnimation,
+            SizedTextureArray retractingAnimation,
+            SizedTextureArray pursuingAnimation,
+            SizedTextureArray attackingAnimation,
+            SizedTextureArray disengagingAnimation,
+            SizedTextureArray retreatingAnimation,
+            SizedTextureArray goingToAnimation
+    ) {
+        super(null, parent, renderingLayer);
+        this.animationSource = null;
+        this.animationDuration = animationDuration;
+
+        this.deadAnimation = deadAnimation;
+        this.idleAnimation = idleAnimation;
+        this.deployingAnimation = deployingAnimation;
+        this.retractingAnimation = retractingAnimation;
+        this.pursuingAnimation = pursuingAnimation;
+        this.attackingAnimation = attackingAnimation;
+        this.disengagingAnimation = disengagingAnimation;
+        this.retreatingAnimation = retreatingAnimation;
+        this.goingToAnimation = goingToAnimation;
+    }
 
     public AnimatedSprite(
             DynamicPoint parent,
@@ -59,6 +88,14 @@ public class AnimatedSprite extends Sprite implements RequiresUpdates {
         this.goingToAnimation = goingToAnimation;
     }
 
+    public void setAnimationSource(Target animationSource) {
+        if (this.animationSource == null) {
+            this.animationSource = animationSource;
+        } else {
+            System.out.println("Trying to overwrite animationSource.");
+        }
+    }
+
     @Override
     public void addToRenderList() {
         super.addToRenderList();
@@ -73,6 +110,7 @@ public class AnimatedSprite extends Sprite implements RequiresUpdates {
 
     @Override
     public BufferedImage getCurrentTexture() {
+        if (currentAnimation == null) return idleAnimation.textures[currentAnimationFrame];
         return currentAnimation.textures[currentAnimationFrame];
     }
 
@@ -94,6 +132,7 @@ public class AnimatedSprite extends Sprite implements RequiresUpdates {
 
     @Override
     public void doUpdate() {
+        if (currentAnimation == null) return;
         remainingAnimationDuration -= Config.delayBetweenFrames;
         currentAnimationFrame = Math.round((float)
             (currentAnimation.textureCount - 1)

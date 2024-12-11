@@ -25,7 +25,6 @@ public class Vfx extends Sprite implements RequiresUpdates {
         super(
             null,
             new NoControlDynamicPoint(
-                null,
                 initialPosition,
                 new Vec2(),
                 0
@@ -51,7 +50,6 @@ public class Vfx extends Sprite implements RequiresUpdates {
         super(
             null,
             new NoControlDynamicPoint(
-                null,
                 initialPosition,
                 new Vec2(0,initialVelocity).rotateBy(initialRotation),
                 initialRotation

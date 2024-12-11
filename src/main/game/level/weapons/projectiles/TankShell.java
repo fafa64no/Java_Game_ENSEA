@@ -2,14 +2,14 @@ package main.game.level.weapons.projectiles;
 
 import main.physics.ColliderType;
 import main.rendering.vfx.VfxType;
-import main.utils.data.DataGen;
+import main.utils.data.datagen.TextureGen;
 
 public class TankShell extends BasicProjectileHandler {
     private static TankShell instance=null;
 
     public TankShell(){
         super(
-                DataGen.getTankShellTexture().toArray(),
+                TextureGen.getTankShellTexture().toArray(),
                 800,
                 15,
                 40,

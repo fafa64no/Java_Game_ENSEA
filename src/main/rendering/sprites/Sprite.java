@@ -12,13 +12,19 @@ import java.awt.image.BufferedImage;
 public class Sprite {
     protected final SizedTexture texture;
 
-    protected final DynamicPoint parent;
+    protected DynamicPoint parent;
 
     protected final RenderingLayer renderingLayer;
 
     public Sprite(SizedTexture texture, DynamicPoint parent, RenderingLayer renderingLayer) {
         this.texture = texture;
         this.parent = parent;
+        this.renderingLayer = renderingLayer;
+    }
+
+    public Sprite(SizedTexture texture, RenderingLayer renderingLayer) {
+        this.texture = texture;
+        this.parent = null;
         this.renderingLayer = renderingLayer;
     }
 
@@ -50,6 +56,14 @@ public class Sprite {
             0.5 * getTextureSize()
         );
         return affineTransform;
+    }
+
+    public void setParent(DynamicPoint parent) {
+        if (this.parent == null) {
+            this.parent = parent;
+        } else {
+            System.out.println("Trying to overwrite parent.");
+        }
     }
 
     public int getTextureSize() {

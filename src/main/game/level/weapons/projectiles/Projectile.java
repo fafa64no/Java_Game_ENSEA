@@ -1,6 +1,5 @@
 package main.game.level.weapons.projectiles;
 
-import main.physics.colliders.Collider;
 import main.physics.dynamic_objects.NoControlDynamicPoint;
 import main.utils.RequiresUpdates;
 import main.utils.data.Config;
@@ -19,7 +18,6 @@ public class Projectile extends NoControlDynamicPoint implements RequiresUpdates
     private final int idInProjectileHandler;
 
     public Projectile(
-            Collider mainCollider,
             Vec2 initialPosition,
             double initialVelocity,
             double initialRotation,
@@ -30,7 +28,6 @@ public class Projectile extends NoControlDynamicPoint implements RequiresUpdates
             int idInProjectileHandler
     ) {
         super(
-                mainCollider,
                 initialPosition,
                 new Vec2(0,initialVelocity).rotateBy(initialRotation),
                 initialRotation

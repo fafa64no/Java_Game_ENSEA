@@ -43,7 +43,6 @@ public class GameEngine implements Engine {
                 new Vec2(3),
                 new Vec2(0.5,5),
                 new NoControlDynamicPoint(
-                        null,
                         new Vec2(),
                         new Vec2(0,0),
                         0

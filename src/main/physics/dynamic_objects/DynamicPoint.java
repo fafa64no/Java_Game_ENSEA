@@ -3,15 +3,17 @@ package main.physics.dynamic_objects;
 import main.game.level.target.effects.Effect;
 import main.physics.PhysicEngine;
 import main.physics.colliders.Collider;
+import main.rendering.sprites.Sprite;
 import main.utils.containers.BufferedList;
 import main.utils.vectors.Vec2;
 import main.utils.vectors.Vec3;
 
 public abstract class DynamicPoint {
-    protected final DynamicPoint parent;
+    protected DynamicPoint parent;
     protected final BufferedList<DynamicPoint> children = new BufferedList<>();
+    protected final BufferedList<Sprite> sprites = new BufferedList<>();
 
-    protected final Collider mainCollider;
+    protected Collider mainCollider;
 
     protected Vec3 currentInput;
 
@@ -26,16 +28,13 @@ public abstract class DynamicPoint {
     protected final double rotationModifier;
 
     public DynamicPoint(
-            Collider mainCollider,
             double velocityModifier,
             double rotationModifier,
             Vec2 initialPosition,
             Vec2 initialVelocity,
             double initialRotation
     ) {
-        this.mainCollider = mainCollider;
-        if(mainCollider != null)
-            this.mainCollider.addParent(this);
+        this.mainCollider = null;
         this.velocityModifier = velocityModifier;
         this.rotationModifier = rotationModifier;
         this.position = initialPosition;
@@ -46,22 +45,46 @@ public abstract class DynamicPoint {
         this.parent = null;
     }
 
-    public void addToPhysicsEngine() {
+    public DynamicPoint addToPhysicsEngine() {
         children.flush();
         PhysicEngine.addDynamicPoint(this);
         if (mainCollider != null) mainCollider.addColliderToColliderList();
         for(DynamicPoint child : children.elements) {
             child.addToPhysicsEngine();
         }
+        return this;
     }
 
-    public void removeFromRemovePhysicsEngine() {
+    public DynamicPoint removeFromRemovePhysicsEngine() {
         children.flush();
         PhysicEngine.removeDynamicPoint(this);
         if (mainCollider != null) mainCollider.removeColliderFromColliderList();
         for(DynamicPoint child : children.elements) {
             child.removeFromRemovePhysicsEngine();
         }
+        return this;
+    }
+
+    public DynamicPoint addToRenderList() {
+        sprites.flush();
+        for (Sprite sprite : sprites.elements) {
+            sprite.addToRenderList();
+        }
+        for(DynamicPoint child : children.elements) {
+            child.addToRenderList();
+        }
+        return this;
+    }
+
+    public DynamicPoint removeFromRenderList() {
+        sprites.flush();
+        for (Sprite sprite : sprites.elements) {
+            sprite.removeFromRenderList();
+        }
+        for(DynamicPoint child : children.elements) {
+            child.removeFromRenderList();
+        }
+        return this;
     }
 
     public void setInput(Vec3 input) {
@@ -101,6 +124,10 @@ public abstract class DynamicPoint {
 
     protected void applyCurrentRotationSpeed() {
         rotation = (rotation + currentRotationSpeed) % (2 * Math.PI);
+
+        for (DynamicPoint child : children.elements) {
+            child.readRotationFromParent();
+        }
     }
 
     protected void readVelocityFromParent() {
@@ -108,6 +135,14 @@ public abstract class DynamicPoint {
             System.out.println("Where's my dad ???????????????");
         } else {
             position = Vec2.add(position, parent.getCurrentVelocity());
+        }
+    }
+
+    protected void readRotationFromParent() {
+        if (parent == null) {
+            System.out.println("Where's my dad ???????????????");
+        } else {
+            rotation = (rotation + parent.rotation) % (2 * Math.PI);
         }
     }
 
@@ -127,12 +162,34 @@ public abstract class DynamicPoint {
 
     }
 
-    public void addChild(DynamicPoint dynamicPoint) {
-        children.addElement(dynamicPoint);
+    public DynamicPoint addChild(DynamicPoint child) {
+        children.addElement(child);
+        child.setParent(this);
+        return child;
     }
 
-    public void removeChild(DynamicPoint dynamicPoint) {
-        children.removeElement(dynamicPoint);
+    public void setParent(DynamicPoint parent) {
+        if (this.parent == null) {
+            this.parent = parent;
+        } else {
+            System.out.println("Trying to overwrite parent.");
+        }
+    }
+
+    public DynamicPoint setMainCollider(Collider collider) {
+        if (this.mainCollider == null) {
+            this.mainCollider = collider;
+            collider.setParent(this);
+        } else {
+            System.out.println("Trying to overwrite mainCollider.");
+        }
+        return this;
+    }
+
+    public DynamicPoint addSprite(Sprite sprite) {
+        sprite.setParent(this);
+        sprites.addElement(sprite);
+        return this;
     }
 
     protected abstract void convertInputToVelocity();

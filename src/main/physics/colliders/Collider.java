@@ -10,7 +10,6 @@ import main.rendering.layers.RenderingLayer;
 import main.rendering.vfx.Vfx;
 import main.rendering.vfx.VfxType;
 import main.utils.data.CollisionConfig;
-import main.utils.data.DataGen;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;
 
@@ -192,7 +191,7 @@ public abstract class Collider {
         };
     }
 
-    public void addParent(DynamicPoint dynamicPoint) {
+    public void setParent(DynamicPoint dynamicPoint) {
         if(parent == null) {
             parent = dynamicPoint;
         } else {

@@ -2,14 +2,14 @@ package main.game.level.weapons.projectiles;
 
 import main.physics.ColliderType;
 import main.rendering.vfx.VfxType;
-import main.utils.data.DataGen;
+import main.utils.data.datagen.TextureGen;
 
 public class AerialMachineGunBullet extends BasicProjectileHandler {
     private static AerialMachineGunBullet instance = null;
 
     public AerialMachineGunBullet(){
         super(
-                DataGen.getMachineGunBulletTexture().toArray(),
+                TextureGen.getMachineGunBulletTexture().toArray(),
                 600,
                 20,
                 1,

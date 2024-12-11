@@ -9,9 +9,9 @@ public class SizedTextureArray {
     public final int textureCount;
     public final BufferedImage[] textures;
 
-    public SizedTextureArray(int textureSize, int textureCount, BufferedImage tileMap, IVec2[] positionsInTileMap) {
+    public SizedTextureArray(int textureSize, BufferedImage tileMap, IVec2[] positionsInTileMap) {
         this.textureSize = textureSize;
-        this.textureCount = textureCount;
+        this.textureCount = positionsInTileMap.length;
         this.textures = new BufferedImage[textureCount];
 
         for(int i = 0; i < textureCount; i++) {
@@ -20,6 +20,19 @@ public class SizedTextureArray {
                 textureSize * positionsInTileMap[i].y,
                 textureSize,
                 textureSize
+            );
+        }
+    }
+
+    public SizedTextureArray(TileMap tileMap, IVec2[] positionsInTileMap) {
+        this.textureSize = tileMap.getTextureSize();
+        this.textureCount = positionsInTileMap.length;
+        this.textures = new BufferedImage[textureCount];
+
+        for(int i = 0; i < textureCount; i++) {
+            this.textures[i] = tileMap.getTextureAt(
+                    positionsInTileMap[i].x,
+                    positionsInTileMap[i].y
             );
         }
     }
