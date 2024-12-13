@@ -1,5 +1,6 @@
 package main.game.vehicles.turret;
 
+import main.game.controllers.Controller;
 import main.physics.dynamic_objects.DynamicPoint;
 import main.utils.vectors.Vec2;
 
@@ -68,7 +69,10 @@ public class BasicTurret extends DynamicPoint {
     @Override
     protected void convertInputToRotation() {
         if (target == null) return;
-        Vec2 targetPosition = target.getCurrentAimPoint();
+        Controller controller = target.getController();
+        if (controller == null) return;
+
+        Vec2 targetPosition = controller.getAimPoint();
         double targetRotation = getTargetRotation(targetPosition);
 
         int angleSign;  double angleToTravel;

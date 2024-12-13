@@ -4,6 +4,7 @@ import main.game.GameEngine;
 import main.game.level.weapons.projectiles.ProjectileHandler;
 import main.physics.layers.CollisionLayer;
 import main.physics.dynamic_objects.DynamicPoint;
+import main.rendering.layers.RenderingLayer;
 import main.utils.RequiresUpdates;
 import main.utils.noise.PseudoRandom;
 import main.utils.vectors.Vec2;
@@ -20,6 +21,7 @@ public class BasicWeapon implements RequiresUpdates {
 
     protected final Vec2 initialOffset;
     protected final double initialRotation;
+    protected final RenderingLayer renderingLayer;
 
     public BasicWeapon(
             ProjectileHandler projectileHandler,
@@ -28,7 +30,8 @@ public class BasicWeapon implements RequiresUpdates {
             DynamicPoint parent,
             CollisionLayer collisionLayer,
             Vec2 initialOffset,
-            double initialRotation
+            double initialRotation,
+            RenderingLayer renderingLayer
     ) {
         this.projectileHandler = projectileHandler;
         this.reloadTime = reloadTime;
@@ -37,6 +40,7 @@ public class BasicWeapon implements RequiresUpdates {
         this.collisionLayer = collisionLayer;
         this.initialOffset = initialOffset;
         this.initialRotation = initialRotation;
+        this.renderingLayer = renderingLayer;
 
         GameEngine.addRequiresUpdates(this);
     }
@@ -63,8 +67,11 @@ public class BasicWeapon implements RequiresUpdates {
         projectileHandler.fireInDirection(
             firingPosition,
             firingRotation,
-            collisionLayer
+            collisionLayer,
+            renderingLayer
         );
+
+        remainingReloadTime = reloadTime;
     }
 
     @Override

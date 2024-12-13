@@ -58,6 +58,28 @@ public class AnimatedSprite extends Sprite implements RequiresUpdates {
         this.goingToAnimation = goingToAnimation;
     }
 
+    public AnimatedSprite(
+            RenderingLayer renderingLayer,
+            Target animationSource,
+            int animationDuration,
+            SizedTextureArray deadAnimation,
+            SizedTextureArray idleAnimation
+    ) {
+        super(null, renderingLayer);
+        this.animationSource = animationSource;
+        this.animationDuration = animationDuration;
+
+        this.deadAnimation = deadAnimation;
+        this.idleAnimation = idleAnimation;
+        this.deployingAnimation = idleAnimation;
+        this.retractingAnimation = idleAnimation;
+        this.pursuingAnimation = idleAnimation;
+        this.attackingAnimation = idleAnimation;
+        this.disengagingAnimation = idleAnimation;
+        this.retreatingAnimation = idleAnimation;
+        this.goingToAnimation = idleAnimation;
+    }
+
     public void setAnimationSource(Target animationSource) {
         if (this.animationSource == null) {
             this.animationSource = animationSource;

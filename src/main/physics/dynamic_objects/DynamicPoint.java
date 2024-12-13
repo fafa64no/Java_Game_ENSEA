@@ -3,6 +3,7 @@ package main.physics.dynamic_objects;
 import main.game.controllers.Controller;
 import main.game.level.target.Target;
 import main.game.level.target.effects.Effect;
+import main.game.level.weapons.projectiles.Projectile;
 import main.physics.PhysicEngine;
 import main.physics.colliders.Collider;
 import main.rendering.sprites.Sprite;
@@ -173,6 +174,9 @@ public abstract class DynamicPoint {
             case DAMAGE:
                 if (target != null) target.dealDamage(modifier);
                 break;
+            case BLOCK:
+                if (this instanceof Projectile) ((Projectile) this).destroyProjectile();
+                break;
         }
     }
 
@@ -219,6 +223,10 @@ public abstract class DynamicPoint {
     public void setController(Controller controller) {
         if (target == null) return;
         target.setController(controller);
+    }
+
+    public Target getTarget() {
+        return target;
     }
 
     protected abstract void convertInputToVelocity();

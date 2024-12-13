@@ -4,6 +4,7 @@ import main.physics.ColliderType;
 import main.physics.Collision;
 import main.physics.layers.CollisionLayer;
 import main.physics.dynamic_objects.DynamicPoint;
+import main.rendering.vfx.VfxType;
 import main.utils.vectors.BVec2;
 import main.utils.vectors.Vec2;
 import main.utils.vectors.Vec4;
@@ -26,6 +27,32 @@ public class PointCollider extends Collider{
                 colliderType,
                 collisionLayer,
                 offset,
+                parent
+        );
+    }
+
+    public PointCollider(
+            boolean inverted,
+            double friction,
+            double modifier,
+            ColliderType colliderType,
+            CollisionLayer collisionLayer,
+            Vec2 offset,
+            VfxType vfxType,
+            int vfxCooldown,
+            int vfxDuration,
+            DynamicPoint parent
+    ) {
+        super(
+                inverted,
+                friction,
+                modifier,
+                colliderType,
+                collisionLayer,
+                offset,
+                vfxType,
+                vfxCooldown,
+                vfxDuration,
                 parent
         );
     }

@@ -48,4 +48,22 @@ public record Collision(
             )
         );
     }
+
+    @Override
+    public String toString() {
+        return "Collision{" +
+                "colliderSource=" + colliderSource +
+                ", colliderTarget=" + colliderTarget +
+                ", colliderTypeSource=" + colliderTypeSource +
+                ", colliderTypeTarget=" + colliderTypeTarget +
+                ", collisionLayerSource=" + collisionLayerSource +
+                ", collisionLayerTarget=" + collisionLayerTarget +
+                ", colliderSourceFriction=" + colliderSourceFriction +
+                ", colliderTargetFriction=" + colliderTargetFriction +
+                ", colliderSourceModifier=" + colliderSourceModifier +
+                ", colliderTargetModifier=" + colliderTargetModifier +
+                ", didCollide=" + didCollide +
+                ", normal=" + normal +
+                '}';
+    }
 }

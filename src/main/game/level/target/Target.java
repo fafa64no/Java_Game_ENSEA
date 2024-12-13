@@ -1,8 +1,12 @@
 package main.game.level.target;
 
 import main.game.controllers.Controller;
+import main.game.level.weapons.BasicWeapon;
 import main.physics.dynamic_objects.DynamicPoint;
 import main.utils.vectors.Vec2;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Target {
     protected DynamicPoint mainNode;
@@ -12,6 +16,10 @@ public class Target {
     protected LifeState currentLifeState = LifeState.LIFE_STATE_IDLE;
 
     protected Controller controller;
+
+    protected final List<BasicWeapon> primaryWeapons = new ArrayList<>();
+    protected final List<BasicWeapon> secondaryWeapons = new ArrayList<>();
+    protected final List<BasicWeapon> tertiaryWeapons = new ArrayList<>();
 
     public Target(double maxHealth) {
         this.maxHealth = maxHealth;
@@ -64,11 +72,38 @@ public class Target {
         currentLifeState = LifeState.LIFE_STATE_DEAD;
     }
 
-    public Vec2 getCurrentAimPoint() {
-        return controller.getAimPoint();
+    public Controller getController() {
+        return controller;
     }
 
     public void setController(Controller controller) {
         this.controller = controller;
+    }
+
+    public Target addPrimaryWeapon(BasicWeapon weapon) {
+        primaryWeapons.add(weapon);
+        return this;
+    }
+
+    public Target addSecondaryWeapon(BasicWeapon weapon) {
+        secondaryWeapons.add(weapon);
+        return this;
+    }
+
+    public Target addTertiaryWeapon(BasicWeapon weapon) {
+        tertiaryWeapons.add(weapon);
+        return this;
+    }
+
+    public List<BasicWeapon> getPrimaryWeapons() {
+        return primaryWeapons;
+    }
+
+    public List<BasicWeapon> getSecondaryWeapons() {
+        return secondaryWeapons;
+    }
+
+    public List<BasicWeapon> getTertiaryWeapons() {
+        return tertiaryWeapons;
     }
 }

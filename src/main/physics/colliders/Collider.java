@@ -145,15 +145,26 @@ public abstract class Collider {
     }
 
     protected void updateEffects(Collision collision) {
-        if(parent != null) {
-            switch (collision.colliderTypeTarget()){
-                case SOLID_DAMAGE_DEALER,
-                     SOLID_THICK_DAMAGE_DEALER,
-                     AERIAL_DAMAGE_DEALER,
-                     AERIAL_THICK_DAMAGE_DEALER,
-                     POINT_DAMAGE_DEALER
-                        -> parent.applyEffect(Effect.DAMAGE, collision.colliderTargetModifier());
-            }
+        if (parent == null) return;
+        ColliderType ct = collision.colliderTypeSource();
+        if (
+                ct == ColliderType.SOLID_DAMAGE_DEALER ||
+                ct == ColliderType.SOLID_THICK_DAMAGE_DEALER ||
+                ct == ColliderType.AERIAL_DAMAGE_DEALER ||
+                ct == ColliderType.AERIAL_THICK_DAMAGE_DEALER ||
+                ct == ColliderType.POINT_DAMAGE_DEALER
+        ) {
+            parent.applyEffect(Effect.DAMAGE, collision.colliderTargetModifier());
+        }
+        if (
+                ct == ColliderType.SOLID_THICK_INERT ||
+                ct == ColliderType.SOLID_THICK_TRIGGER ||
+                ct == ColliderType.SOLID_THICK_DAMAGE_DEALER ||
+                ct == ColliderType.AERIAL_THICK_INERT ||
+                ct == ColliderType.AERIAL_THICK_TRIGGER ||
+                ct == ColliderType.AERIAL_THICK_DAMAGE_DEALER
+        ) {
+            parent.applyEffect(Effect.BLOCK, collision.colliderTargetModifier());
         }
     }
 

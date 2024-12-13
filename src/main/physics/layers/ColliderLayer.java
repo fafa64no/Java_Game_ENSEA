@@ -15,8 +15,8 @@ public class ColliderLayer {
                 Vec2 relativeVelocity = Vec2.add(collider1.getVelocity(),collider2.getVelocity());
                 Collision collision = collider1.doCollide(collider2, relativeVelocity);
                 if(collision == null)continue;
-                collider1.onCollide(Collision.getReverseCollision(collision));
                 collider2.onCollide(collision);
+                collider1.onCollide(Collision.getReverseCollision(collision));
             }
         }
         return this;

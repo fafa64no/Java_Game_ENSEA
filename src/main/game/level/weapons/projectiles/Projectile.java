@@ -1,6 +1,8 @@
 package main.game.level.weapons.projectiles;
 
+import main.game.GameEngine;
 import main.physics.dynamic_objects.NoControlDynamicPoint;
+import main.rendering.sprites.Sprite;
 import main.utils.RequiresUpdates;
 import main.utils.data.Config;
 import main.utils.vectors.Vec2;
@@ -14,6 +16,7 @@ public class Projectile extends NoControlDynamicPoint implements RequiresUpdates
     private final int animationSpeed;
 
     public final ProjectileHandler parent;
+    protected final Sprite sprite;
 
     private final int idInProjectileHandler;
 
@@ -25,6 +28,7 @@ public class Projectile extends NoControlDynamicPoint implements RequiresUpdates
             int initialLifeSpan,
             int animationSpeed,
             ProjectileHandler parent,
+            Sprite sprite,
             int idInProjectileHandler
     ) {
         super(
@@ -34,11 +38,17 @@ public class Projectile extends NoControlDynamicPoint implements RequiresUpdates
         );
         this.animationFrames = animationFrames;
         this.initialLifeSpan = initialLifeSpan;
+        this.remainingMilliseconds = initialLifeSpan;
         this.animationSpeed = animationSpeed;
         this.parent = parent;
+        this.sprite = sprite;
         this.idInProjectileHandler = idInProjectileHandler;
 
+        this.sprite.setParent(this);
+
         addToPhysicsEngine();
+        GameEngine.addRequiresUpdates(this);
+        sprite.addToRenderList();
     }
 
     @Override
@@ -57,6 +67,8 @@ public class Projectile extends NoControlDynamicPoint implements RequiresUpdates
 
     public void destroyProjectile(){
         removeFromRemovePhysicsEngine();
+        GameEngine.removeRequiresUpdates(this);
+        sprite.removeFromRenderList();
         if (parent!=null) parent.removeProjectile(idInProjectileHandler);
     }
 

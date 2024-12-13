@@ -10,6 +10,7 @@ public class InputManager implements KeyListener, MouseListener, MouseWheelListe
     private int lastVehicleRequested = 0;
 
     private final boolean[] abilitiesTriggered = new boolean[AbilityType.ABILITY_COUNT.ordinal()];
+    private final boolean[] abilitiesEnabled = new boolean[AbilityType.ABILITY_COUNT.ordinal()];
 
     private boolean pauseGotToggled = false;
     private boolean isZooming = false;
@@ -36,8 +37,14 @@ public class InputManager implements KeyListener, MouseListener, MouseWheelListe
             case KEY_SWAP_TO_VEHICLE_9 -> lastVehicleRequested = 9;
             case KEY_SWAP_TO_VEHICLE_0 -> lastVehicleRequested = 0;
 
-            case KEY_FIRE_SECONDARY -> abilitiesTriggered[AbilityType.ABILITY_SECONDARY_FIRE.ordinal()] = true;
-            case KEY_FIRE_TERTIARY -> abilitiesTriggered[AbilityType.ABILITY_TERTIARY_FIRE.ordinal()] = true;
+            case KEY_FIRE_SECONDARY -> {
+                abilitiesTriggered[AbilityType.ABILITY_SECONDARY_FIRE.ordinal()] = true;
+                abilitiesEnabled[AbilityType.ABILITY_SECONDARY_FIRE.ordinal()] = true;
+            }
+            case KEY_FIRE_TERTIARY -> {
+                abilitiesTriggered[AbilityType.ABILITY_TERTIARY_FIRE.ordinal()] = true;
+                abilitiesEnabled[AbilityType.ABILITY_TERTIARY_FIRE.ordinal()] = true;
+            }
 
             case KEY_PAUSE -> pauseGotToggled = true;
         }
@@ -56,6 +63,9 @@ public class InputManager implements KeyListener, MouseListener, MouseWheelListe
             case KEY_TURN_RIGHT -> currentInputDir.x -= 1;
             case KEY_STRAFE_LEFT -> currentInputDir.z += 1;
             case KEY_STRAFE_RIGHT -> currentInputDir.z -= 1;
+
+            case KEY_FIRE_SECONDARY -> abilitiesEnabled[AbilityType.ABILITY_SECONDARY_FIRE.ordinal()] = false;
+            case KEY_FIRE_TERTIARY -> abilitiesEnabled[AbilityType.ABILITY_TERTIARY_FIRE.ordinal()] = false;
         }
 
         currentInputDir.x = Math.clamp(currentInputDir.x,-1,1);
@@ -69,6 +79,7 @@ public class InputManager implements KeyListener, MouseListener, MouseWheelListe
         switch (e.getButton()){
             case 1:     // Left Click
                 abilitiesTriggered[AbilityType.ABILITY_PRIMARY_FIRE.ordinal()] = true;
+                abilitiesEnabled[AbilityType.ABILITY_PRIMARY_FIRE.ordinal()] = true;
                 break;
             case 2:     // Right Click
                 isZooming = true;
@@ -80,6 +91,7 @@ public class InputManager implements KeyListener, MouseListener, MouseWheelListe
     public void mouseReleased(MouseEvent e) {
         switch (e.getButton()){
             case 1:     // Left Click
+                abilitiesEnabled[AbilityType.ABILITY_PRIMARY_FIRE.ordinal()] = false;
                 break;
             case 2:     // Right Click
                 isZooming = false;
@@ -131,6 +143,12 @@ public class InputManager implements KeyListener, MouseListener, MouseWheelListe
             output[i] = abilitiesTriggered[i];
             abilitiesTriggered[i] = false;
         }
+        return output;
+    }
+
+    public boolean[] getAbilitiesEnabled() {
+        boolean[] output = new boolean[AbilityType.ABILITY_COUNT.ordinal()];
+        System.arraycopy(abilitiesEnabled, 0, output, 0, AbilityType.ABILITY_COUNT.ordinal());
         return output;
     }
 

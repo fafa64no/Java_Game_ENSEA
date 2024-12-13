@@ -1,10 +1,12 @@
 package main.rendering.vfx;
 
+import main.game.GameEngine;
 import main.physics.dynamic_objects.NoControlDynamicPoint;
 import main.rendering.layers.RenderingLayer;
 import main.rendering.sprites.Sprite;
 import main.utils.RequiresUpdates;
 import main.utils.containers.SizedTextureArray;
+import main.utils.data.Config;
 import main.utils.vectors.Vec2;
 
 import java.awt.image.BufferedImage;
@@ -37,6 +39,7 @@ public class Vfx extends Sprite implements RequiresUpdates {
 
         this.addToRenderList();
         parent.addToPhysicsEngine();
+        GameEngine.addRequiresUpdates(this);
     }
 
     public Vfx(
@@ -62,6 +65,7 @@ public class Vfx extends Sprite implements RequiresUpdates {
 
         this.addToRenderList();
         parent.addToPhysicsEngine();
+        GameEngine.addRequiresUpdates(this);
     }
 
     public void updateRemainingTime(){
@@ -78,7 +82,8 @@ public class Vfx extends Sprite implements RequiresUpdates {
 
     @Override
     public void doUpdate() {
-        if(--remainingAnimationTime<0){
+        remainingAnimationTime -= Config.delayBetweenFrames;
+        if(remainingAnimationTime<0){
             parent.removeFromRemovePhysicsEngine();
             this.removeFromRenderList();
         }else{

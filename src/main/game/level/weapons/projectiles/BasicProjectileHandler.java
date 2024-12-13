@@ -3,6 +3,8 @@ package main.game.level.weapons.projectiles;
 import main.physics.ColliderType;
 import main.physics.layers.CollisionLayer;
 import main.physics.colliders.PointCollider;
+import main.rendering.layers.RenderingLayer;
+import main.rendering.sprites.Sprite;
 import main.rendering.vfx.VfxType;
 import main.utils.containers.SizedTextureArray;
 import main.utils.data.Config;
@@ -51,7 +53,8 @@ public abstract class BasicProjectileHandler implements ProjectileHandler {
             double rotation,
             double projectileSpeed,
             double modifier,
-            CollisionLayer collisionLayer
+            CollisionLayer collisionLayer,
+            RenderingLayer renderingLayer
     ) {
         projectiles[projectilePointer] = new Projectile(
             initialPosition,
@@ -61,8 +64,16 @@ public abstract class BasicProjectileHandler implements ProjectileHandler {
             projectileLifeSpan,
             animationSpeed,
             this,
+            getProjectileSprite(renderingLayer),
             projectilePointer
         );
+        setProjectileCollider(modifier, collisionLayer);
+    }
+
+    protected void setProjectileCollider(
+            double modifier,
+            CollisionLayer collisionLayer
+    ) {
         projectiles[projectilePointer].setMainCollider(new PointCollider(
                 false,
                 0,
@@ -70,9 +81,14 @@ public abstract class BasicProjectileHandler implements ProjectileHandler {
                 colliderType,
                 collisionLayer,
                 new Vec2(),
+                VfxType.VFX_PIERCING_METAL,
+                0,
+                200,
                 null
         ));
     }
+
+    protected abstract Sprite getProjectileSprite(RenderingLayer renderingLayer);
 
     @Override
     public void fireInDirection(
@@ -80,28 +96,31 @@ public abstract class BasicProjectileHandler implements ProjectileHandler {
             double rotation,
             double projectileSpeed,
             double modifier,
-            CollisionLayer collisionLayer
+            CollisionLayer collisionLayer,
+            RenderingLayer renderingLayer
     ) {
         if (projectiles[projectilePointer] == null) {
-            genProjectile(initialPosition,rotation,projectileSpeed,modifier,collisionLayer);
+            genProjectile(initialPosition,rotation,projectileSpeed,modifier,collisionLayer,renderingLayer);
         } else {
             System.out.println("Too many projectiles");
         }
-        projectilePointer=(projectilePointer+1)%projectiles.length;
+        projectilePointer = (projectilePointer + 1) % projectiles.length;
     }
 
     @Override
     public void fireInDirection(
             Vec2 initialPosition,
             double rotation,
-            CollisionLayer collisionLayer
+            CollisionLayer collisionLayer,
+            RenderingLayer renderingLayer
     ) {
         fireInDirection(
             initialPosition,
             rotation,
             defaultProjectileSpeed,
             defaultModifier,
-            collisionLayer
+            collisionLayer,
+            renderingLayer
         );
     }
 
